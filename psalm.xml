@@ -46,6 +46,11 @@
                 <directory name="tests/src/IntegrationTests/" />
             </errorLevel>
         </MissingConstructor>
+        <PossiblyInvalidArgument>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-doctrine-orm-adapter/src/QueryBuilderAdapter.php" />
+            </errorLevel>
+        </PossiblyInvalidArgument>
     </issueHandlers>
 
     <plugins>

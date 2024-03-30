@@ -122,6 +122,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $queryBuilder->setParameter(
                     "rekapager_where_{$z}",
                     $excludeProperty['value'],
+                    // @phpstan-ignore-next-line ORM 2 compatibility
                     $this->getType($excludeProperty['property'])
                 );
 
@@ -137,6 +138,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $queryBuilder->setParameter(
                     "rekapager_where_{$z}",
                     $property['value'],
+                    // @phpstan-ignore-next-line ORM 2 compatibility
                     $this->getType($property['property'])
                 );
 
@@ -150,6 +152,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $queryBuilder->setParameter(
                     "rekapager_where_{$z}",
                     $property['value'],
+                    // @phpstan-ignore-next-line ORM 2 compatibility
                     $this->getType($property['property'])
                 );
 
