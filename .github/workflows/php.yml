@@ -68,6 +68,11 @@ jobs:
     - name: Validate monorepo
       run: vendor/bin/monorepo-builder validate
 
+    - name: Load fixtures
+      run: |
+        tests/bin/console doctrine:schema:create
+        tests/bin/console doctrine:fixtures:load --no-interaction
+
     - name: Run phpunit
       run: |
         export SYMFONY_DEPRECATIONS_HELPER='max[direct]=0'
