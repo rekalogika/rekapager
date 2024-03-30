@@ -3,6 +3,7 @@
     "homepage": "https://rekalogika.dev/rekapager",
     "license": "MIT",
     "type": "library",
+    "description": "Pagination library for PHP, supporting both offset-based and keyset-based pagination.",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
