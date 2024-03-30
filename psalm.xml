@@ -10,10 +10,11 @@
 
     <projectFiles>
         <directory name="packages" />
-        <directory name="tests" />
+        <directory name="tests/src" />
+        <directory name="tests/config" />
+        <directory name="tests/bin" />
         <ignoreFiles>
             <directory name="vendor" />
-            <directory name="tests/var" />
             <directory name="tests/src/App/Factory" />
         </ignoreFiles>
     </projectFiles>
