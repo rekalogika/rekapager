@@ -122,7 +122,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $queryBuilder->setParameter(
                     "rekapager_where_{$z}",
                     $excludeProperty['value'],
-                    // @phpstan-ignore-next-line ORM 2 compatibility
+                    // @phpstan-ignore-next-line
                     $this->getType($excludeProperty['property'])
                 );
 
@@ -138,7 +138,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $queryBuilder->setParameter(
                     "rekapager_where_{$z}",
                     $property['value'],
-                    // @phpstan-ignore-next-line ORM 2 compatibility
+                    // @phpstan-ignore-next-line
                     $this->getType($property['property'])
                 );
 
@@ -152,7 +152,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $queryBuilder->setParameter(
                     "rekapager_where_{$z}",
                     $property['value'],
-                    // @phpstan-ignore-next-line ORM 2 compatibility
+                    // @phpstan-ignore-next-line
                     $this->getType($property['property'])
                 );
 
@@ -312,7 +312,10 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
         return $result;
     }
 
-    private function getType(string $name): ParameterType|ArrayParameterType|string|int|null
+    /**
+     * @return ParameterType|ArrayParameterType|string|int|null
+     */
+    private function getType(string $name): mixed
     {
         return $this->typeMapping[$name] ?? null;
     }

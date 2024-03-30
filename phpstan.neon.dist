@@ -5,7 +5,8 @@ parameters:
     checkFunctionNameCase: true
     checkInternalClassCaseSensitivity: true
     reportMaybesInPropertyPhpDocTypes: true
-    treatPhpDocTypesAsCertain: false    
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
     paths:
         - packages
         - tests
