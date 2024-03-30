@@ -29,6 +29,6 @@
         "symfony/http-kernel": "^6.4 || ^7.0",
         "symfony/routing": "^6.4 || ^7.0",
         "symfony/serializer": "^6.4 || ^7.0",
-        "twig/twig": "^3.5"
+        "twig/twig": "^3.8"
     }
 }
