@@ -1,6 +1,6 @@
 {
     "name": "rekalogika/rekapager-bundle",
-    "description": "",
+    "description": "Symfony bundle for the Rekapager library",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [],
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "rekalogika/rekapager-offset-pagination",
-    "description": "",
+    "description": "Offset pagination component of the Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [],
     "license": "MIT",

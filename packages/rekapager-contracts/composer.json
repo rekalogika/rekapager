@@ -1,6 +1,6 @@
 {
     "name": "rekalogika/rekapager-contracts",
-    "description": "",
+    "description": "Interfaces and nominal classes for Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [],
     "license": "MIT",

@@ -1,6 +1,6 @@
 {
     "name": "rekalogika/rekapager-doctrine-orm-adapter",
-    "description": "",
+    "description": "Doctrine ORM adapter for Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [],
     "license": "MIT",

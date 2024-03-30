@@ -1,6 +1,6 @@
 {
     "name": "rekalogika/rekapager-doctrine-collections-adapter",
-    "description": "",
+    "description": "Doctrine Collections adapter for Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [],
     "license": "MIT",

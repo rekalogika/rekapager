@@ -1,0 +1,86 @@
+name: 'Packages Split'
+
+on:
+    workflow_dispatch: null
+    push:
+        branches:
+            - main
+        tags:
+            - '*'
+
+env:
+    GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+jobs:
+    packages_split:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                # define package to repository map
+                package:
+                    -
+                        local_path: 'rekapager-bundle'
+                        split_repository: 'rekapager-bundle'
+                    -
+                        local_path: 'rekapager-contracts'
+                        split_repository: 'rekapager-contracts'
+                    -
+                        local_path: 'rekapager-core'
+                        split_repository: 'rekapager-core'
+                    -
+                        local_path: 'rekapager-doctrine-collections-adapter'
+                        split_repository: 'rekapager-doctrine-collections-adapter'
+                    -
+                        local_path: 'rekapager-doctrine-orm-adapter'
+                        split_repository: 'rekapager-doctrine-orm-adapter'
+                    -
+                        local_path: 'rekapager-keyset-pagination'
+                        split_repository: 'rekapager-keyset-pagination'
+                    -
+                        local_path: 'rekapager-offset-pagination'
+                        split_repository: 'rekapager-offset-pagination'
+    
+        steps:
+            -   uses: actions/checkout@v2
+
+            # no tag
+            -
+                if: "!startsWith(github.ref, 'refs/tags/')"
+                uses: "danharrin/monorepo-split-github-action@v2.3.0"
+                with:
+                    # ↓ split "packages/easy-coding-standard" directory
+                    package_directory: 'packages/${{ matrix.package.local_path }}'
+
+                    # ↓ into https://github.com/symplify/easy-coding-standard repository
+                    repository_organization: 'rekalogika'
+                    repository_name: '${{ matrix.package.split_repository }}'
+
+                    # [optional, with "github.com" as default]
+                    repository_host: github.com
+
+                    # ↓ the user signed under the split commit
+                    user_name: "Priyadi Iman Nurcahyo"
+                    user_email: "1102197+priyadi@users.noreply.github.com"
+
+            # with tag
+            -
+                if: "startsWith(github.ref, 'refs/tags/')"
+                uses: "danharrin/monorepo-split-github-action@v2.3.0"
+                with:
+                    tag: ${GITHUB_REF#refs/tags/}
+
+                    # ↓ split "packages/easy-coding-standard" directory
+                    package_directory: 'packages/${{ matrix.package.local_path }}'
+
+                    # ↓ into https://github.com/symplify/easy-coding-standard repository
+                    repository_organization: 'rekalogika'
+                    repository_name: '${{ matrix.package.split_repository }}'
+
+                    # [optional, with "github.com" as default]
+                    repository_host: github.com
+
+                    # ↓ the user signed under the split commit
+                    user_name: "Priyadi Iman Nurcahyo"
+                    user_email: "1102197+priyadi@users.noreply.github.com"

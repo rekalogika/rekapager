@@ -1,6 +1,6 @@
 {
     "name": "rekalogika/rekapager-core",
-    "description": "",
+    "description": "Core functionality of Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [],
     "license": "MIT",
