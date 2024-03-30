@@ -1,0 +1,24 @@
+{
+    "name": "rekalogika/rekapager-keyset-pagination",
+    "description": "",
+    "homepage": "https://rekalogika.dev/rekapager",
+    "keywords": [],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Rekapager\\Keyset\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "rekalogika/rekapager-contracts": "^0.5",
+        "spomky-labs/base64url": "^2.0"
+    }
+}

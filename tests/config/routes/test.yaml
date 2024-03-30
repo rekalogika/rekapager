@@ -1,0 +1,5 @@
+test:
+    resource:
+        path: '../../src/App/Controller/'
+        namespace: 'Rekalogika\Rekapager\Tests\App\Controller'
+    type: attribute

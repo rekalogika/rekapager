@@ -1,0 +1,34 @@
+{
+    "name": "rekalogika/rekapager-bundle",
+    "description": "",
+    "homepage": "https://rekalogika.dev/rekapager",
+    "keywords": [],
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Rekapager\\Symfony\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "psr/container": "^2.0",
+        "rekalogika/rekapager-contracts": "^0.5",
+        "rekalogika/rekapager-core": "^0.5",
+        "rekalogika/rekapager-keyset-pagination": "^0.5",
+        "rekalogika/rekapager-offset-pagination": "^0.5",
+        "symfony/config": "^6.4 || ^7.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0",
+        "symfony/http-foundation": "^6.4 || ^7.0",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/routing": "^6.4 || ^7.0",
+        "symfony/serializer": "^6.4 || ^7.0",
+        "twig/twig": "^3.5"
+    }
+}

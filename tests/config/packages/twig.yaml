@@ -1,0 +1,2 @@
+twig:
+    form_themes: ['bootstrap_5_horizontal_layout.html.twig']

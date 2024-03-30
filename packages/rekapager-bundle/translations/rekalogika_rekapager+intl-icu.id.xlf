@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="id">
+  <file id="rekalogika_file.id">
+    <unit id="First" name="First">
+      <segment>
+        <source>First</source>
+        <target>Awal</target>
+      </segment>
+    </unit>
+    <unit id="Previous" name="Previous">
+      <segment>
+        <source>Previous</source>
+        <target>Sebelum</target>
+      </segment>
+    </unit>
+    <unit id="Next" name="Next">
+      <segment>
+        <source>Next</source>
+        <target>Berikut</target>
+      </segment>
+    </unit>
+    <unit id="Last" name="Last">
+      <segment>
+        <source>Last</source>
+        <target>Akhir</target>
+      </segment>
+    </unit>
+    <unit id="Disabled" name="The page is present but disabled due to policy reasons">
+      <segment>
+        <source>The page is present but disabled due to policy reasons</source>
+        <target>Halaman ini ada tetapi dinonaktifkan karena alasan kebijakan</target>
+      </segment>
+    </unit>
+    <unit id="Negative" name="Page {page} from the end">
+      <segment>
+        <source>Page {page} from the end</source>
+        <target>Halaman {page} dari belakang</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
