@@ -89,9 +89,6 @@ class OffsetPage implements OffsetPageInterface, \IteratorAggregate
             limit: $this->itemsPerPage + 1,
         );
 
-        /** @psalm-suppress InvalidArgument */
-        $result = iterator_to_array($result);
-
         if (\count($result) > $this->itemsPerPage) {
             $this->hasNextPage = true;
             array_pop($result);

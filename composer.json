@@ -27,7 +27,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "doctrine/collections": "^2.2",
         "doctrine/orm": "^2.14 || ^3.0",
         "psr/container": "^2.0",

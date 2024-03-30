@@ -17,7 +17,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "psr/container": "^2.0",
         "rekalogika/rekapager-contracts": "^0.5",
         "rekalogika/rekapager-core": "^0.5",

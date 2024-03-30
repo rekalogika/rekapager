@@ -122,6 +122,6 @@ class PagerItem implements PagerItemInterface, \IteratorAggregate
 /**
  * @internal
  */
-final readonly class NullPageNumber
+final class NullPageNumber
 {
 }
