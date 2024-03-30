@@ -18,9 +18,13 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php: [ '8.1', '8.2', '8.3' ]
+        symfony: [ '6.*', '7.*' ]
         dep: [highest,lowest]
+        exclude: 
+          - php: '8.1'
+            symfony: '7.*'
 
-    name: ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
+    name: Symfony ${{ matrix.symfony }}, ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 
     steps:
     - uses: actions/checkout@v3
@@ -30,6 +34,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: intl
+        tools: flex
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -48,16 +53,22 @@ jobs:
       with:
         dependency-versions: ${{ matrix.dep }}
         composer-options: --prefer-dist --no-progress
+      env:
+        SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
     - name: Run psalm
       run: vendor/bin/psalm
-      if: matrix.dep == 'highest'
 
     - name: Run phpstan
       run: vendor/bin/phpstan analyse
-      if: matrix.dep == 'highest'
+
+    - name: Lint container
+      run: tests/bin/console lint:container
+      
+    - name: Validate monorepo
+      run: vendor/bin/monorepo-builder validate
 
     - name: Run phpunit
       run: |
+        export SYMFONY_DEPRECATIONS_HELPER='max[direct]=0'
         vendor/bin/phpunit
-
