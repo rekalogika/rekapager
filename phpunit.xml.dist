@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    executionOrder="depends,defects"
+    beStrictAboutOutputDuringTests="true"
+    failOnRisky="true"
+    failOnWarning="false"
+    cacheDirectory=".phpunit.cache"
+    beStrictAboutCoverageMetadata="true">
+  <php>
+    <ini
+        name="display_errors"
+        value="1" />
+    <ini
+        name="error_reporting"
+        value="-1" />
+    <server
+        name="APP_ENV"
+        value="test"
+        force="true" />
+    <server
+        name="SHELL_VERBOSITY"
+        value="-1" />
+    <server
+        name="KERNEL_CLASS"
+        value="Rekalogika\Rekapager\Tests\App\Kernel" />
+    <server
+        name="SYMFONY_PHPUNIT_VERSION"
+        value="10.5" />
+  </php>
+  <testsuites>
+    <testsuite name="default">
+      <directory>tests/src/UnitTests</directory>
+      <directory>tests/src/IntegrationTests</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
+</phpunit>

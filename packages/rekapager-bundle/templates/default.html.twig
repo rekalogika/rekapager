@@ -1,0 +1,46 @@
+{%- extends '@RekalogikaRekapager/base.html.twig' -%}
+
+{%- block pager -%}
+    {%- set id = 'rekapager-' ~ random() -%}
+
+    <style>
+        #{{ id }} nav {
+            border-top: 1px solid #eee;
+            margin-top: 1em;
+            padding-top: 0.5em;
+        }
+
+        #{{ id }} .pagination a {
+            display: block;
+            padding: 0.5em 1em;
+            margin: 0 0.1em;
+            border: 1px solid #999;
+            border-radius: 0.2em;
+            text-decoration: none;
+        }
+
+        #{{ id }} .pagination a[aria-current="page"] {
+            background-color: #333;
+            color: #fff;
+        }
+
+        #{{ id }} .pagination a.disabled {
+            background-color: #ddd;
+            color: #555;
+        }
+    </style>
+
+    <nav id="{{ id }}">
+        <ul class="pagination">
+            {{- block("items") -}}
+        </ul>
+    </nav>
+{%- endblock -%}
+
+{%- block gap -%}
+    <li>
+        <a href="#" class="disabled">
+            {{- block("label_gap") -}}
+        </a>
+    </li>
+{%- endblock -%}

@@ -1,0 +1,51 @@
+{%- extends '@RekalogikaRekapager/base.html.twig' -%}
+
+{%- block pager -%}
+    <nav aria-label="pagination">
+        <ul class="pagination">
+            {{- block("items") -}}
+        </ul>
+    </nav>
+{%- endblock -%}
+
+{%- block current -%}
+    <li class="page-item" {% if help %}title="{{ help }}"{% endif %}>
+        <a class="page-link active" href="{{- href -}}" aria-current="page">{{- number|default("label_unknown") -}}</a>
+    </li>
+{%- endblock -%}
+
+{%- block neighbor -%}
+    <li class="page-item {{ disabled ? "disabled" }}" {% if help %}title="{{ help }}"{% endif %}>
+        <a class="page-link" href="{{- href -}}">{{- number|default("label_unknown") -}}</a>
+    </li>
+{%- endblock -%}
+
+{%- block previous -%}
+    <li class="page-item {{ disabled ? "disabled" }}" {% if help %}title="{{ help }}"{% endif %}>
+        <a class="page-link" href="{{- href -}}" rel="prev">{{- block("label_previous") -}}</a>
+    </li>
+{%- endblock -%}
+
+{%- block next -%}
+    <li class="page-item {{ disabled ? "disabled" }}" {% if help %}title="{{ help }}"{% endif %}>
+        <a class="page-link" href="{{- href -}}" rel="next">{{- block("label_next") -}}</a>
+    </li>
+{%- endblock -%}
+
+{%- block first -%}
+    <li class="page-item {{ disabled ? "disabled" }}" {% if help %}title="{{ help }}"{% endif %}>
+        <a class="page-link" href="{{- href -}}">{{- block("label_first") -}}</a>
+    </li>
+{%- endblock -%}
+
+{%- block last -%}
+    <li class="page-item {{ disabled ? "disabled" }}" {% if help %}title="{{ help }}"{% endif %}>
+        <a class="page-link" href="{{- href -}}">{{- block("label_last") -}}</a>
+    </li>
+{%- endblock -%}
+
+{%- block gap -%}
+    <li class="page-item disabled" {% if help %}title="{{ help }}"{% endif %}>
+        <a class="page-link" href="#">{{- block("label_gap") -}}</a>
+    </li>
+{%- endblock -%}

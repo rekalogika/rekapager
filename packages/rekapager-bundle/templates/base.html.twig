@@ -1,0 +1,210 @@
+{# root block, should not override this #}
+
+{%- block root -%}
+    {{- block("pager") -}}
+{%- endblock root -%}
+
+
+{# base blocks #}
+
+{%- block pager -%}
+    <nav>
+        <ul>
+            {{- block("items") -}}
+        </ul>
+    </nav>
+{%- endblock -%}
+
+{%- block items -%}
+    {# previous #}
+    {%- set page = pager.previousPage -%}
+    {%- set disabled = not page or page.disabled or not page.url -%}
+    {%- set href = disabled ? '#' : page.url|default('#') -%}
+    {%- set number = page ? page.pageNumber : null -%}
+    {%- set help = null -%}
+    {{- block("previous") -}}
+
+    {# first #}
+    {%- set page = pager.firstPage -%}
+    {%- if page -%}
+        {%- set disabled = page.disabled or not page.url -%}
+        {%- set href = disabled ? '#' : page.url|default('#') -%}
+        {%- set number = page ? page.pageNumber : null -%}
+        {%- set help = null -%}
+        {{- block("first") -}}
+    {%- endif -%}
+
+    {# gap before #}
+    {%- if pager.hasGapToFirstPage -%}
+        {%- set help = null -%}
+        {{- block("gap_before") -}}
+    {%- endif -%}
+
+    {# previous neighboring pages #}
+    {%- set pages = pager.previousNeighboringPages -%}
+    {{- block("previous_neighboring_pages") -}}
+
+    {# current #}
+    {%- set page = pager.currentPage -%}
+    {%- set href = page ? page.url : '#' -%}
+    {%- set number = page ? page.pageNumber : null -%}
+    {%- set disabled = false -%}
+    {%- set help = block('help_page') -%}
+    {{- block("current") -}}
+
+    {# next neighboring pages #}
+    {%- set pages = pager.nextNeighboringPages -%}
+    {{- block("next_neighboring_pages") -}}
+
+    {# gap after #}
+    {%- if pager.hasGapToLastPage -%}
+        {{- block("gap_after") -}}
+        {%- set help = null -%}
+    {%- endif -%}
+
+    {# last #}
+    {%- set page = pager.lastPage -%}
+    {%- if page -%}
+        {%- set disabled = page.disabled or not page.url -%}
+        {%- set href = disabled ? '#' : page.url|default('#') -%}
+        {%- set number = page ? page.pageNumber : null -%}
+        {%- set help = null -%}
+        {{- block("last") -}}
+    {%- endif -%}
+
+    {# next #}
+    {%- set page = pager.nextPage -%}
+    {%- set disabled = not page or page.disabled or not page.url -%}
+    {%- set href = disabled ? '#' : page.url|default('#') -%}
+    {%- set number = page ? page.pageNumber : null -%}
+    {%- set help = null -%}
+    {{- block("next") -}}
+{%- endblock -%}
+
+{%- block previous_neighboring_pages -%}
+    {%- for page in pager.previousNeighboringPages -%}
+        {%- set number = page.pageNumber -%}
+        {%- set disabled = page.disabled or not page.url -%}
+        {%- set href = disabled ? '#' : page.url|default('#') -%}
+        {%- set help = block('help_page') -%}
+        {{- block("neighbor") -}}
+    {%- endfor -%}
+{%- endblock -%}
+
+{%- block next_neighboring_pages -%}
+    {%- for page in pager.nextNeighboringPages -%}
+        {%- set number = page.pageNumber -%}
+        {%- set disabled = page.disabled or not page.url -%}
+        {%- set href = disabled ? '#' : page.url|default('#') -%}
+        {%- set help = block('help_page') -%}
+        {{- block("neighbor") -}}
+    {%- endfor -%}
+{%- endblock -%}
+
+{%- block gap_before -%}
+    {{- block("gap") -}}
+{%- endblock -%}
+
+{%- block gap_after -%}
+    {{- block("gap") -}}
+{%- endblock -%}
+
+
+{# items #}
+
+{%- block current -%}
+    <li {% if help %}title="{{ help }}"{% endif %}>
+        <a href="{{- href -}}" aria-current="page">
+            {{- number|default("label_unknown") -}}
+        </a>
+    </li>
+{%- endblock -%}
+
+{%- block neighbor -%}
+    <li {% if help %}title="{{ help }}"{% endif %}>
+        <a href="{{- href -}}" class="{{ disabled ? "disabled" }}">
+            {{- number|default("label_unknown") -}}
+        </a>
+    </li>
+{%- endblock -%}
+
+{%- block previous -%}
+    <li {% if help %}title="{{ help }}"{% endif %}>
+        <a href="{{- href -}}" class="{{ disabled ? "disabled" }}" rel="prev">
+            {{- block("label_previous") -}}
+        </a>
+    </li>
+{%- endblock -%}
+
+{%- block next -%}
+    <li {% if help %}title="{{ help }}"{% endif %}>
+        <a href="{{- href -}}" class="{{ disabled ? "disabled" }}" rel="next">
+            {{- block("label_next") -}}
+        </a>
+    </li>
+{%- endblock -%}
+
+{%- block first -%}
+    <li {% if help %}title="{{ help }}"{% endif %}>
+        <a href="{{- href -}}" class="{{ disabled ? "disabled" }}">
+            {{- block("label_first") -}}
+        </a>
+    </li>
+{%- endblock -%}
+
+{%- block last -%}
+    <li {% if help %}title="{{ help }}"{% endif %}>
+        <a href="{{- href -}}" class="{{ disabled ? "disabled" }}">
+            {{- block("label_last") -}}
+        </a>
+    </li>
+{%- endblock -%}
+
+{%- block gap -%}
+    <li {% if help %}title="{{ help }}"{% endif %}>
+        {{- block("label_gap") -}}
+    </li>
+{%- endblock -%}
+
+
+{# labels #}
+
+{%- block label_first -%}
+    {%- if pager.proximity > 0 -%}
+        1
+    {%- else -%}
+        {{- 'First'|trans({}, 'rekalogika_rekapager', locale) -}}
+    {%- endif -%}
+{%- endblock -%}
+
+{%- block label_previous -%}
+    {{- 'Previous'|trans({}, 'rekalogika_rekapager', locale) -}}
+{%- endblock -%}
+
+{%- block label_next -%}
+    {{- 'Next'|trans({}, 'rekalogika_rekapager', locale) -}}
+{%- endblock -%}
+
+{%- block label_last -%}
+    {%- if pager.hasGapToLastPage or pager.proximity == 0 -%}
+        {{- 'Last'|trans({}, 'rekalogika_rekapager', locale) -}}
+    {%- else -%}
+        {{ number }}
+    {%- endif -%}
+{%- endblock -%}
+
+{%- block label_gap -%}
+    ⋯
+{%- endblock -%}
+
+{%- block label_unknown -%}
+    •
+{%- endblock -%}
+
+{%- block help_page -%}
+    {%- if page.disabled -%}
+        {{- 'The page is present but disabled due to policy reasons'|trans({}, 'rekalogika_rekapager', locale) -}}
+    {%- elseif number < 0 -%}
+        {{- 'Page {page} from the end'|trans({'{page}': -number}, 'rekalogika_rekapager', locale) -}}
+    {%- endif -%}
+{%- endblock -%}

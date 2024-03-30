@@ -1,0 +1,23 @@
+parameters:
+    level: max
+    checkBenevolentUnionTypes: true
+    checkExplicitMixedMissingReturn: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    reportMaybesInPropertyPhpDocTypes: true
+    treatPhpDocTypesAsCertain: false    
+    paths:
+        - packages
+        - tests
+    excludePaths:
+        - tests/var
+    ignoreErrors:
+        - '#Rekalogika\\Rekapager\\Tests\\App\\Entity\\Post> given.#'
+
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/bnf/phpstan-psr-container/extension.neon
+    - vendor/ekino/phpstan-banned-code/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon

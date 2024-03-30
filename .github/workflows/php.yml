@@ -1,0 +1,63 @@
+name: Test
+
+on:
+  push:
+    branches: [ "main", "test" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+
+    runs-on: ${{ matrix.operating-system }}
+
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php: [ '8.1', '8.2', '8.3' ]
+        dep: [highest,lowest]
+
+    name: ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: intl
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      uses: ramsey/composer-install@v2
+      with:
+        dependency-versions: ${{ matrix.dep }}
+        composer-options: --prefer-dist --no-progress
+
+    - name: Run psalm
+      run: vendor/bin/psalm
+      if: matrix.dep == 'highest'
+
+    - name: Run phpstan
+      run: vendor/bin/phpstan analyse
+      if: matrix.dep == 'highest'
+
+    - name: Run phpunit
+      run: |
+        vendor/bin/phpunit
+

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<psalm
+        errorLevel="1"
+        resolveFromConfigFile="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+        findUnusedBaselineEntry="true"
+        findUnusedCode="false">
+
+    <projectFiles>
+        <directory name="packages" />
+        <directory name="tests" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="tests/var" />
+            <directory name="tests/src/App/Factory" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <file name="tests/src/UnitTests/OffsetPageableTest.php" />
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <MixedArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <file name="tests/src/UnitTests/OffsetPageableTest.php" />
+            </errorLevel>
+        </MixedArgumentTypeCoercion>
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <file name="tests/src/App/PageableGenerator/*" />
+                <file name="tests/src/IntegrationTests/Pageable/PageableTestCase.php" />
+            </errorLevel>
+        </InvalidArgument>
+        <MixedAssignment>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-keyset-pagination/src/Contracts/KeysetPageIdentifier.php" />
+            </errorLevel>
+        </MixedAssignment>
+        <MissingConstructor>
+            <errorLevel type="suppress">
+                <directory name="tests/src/IntegrationTests/" />
+            </errorLevel>
+        </MissingConstructor>
+    </issueHandlers>
+
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin" />
+    </plugins>
+</psalm>

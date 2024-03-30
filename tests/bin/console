@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of rekalogika/mapper package.
+ *
+ * (c) Priyadi Iman Nurcahyo <https://rekalogika.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
+namespace Rekalogika\Rekapager\Tests\App;
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+
+require_once dirname(__DIR__).'/../vendor/autoload_runtime.php';
+
+return function (array $context) {
+    $kernel = new Kernel();
+
+    return new Application($kernel);
+};
