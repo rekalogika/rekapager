@@ -289,6 +289,16 @@ final class ProximityPager implements PagerInterface
             $this->hasHiddenPagesAfter = false;
             $this->nextNeighboringPages[] = $this->decorate($secondLastPage);
         }
+
+        // if no gap to last page and last page is null, then set the last page
+
+        if ($hasGapToLastPage === false && $this->lastPage === null) {
+            $page = array_shift($nextPages);
+
+            if ($page !== null) {
+                $this->lastPage = $this->decorate($page);
+            }
+        }
     }
 
     public function withProximity(int $proximity): static
