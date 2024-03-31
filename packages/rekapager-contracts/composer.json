@@ -2,7 +2,13 @@
     "name": "rekalogika/rekapager-contracts",
     "description": "Interfaces and nominal classes for Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
-    "keywords": [],
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination"
+    ],
     "license": "MIT",
     "type": "library",
     "authors": [

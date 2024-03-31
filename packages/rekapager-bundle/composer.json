@@ -2,7 +2,16 @@
     "name": "rekalogika/rekapager-bundle",
     "description": "Symfony bundle for the Rekapager library",
     "homepage": "https://rekalogika.dev/rekapager",
-    "keywords": [],
+    "keywords": [
+        "pagination",
+        "symfony",
+        "bundle",
+        "symfony-bundle",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination"
+    ],
     "license": "MIT",
     "type": "symfony-bundle",
     "authors": [

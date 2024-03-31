@@ -2,7 +2,13 @@
     "name": "rekalogika/rekapager-core",
     "description": "Core functionality of Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
-    "keywords": [],
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination"
+    ],
     "license": "MIT",
     "type": "library",
     "authors": [

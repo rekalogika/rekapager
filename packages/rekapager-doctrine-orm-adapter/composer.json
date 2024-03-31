@@ -2,7 +2,17 @@
     "name": "rekalogika/rekapager-doctrine-orm-adapter",
     "description": "Doctrine ORM adapter for Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
-    "keywords": [],
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination",
+        "doctrine",
+        "orm",
+        "querybuilder",
+        "query"
+    ],
     "license": "MIT",
     "type": "library",
     "authors": [

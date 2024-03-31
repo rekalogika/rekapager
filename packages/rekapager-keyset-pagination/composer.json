@@ -2,7 +2,13 @@
     "name": "rekalogika/rekapager-keyset-pagination",
     "description": "Keyset pagination component of the Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
-    "keywords": [],
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination"
+    ],
     "license": "MIT",
     "type": "library",
     "authors": [

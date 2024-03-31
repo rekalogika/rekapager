@@ -2,7 +2,17 @@
     "name": "rekalogika/rekapager-doctrine-collections-adapter",
     "description": "Doctrine Collections adapter for Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
-    "keywords": [],
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination",
+        "doctrine",
+        "collections",
+        "doctrine-collections",
+        "selectable"
+    ],
     "license": "MIT",
     "type": "library",
     "authors": [

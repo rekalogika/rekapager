@@ -2,7 +2,14 @@
     "name": "rekalogika/rekapager-pagerfanta-adapter",
     "description": "Adapts Pagerfanta and its adapters for use with Rekapager pagination library",
     "homepage": "https://rekalogika.dev/rekapager",
-    "keywords": [],
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination",
+        "pagerfanta"
+    ],
     "license": "MIT",
     "type": "library",
     "authors": [
