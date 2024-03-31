@@ -264,7 +264,7 @@ class OffsetPagerTest extends PagerTestCase
             hasPrevious: true,
             hasNext: true,
             hasFirst: true,
-            hasLast: false,
+            hasLast: true,
             hasGapToFirstPage: true,
             hasGapToLastPage: false,
             numOfPreviousNeighboringPages: 2,
