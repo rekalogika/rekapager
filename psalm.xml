@@ -51,6 +51,21 @@
                 <file name="packages/rekapager-doctrine-orm-adapter/src/QueryBuilderAdapter.php" />
             </errorLevel>
         </PossiblyInvalidArgument>
+        <UndefinedInterfaceMethod>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </UndefinedInterfaceMethod>
+        <MixedMethodCall>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </MixedMethodCall>
+        <PossiblyNullReference>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
+            </errorLevel>
+        </PossiblyNullReference>
     </issueHandlers>
 
     <plugins>

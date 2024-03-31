@@ -24,6 +24,9 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
         $debug = (bool) $container->getParameter('kernel.debug');
 
         $loader = new PhpFileLoader(
@@ -38,6 +41,38 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
 
         $container->registerForAutoconfiguration(PageIdentifierEncoderInterface::class)
             ->addTag('rekalogika.rekapager.page_identifier_encoder');
+
+        // config
+
+        $defaultTwigTemplate = $config['default_template'] ?? null;
+        if (null === $defaultTwigTemplate || !\is_string($defaultTwigTemplate)) {
+            throw new \InvalidArgumentException('The "default_template" config is required.');
+        }
+
+        $defaultPageParameterName = $config['default_page_parameter_name'] ?? null;
+        if (null === $defaultPageParameterName || !\is_string($defaultPageParameterName)) {
+            throw new \InvalidArgumentException('The "default_page_parameter_name" config is required.');
+        }
+
+        $defaultProximity = $config['default_proximity'] ?? null;
+        if (null === $defaultProximity || !\is_int($defaultProximity)) {
+            throw new \InvalidArgumentException('The "default_proximity" config is required.');
+        }
+
+        $container->setParameter(
+            'rekalogika.rekapager.config.default_template',
+            $defaultTwigTemplate
+        );
+
+        $container->setParameter(
+            'rekalogika.rekapager.config.default_page_parameter_name',
+            $defaultPageParameterName
+        );
+
+        $container->setParameter(
+            'rekalogika.rekapager.config.default_proximity',
+            $defaultProximity
+        );
     }
 
     public function prepend(ContainerBuilder $container): void
