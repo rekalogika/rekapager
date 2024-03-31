@@ -278,6 +278,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $exploded = explode(' ', $part);
                 $field = $exploded[0];
                 $direction = $exploded[1] ?? 'ASC';
+                $direction = strtoupper($direction);
 
                 if (!\in_array($direction, ['ASC', 'DESC'], true)) {
                     throw new \LogicException('Invalid direction');
