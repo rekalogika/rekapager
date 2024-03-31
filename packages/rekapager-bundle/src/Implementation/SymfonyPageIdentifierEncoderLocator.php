@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony\Implementation;
+namespace Rekalogika\Rekapager\Bundle\Implementation;
 
 use Psr\Container\ContainerInterface;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;

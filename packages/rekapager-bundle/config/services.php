@@ -11,17 +11,17 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
+use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
+use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
+use Rekalogika\Rekapager\Bundle\Implementation\SymfonyPageIdentifierEncoderLocator;
+use Rekalogika\Rekapager\Bundle\Implementation\SymfonyPageUrlGeneratorFactory;
+use Rekalogika\Rekapager\Bundle\PagerFactory;
+use Rekalogika\Rekapager\Bundle\Twig\RekapagerExtension;
+use Rekalogika\Rekapager\Bundle\Twig\RekapagerRuntime;
+use Rekalogika\Rekapager\Bundle\Twig\TwigPagerRenderer;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Keyset\PageIdentifierEncoder\SymfonySerializerKeysetPageIdentifierEncoder;
 use Rekalogika\Rekapager\Offset\OffsetPageIdentifierEncoder;
-use Rekalogika\Rekapager\Symfony\Contracts\PagerFactoryInterface;
-use Rekalogika\Rekapager\Symfony\Contracts\PageUrlGeneratorFactoryInterface;
-use Rekalogika\Rekapager\Symfony\Implementation\SymfonyPageIdentifierEncoderLocator;
-use Rekalogika\Rekapager\Symfony\Implementation\SymfonyPageUrlGeneratorFactory;
-use Rekalogika\Rekapager\Symfony\PagerFactory;
-use Rekalogika\Rekapager\Symfony\Twig\RekapagerExtension;
-use Rekalogika\Rekapager\Symfony\Twig\RekapagerRuntime;
-use Rekalogika\Rekapager\Symfony\Twig\TwigPagerRenderer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;

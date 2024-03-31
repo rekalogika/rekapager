@@ -11,10 +11,10 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony\Implementation;
+namespace Rekalogika\Rekapager\Bundle\Implementation;
 
+use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
-use Rekalogika\Rekapager\Symfony\Contracts\PageUrlGeneratorFactoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SymfonyPageUrlGeneratorFactory implements PageUrlGeneratorFactoryInterface

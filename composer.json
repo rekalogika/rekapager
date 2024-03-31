@@ -19,7 +19,7 @@
             "Rekalogika\\Rekapager\\Keyset\\": "packages/rekapager-keyset-pagination/src/",
             "Rekalogika\\Rekapager\\Offset\\": "packages/rekapager-offset-pagination/src/",
             "Rekalogika\\Rekapager\\Pagerfanta\\": "packages/rekapager-pagerfanta-adapter/src/",
-            "Rekalogika\\Rekapager\\Symfony\\": "packages/rekapager-bundle/src/"
+            "Rekalogika\\Rekapager\\Bundle\\": "packages/rekapager-bundle/src/"
         }
     },
     "autoload-dev": {

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony;
+namespace Rekalogika\Rekapager\Bundle;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

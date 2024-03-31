@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony\Twig;
+namespace Rekalogika\Rekapager\Bundle\Twig;
 
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Twig\Extension\RuntimeExtensionInterface;

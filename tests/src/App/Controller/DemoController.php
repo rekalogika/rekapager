@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Controller;
 
-use Rekalogika\Rekapager\Symfony\Contracts\PagerFactoryInterface;
-use Rekalogika\Rekapager\Symfony\PagerOptions;
+use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
+use Rekalogika\Rekapager\Bundle\PagerOptions;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Rekalogika\Rekapager\Tests\App\Doctrine\SqlLogger;
 use Rekalogika\Rekapager\Tests\App\Form\PagerParameters;

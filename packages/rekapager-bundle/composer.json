@@ -22,7 +22,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rekalogika\\Rekapager\\Symfony\\": "src/"
+            "Rekalogika\\Rekapager\\Bundle\\": "src/"
         }
     },
     "require": {

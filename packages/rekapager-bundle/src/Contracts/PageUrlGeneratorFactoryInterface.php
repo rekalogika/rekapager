@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony\Contracts;
+namespace Rekalogika\Rekapager\Bundle\Contracts;
 
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

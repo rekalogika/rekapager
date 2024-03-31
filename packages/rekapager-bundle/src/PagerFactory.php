@@ -11,14 +11,14 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony;
+namespace Rekalogika\Rekapager\Bundle;
 
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
+use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
-use Rekalogika\Rekapager\Symfony\Contracts\PagerFactoryInterface;
-use Rekalogika\Rekapager\Symfony\Contracts\PageUrlGeneratorFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

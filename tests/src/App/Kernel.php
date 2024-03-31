@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Tests\App;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
-use Rekalogika\Rekapager\Symfony\RekalogikaRekapagerBundle;
+use Rekalogika\Rekapager\Bundle\RekalogikaRekapagerBundle;
 use Rekalogika\Rekapager\Tests\App\DependencyInjection\DoctrineSqlLoggingPass;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
