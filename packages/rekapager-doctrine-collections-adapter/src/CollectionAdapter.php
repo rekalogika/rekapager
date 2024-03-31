@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\Collections;
 
-use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
 use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
 
 /**
@@ -24,10 +24,10 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
 final class CollectionAdapter implements OffsetPaginationAdapterInterface
 {
     /**
-     * @param Collection<TKey,T> $collection
+     * @param ReadableCollection<TKey,T> $collection
      */
     public function __construct(
-        private readonly Collection $collection,
+        private readonly ReadableCollection $collection,
     ) {
     }
 
