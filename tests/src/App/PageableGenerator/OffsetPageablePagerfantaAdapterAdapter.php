@@ -14,11 +14,12 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 
 use Doctrine\Common\Collections\Criteria;
+use Pagerfanta\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Collections\Decorator\LazyMatching\LazyMatchingCollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
-use Rekalogika\Rekapager\Doctrine\Collections\CollectionAdapter;
 use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
+use Rekalogika\Rekapager\Pagerfanta\PagerfantaAdapterAdapter;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
@@ -26,7 +27,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
 /**
  * @implements PageableGeneratorInterface<int,Post,PageNumber>
  */
-class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInterface
+class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterface
 {
     public function __construct(private UserRepository $userRepository)
     {
@@ -34,12 +35,12 @@ class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInte
 
     public static function getKey(): string
     {
-        return 'offsetpageable-collectionadapter-collection';
+        return 'offsetpageable-pagerfantaadapteradapter-collection';
     }
 
     public function getTitle(): string
     {
-        return 'OffsetPageable - CollectionAdapter - Collection';
+        return 'OffsetPageable - PagerfantaAdapterAdapter - PagerfantaSelectableAdapter - Collection';
     }
 
     public function generatePageable(
@@ -54,14 +55,12 @@ class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInte
         }
 
         // @highlight-start
-        // LazyMatchingCollection is part of rekalogika/doctrine-collections-decorator package
-        $lazyPosts = new LazyMatchingCollection($user->getPosts());
-        $filteredPosts = $lazyPosts->matching(
-            Criteria::create()
-                ->where(Criteria::expr()->eq('setName', $setName))
-        );
+        $criteria = Criteria::create()
+                ->where(Criteria::expr()->eq('setName', $setName));
 
-        $adapter = new CollectionAdapter($filteredPosts);
+        $pagerfantaAdapter = new SelectableAdapter($user->getPosts(), $criteria);
+        $adapter = new PagerfantaAdapterAdapter($pagerfantaAdapter);
+
         $pageable = new OffsetPageable(
             adapter: $adapter,
             itemsPerPage: $itemsPerPage,

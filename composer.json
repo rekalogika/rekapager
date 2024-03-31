@@ -18,6 +18,7 @@
             "Rekalogika\\Rekapager\\Doctrine\\ORM\\": "packages/rekapager-doctrine-orm-adapter/src/",
             "Rekalogika\\Rekapager\\Keyset\\": "packages/rekapager-keyset-pagination/src/",
             "Rekalogika\\Rekapager\\Offset\\": "packages/rekapager-offset-pagination/src/",
+            "Rekalogika\\Rekapager\\Pagerfanta\\": "packages/rekapager-pagerfanta-adapter/src/",
             "Rekalogika\\Rekapager\\Symfony\\": "packages/rekapager-bundle/src/"
         }
     },
@@ -30,6 +31,8 @@
         "php": "^8.2",
         "doctrine/collections": "^2.2",
         "doctrine/orm": "^2.14 || ^3.0",
+        "pagerfanta/core": "^4.0",
+        "pagerfanta/doctrine-collections-adapter": "^4.0",
         "psr/container": "^2.0",
         "spomky-labs/base64url": "^2.0",
         "symfony/config": "^6.4 || ^7.0",
@@ -46,7 +49,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.5",
         "doctrine/persistence": "^3.1",
         "ekino/phpstan-banned-code": "^1.0",
-        "fakerphp/faker":"^1.23",
+        "fakerphp/faker": "^1.23",
         "phpstan/phpstan": "^1.10.66 || ^1.11",
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "phpstan/phpstan-phpunit": "^1.3",
@@ -55,6 +58,7 @@
         "psalm/plugin-symfony": "^5.1",
         "psr/log": "^2.0",
         "ramsey/uuid": "^4.7",
+        "rekalogika/doctrine-collections-decorator": "^2.3",
         "symfony/debug-bundle": "^6.4 || ^7.0",
         "symfony/doctrine-bridge": "^6.4 || ^7.0",
         "symfony/dotenv": "^6.4 || ^7.0",
@@ -80,12 +84,13 @@
         }
     },
     "replace": {
-        "rekalogika/rekapager-bundle": "self.version",
-        "rekalogika/rekapager-contracts": "self.version",
-        "rekalogika/rekapager-core": "self.version",
-        "rekalogika/rekapager-doctrine-collections-adapter": "self.version",
-        "rekalogika/rekapager-doctrine-orm-adapter": "self.version",
-        "rekalogika/rekapager-keyset-pagination": "self.version",
-        "rekalogika/rekapager-offset-pagination": "self.version"
+        "rekalogika/rekapager-bundle": "0.5.0",
+        "rekalogika/rekapager-contracts": "0.5.0",
+        "rekalogika/rekapager-core": "0.5.0",
+        "rekalogika/rekapager-doctrine-collections-adapter": "0.5.0",
+        "rekalogika/rekapager-doctrine-orm-adapter": "0.5.0",
+        "rekalogika/rekapager-keyset-pagination": "0.5.0",
+        "rekalogika/rekapager-offset-pagination": "0.5.0",
+        "rekalogika/rekapager-pagerfanta-adapter": "0.5.0"
     }
 }

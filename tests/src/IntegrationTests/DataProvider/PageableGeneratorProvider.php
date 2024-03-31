@@ -17,6 +17,7 @@ use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableQueryBuilderA
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableSelectableAdapterCollection;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableSelectableAdapterEntityRepository;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\OffsetPageableCollectionAdapterCollection;
+use Rekalogika\Rekapager\Tests\App\PageableGenerator\OffsetPageablePagerfantaAdapterAdapter;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\OffsetPageableSelectableAdapterCollection;
 
 final class PageableGeneratorProvider
@@ -31,6 +32,7 @@ final class PageableGeneratorProvider
         yield [KeysetPageableSelectableAdapterEntityRepository::class];
         yield [OffsetPageableCollectionAdapterCollection::class];
         yield [OffsetPageableSelectableAdapterCollection::class];
+        yield [OffsetPageablePagerfantaAdapterAdapter::class];
     }
 
     /**
@@ -50,5 +52,6 @@ final class PageableGeneratorProvider
     {
         yield [OffsetPageableCollectionAdapterCollection::class];
         yield [OffsetPageableSelectableAdapterCollection::class];
+        yield [OffsetPageablePagerfantaAdapterAdapter::class];
     }
 }
