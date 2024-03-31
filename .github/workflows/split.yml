@@ -36,6 +36,9 @@ jobs:
                         local_path: 'rekapager-doctrine-orm-adapter'
                         split_repository: 'rekapager-doctrine-orm-adapter'
                     -
+                        local_path: 'rekapager-pagerfanta-adapter'
+                        split_repository: 'rekapager-pagerfanta-adapter'
+                    -
                         local_path: 'rekapager-keyset-pagination'
                         split_repository: 'rekapager-keyset-pagination'
                     -
