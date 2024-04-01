@@ -40,7 +40,7 @@ class PagerFactory implements PagerFactoryInterface
     ) {
     }
 
-    public function createFromPageable(
+    public function createPager(
         PageableInterface $pageable,
         Request $request,
         object $options = null

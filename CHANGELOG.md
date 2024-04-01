@@ -7,6 +7,7 @@
 * fix(`QueryBuilderAdapter`): throws an exception if the query does not have an
   order by clause.
 * feat: add `PagerfantaPageable`
+* refactor(`PagerFactoryInterface`): rename method to `createPager()`
 
 ## 0.5.0
 
