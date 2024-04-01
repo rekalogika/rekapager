@@ -18,6 +18,7 @@ use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryCounter;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
@@ -286,6 +287,10 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
 
                 $result[$field] = $direction;
             }
+        }
+
+        if (\count($result) === 0) {
+            throw new LogicException('The QueryBuilder does not have any ORDER BY clause.');
         }
 
         return $this->sortOrderCache = $result;
