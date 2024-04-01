@@ -44,11 +44,6 @@ class PagerItem implements PagerItemInterface, \IteratorAggregate
         $this->pageNumber = new NullPageNumber();
     }
 
-    public function getPage(): PageInterface
-    {
-        return $this->wrapped;
-    }
-
     public function isDisabled(): bool
     {
         return $this->wrapped instanceof NullPageInterface;
@@ -88,24 +83,48 @@ class PagerItem implements PagerItemInterface, \IteratorAggregate
         return $this->wrapped->getItemsPerPage();
     }
 
-    public function getNextPage(): ?PageInterface
+    public function getNextPage(): ?PagerItemInterface
     {
-        return $this->wrapped->getNextPage();
+        $nextPage = $this->wrapped->getNextPage();
+
+        if ($nextPage === null) {
+            return null;
+        }
+
+        return $this->decorate($nextPage);
     }
 
-    public function getPreviousPage(): ?PageInterface
+    public function getPreviousPage(): ?PagerItemInterface
     {
-        return $this->wrapped->getPreviousPage();
+        $previousPage = $this->wrapped->getPreviousPage();
+
+        if ($previousPage === null) {
+            return null;
+        }
+
+        return $this->decorate($previousPage);
     }
 
     public function getNextPages(int $numberOfPages): array
-    {
-        return $this->wrapped->getNextPages($numberOfPages);
+    {   
+        $pages = [];
+
+        foreach ($this->wrapped->getNextPages($numberOfPages) as $page) {
+            $pages[] = $this->decorate($page);
+        }
+
+        return $pages;
     }
 
     public function getPreviousPages(int $numberOfPages): array
     {
-        return $this->wrapped->getPreviousPages($numberOfPages);
+        $pages = [];
+
+        foreach ($this->wrapped->getPreviousPages($numberOfPages) as $page) {
+            $pages[] = $this->decorate($page);
+        }
+
+        return $pages;
     }
 
     public function count(): int
@@ -116,6 +135,25 @@ class PagerItem implements PagerItemInterface, \IteratorAggregate
     public function getUrl(): ?string
     {
         return $this->pagerUrlGenerator->generateUrl($this);
+    }
+
+    /**
+     * @template TKey2 of array-key
+     * @template T2
+     * @template TIdentifier2 of object
+     * @param PageInterface<TKey2,T2,TIdentifier2> $page
+     * @return PagerItem<TKey2,T2,TIdentifier2>
+     */
+    private function decorate(PageInterface $page): PagerItem
+    {
+        if ($page instanceof PagerItem) {
+            return $page;
+        }
+
+        return new PagerItem(
+            wrapped: $page,
+            pagerUrlGenerator: $this->pagerUrlGenerator,
+        );
     }
 }
 
