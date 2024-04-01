@@ -25,10 +25,35 @@ interface PagerItemInterface extends PageInterface
 {
     public function getUrl(): ?string;
 
-    /**
-     * @return PageInterface<TKey,T,TIdentifier>
-     */
-    public function getPage(): PageInterface;
-
     public function isDisabled(): bool;
+
+    //
+    // overriden methods
+    //
+
+    /**
+     * @return null|PagerItemInterface<TKey,T,TIdentifier>
+     */
+    public function getNextPage(): ?PagerItemInterface;
+
+    /**
+     * @return null|PagerItemInterface<TKey,T,TIdentifier>
+     */
+    public function getPreviousPage(): ?PagerItemInterface;
+
+    /**
+     * Gets n next pages
+     *
+     * @param int<1,max> $numberOfPages
+     * @return array<int,PagerItemInterface<TKey,T,TIdentifier>>
+     */
+    public function getNextPages(int $numberOfPages): array;
+
+    /**
+     * Gets n previous pages
+     *
+     * @param int<1,max> $numberOfPages
+     * @return array<int,PagerItemInterface<TKey,T,TIdentifier>>
+     */
+    public function getPreviousPages(int $numberOfPages): array;
 }
