@@ -3,6 +3,8 @@ name: Image
 
 # Configures this workflow to run every time a change is pushed to the branch called `release`.
 on:
+  push:
+    branches: ['build/demodockerization']
   workflow_run:
     workflows: ["CI"]
     types:
