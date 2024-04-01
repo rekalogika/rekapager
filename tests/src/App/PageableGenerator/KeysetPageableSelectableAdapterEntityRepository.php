@@ -49,17 +49,20 @@ class KeysetPageableSelectableAdapterEntityRepository implements PageableGenerat
         ?int $pageLimit = null,
     ): PageableInterface {
         // @highlight-start
+        $selectable = $this->postRepository;
+
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('setName', $setName))
+            ->orderBy([
+                'date' => Order::Descending,
+                'title' => Order::Ascending,
+                'id' => Order::Ascending
+            ]);
+
+        $adapter = new SelectableAdapter($selectable, $criteria);
+
         $pageable = new KeysetPageable(
-            new SelectableAdapter(
-                $this->postRepository,
-                Criteria::create()
-                    ->where(Criteria::expr()->eq('setName', $setName))
-                    ->orderBy([
-                        'date' => Order::Descending,
-                        'title' => Order::Ascending,
-                        'id' => Order::Ascending
-                    ])
-            ),
+            adapter: $adapter,
             itemsPerPage: $itemsPerPage,
             count: $count,
         );

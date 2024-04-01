@@ -80,10 +80,14 @@ class DemoController extends AbstractController
             pageLimit: $pagerParameters->adapterPageLimit,
         );
 
-        $pager = $pagerFactory->createFromPageable($pageable, $request, new PagerOptions(
-            proximity: $pagerParameters->proximity,
-            pageLimit: $pagerParameters->pagerPageLimit,
-        ));
+        $pager = $pagerFactory->createFromPageable(
+            pageable: $pageable,
+            request: $request,
+            options: new PagerOptions(
+                proximity: $pagerParameters->proximity,
+                pageLimit: $pagerParameters->pagerPageLimit,
+            )
+        );
 
         $title = $pageableGenerator->getTitle();
 
