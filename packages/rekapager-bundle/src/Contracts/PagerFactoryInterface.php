@@ -30,7 +30,7 @@ interface PagerFactoryInterface
      * @param TOptions|null $options
      * @return PagerInterface<TKey,T,TIdentifier>
      */
-    public function createFromPageable(
+    public function createPager(
         PageableInterface $pageable,
         Request $request,
         ?object $options = null
