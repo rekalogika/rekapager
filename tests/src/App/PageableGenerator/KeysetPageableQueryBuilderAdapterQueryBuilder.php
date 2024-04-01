@@ -56,13 +56,15 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             ->addOrderBy('p.title', 'ASC')
             ->addOrderBy('p.id', 'ASC');
 
+        $adapter = new QueryBuilderAdapter(
+            queryBuilder: $queryBuilder,
+            typeMapping: [
+                'p.date' => Types::DATE_MUTABLE
+            ]
+        );
+
         $pageable = new KeysetPageable(
-            new QueryBuilderAdapter(
-                queryBuilder: $queryBuilder,
-                typeMapping: [
-                    'p.date' => Types::DATE_MUTABLE
-                ]
-            ),
+            adapter: $adapter,
             itemsPerPage: $itemsPerPage,
             count: $count,
         );

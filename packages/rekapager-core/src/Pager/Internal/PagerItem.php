@@ -106,7 +106,7 @@ class PagerItem implements PagerItemInterface, \IteratorAggregate
     }
 
     public function getNextPages(int $numberOfPages): array
-    {   
+    {
         $pages = [];
 
         foreach ($this->wrapped->getNextPages($numberOfPages) as $page) {

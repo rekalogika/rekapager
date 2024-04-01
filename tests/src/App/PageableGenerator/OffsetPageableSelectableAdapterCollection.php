@@ -54,17 +54,20 @@ class OffsetPageableSelectableAdapterCollection implements PageableGeneratorInte
         }
 
         // @highlight-start
+        $selectable = $user->getPosts();
+
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->eq('setName', $setName))
+            ->orderBy([
+                'date' => Order::Descending,
+                'title' => Order::Ascending,
+                'id' => Order::Ascending
+            ]);
+
+        $adapter = new SelectableAdapter($selectable, $criteria);
+
         $pageable = new OffsetPageable(
-            new SelectableAdapter(
-                $user->getPosts(),
-                Criteria::create()
-                    ->where(Criteria::expr()->eq('setName', $setName))
-                    ->orderBy([
-                        'date' => Order::Descending,
-                        'title' => Order::Ascending,
-                        'id' => Order::Ascending
-                    ])
-            ),
+            adapter: $adapter,
             itemsPerPage: $itemsPerPage,
             count: $count,
             pageLimit: $pageLimit,
