@@ -63,6 +63,17 @@ final class KeysetPageable implements KeysetPageableInterface
         return $this->itemsPerPage;
     }
 
+    public function getPages(): \Traversable
+    {
+        $page = $this->getFirstPage();
+
+        while ($page !== null) {
+            yield $page;
+
+            $page = $page->getNextPage();
+        }
+    }
+
     /**
      * @return KeysetPageInterface<TKey,T>
      */
