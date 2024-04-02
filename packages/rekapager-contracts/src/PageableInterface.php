@@ -44,6 +44,11 @@ interface PageableInterface
     public function getLastPage(): ?PageInterface;
 
     /**
+     * @return \Traversable<PageInterface<TKey,T,TIdentifier>>
+     */
+    public function getPages(): \Traversable;
+
+    /**
      * @return int<1,max>
      */
     public function getItemsPerPage(): int;

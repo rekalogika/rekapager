@@ -6,6 +6,7 @@
   pagers
 * fix(`OffsetPage`): fix `OutOfBoundsException` on an empty first page.
 * fix(`Pager`): fetch only 2 * proximity ahead and behind.
+* feat(`PageableInterface`): add `getPages()` for easy batching
 
 ## 0.5.2
 

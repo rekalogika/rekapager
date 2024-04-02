@@ -66,6 +66,17 @@ final class OffsetPageable implements OffsetPageableInterface
         return $this->itemsPerPage;
     }
 
+    public function getPages(): \Traversable
+    {
+        $page = $this->getFirstPage();
+
+        while ($page !== null) {
+            yield $page;
+
+            $page = $page->getNextPage();
+        }
+    }
+
     public function getFirstPage(): PageInterface
     {
         return $this->getPageByIdentifier(new PageNumber(1));
