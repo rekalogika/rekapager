@@ -282,7 +282,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $direction = strtoupper($direction);
 
                 if (!\in_array($direction, ['ASC', 'DESC'], true)) {
-                    throw new \LogicException('Invalid direction');
+                    throw new LogicException('Invalid direction');
+                }
+
+                if (isset($result[$field])) {
+                    throw new LogicException(sprintf('The field "%s" appears multiple times in the ORDER BY clause.', $field));
                 }
 
                 $result[$field] = $direction;
