@@ -115,6 +115,7 @@ abstract class PagerTestCase extends PageableTestCase
         array $previousPageNumbers,
         ?int $currentPageNumber,
         array $nextPageNumbers,
+        int $currentCount,
     ): void {
         static::assertEquals($proximity, $pager->getProximity());
         static::assertEquals($hasPrevious, $pager->getPreviousPage() !== null);
@@ -153,6 +154,8 @@ abstract class PagerTestCase extends PageableTestCase
         );
 
         static::assertEquals($nextPageNumbers, $numbers);
+
+        static::assertEquals($currentCount, $pager->getCurrentPage()->count());
     }
 
     /**

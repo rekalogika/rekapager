@@ -40,6 +40,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: 1,
             previousPageNumbers: [],
             nextPageNumbers: [2, 3, 4, 5],
+            currentCount: 5,
         );
     }
 
@@ -66,6 +67,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: 2,
             previousPageNumbers: [],
             nextPageNumbers: [3, 4, 5],
+            currentCount: 5,
         );
     }
 
@@ -92,6 +94,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: 3,
             previousPageNumbers: [2],
             nextPageNumbers: [4, 5],
+            currentCount: 5,
         );
     }
 
@@ -118,6 +121,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: 4,
             previousPageNumbers: [2, 3],
             nextPageNumbers: [5, 6],
+            currentCount: 5,
         );
     }
 
@@ -144,6 +148,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: 5,
             previousPageNumbers: [2, 3, 4],
             nextPageNumbers: [6, 7],
+            currentCount: 5,
         );
     }
 
@@ -170,6 +175,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: 6,
             previousPageNumbers: [4, 5],
             nextPageNumbers: [7, 8],
+            currentCount: 5,
         );
     }
 
@@ -196,6 +202,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: -1,
             previousPageNumbers: [-5, -4, -3, -2],
             nextPageNumbers: [],
+            currentCount: 5,
         );
     }
 
@@ -222,6 +229,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: -2,
             previousPageNumbers: [-5, -4, -3,],
             nextPageNumbers: [],
+            currentCount: 5,
         );
     }
 
@@ -248,6 +256,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: -3,
             previousPageNumbers: [-5, -4],
             nextPageNumbers: [-2],
+            currentCount: 5,
         );
     }
 
@@ -274,6 +283,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: -4,
             previousPageNumbers: [-6, -5],
             nextPageNumbers: [-3, -2],
+            currentCount: 5,
         );
     }
 
@@ -300,6 +310,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: -5,
             previousPageNumbers: [-7, -6],
             nextPageNumbers: [-4, -3, -2],
+            currentCount: 5,
         );
     }
 
@@ -326,6 +337,7 @@ class KeysetPagerTest extends PagerTestCase
             currentPageNumber: -6,
             previousPageNumbers: [-8, -7],
             nextPageNumbers: [-5, -4],
+            currentCount: 5,
         );
     }
 }
