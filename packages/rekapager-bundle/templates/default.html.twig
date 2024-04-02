@@ -19,12 +19,21 @@
             text-decoration: none;
         }
 
+        #{{ id }} .pagination span.gap {
+            display: block;
+            padding: 0.5em 0.3em;
+            margin: 0 0.1em;
+            border: none;
+            border-radius: 0.2em;
+            text-decoration: none;
+        }
+
         #{{ id }} .pagination a[aria-current="page"] {
             background-color: #333;
             color: #fff;
         }
 
-        #{{ id }} .pagination a.disabled {
+        #{{ id }} .pagination .disabled {
             background-color: #ddd;
             color: #555;
         }
@@ -39,8 +48,6 @@
 
 {%- block gap -%}
     <li>
-        <a href="#" class="disabled">
-            {{- block("label_gap") -}}
-        </a>
+        <span class="gap">{{- block("label_gap") -}}</span>
     </li>
 {%- endblock -%}
