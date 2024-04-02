@@ -16,37 +16,36 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pager;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class CountAwareKeysetPagerTest extends PagerTestCase
+class EmptyPagerTest extends PagerTestCase
 {
-    protected function getPagerCount(): bool|int
+    protected function getSetName(): string
     {
-        return true;
+        return 'empty';
     }
 
-    #[DataProviderExternal(PageableGeneratorProvider::class, 'keyset')]
-    public function testLastPage(string $pageableGeneratorClass): void
+    #[DataProviderExternal(PageableGeneratorProvider::class, 'all')]
+    public function testFirstPage(string $pageableGeneratorClass): void
     {
         $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
-        $page = $this->getNthPageFromEnd($pageable, 1);
-        $pager = $this->createPagerFromPage($page);
+        $pager = $this->createPagerFromPageable($pageable);
 
         $this->assertPager(
             $pager,
             proximity: 2,
-            hasPrevious: true,
+            hasPrevious: false,
             hasNext: false,
-            hasFirst: true,
+            hasFirst: false,
             hasLast: false,
-            hasGapToFirstPage: true,
+            hasGapToFirstPage: false,
             hasGapToLastPage: false,
-            numOfPreviousNeighboringPages: 4,
+            numOfPreviousNeighboringPages: 0,
             numOfNextNeighboringPages: 0,
-            firstPageNumber: 1,
+            firstPageNumber: null,
             lastPageNumber: null,
-            currentPageNumber: 21,
-            previousPageNumbers: [17, 18, 19, 20],
+            currentPageNumber: 1,
+            previousPageNumbers: [],
             nextPageNumbers: [],
-            currentCount: 3,
+            currentCount: 0,
         );
     }
 }

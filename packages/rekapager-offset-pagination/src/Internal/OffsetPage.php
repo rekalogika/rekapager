@@ -73,7 +73,7 @@ class OffsetPage implements OffsetPageInterface, \IteratorAggregate
     private function getResult(): array
     {
         if ($this->result !== null) {
-            if (\count($this->result) === 0) {
+            if (\count($this->result) === 0 && $this->pageNumber !== 1) {
                 throw new OutOfBoundsException('The page does not exist.');
             }
 

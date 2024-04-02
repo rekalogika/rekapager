@@ -40,6 +40,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 1,
             previousPageNumbers: [],
             nextPageNumbers: [2, 3, 4, 5],
+            currentCount: 5,
         );
     }
 
@@ -66,6 +67,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 2,
             previousPageNumbers: [],
             nextPageNumbers: [3, 4, 5],
+            currentCount: 5,
         );
     }
 
@@ -92,6 +94,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 3,
             previousPageNumbers: [2],
             nextPageNumbers: [4, 5],
+            currentCount: 5,
         );
     }
 
@@ -118,6 +121,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 4,
             previousPageNumbers: [2, 3],
             nextPageNumbers: [5, 6],
+            currentCount: 5,
         );
     }
 
@@ -144,6 +148,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 5,
             previousPageNumbers: [2, 3, 4],
             nextPageNumbers: [6, 7],
+            currentCount: 5,
         );
     }
 
@@ -170,6 +175,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 6,
             previousPageNumbers: [4, 5],
             nextPageNumbers: [7, 8],
+            currentCount: 5,
         );
     }
 
@@ -196,6 +202,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 21,
             previousPageNumbers: [17, 18, 19, 20],
             nextPageNumbers: [],
+            currentCount: 3,
         );
     }
 
@@ -222,6 +229,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 20,
             previousPageNumbers: [17, 18, 19],
             nextPageNumbers: [21],
+            currentCount: 5,
         );
     }
 
@@ -248,6 +256,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 19,
             previousPageNumbers: [17, 18],
             nextPageNumbers: [20, 21],
+            currentCount: 5,
         );
     }
 
@@ -274,6 +283,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 18,
             previousPageNumbers: [16, 17],
             nextPageNumbers: [19, 20],
+            currentCount: 5,
         );
     }
 
@@ -300,6 +310,7 @@ class OffsetPagerTest extends PagerTestCase
             currentPageNumber: 17,
             previousPageNumbers: [15, 16],
             nextPageNumbers: [18, 19],
+            currentCount: 5,
         );
     }
 }
