@@ -93,7 +93,7 @@ final class ProximityPager implements PagerInterface
         if ($currentIsFirstPage) {
             $previousPages = [];
         } else {
-            $previousPages = $currentPage->getPreviousPages($this->proximity * 2 + 2);
+            $previousPages = $currentPage->getPreviousPages($this->proximity * 2);
         }
 
         if (\count($previousPages) >= $this->proximity + 2) {
@@ -116,7 +116,7 @@ final class ProximityPager implements PagerInterface
 
         // check next pages
 
-        $nextPages = $currentPage->getNextPages($this->proximity * 2 + 2);
+        $nextPages = $currentPage->getNextPages($this->proximity * 2);
 
         if (\count($nextPages) >= $this->proximity + 2) {
             $currentIsLastPage = false;
