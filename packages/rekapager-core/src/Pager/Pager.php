@@ -93,6 +93,7 @@ final class Pager implements PagerInterface
                 pagerUrlGenerator: $this->pagerUrlGenerator
             );
         }
+
         return $this->pager = new ZeroProximityPager(
             page: $this->page,
             pageLimit: $this->pageLimit,

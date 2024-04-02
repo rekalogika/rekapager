@@ -30,7 +30,7 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
  *
  * @internal
  */
-class OffsetPage implements OffsetPageInterface, \IteratorAggregate
+final class OffsetPage implements OffsetPageInterface, \IteratorAggregate
 {
     /**
      * @var null|array<TKey,T>
@@ -55,6 +55,24 @@ class OffsetPage implements OffsetPageInterface, \IteratorAggregate
         private readonly ?int $totalPages,
         private readonly ?int $limitPages,
     ) {
+    }
+
+    public function withPageNumber(?int $pageNumber): static
+    {
+        $pageNumber ??= 1;
+        if ($pageNumber < 1) {
+            $pageNumber = 1;
+        }
+
+        return new static(
+            pageable: $this->pageable,
+            adapter: $this->adapter,
+            pageNumber: $pageNumber,
+            itemsPerPage: $this->itemsPerPage,
+            totalItems: $this->totalItems,
+            totalPages: $this->totalPages,
+            limitPages: $this->limitPages,
+        );
     }
 
     public function getPageIdentifier(): object

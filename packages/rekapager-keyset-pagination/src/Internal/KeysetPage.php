@@ -57,6 +57,24 @@ final class KeysetPage implements KeysetPageInterface, \IteratorAggregate
     ) {
     }
 
+    public function withPageNumber(?int $pageNumber): static
+    {
+        $pageIdentifier = new KeysetPageIdentifier(
+            pageNumber: $pageNumber,
+            pageOffsetFromBoundary: 0,
+            boundaryType: $this->pageIdentifier->getBoundaryType(),
+            boundaryValues: $this->pageIdentifier->getBoundaryValues(),
+            limit: null,
+        );
+
+        return new self(
+            pageable: $this->pageable,
+            adapter: $this->adapter,
+            pageIdentifier: $pageIdentifier,
+            itemsPerPage: $this->itemsPerPage,
+        );
+    }
+
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;

@@ -126,14 +126,8 @@ abstract class PagerTestCase extends PageableTestCase
         static::assertEquals($hasGapToLastPage, $pager->hasGapToLastPage());
         static::assertCount($numOfPreviousNeighboringPages, $pager->getPreviousNeighboringPages());
         static::assertCount($numOfNextNeighboringPages, $pager->getNextNeighboringPages());
-
-        if ($firstPageNumber !== null) {
-            static::assertEquals($firstPageNumber, $pager->getFirstPage()?->getPageNumber());
-        }
-
-        if ($lastPageNumber !== null) {
-            static::assertEquals($lastPageNumber, $pager->getLastPage()?->getPageNumber());
-        }
+        static::assertEquals($firstPageNumber, $pager->getFirstPage()?->getPageNumber());
+        static::assertEquals($lastPageNumber, $pager->getLastPage()?->getPageNumber());
 
         /** @psalm-suppress InvalidArgument */
         $numbers = array_map(
