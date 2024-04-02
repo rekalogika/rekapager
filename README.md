@@ -46,10 +46,10 @@ fast as seeking to the first page:
 
 ![last page](https://rekalogika.dev/rekapager/last-without-count.png)
 
-Negatives page numbers shown above indicate page numbers from the end. The last
-page is -1, the second to last is -2, and so on. It is done this way because by
-default the pager does not fetch the total count from the underlying data, which
-is another common performance issue involving pagination.
+Negative page numbers shown above indicate the page numbers from the end. The
+last page is -1, the second to last is -2, and so on. It is done this way
+because by default the pager does not fetch the total count from the underlying
+data, which is another common performance issue involving pagination.
 
 The pager can work without knowing the total count, but if the count is
 available, the pager will use it:
@@ -230,6 +230,13 @@ docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:main
 ```
 
 Then access the demo at [http://localhost:8187](http://localhost:8187).
+
+## Acknowledgements
+
+* [Use the Index, Luke](https://use-the-index-luke.com/no-offset)
+* [Pagerfanta](https://www.babdev.com/open-source/packages/pagerfanta/docs/4.x/intro)
+* [PagerWave](https://gitlab.com/pagerwave/PagerWave)
+* [fast-doctrine-paginator](https://github.com/mentionapp/fast-doctrine-paginator)
 
 ## Documentation
 
