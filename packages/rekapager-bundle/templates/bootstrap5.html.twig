@@ -45,7 +45,7 @@
 {%- endblock -%}
 
 {%- block gap -%}
-    <li class="page-item disabled" {% if help %}title="{{ help }}"{% endif %}>
-        <a class="page-link" href="#">{{- block("label_gap") -}}</a>
+    <li class="page-item" {% if help %}title="{{ help }}"{% endif %}>
+        <span class="page-link">{{- block("label_gap") -}}</span>
     </li>
 {%- endblock -%}
