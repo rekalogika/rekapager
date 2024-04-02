@@ -209,13 +209,12 @@ use Rekalogika\Rekapager\PageableInterface;
 /** @var PageableInterface $pageable */
 /** @var EntityManagerInterface $entityManager */
 
-$page = $pageable->withItemsPerPage(1000)->getFirstPage();
-
-while ($page = $page->getNextPage()) {
+foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
     foreach ($page as $item) {
         // Do something with the item
     }
 
+    // Do something after each page here
     $entityManager->flush(); // if required
     $entitymanager->clear();
 }
