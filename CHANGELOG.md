@@ -5,6 +5,7 @@
 * test: add tests for zero proximity pager, empty pager, and test current count for all
   pagers
 * fix(`OffsetPage`): fix `OutOfBoundsException` on an empty first page.
+* fix(`Pager`): fetch only 2 * proximity ahead and behind.
 
 ## 0.5.2
 
