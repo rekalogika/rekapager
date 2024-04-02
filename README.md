@@ -12,15 +12,23 @@ current page as an anchor for the next page. This method is more efficient than
 offset pagination because it leverages the index, and does not require the
 database to scan all rows from the beginning to reach the desired page.
 
-Instead of using page numbers, the keyset pagination implementation of this
-library uses a page identifier object to reference a page. This identifier is
-encoded into a string and passed as a single query parameter.
+Instead of using page numbers, a page identifier object is used to reference a
+page. This identifier is encoded into a string and passed as a single query
+parameter.
 
-The library works separately from the filtering and sorting logic, and does not
-require a specific way to filter or sort your data. It just needs the query (or
-comparable information), and it will automatically modify the query to perform
-the pagination. The only requirement is that the query needs to have a
-deterministic sort order. Queries with multiple sort columns are also supported.
+Because it requires only a single query parameter, it works similarly on the
+surface with offset pagination. Migrating from offset pagination to keyset
+pagination will be straightforward. The difference is that instead of having
+page numbers in the URL, we'll be getting an 'ugly' string.
+
+It also easily allows us to keep the pagination job separate from the filtering
+and sorting logic. The library does not require a specific way to filter or sort
+your data.
+
+The required query for performing keyset pagination is complex, especially if
+more than one column is used for sorting. This library handles that task
+automatically. The only requirement is that the query needs to have a
+deterministic sort order. Queries with multiple sort columns are supported.
 
 Bidirectional navigation is supported. The user will be able to navigate forward
 and backward from the current page. It also supports offset seeking, allowing
@@ -38,10 +46,13 @@ fast as seeking to the first page:
 
 ![last page](https://rekalogika.dev/rekapager/last-without-count.png)
 
-The page numbers at the end are negative because by default the pager does not
-fetch the total count from the underlying data, which is another common
-performance issue involving pagination. It can work without knowing the total
-count, but if the count is available, the pager will use it:
+Negatives page numbers shown above indicate page numbers from the end. The last
+page is -1, the second to last is -2, and so on. It is done this way because by
+default the pager does not fetch the total count from the underlying data, which
+is another common performance issue involving pagination.
+
+The pager can work without knowing the total count, but if the count is
+available, the pager will use it:
 
 ![last page with count](https://rekalogika.dev/rekapager/last-with-count.png)
 
@@ -68,6 +79,10 @@ This feature prevents denials of service, either maliciously or accidentally. In
 most cases, a real user won't have a good reason for accessing page 56267264,
 but doing so can cause a denial of service to the web server, application, and
 the database.
+
+For interoperability, the library supports using any of the existing Pagerfanta
+adapters, as well as adapting a Pagerfanta instance into an
+`OffsetPageableInterface` instance.
 
 ## Supported Underlying Data Types
 
