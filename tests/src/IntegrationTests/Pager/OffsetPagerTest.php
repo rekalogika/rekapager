@@ -279,7 +279,7 @@ class OffsetPagerTest extends PagerTestCase
             numOfPreviousNeighboringPages: 2,
             numOfNextNeighboringPages: 2,
             firstPageNumber: 1,
-            lastPageNumber: null,
+            lastPageNumber: 21,
             currentPageNumber: 18,
             previousPageNumbers: [16, 17],
             nextPageNumbers: [19, 20],

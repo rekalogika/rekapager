@@ -30,7 +30,7 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
  *
  * @internal
  */
-class PagerItem implements PagerItemInterface, \IteratorAggregate
+final class PagerItem implements PagerItemInterface, \IteratorAggregate
 {
     private int|null|NullPageNumber $pageNumber;
 
@@ -42,6 +42,17 @@ class PagerItem implements PagerItemInterface, \IteratorAggregate
         private PagerUrlGeneratorInterface $pagerUrlGenerator,
     ) {
         $this->pageNumber = new NullPageNumber();
+    }
+
+    /**
+     * @return self<TKey,T,TIdentifier>
+     */
+    public function withPageNumber(?int $pageNumber): self
+    {
+        return new self(
+            wrapped: $this->wrapped->withPageNumber($pageNumber),
+            pagerUrlGenerator: $this->pagerUrlGenerator,
+        );
     }
 
     public function isDisabled(): bool
@@ -66,11 +77,6 @@ class PagerItem implements PagerItemInterface, \IteratorAggregate
         }
 
         return $this->wrapped->getPageNumber();
-    }
-
-    public function setPageNumber(?int $pageNumber): void
-    {
-        $this->pageNumber = $pageNumber;
     }
 
     public function getPageable(): PageableInterface

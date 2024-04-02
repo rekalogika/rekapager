@@ -26,7 +26,7 @@ use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
  * @implements \IteratorAggregate<TKey,T>
  * @internal
  */
-class NullOffsetPage implements NullPageInterface, \IteratorAggregate
+final class NullOffsetPage implements NullPageInterface, \IteratorAggregate
 {
     /**
      * @param PageableInterface<TKey,T,PageNumber> $pageable
@@ -40,6 +40,16 @@ class NullOffsetPage implements NullPageInterface, \IteratorAggregate
     ) {
     }
 
+    public function withPageNumber(?int $pageNumber): static
+    {
+        $pageNumber ??= 1;
+        if ($pageNumber < 1) {
+            $pageNumber = 1;
+        }
+
+        return new static($this->pageable, $pageNumber, $this->itemsPerPage);
+    }
+
     public function getIterator(): \Traversable
     {
         yield from [];
@@ -50,13 +60,9 @@ class NullOffsetPage implements NullPageInterface, \IteratorAggregate
         return new PageNumber($this->pageNumber);
     }
 
-    public function getPageNumber(): ?int
+    public function getPageNumber(): int
     {
         return $this->pageNumber;
-    }
-
-    public function setPageNumber(?int $pageNumber): void
-    {
     }
 
     public function getPageable(): PageableInterface

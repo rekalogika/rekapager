@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.2
+
+* fix: various pager numbering fixes
+
 ## 0.6.1
 
 * fix(`QueryBuilderAdapter`): now refuses to continue if the same field appears

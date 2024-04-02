@@ -41,6 +41,11 @@ interface PageInterface extends \Traversable, \Countable
     public function getPageNumber(): ?int;
 
     /**
+     * @return self<TKey,T,TIdentifier>
+     */
+    public function withPageNumber(?int $pageNumber): self;
+
+    /**
      * @return PageableInterface<TKey,T,TIdentifier>
      */
     public function getPageable(): PageableInterface;

@@ -26,7 +26,7 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
  * @implements \IteratorAggregate<TKey,T>
  * @internal
  */
-class NullPageDecorator implements NullPageInterface, \IteratorAggregate
+final class NullPageDecorator implements NullPageInterface, \IteratorAggregate
 {
     /**
      * @param PageInterface<TKey,T,TIdentifier> $page
@@ -44,6 +44,11 @@ class NullPageDecorator implements NullPageInterface, \IteratorAggregate
     public function getPageNumber(): ?int
     {
         return $this->page->getPageNumber();
+    }
+
+    public function withPageNumber(?int $pageNumber): static
+    {
+        return new static($this->page->withPageNumber($pageNumber));
     }
 
     public function getPageable(): PageableInterface

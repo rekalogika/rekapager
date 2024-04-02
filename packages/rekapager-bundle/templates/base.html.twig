@@ -115,7 +115,7 @@
 {%- block current -%}
     <li {% if help %}title="{{ help }}"{% endif %}>
         <a href="{{- href -}}" aria-current="page">
-            {{- number|default("label_unknown") -}}
+            {{- number|default(block('label_unknown')) -}}
         </a>
     </li>
 {%- endblock -%}
@@ -123,7 +123,7 @@
 {%- block neighbor -%}
     <li {% if help %}title="{{ help }}"{% endif %}>
         <a href="{{- href -}}" class="{{ disabled ? "disabled" }}">
-            {{- number|default("label_unknown") -}}
+            {{- number|default(block('label_unknown')) -}}
         </a>
     </li>
 {%- endblock -%}
@@ -186,7 +186,7 @@
 {%- endblock -%}
 
 {%- block label_last -%}
-    {%- if pager.hasGapToLastPage or pager.proximity == 0 -%}
+    {%- if number is null or pager.hasGapToLastPage or pager.proximity == 0 -%}
         {{- 'Last'|trans({}, 'rekalogika_rekapager', locale) -}}
     {%- else -%}
         {{ number }}
