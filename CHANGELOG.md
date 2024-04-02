@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.3
+## 0.6.0
 
 * test: add tests for zero proximity pager, empty pager, and test current count for all
   pagers
