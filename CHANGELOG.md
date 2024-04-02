@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1
+
+* fix(`QueryBuilderAdapter`): now refuses to continue if the same field appears
+  multiple times in the order by clause.
+
+
 ## 0.6.0
 
 * test: add tests for zero proximity pager, empty pager, and test current count for all
