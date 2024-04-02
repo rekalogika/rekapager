@@ -30,8 +30,6 @@
         "psr/container": "^2.0",
         "rekalogika/rekapager-contracts": "^0.5.2",
         "rekalogika/rekapager-core": "^0.5.2",
-        "rekalogika/rekapager-keyset-pagination": "^0.5.2",
-        "rekalogika/rekapager-offset-pagination": "^0.5.2",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/http-foundation": "^6.4 || ^7.0",

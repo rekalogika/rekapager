@@ -69,19 +69,23 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             )
         ]);
 
-    $services
-        ->set(SymfonySerializerKeysetPageIdentifierEncoder::class)
-        ->args([
-            service(NormalizerInterface::class),
-            service(DenormalizerInterface::class),
-            service(EncoderInterface::class),
-            service(DecoderInterface::class),
-        ])
-        ->tag('rekalogika.rekapager.page_identifier_encoder');
+    if (class_exists(SymfonySerializerKeysetPageIdentifierEncoder::class)) {
+        $services
+            ->set(SymfonySerializerKeysetPageIdentifierEncoder::class)
+            ->args([
+                service(NormalizerInterface::class),
+                service(DenormalizerInterface::class),
+                service(EncoderInterface::class),
+                service(DecoderInterface::class),
+            ])
+            ->tag('rekalogika.rekapager.page_identifier_encoder');
+    }
 
-    $services
-        ->set(OffsetPageIdentifierEncoder::class)
-        ->tag('rekalogika.rekapager.page_identifier_encoder');
+    if (class_exists(OffsetPageIdentifierEncoder::class)) {
+        $services
+            ->set(OffsetPageIdentifierEncoder::class)
+            ->tag('rekalogika.rekapager.page_identifier_encoder');
+    }
 
     $services
         ->set(
