@@ -80,8 +80,8 @@ most cases, a real user won't have a good reason for accessing page 56267264,
 but doing so can cause a denial of service to the web server, application, and
 the database.
 
-For interoperability, the library supports using any of the existing Pagerfanta
-adapters, as well as adapting a Pagerfanta instance into an
+For interoperability, the library supports offset pagination using any of the
+existing Pagerfanta adapters, as well as adapting a Pagerfanta instance into an
 `OffsetPageableInterface` instance.
 
 ## Supported Underlying Data Types
