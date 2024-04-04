@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.7.1
+
+* build: update babel config according to symfony docs
+
 # 0.7.0
 
 * feat: infinite scrolling
