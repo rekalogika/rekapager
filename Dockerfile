@@ -24,6 +24,7 @@ EXPOSE 80
 COPY . .
 
 RUN mkdir -p /var/www/html/tests/var && chmod -R 777 /var/www/html/tests/var
+RUN tests/bin/console importmap:install
 
 # Start Apache when the container runs
 CMD ["apache2-foreground"]

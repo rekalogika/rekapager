@@ -8,6 +8,7 @@
 * fix: change infinite scrolling breakpoint to 768px
 * feat: infinite scrolling demo
 * feat: `rekapager_infinite_scrolling_content` Twig function
+* fix(`Dockerfile`): fix importmap
 
 ## 0.6.2
 
