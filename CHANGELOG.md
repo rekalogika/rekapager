@@ -4,6 +4,8 @@
 
 * feat: infinite scrolling
 * feat: AssetMapper compatibility
+* fix: js module
+* fix: change infinite scrolling breakpoint to 768px
 
 ## 0.6.2
 
