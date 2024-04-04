@@ -122,7 +122,7 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
 
         $frameworkBundleMetadata = $bundlesMetadata['FrameworkBundle'] ?? null;
 
-        if (!is_array($frameworkBundleMetadata)) {
+        if (!\is_array($frameworkBundleMetadata)) {
             return false;
         }
 
