@@ -10,6 +10,7 @@
         <link href="/prism.css" rel="stylesheet"/>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="/prism.js"></script>
+        {{ importmap('app') }}
 
         <style>
             .time-container {
@@ -82,6 +83,10 @@
             .page-link.active {
                 color: #f5f5f5;
             }
+            .pager-container {
+                border: 2px dashed #ccc;
+                border-radius: 10px;
+            }
         </style>
     </head>
 
@@ -114,11 +119,14 @@
         <div class="container my-5">
             <h1 class="h2 mb-4">{{ title }}</h1>
 
-            <div class="clearfix">
-                <div class="float-start mx-0 my-0 px-3 pt-3">
-                    {{ rekapager(pager, template=template, locale=locale, proximity=proximity) }}
+            <div class="container p-4 pager-container">
+                <div class="clearfix">
+                    <div class="float-start mx-0 my-0 px-3 pt-3">
+                        {{ rekapager(pager, template=template, locale=locale, proximity=proximity) }}
+                    </div>
                 </div>
             </div>
+
 
             <h2 class="h3 mt-4">Pager Parameters</h2>
 
@@ -143,23 +151,32 @@
 
             <h2 class="h3 mt-4">Results</h2>
 
+            <div class="alert alert-info d-none d-md-block">
+                To test infinite scrolling, make your viewport narrower, and reload the page.
+            </div>
+
             <table class="table">
-                <tr>
-                    <th>Result Key</th>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Content</th>
-                </tr>
-                {% for key,post in pager.currentPage %}
+                <thead>
                     <tr>
-                        <td>{{ key }}</td>
-                        <td>{{ post.id }}</td>
-                        <td>{{ post.title }}</td>
-                        <td>{{ post.date|date('Y-m-d') }}</td>
-                        <td>{{ post.content }}</td>
+                        <th>Result Key</th>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Content</th>
                     </tr>
-                {% endfor %}
+                </thead>
+                
+                <tbody {{ rekapager_infinite_scrolling_content() }}>
+                    {% for key,post in pager.currentPage %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.date|date('Y-m-d') }}</td>
+                            <td>{{ post.content }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </body>

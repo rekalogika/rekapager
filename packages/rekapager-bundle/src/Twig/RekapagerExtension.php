@@ -28,6 +28,18 @@ class RekapagerExtension extends AbstractExtension
                     'is_safe' => ['html'],
                 ]
             ),
+            new TwigFunction(
+                'rekapager_infinite_scrolling_content',
+                $this->renderInfiniteScrolling(...),
+                [
+                    'is_safe' => ['html'],
+                ]
+            ),
         ];
+    }
+
+    private function renderInfiniteScrolling(): string
+    {
+        return 'data-controller="rekalogika--rekapager-bundle--infinite-scrolling"';
     }
 }

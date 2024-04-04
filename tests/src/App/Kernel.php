@@ -27,6 +27,7 @@ use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use Symfony\UX\StimulusBundle\StimulusBundle;
 use Zenstruck\Foundry\ZenstruckFoundryBundle;
 
 class Kernel extends BaseKernel
@@ -59,6 +60,7 @@ class Kernel extends BaseKernel
         yield new DoctrineFixturesBundle();
         yield new ZenstruckFoundryBundle();
         yield new MakerBundle();
+        yield new StimulusBundle();
         yield new MonologBundle();
         yield new RekalogikaRekapagerBundle();
     }
