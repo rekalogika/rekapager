@@ -9,6 +9,7 @@
 * feat: infinite scrolling demo
 * feat: `rekapager_infinite_scrolling_content` Twig function
 * fix(`Dockerfile`): fix importmap
+* demo: show page identifier
 
 ## 0.6.2
 
