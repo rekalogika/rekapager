@@ -143,6 +143,10 @@
                 {{ runnable_sql|doctrine_prettify_sql }}
             {% endfor %}
 
+            <h2 class="h3 mt-4">Current Page Identifier</h2>
+
+            {{ dump(pager.currentPage.pageIdentifier) }}
+
             <h2 class="h3 mt-4">Source Code</h2>
 
             <pre><code class="language-php">
