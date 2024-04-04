@@ -1,0 +1,29 @@
+{
+    "name": "@rekalogika/rekapager-bundle",
+    "description": "Symfony bundle for the Rekapager library",
+    "license": "MIT",
+    "version": "0.6.1",
+    "symfony": {
+        "controllers": {
+            "infinite-scrolling": {
+                "main": "dist/infinite-scrolling.js",
+                "webpackMode": "eager",
+                "fetch": "eager",
+                "enabled": true,
+                "autoimport": {}
+            }
+        }
+    },
+    "scripts": {
+        "build": "babel src -d dist"
+    },
+    "peerDependencies": {
+        "@hotwired/stimulus": "^3.0"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.12",
+        "@babel/core": "^7.12",
+        "@babel/preset-env": "^7.22.20",
+        "@hotwired/stimulus": "^3.0"
+    }
+}
