@@ -114,7 +114,7 @@ var _default = /*#__PURE__*/function (_Controller) {
 _defineProperty(_default, "values", {
   breakpoint: {
     type: String,
-    "default": '576px'
+    "default": '768px'
   },
   pagination: {
     type: String,

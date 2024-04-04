@@ -13,7 +13,7 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
     static values = {
-        breakpoint: { type: String, default: '576px' },
+        breakpoint: { type: String, default: '768px' },
         pagination: { type: String, default: '.pagination' },
         controllerName: { type: String, default: 'rekalogika--rekapager-bundle--infinite-scrolling' }
     }
