@@ -59,6 +59,7 @@
         "psr/log": "^2.0 || ^3.0",
         "ramsey/uuid": "^4.7",
         "rekalogika/doctrine-collections-decorator": "^2.3",
+        "symfony/asset-mapper": "^6.4 || ^7.0",
         "symfony/debug-bundle": "^6.4 || ^7.0",
         "symfony/doctrine-bridge": "^6.4 || ^7.0",
         "symfony/dotenv": "^6.4 || ^7.0",
