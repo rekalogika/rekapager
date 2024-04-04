@@ -29,8 +29,8 @@
     "require": {
         "php": "^8.2",
         "psr/container": "^2.0",
-        "rekalogika/rekapager-contracts": "^0.6",
-        "rekalogika/rekapager-core": "^0.6",
+        "rekalogika/rekapager-contracts": "^0.7",
+        "rekalogika/rekapager-core": "^0.7",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/flex": ">=1.3.1",
