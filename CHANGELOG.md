@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.7.0
+
+* feat: infinite scrolling
+
 ## 0.6.2
 
 * fix: various pager numbering fixes
