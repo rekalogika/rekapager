@@ -98,8 +98,8 @@ var _default = /*#__PURE__*/function (_Controller) {
         // append new elements
 
         var fragment = document.createRange().createContextualFragment(html);
-        var newElements = fragment.querySelector('[data-controller~="infinitescrolling"]').children;
-        (_document$querySelect = document.querySelector('[data-controller~="infinitescrolling"]')).append.apply(_document$querySelect, _toConsumableArray(newElements));
+        var newElements = fragment.querySelector('[data-controller~="' + _this.controllerNameValue + '"]').children;
+        (_document$querySelect = document.querySelector('[data-controller~="' + _this.controllerNameValue + '"]')).append.apply(_document$querySelect, _toConsumableArray(newElements));
 
         // find next link
 
@@ -119,6 +119,10 @@ _defineProperty(_default, "values", {
   pagination: {
     type: String,
     "default": '.pagination'
+  },
+  controllerName: {
+    type: String,
+    "default": 'rekalogika--rekapager-bundle--infinite-scrolling'
   }
 });
 export { _default as default };

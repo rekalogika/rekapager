@@ -14,7 +14,8 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
     static values = {
         breakpoint: { type: String, default: '576px' },
-        pagination: { type: String, default: '.pagination' }
+        pagination: { type: String, default: '.pagination' },
+        controllerName: { type: String, default: 'rekalogika--rekapager-bundle--infinite-scrolling' }
     }
 
     connect() {
@@ -86,9 +87,9 @@ export default class extends Controller {
 
                 let fragment = document.createRange().createContextualFragment(html)
                 let newElements = fragment
-                    .querySelector('[data-controller~="infinitescrolling"]')
+                    .querySelector('[data-controller~="'+ this.controllerNameValue +'"]')
                     .children
-                document.querySelector('[data-controller~="infinitescrolling"]')
+                document.querySelector('[data-controller~="' + this.controllerNameValue + '"]')
                     .append(...newElements)
 
                 // find next link
