@@ -3,6 +3,7 @@
 # 0.7.0
 
 * feat: infinite scrolling
+* feat: AssetMapper compatibility
 
 ## 0.6.2
 

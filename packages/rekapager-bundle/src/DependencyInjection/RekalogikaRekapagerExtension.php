@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Bundle\DependencyInjection;
 
 use Rekalogika\Contracts\Rekapager\PageIdentifierEncoderInterface;
+use Symfony\Component\AssetMapper\AssetMapperInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -91,5 +92,46 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
                 ]
             ]
         );
+
+        if (!$this->isAssetMapperAvailable($container)) {
+            return;
+        }
+
+        $container->prependExtensionConfig('framework', [
+            'asset_mapper' => [
+                'paths' => [
+                    __DIR__ . '/../../assets/dist' => '@rekalogika/rekapager-bundle',
+                ],
+            ],
+        ]);
+    }
+
+
+    private function isAssetMapperAvailable(ContainerBuilder $container): bool
+    {
+        if (!interface_exists(AssetMapperInterface::class)) {
+            return false;
+        }
+
+        // check that FrameworkBundle 6.3 or higher is installed
+        $bundlesMetadata = $container->getParameter('kernel.bundles_metadata');
+
+        if (!\is_array($bundlesMetadata)) {
+            return false;
+        }
+
+        $frameworkBundleMetadata = $bundlesMetadata['FrameworkBundle'] ?? null;
+
+        if (!is_array($frameworkBundleMetadata)) {
+            return false;
+        }
+
+        $path = $frameworkBundleMetadata['path'] ?? null;
+
+        if (!\is_string($path)) {
+            return false;
+        }
+
+        return is_file($path . '/Resources/config/asset_mapper.php');
     }
 }
