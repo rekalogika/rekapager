@@ -3,6 +3,7 @@
 # 0.7.1
 
 * build: update babel config according to symfony docs
+* fix(`bootstrap5.html.twig`): fix label_unknown bug
 
 # 0.7.0
 
