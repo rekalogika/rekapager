@@ -340,4 +340,44 @@ class KeysetPagerTest extends PagerTestCase
             currentCount: 5,
         );
     }
+
+    #[DataProviderExternal(PageableGeneratorProvider::class, 'keyset')]
+    public function testNextFromSecondLastPage(string $pageableGeneratorClass): void
+    {
+        $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
+
+        $lastPage = $pageable->getLastPage();
+        self::assertNotNull($lastPage);
+
+        $lastPagePager = $this->createPagerFromPage($lastPage);
+
+        $secondLastPage = $lastPagePager->getPreviousPage();
+        self::assertNotNull($secondLastPage);
+
+        $secondLastPagePager = $this->createPagerFromPage($secondLastPage);
+
+        $nextFromSecondLastPage = $secondLastPagePager->getNextPage();
+        self::assertNotNull($nextFromSecondLastPage);
+
+        $pager = $this->createPagerFromPage($nextFromSecondLastPage);
+
+        $this->assertPager(
+            $pager,
+            proximity: 2,
+            hasPrevious: true,
+            hasNext: false,
+            hasFirst: true,
+            hasLast: false,
+            hasGapToFirstPage: true,
+            hasGapToLastPage: false,
+            numOfPreviousNeighboringPages: 4,
+            numOfNextNeighboringPages: 0,
+            firstPageNumber: 1,
+            lastPageNumber: null,
+            currentPageNumber: -1,
+            previousPageNumbers: [-5, -4, -3, -2],
+            nextPageNumbers: [],
+            currentCount: 5,
+        );
+    }
 }

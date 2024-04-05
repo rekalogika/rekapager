@@ -4,6 +4,8 @@
 
 * build: update babel config according to symfony docs
 * fix(`bootstrap5.html.twig`): fix label_unknown bug
+* fix(`ProximityPager`): fix bug when going to next page from second to last
+  page
 
 # 0.7.0
 
