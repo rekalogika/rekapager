@@ -313,4 +313,62 @@ class OffsetPagerTest extends PagerTestCase
             currentCount: 5,
         );
     }
+
+    #[DataProviderExternal(PageableGeneratorProvider::class, 'offset')]
+    public function testThirdPageByIterationAndJump(string $pageableGeneratorClass): void
+    {
+        $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
+        $pageByIteration = $this->getNthPageFromBeginning($pageable, 3);
+        $pagerByIteration = $this->createPagerFromPage($pageByIteration);
+
+        $this->assertPager(
+            $pagerByIteration,
+            proximity: 2,
+            hasPrevious: true,
+            hasNext: true,
+            hasFirst: true,
+            hasLast: false,
+            hasGapToFirstPage: false,
+            hasGapToLastPage: true,
+            numOfPreviousNeighboringPages: 1,
+            numOfNextNeighboringPages: 2,
+            firstPageNumber: 1,
+            lastPageNumber: null,
+            currentPageNumber: 3,
+            previousPageNumbers: [2],
+            nextPageNumbers: [4, 5],
+            currentCount: 5,
+        );
+
+        $firstPage = $pageable->getFirstPage();
+        $nextPages = $firstPage->getNextPages(2);
+        $pageByJump = $nextPages[1] ?? null;
+        static::assertNotNull($pageByJump);
+
+        $pagerByJump = $this->createPagerFromPage($pageByJump);
+
+        $this->assertPager(
+            $pagerByJump,
+            proximity: 2,
+            hasPrevious: true,
+            hasNext: true,
+            hasFirst: true,
+            hasLast: false,
+            hasGapToFirstPage: false,
+            hasGapToLastPage: true,
+            numOfPreviousNeighboringPages: 1,
+            numOfNextNeighboringPages: 2,
+            firstPageNumber: 1,
+            lastPageNumber: null,
+            currentPageNumber: 3,
+            previousPageNumbers: [2],
+            nextPageNumbers: [4, 5],
+            currentCount: 5,
+        );
+
+        self::assertEquals(
+            iterator_to_array($pagerByIteration->getCurrentPage()),
+            iterator_to_array($pagerByJump->getCurrentPage())
+        );
+    }
 }

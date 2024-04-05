@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.7.2
+
+* fix: next page skipping bug & lazy loading Pager
+
 # 0.7.1
 
 * build: update babel config according to symfony docs
