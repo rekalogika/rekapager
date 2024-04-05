@@ -10,13 +10,13 @@
 
 {%- block current -%}
     <li class="page-item" {% if help %}title="{{ help }}"{% endif %}>
-        <a class="page-link active" href="{{- href -}}" aria-current="page">{{- number|default("label_unknown") -}}</a>
+        <a class="page-link active" href="{{- href -}}" aria-current="page">{{- number|default(block("label_unknown")) -}}</a>
     </li>
 {%- endblock -%}
 
 {%- block neighbor -%}
     <li class="page-item {{ disabled ? "disabled" }}" {% if help %}title="{{ help }}"{% endif %}>
-        <a class="page-link" href="{{- href -}}">{{- number|default("label_unknown") -}}</a>
+        <a class="page-link" href="{{- href -}}">{{- number|default(block("label_unknown")) -}}</a>
     </li>
 {%- endblock -%}
 
