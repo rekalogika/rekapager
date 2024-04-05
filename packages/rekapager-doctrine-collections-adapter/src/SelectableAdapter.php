@@ -178,6 +178,23 @@ final class SelectableAdapter implements
 
         foreach ($properties as $property) {
             if ($i === 0) {
+                if (\count($properties) === 1) {
+                    if ($property['order'] === Order::Ascending) {
+                        $expressions[] = Criteria::expr()->gt(
+                            $property['property'],
+                            $property['value']
+                        );
+                    } else {
+                        $expressions[] = Criteria::expr()->lt(
+                            $property['property'],
+                            $property['value']
+                        );
+                    }
+
+                    $i++;
+                    continue;
+                }
+
                 if ($property['order'] === Order::Ascending) {
                     $expressions[] = Criteria::expr()->gte(
                         $property['property'],

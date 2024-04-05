@@ -113,6 +113,31 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
 
         foreach ($properties as $property) {
             if ($i === 0) {
+                if (\count($properties) === 1) {
+                    if ($property['order'] === 'ASC') {
+                        $expressions[] = $queryBuilder->expr()->gt(
+                            $property['property'],
+                            ":rekapager_where_{$z}"
+                        );
+                    } else {
+                        $expressions[] = $queryBuilder->expr()->lt(
+                            $property['property'],
+                            ":rekapager_where_{$z}"
+                        );
+                    }
+
+                    $queryBuilder->setParameter(
+                        "rekapager_where_{$z}",
+                        $property['value'],
+                        // @phpstan-ignore-next-line
+                        $this->getType($property['property'])
+                    );
+
+                    $i++;
+                    continue;
+                }
+
+
                 if ($property['order'] === 'ASC') {
                     $expressions[] = $queryBuilder->expr()->gte(
                         $property['property'],
