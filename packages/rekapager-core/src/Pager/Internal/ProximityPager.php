@@ -301,6 +301,24 @@ final class ProximityPager implements PagerInterface
             }
         }
 
+        // if current page is last page & page number is not set, then
+        // set page number to -1, and renumber the previous pages
+
+        if ($currentIsLastPage && $currentPage->getPageNumber() === null) {
+            $this->currentPage = $this->currentPage->withPageNumber(-1);
+
+            $currentPageNumber = -1;
+            $previousNeigboringPages = [];
+
+            foreach (array_reverse($this->previousNeighboringPages) as $page) {
+                $currentPageNumber--;
+                $page = $page->withPageNumber($currentPageNumber);
+                $previousNeigboringPages[] = $page;
+            }
+
+            $this->previousNeighboringPages = array_reverse($previousNeigboringPages);
+        }
+
         // if no gap to last page, set the last page number to the last + 1
 
         if ($hasGapToLastPage === false && $this->lastPage !== null) {
@@ -318,6 +336,16 @@ final class ProximityPager implements PagerInterface
                     $this->lastPage = $this->lastPage->withPageNumber($pageNumber + 1);
                 }
             }
+        }
+
+        // if next page is last page, then replace the next page with last
+        // page
+
+        if (
+            \count($this->nextNeighboringPages) === 0
+            && $this->nextPage !== null
+        ) {
+            $this->nextPage = $this->lastPage;
         }
     }
 
