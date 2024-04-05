@@ -61,10 +61,10 @@ final class KeysetPage implements KeysetPageInterface, \IteratorAggregate
     {
         $pageIdentifier = new KeysetPageIdentifier(
             pageNumber: $pageNumber,
-            pageOffsetFromBoundary: 0,
+            pageOffsetFromBoundary: $this->pageIdentifier->getPageOffsetFromBoundary(),
             boundaryType: $this->pageIdentifier->getBoundaryType(),
             boundaryValues: $this->pageIdentifier->getBoundaryValues(),
-            limit: null,
+            limit: $this->pageIdentifier->getLimit(),
         );
 
         return new self(
