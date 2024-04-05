@@ -110,15 +110,15 @@ final class SelectableAdapter implements
      *     post t0
      * WHERE
      *     (
-     *         t0.date < '2024-03-23'
-     *         OR (
-     *             t0.date = '2024-03-23'
-     *             AND t0.title > 'Commodi culpa magni.'
+     *         t0.date <= '2024-03-26'
+     *         AND NOT (
+     *             t0.date = '2024-03-26'
+     *             AND t0.title <= 'Saepe eos animi qui.'
      *         )
-     *         OR (
-     *             t0.date = '2024-03-23'
-     *             AND t0.title = 'Commodi culpa magni.'
-     *             AND t0.id > 251
+     *         AND NOT (
+     *             t0.date = '2024-03-26'
+     *             AND t0.title = 'Saepe eos animi qui.'
+     *             AND t0.id <= 115
      *         )
      *     )
      * ORDER BY
@@ -177,32 +177,64 @@ final class SelectableAdapter implements
         $expressions = [];
 
         foreach ($properties as $property) {
+            if ($i === 0) {
+                if (\count($properties) === 1) {
+                    if ($property['order'] === Order::Ascending) {
+                        $expressions[] = Criteria::expr()->gt(
+                            $property['property'],
+                            $property['value']
+                        );
+                    } else {
+                        $expressions[] = Criteria::expr()->lt(
+                            $property['property'],
+                            $property['value']
+                        );
+                    }
+
+                    $i++;
+                    continue;
+                }
+
+                if ($property['order'] === Order::Ascending) {
+                    $expressions[] = Criteria::expr()->gte(
+                        $property['property'],
+                        $property['value']
+                    );
+                } else {
+                    $expressions[] = Criteria::expr()->lte(
+                        $property['property'],
+                        $property['value']
+                    );
+                }
+
+                $i++;
+                continue;
+            }
+
             $subExpressions = [];
 
-            foreach (\array_slice($properties, 0, $i) as $excludeProperty) {
+            foreach (\array_slice($properties, 0, $i) as $equalProperty) {
                 $subExpressions[] = Criteria::expr()->eq(
-                    $excludeProperty['property'],
-                    $excludeProperty['value']
+                    $equalProperty['property'],
+                    $equalProperty['value']
                 );
             }
 
             if ($property['order'] === Order::Ascending) {
-                $subExpressions[] = Criteria::expr()->gt(
+                $subExpressions[] = Criteria::expr()->lte(
                     $property['property'],
                     $property['value']
                 );
             } else {
-                $subExpressions[] = Criteria::expr()->lt(
+                $subExpressions[] = Criteria::expr()->gte(
                     $property['property'],
                     $property['value']
                 );
             }
 
-            if (\count($subExpressions) === 1) {
-                $subExpression = $subExpressions[0];
-            } else {
-                $subExpression = Criteria::expr()->andX(...$subExpressions);
-            }
+            $subExpression = Criteria::expr()->not(
+                Criteria::expr()->andX(...$subExpressions)
+            );
 
             $expressions[] = $subExpression;
 
@@ -210,7 +242,7 @@ final class SelectableAdapter implements
         }
 
         if (\count($expressions) > 0) {
-            $criteria->andWhere(Criteria::expr()->orX(...$expressions));
+            $criteria->andWhere(Criteria::expr()->andX(...$expressions));
         }
 
         return $criteria;

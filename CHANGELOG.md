@@ -3,6 +3,7 @@
 # 0.7.2
 
 * fix: next page skipping bug & lazy loading Pager
+* perf: flip SQL keyset expression for potential performance improvement
 
 # 0.7.1
 
