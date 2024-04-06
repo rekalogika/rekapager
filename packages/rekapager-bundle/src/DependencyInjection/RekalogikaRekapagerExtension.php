@@ -35,6 +35,7 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
             new FileLocator(__DIR__ . '/../../config')
         );
         $loader->load('services.php');
+        $loader->load('encoders.php');
 
         if ($debug) {
             $loader->load('debug.php');
