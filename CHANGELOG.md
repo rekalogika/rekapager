@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.8.0
+
+* build: spinoff encoder service definition
+* build: twig & twigbundle is now optional
+
 # 0.7.2
 
 * fix: next page skipping bug & lazy loading Pager
