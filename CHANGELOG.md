@@ -4,6 +4,7 @@
 
 * build: spinoff encoder service definition
 * build: twig & twigbundle is now optional
+* feat: API Platform support
 
 # 0.7.2
 
