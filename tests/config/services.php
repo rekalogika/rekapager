@@ -15,7 +15,10 @@ use Rekalogika\Rekapager\Keyset\Internal\KeysetPage;
 use Rekalogika\Contracts\Rekapager\PageIdentifierEncoderInterface;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
+use Rekalogika\Rekapager\Tests\App\Misc\DebugToolbarReplacerSubscriber;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -35,4 +38,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             PageIdentifierEncoderLocatorInterface::class,
         )
         ->public();
+
+    $services->set(DebugToolbarReplacerSubscriber::class)
+        ->args([service('kernel')])
+        ->tag('kernel.event_subscriber');
 };
