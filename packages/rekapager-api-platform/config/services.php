@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 use Rekalogika\Rekapager\ApiPlatform\PageNormalizer;
 use Rekalogika\Rekapager\ApiPlatform\PagerFactory;
+use Rekalogika\Rekapager\ApiPlatform\RekapagerExtension;
 use Rekalogika\Rekapager\ApiPlatform\RekapagerOpenApiFactoryDecorator;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -42,5 +43,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->decorate('api_platform.hydra.normalizer.collection')
         ->args([
             '$collectionNormalizer' => service('.inner'),
+        ]);
+
+    $services->set('rekalogika.rekapager.api_platform.orm.extension')
+        ->class(RekapagerExtension::class)
+        ->args([
+            '$pagerFactory' => service(PagerFactory::class),
+            '$pagination' => service('api_platform.pagination'),
+        ])
+        ->tag('api_platform.doctrine.orm.query_extension.collection', [
+            'priority' => -48,
         ]);
 };

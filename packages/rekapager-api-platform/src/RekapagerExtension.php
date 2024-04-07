@@ -1,0 +1,96 @@
+<?php
+
+/*
+ * This file is part of the API Platform project.
+ *
+ * (c) Kévin Dunglas <dunglas@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+/*
+ * This file is part of rekalogika/rekapager package.
+ *
+ * (c) Priyadi Iman Nurcahyo <https://rekalogika.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
+namespace Rekalogika\Rekapager\ApiPlatform;
+
+use ApiPlatform\Doctrine\Orm\Extension\QueryResultCollectionExtensionInterface;
+use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\Pagination\Pagination;
+use Doctrine\ORM\QueryBuilder;
+use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
+use Rekalogika\Rekapager\Keyset\KeysetPageable;
+
+/**
+ * Some code borrowed from ApiPlatform's PaginationExtension
+ *
+ * @template T of object
+ * @implements QueryResultCollectionExtensionInterface<T>
+ */
+final class RekapagerExtension implements QueryResultCollectionExtensionInterface
+{
+    public function __construct(
+        private readonly PagerFactory $pagerFactory,
+        private readonly Pagination $pagination
+    ) {
+    }
+
+    /**
+     * @param array<array-key,mixed> $context
+     */
+    public function applyToCollection(
+        QueryBuilder $queryBuilder,
+        QueryNameGeneratorInterface $queryNameGenerator,
+        string $resourceClass,
+        ?Operation $operation = null,
+        array $context = []
+    ): void {
+    }
+
+    /**
+     * @param array<array-key,mixed> $context
+     */
+    public function supportsResult(
+        string $resourceClass,
+        ?Operation $operation = null,
+        array $context = []
+    ): bool {
+        if ((bool) ($context['graphql_operation_name'] ?? false)) {
+            return $this->pagination->isGraphQlEnabled($operation, $context);
+        }
+
+        return $this->pagination->isEnabled($operation, $context);
+    }
+
+    /**
+     * @param array<array-key,mixed> $context
+     * @return iterable<array-key,mixed>
+     */
+    public function getResult(
+        QueryBuilder $queryBuilder,
+        ?string $resourceClass = null,
+        ?Operation $operation = null,
+        array $context = []
+    ): iterable {
+        $pageable = new KeysetPageable(new QueryBuilderAdapter($queryBuilder));
+
+        $itemsPerPage = $this->pagination->getLimit($operation, $context);
+
+        if ($itemsPerPage > 1) {
+            $pageable = $pageable->withItemsPerPage($itemsPerPage);
+        }
+
+        $pager = $this->pagerFactory->createPager($pageable, $context);
+
+        return $pager;
+    }
+}
