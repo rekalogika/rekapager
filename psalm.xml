@@ -66,6 +66,16 @@
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </PossiblyNullReference>
+        <InternalClass>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-api-platform/src/PageNormalizer.php" />
+            </errorLevel>
+        </InternalClass>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-api-platform/src/PageNormalizer.php" />
+            </errorLevel>
+        </InternalMethod>
     </issueHandlers>
 
     <plugins>

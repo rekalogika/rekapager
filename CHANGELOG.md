@@ -6,6 +6,7 @@
 * build: twig & twigbundle is now optional
 * feat: API Platform support
 * feat(`OpenApi`): change all 'page' parameters to accept string
+* feat(ApiPlatform): add `PageNormalizer` & `PagerFactory`
 
 # 0.7.2
 
