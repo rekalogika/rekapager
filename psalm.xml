@@ -76,6 +76,11 @@
                 <file name="packages/rekapager-api-platform/src/PageNormalizer.php" />
             </errorLevel>
         </InternalMethod>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-api-platform/src/PageNormalizer.php" />
+            </errorLevel>
+        </TooManyArguments>
     </issueHandlers>
 
     <plugins>
