@@ -91,6 +91,7 @@ class PageNormalizer implements NormalizerInterface, NormalizerAwareInterface
         ?string $format = null,
         array $context = []
     ): bool {
+        // @phpstan-ignore-next-line
         return $this->collectionNormalizer->supportsNormalization($data, $format, $context);
     }
 

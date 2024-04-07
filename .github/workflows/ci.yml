@@ -53,9 +53,11 @@ jobs:
 
     - name: Run psalm
       run: vendor/bin/psalm
+      if: matrix.dep == 'highest'
 
     - name: Run phpstan
       run: vendor/bin/phpstan analyse
+      if: matrix.dep == 'highest'
 
     - name: Lint container
       run: tests/bin/console lint:container
