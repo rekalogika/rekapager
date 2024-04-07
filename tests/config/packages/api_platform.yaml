@@ -24,5 +24,4 @@ api_platform:
     keep_legacy_inflector: false
     mapping:
         paths:
-            - '%kernel.project_dir%/src/App/ApiResource'
             - '%kernel.project_dir%/src/App/Entity'
