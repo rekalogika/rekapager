@@ -40,7 +40,8 @@ final class RekapagerExtension implements QueryResultCollectionExtensionInterfac
 {
     public function __construct(
         private readonly PagerFactory $pagerFactory,
-        private readonly Pagination $pagination
+        private readonly Pagination $pagination,
+        private readonly bool $enabledByDefault,
     ) {
     }
 
@@ -64,6 +65,19 @@ final class RekapagerExtension implements QueryResultCollectionExtensionInterfac
         ?Operation $operation = null,
         array $context = []
     ): bool {
+        /** @psalm-suppress InternalMethod */
+        $extraProperties = $operation?->getExtraProperties() ?? [];
+        /** @var bool|null */
+        $isEnabled = $extraProperties['rekapager_orm_enabled'] ?? null;
+
+        if (!\is_bool($isEnabled) && $isEnabled === null) {
+            $isEnabled = $this->enabledByDefault;
+        }
+
+        if ($isEnabled === false) {
+            return false;
+        }
+
         if ((bool) ($context['graphql_operation_name'] ?? false)) {
             return $this->pagination->isGraphQlEnabled($operation, $context);
         }
