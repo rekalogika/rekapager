@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\App\ApiState;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\PartialPaginatorInterface;
 use ApiPlatform\State\ProviderInterface;
-use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerFactory;
+use Rekalogika\Rekapager\ApiPlatform\PagerFactoryInterface;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
@@ -29,7 +29,7 @@ class PostProvider implements ProviderInterface
 {
     public function __construct(
         private PostRepository $postRepository,
-        private PagerFactory $pagerFactory,
+        private PagerFactoryInterface $pagerFactory,
     ) {
     }
 

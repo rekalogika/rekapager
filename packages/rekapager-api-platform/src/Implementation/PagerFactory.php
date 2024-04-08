@@ -21,13 +21,14 @@ use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
+use Rekalogika\Rekapager\ApiPlatform\PagerFactoryInterface;
 use Rekalogika\Rekapager\ApiPlatform\Util\IriHelper;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
 use Rekalogika\Rekapager\Pager\TraversablePager;
 
-class PagerFactory
+class PagerFactory implements PagerFactoryInterface
 {
     public function __construct(
         private readonly ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
@@ -38,14 +39,6 @@ class PagerFactory
     ) {
     }
 
-    /**
-     * @template TKey of array-key
-     * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
-     * @param array<array-key,mixed> $context
-     * @return PageInterface<TKey,T,TIdentifier>
-     */
     public function getPage(
         PageableInterface $pageable,
         ?Operation $operation = null,
@@ -77,14 +70,6 @@ class PagerFactory
         return $page;
     }
 
-    /**
-     * @template TKey of array-key
-     * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
-     * @param array<array-key,mixed> $context
-     * @return TraversablePagerInterface<TKey,T,TIdentifier>
-     */
     public function createPager(
         PageableInterface $pageable,
         ?Operation $operation = null,
