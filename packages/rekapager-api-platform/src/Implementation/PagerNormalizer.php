@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * @see PartialCollectionViewNormalizer
  */
-class PageNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     public function __construct(
         private readonly NormalizerInterface $collectionNormalizer,

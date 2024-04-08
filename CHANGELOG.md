@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.8.1
+
+* feat: add `PagerFactoryInterface` for API Platform
+
 # 0.8.0
 
 * build: spinoff encoder service definition

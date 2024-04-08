@@ -11,10 +11,11 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-use Rekalogika\Rekapager\ApiPlatform\Implementation\PageNormalizer;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerFactory;
+use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerNormalizer;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerExtension;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerOpenApiFactoryDecorator;
+use Rekalogika\Rekapager\ApiPlatform\PagerFactoryInterface;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -31,14 +32,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services = $containerConfigurator->services();
 
-    $services->set('rekalogika.rekapager.api_platform.open_api_factory_decorator')
+    $services
+        ->set('rekalogika.rekapager.api_platform.open_api_factory_decorator')
         ->class(RekapagerOpenApiFactoryDecorator::class)
         ->decorate('api_platform.openapi.factory')
         ->args([
             '$decorated' => service('.inner'),
         ]);
 
-    $services->set(PagerFactory::class)
+    $services
+        ->set(PagerFactoryInterface::class)
+        ->class(PagerFactory::class)
         ->args([
             '$resourceMetadataFactory' => service('api_platform.metadata.resource.metadata_collection_factory'),
             '$pageIdentifierEncoderLocator' => service(PageIdentifierEncoderLocatorInterface::class),
@@ -47,17 +51,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$urlGenerationStrategy' => '%api_platform.url_generation_strategy%'
         ]);
 
-    $services->set('rekalogika.rekapager.api_platform.page_normalizer')
-        ->class(PageNormalizer::class)
+    $services
+        ->set('rekalogika.rekapager.api_platform.page_normalizer')
+        ->class(PagerNormalizer::class)
         ->decorate('api_platform.hydra.normalizer.collection')
         ->args([
             '$collectionNormalizer' => service('.inner'),
         ]);
 
-    $services->set('rekalogika.rekapager.api_platform.orm.extension')
+    $services
+        ->set('rekalogika.rekapager.api_platform.orm.extension')
         ->class(RekapagerExtension::class)
         ->args([
-            '$pagerFactory' => service(PagerFactory::class),
+            '$pagerFactory' => service(PagerFactoryInterface::class),
             '$pagination' => service('api_platform.pagination'),
             '$enabledByDefault' => '%rekalogika.rekapager.api_platform.enable_orm_support_by_default%',
         ])
