@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\ApiPlatform\Implementation;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\Metadata\UrlGeneratorInterface;
+use ApiPlatform\State\Pagination\Pagination;
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
@@ -31,6 +32,7 @@ class PagerFactory
     public function __construct(
         private readonly ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
         private readonly PageIdentifierEncoderLocatorInterface $pageIdentifierEncoderLocator,
+        private readonly Pagination $pagination,
         private readonly string $pageParameterName = 'page',
         private readonly int $urlGenerationStrategy = UrlGeneratorInterface::ABS_PATH,
     ) {
@@ -49,6 +51,12 @@ class PagerFactory
         ?Operation $operation = null,
         array $context = []
     ): PageInterface {
+        $itemsPerPage = $this->pagination->getLimit($operation, $context);
+
+        if ($itemsPerPage > 1) {
+            $pageable = $pageable->withItemsPerPage($itemsPerPage);
+        }
+
         $pageIdentifierEncoder = $this->pageIdentifierEncoderLocator
             ->getPageIdentifierEncoder($pageable::getPageIdentifierClass());
 

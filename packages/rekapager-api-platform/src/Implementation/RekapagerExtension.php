@@ -82,13 +82,6 @@ final class RekapagerExtension implements QueryResultCollectionExtensionInterfac
         array $context = []
     ): iterable {
         $pageable = new KeysetPageable(new QueryBuilderAdapter($queryBuilder));
-
-        $itemsPerPage = $this->pagination->getLimit($operation, $context);
-
-        if ($itemsPerPage > 1) {
-            $pageable = $pageable->withItemsPerPage($itemsPerPage);
-        }
-
         $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 
         return $pager;
