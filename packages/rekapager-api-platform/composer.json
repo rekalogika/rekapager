@@ -1,11 +1,12 @@
 {
-    "name": "rekalogika/rekapager-bundle",
-    "description": "Symfony bundle for the Rekapager library",
+    "name": "rekalogika/rekapager-api-platform",
+    "description": "Adds Rekapager support to API Platform",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [
-        "symfony-ux",
         "pagination",
         "symfony",
+        "api-platform",
+        "api",
         "bundle",
         "symfony-bundle",
         "rekapager",
@@ -23,11 +24,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rekalogika\\Rekapager\\Bundle\\": "src/"
+            "Rekalogika\\Rekapager\\ApiPlatform\\": "src/"
         }
     },
     "require": {
         "php": "^8.2",
+        "api-platform/core": "^3.2",
         "psr/container": "^2.0",
         "rekalogika/rekapager-contracts": "^0.8",
         "rekalogika/rekapager-core": "^0.8",
@@ -36,9 +38,6 @@
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/flex": "^2.4",
         "symfony/http-foundation": "^6.4 || ^7.0",
-        "symfony/http-kernel": "^6.4 || ^7.0",
-        "symfony/routing": "^6.4 || ^7.0",
-        "symfony/serializer": "^6.4 || ^7.0",
-        "symfony/stimulus-bundle": "^2.16"
+        "symfony/http-kernel": "^6.4 || ^7.0"
     }
 }

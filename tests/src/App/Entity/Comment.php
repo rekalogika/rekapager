@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Rekalogika\Rekapager\Tests\App\Repository\CommentRepository;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ApiResource()]
 class Comment
 {
     #[ORM\Id]

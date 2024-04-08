@@ -47,15 +47,17 @@ jobs:
       uses: ramsey/composer-install@v2
       with:
         dependency-versions: ${{ matrix.dep }}
-        composer-options: --prefer-dist --no-progress
+        composer-options: --prefer-dist --no-progress --no-scripts
       env:
         SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
     - name: Run psalm
       run: vendor/bin/psalm
+      if: matrix.dep == 'highest' && matrix.symfony == '7.*'
 
     - name: Run phpstan
       run: vendor/bin/phpstan analyse
+      if: matrix.dep == 'highest' && matrix.symfony == '7.*'
 
     - name: Lint container
       run: tests/bin/console lint:container

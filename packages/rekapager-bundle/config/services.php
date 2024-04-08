@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
-use Rekalogika\Rekapager\Bundle\Implementation\SymfonyPageIdentifierEncoderLocator;
 use Rekalogika\Rekapager\Bundle\Implementation\SymfonyPageUrlGeneratorFactory;
 use Rekalogika\Rekapager\Bundle\PagerFactory;
 use Rekalogika\Rekapager\Bundle\Twig\RekapagerExtension;
@@ -24,7 +23,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $params = $containerConfigurator->parameters();
@@ -50,18 +48,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     );
 
     $services = $containerConfigurator->services();
-
-    $services
-        ->set(
-            PageIdentifierEncoderLocatorInterface::class,
-            SymfonyPageIdentifierEncoderLocator::class
-        )
-        ->args([
-            tagged_locator(
-                'rekalogika.rekapager.page_identifier_encoder',
-                defaultIndexMethod: 'getIdentifierClass'
-            )
-        ]);
 
     $services
         ->set(

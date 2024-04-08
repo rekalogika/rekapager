@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App;
 
+use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
+use Rekalogika\Rekapager\ApiPlatform\RekalogikaRekapagerApiPlatformBundle;
 use Rekalogika\Rekapager\Bundle\RekalogikaRekapagerBundle;
 use Rekalogika\Rekapager\Tests\App\DependencyInjection\DoctrineSqlLoggingPass;
 use Symfony\Bundle\DebugBundle\DebugBundle;
@@ -62,7 +64,9 @@ class Kernel extends BaseKernel
         yield new MakerBundle();
         yield new StimulusBundle();
         yield new MonologBundle();
+        yield new ApiPlatformBundle();
         yield new RekalogikaRekapagerBundle();
+        yield new RekalogikaRekapagerApiPlatformBundle();
     }
 
     public function getProjectDir(): string

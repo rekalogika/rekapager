@@ -13,16 +13,28 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Rekalogika\Rekapager\Tests\App\ApiState\PostProvider;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\Index(fields: ['date'])]
 #[ORM\Index(fields: ['title'])]
 #[ORM\Index(fields: ['setName'])]
+#[ApiResource(extraProperties: ['rekapager_orm_enabled' => true])]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/custom/posts',
+            provider: PostProvider::class,
+        )
+    ]
+)]
 class Post
 {
     #[ORM\Id]

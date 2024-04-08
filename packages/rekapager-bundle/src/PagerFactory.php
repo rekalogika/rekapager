@@ -111,7 +111,7 @@ class PagerFactory implements PagerFactoryInterface
             proximity: $proximity,
             pageLimit: $pageLimit,
             pageUrlGenerator: $pageUrlGenerator,
-            pageIdentifierEncoderFactory: $this->pageIdentifierEncoderLocator,
+            pageIdentifierEncoderLocator: $this->pageIdentifierEncoderLocator,
         );
     }
 

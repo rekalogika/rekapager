@@ -54,18 +54,36 @@
         <UndefinedInterfaceMethod>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
+                <file name="packages/rekapager-api-platform/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </UndefinedInterfaceMethod>
         <MixedMethodCall>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
+                <file name="packages/rekapager-api-platform/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </MixedMethodCall>
         <PossiblyNullReference>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
+                <file name="packages/rekapager-api-platform/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </PossiblyNullReference>
+        <InternalClass>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-api-platform/src/Implementation/PageNormalizer.php" />
+            </errorLevel>
+        </InternalClass>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-api-platform/src/Implementation/PageNormalizer.php" />
+            </errorLevel>
+        </InternalMethod>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-api-platform/src/Implementation/PageNormalizer.php" />
+            </errorLevel>
+        </TooManyArguments>
     </issueHandlers>
 
     <plugins>

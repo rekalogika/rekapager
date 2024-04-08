@@ -14,12 +14,14 @@
         "psr-4": {
             "Rekalogika\\Contracts\\Rekapager\\": "packages/rekapager-contracts/src/",
             "Rekalogika\\Rekapager\\": "packages/rekapager-core/src/",
+            "Rekalogika\\Rekapager\\ApiPlatform\\": "packages/rekapager-api-platform/src/",
+            "Rekalogika\\Rekapager\\Bundle\\": "packages/rekapager-bundle/src/",
             "Rekalogika\\Rekapager\\Doctrine\\Collections\\": "packages/rekapager-doctrine-collections-adapter/src/",
             "Rekalogika\\Rekapager\\Doctrine\\ORM\\": "packages/rekapager-doctrine-orm-adapter/src/",
             "Rekalogika\\Rekapager\\Keyset\\": "packages/rekapager-keyset-pagination/src/",
             "Rekalogika\\Rekapager\\Offset\\": "packages/rekapager-offset-pagination/src/",
             "Rekalogika\\Rekapager\\Pagerfanta\\": "packages/rekapager-pagerfanta-adapter/src/",
-            "Rekalogika\\Rekapager\\Bundle\\": "packages/rekapager-bundle/src/"
+            "Rekalogika\\Rekapager\\Symfony\\": "packages/rekapager-symfony-bridge/src/"
         }
     },
     "autoload-dev": {
@@ -29,6 +31,7 @@
     },
     "require": {
         "php": "^8.2",
+        "api-platform/core": "^3.2",
         "doctrine/collections": "^2.2",
         "doctrine/orm": "^2.14 || ^3.0",
         "pagerfanta/core": "^4.0",
@@ -41,6 +44,7 @@
         "symfony/http-kernel": "^6.4 || ^7.0",
         "symfony/routing": "^6.4 || ^7.0",
         "symfony/serializer": "^6.4 || ^7.0",
+        "symfony/stimulus-bundle": "^2.16",
         "twig/twig": "^3.8"
     },
     "require-dev": {
@@ -59,16 +63,18 @@
         "psr/log": "^2.0 || ^3.0",
         "ramsey/uuid": "^4.7",
         "rekalogika/doctrine-collections-decorator": "^2.3",
+        "symfony/asset": "^6.4 || ^7.0",
         "symfony/asset-mapper": "^6.4 || ^7.0",
+        "symfony/browser-kit": "^6.4 || ^7.0",
         "symfony/debug-bundle": "^6.4 || ^7.0",
         "symfony/doctrine-bridge": "^6.4 || ^7.0",
         "symfony/dotenv": "^6.4 || ^7.0",
         "symfony/form": "^6.4 || ^7.0",
         "symfony/framework-bundle": "^6.4 || ^7.0",
+        "symfony/http-client": "^6.4 || ^7.0",
         "symfony/maker-bundle": "^1.55",
         "symfony/monolog-bundle": "^3.0",
         "symfony/runtime": "^6.4 || ^7.0",
-        "symfony/stimulus-bundle": "^2.16",
         "symfony/translation": "^6.4 || ^7.0",
         "symfony/twig-bundle": "^6.4 || ^7.0",
         "symfony/uid": "^6.4 || ^7.0",
@@ -82,17 +88,20 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "symfony/flex": false
         }
     },
     "replace": {
-        "rekalogika/rekapager-bundle": "0.7.2",
-        "rekalogika/rekapager-contracts": "0.7.2",
-        "rekalogika/rekapager-core": "0.7.2",
-        "rekalogika/rekapager-doctrine-collections-adapter": "0.7.2",
-        "rekalogika/rekapager-doctrine-orm-adapter": "0.7.2",
-        "rekalogika/rekapager-keyset-pagination": "0.7.2",
-        "rekalogika/rekapager-offset-pagination": "0.7.2",
-        "rekalogika/rekapager-pagerfanta-adapter": "0.7.2"
+        "rekalogika/rekapager-api-platform": "0.8.0",
+        "rekalogika/rekapager-bundle": "0.8.0",
+        "rekalogika/rekapager-contracts": "0.8.0",
+        "rekalogika/rekapager-core": "0.8.0",
+        "rekalogika/rekapager-doctrine-collections-adapter": "0.8.0",
+        "rekalogika/rekapager-doctrine-orm-adapter": "0.8.0",
+        "rekalogika/rekapager-keyset-pagination": "0.8.0",
+        "rekalogika/rekapager-offset-pagination": "0.8.0",
+        "rekalogika/rekapager-pagerfanta-adapter": "0.8.0",
+        "rekalogika/rekapager-symfony-bridge": "0.8.0"
     }
 }

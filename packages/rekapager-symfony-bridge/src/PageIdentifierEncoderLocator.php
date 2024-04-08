@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Bundle\Implementation;
+namespace Rekalogika\Rekapager\Symfony;
 
 use Psr\Container\ContainerInterface;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
@@ -20,7 +20,7 @@ use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Exception\MissingPageIdentifierEncoderException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-class SymfonyPageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterface
+class PageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterface
 {
     public function __construct(private ContainerInterface $container)
     {

@@ -1,0 +1,2 @@
+rekalogika_rekapager_api_platform:
+    enable_orm_support_by_default: false

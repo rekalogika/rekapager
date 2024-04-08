@@ -4,6 +4,10 @@
 
 * build: spinoff encoder service definition
 * build: twig & twigbundle is now optional
+* feat: API Platform support
+* feat(`OpenApi`): change all 'page' parameters to accept string
+* feat(ApiPlatform): add `PageNormalizer` & `PagerFactory`
+* feat(`QueryBuilderAdapter`): add type detection
 
 # 0.7.2
 

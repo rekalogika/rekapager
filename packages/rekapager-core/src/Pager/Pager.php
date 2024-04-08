@@ -48,12 +48,12 @@ final class Pager implements PagerInterface
         private readonly int $proximity = 2,
         private readonly ?int $pageLimit = null,
         private ?PageUrlGeneratorInterface $pageUrlGenerator = null,
-        private ?PageIdentifierEncoderLocatorInterface $pageIdentifierEncoderFactory = null
+        private ?PageIdentifierEncoderLocatorInterface $pageIdentifierEncoderLocator = null
     ) {
-        if ($pageUrlGenerator !== null && $pageIdentifierEncoderFactory !== null) {
+        if ($pageUrlGenerator !== null && $pageIdentifierEncoderLocator !== null) {
             $this->pagerUrlGenerator = new PagerUrlGenerator(
                 $pageUrlGenerator,
-                $pageIdentifierEncoderFactory
+                $pageIdentifierEncoderLocator
             );
         } else {
             $this->pagerUrlGenerator = new NullPagerUrlGenerator();
@@ -72,7 +72,7 @@ final class Pager implements PagerInterface
             proximity: $proximity,
             pageLimit: $this->pageLimit,
             pageUrlGenerator: $this->pageUrlGenerator,
-            pageIdentifierEncoderFactory: $this->pageIdentifierEncoderFactory
+            pageIdentifierEncoderLocator: $this->pageIdentifierEncoderLocator
         );
     }
 
