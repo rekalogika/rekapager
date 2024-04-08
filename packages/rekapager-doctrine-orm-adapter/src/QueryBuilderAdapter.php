@@ -15,6 +15,9 @@ namespace Rekalogika\Rekapager\Doctrine\ORM;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Query\Expr\From;
 use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -23,6 +26,10 @@ use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryCounter;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
+use Symfony\Bridge\Doctrine\Types\UlidType;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Ulid;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @template TKey of array-key
@@ -130,7 +137,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                         "rekapager_where_{$z}",
                         $property['value'],
                         // @phpstan-ignore-next-line
-                        $this->getType($property['property'])
+                        $this->getType($property['property'], $property['value'])
                     );
 
                     $i++;
@@ -155,7 +162,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                     "rekapager_where_{$z}",
                     $property['value'],
                     // @phpstan-ignore-next-line
-                    $this->getType($property['property'])
+                    $this->getType($property['property'], $property['value'])
                 );
 
                 $i++;
@@ -174,7 +181,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                     "rekapager_where_{$z}",
                     $equalProperty['value'],
                     // @phpstan-ignore-next-line
-                    $this->getType($equalProperty['property'])
+                    $this->getType($equalProperty['property'], $equalProperty['value'])
                 );
 
                 $z++;
@@ -190,7 +197,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                     "rekapager_where_{$z}",
                     $property['value'],
                     // @phpstan-ignore-next-line
-                    $this->getType($property['property'])
+                    $this->getType($property['property'], $property['value'])
                 );
 
                 $z++;
@@ -204,7 +211,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                     "rekapager_where_{$z}",
                     $property['value'],
                     // @phpstan-ignore-next-line
-                    $this->getType($property['property'])
+                    $this->getType($property['property'], $property['value'])
                 );
 
                 $z++;
@@ -370,11 +377,87 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
         return $result;
     }
 
-    /**
-     * @return ParameterType|ArrayParameterType|string|int|null
-     */
-    private function getType(string $name): mixed
+    private function getType(
+        string $fieldName,
+        mixed $value
+    ): ParameterType|ArrayParameterType|string|int|null {
+        $type = $this->typeMapping[$fieldName] ?? null;
+
+        // if type is defined in mapping, return it
+        if ($type !== null) {
+            return $type;
+        }
+
+        // if type is null and value is not object, just return as null
+        if (!\is_object($value)) {
+            return null;
+        }
+
+        // if it is an object, we start looking for the type in the class
+        // metadata
+        $type = $this->detectTypeFromMetadata($fieldName);
+
+        if ($type !== null) {
+            return $type;
+        }
+
+        // if not found, use heuristics to detect the type
+        return $this->detectTypeByHeuristics($value);
+    }
+
+    private function detectTypeByHeuristics(object $value): string|null
     {
-        return $this->typeMapping[$name] ?? null;
+        if ($value instanceof \DateTime) {
+            return Types::DATETIME_MUTABLE;
+        } elseif ($value instanceof \DateTimeImmutable) {
+            return Types::DATETIME_IMMUTABLE;
+        } elseif ($value instanceof Uuid) {
+            return UuidType::NAME;
+        } elseif ($value instanceof Ulid) {
+            return UlidType::NAME;
+        }
+
+        return null;
+    }
+
+    private function detectTypeFromMetadata(
+        string $fieldName
+    ): string|null {
+        [$alias, $property] = explode('.', $fieldName);
+        $class = $this->getClassFromAlias($alias);
+
+        if ($class === null) {
+            return null;
+        }
+
+        $manager = $this->queryBuilder->getEntityManager();
+        $metadata = $manager->getClassMetadata($class);
+
+        return $metadata->getTypeOfField($property);
+    }
+
+    /**
+     * @return class-string|null
+     */
+    private function getClassFromAlias(string $alias): ?string
+    {
+        $dqlParts = $this->queryBuilder->getDQLParts();
+        $from = $dqlParts['from'] ?? [];
+
+        if (!\is_array($from)) {
+            throw new LogicException('FROM clause is not an array');
+        }
+
+        foreach ($from as $fromItem) {
+            if (!$fromItem instanceof From) {
+                throw new LogicException('FROM clause is not an instance of From');
+            }
+
+            if ($fromItem->getAlias() === $alias) {
+                return $fromItem->getFrom();
+            }
+        }
+
+        return null;
     }
 }
