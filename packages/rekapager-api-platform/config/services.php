@@ -34,6 +34,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             '$resourceMetadataFactory' => service('api_platform.metadata.resource.metadata_collection_factory'),
             '$pageIdentifierEncoderLocator' => service(PageIdentifierEncoderLocatorInterface::class),
+            '$pagination' => service('api_platform.pagination'),
             '$pageParameterName' => '%api_platform.collection.pagination.page_parameter_name%',
             '$urlGenerationStrategy' => '%api_platform.url_generation_strategy%'
         ]);
