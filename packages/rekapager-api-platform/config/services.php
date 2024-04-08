@@ -11,10 +11,10 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-use Rekalogika\Rekapager\ApiPlatform\PageNormalizer;
-use Rekalogika\Rekapager\ApiPlatform\PagerFactory;
-use Rekalogika\Rekapager\ApiPlatform\RekapagerExtension;
-use Rekalogika\Rekapager\ApiPlatform\RekapagerOpenApiFactoryDecorator;
+use Rekalogika\Rekapager\ApiPlatform\Implementation\PageNormalizer;
+use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerFactory;
+use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerExtension;
+use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerOpenApiFactoryDecorator;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 

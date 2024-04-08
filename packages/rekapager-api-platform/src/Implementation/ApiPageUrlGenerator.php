@@ -11,8 +11,9 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\ApiPlatform;
+namespace Rekalogika\Rekapager\ApiPlatform\Implementation;
 
+use Rekalogika\Rekapager\ApiPlatform\Util\IriHelper;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 
 class ApiPageUrlGenerator implements PageUrlGeneratorInterface

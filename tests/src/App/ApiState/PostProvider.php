@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\App\ApiState;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\PartialPaginatorInterface;
 use ApiPlatform\State\ProviderInterface;
-use Rekalogika\Rekapager\ApiPlatform\PagerFactory;
+use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerFactory;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
@@ -46,7 +46,7 @@ class PostProvider implements ProviderInterface
     ): object|array|null {
         $adapter = new SelectableAdapter($this->postRepository);
         $pageable = new KeysetPageable($adapter);
-        $pager = $this->pagerFactory->createPager($pageable, $context);
+        $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 
         return $pager;
     }

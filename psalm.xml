@@ -68,17 +68,17 @@
         </PossiblyNullReference>
         <InternalClass>
             <errorLevel type="suppress">
-                <file name="packages/rekapager-api-platform/src/PageNormalizer.php" />
+                <file name="packages/rekapager-api-platform/src/Implementation/PageNormalizer.php" />
             </errorLevel>
         </InternalClass>
         <InternalMethod>
             <errorLevel type="suppress">
-                <file name="packages/rekapager-api-platform/src/PageNormalizer.php" />
+                <file name="packages/rekapager-api-platform/src/Implementation/PageNormalizer.php" />
             </errorLevel>
         </InternalMethod>
         <TooManyArguments>
             <errorLevel type="suppress">
-                <file name="packages/rekapager-api-platform/src/PageNormalizer.php" />
+                <file name="packages/rekapager-api-platform/src/Implementation/PageNormalizer.php" />
             </errorLevel>
         </TooManyArguments>
     </issueHandlers>

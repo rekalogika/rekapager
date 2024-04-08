@@ -20,7 +20,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\ApiPlatform;
+namespace Rekalogika\Rekapager\ApiPlatform\Implementation;
 
 use ApiPlatform\Doctrine\Orm\Extension\QueryResultCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
@@ -89,7 +89,7 @@ final class RekapagerExtension implements QueryResultCollectionExtensionInterfac
             $pageable = $pageable->withItemsPerPage($itemsPerPage);
         }
 
-        $pager = $this->pagerFactory->createPager($pageable, $context);
+        $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 
         return $pager;
     }

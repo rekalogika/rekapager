@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\ApiPlatform;
+namespace Rekalogika\Rekapager\ApiPlatform\Util;
 
 use ApiPlatform\Metadata\UrlGeneratorInterface;
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;

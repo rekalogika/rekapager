@@ -14,6 +14,10 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Contracts;
 
 /**
+ * Same as PagerInterface, but can be iterated to get the items of the current
+ * page. This is created to have similar behaviors with other pagers, like
+ * Pagerfanta.
+ *
  * @template TKey of array-key
  * @template T
  * @template TIdentifier of object

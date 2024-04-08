@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\ApiPlatform;
+namespace Rekalogika\Rekapager\ApiPlatform\Implementation;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
@@ -20,6 +20,7 @@ use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
+use Rekalogika\Rekapager\ApiPlatform\Util\IriHelper;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
@@ -45,7 +46,8 @@ class PagerFactory
      */
     public function getPage(
         PageableInterface $pageable,
-        array $context
+        ?Operation $operation = null,
+        array $context = []
     ): PageInterface {
         $pageIdentifierEncoder = $this->pageIdentifierEncoderLocator
             ->getPageIdentifierEncoder($pageable::getPageIdentifierClass());
@@ -77,10 +79,11 @@ class PagerFactory
      */
     public function createPager(
         PageableInterface $pageable,
-        array $context
+        ?Operation $operation = null,
+        array $context = [],
     ): TraversablePagerInterface {
-        $page = $this->getPage($pageable, $context);
-        $operation = $this->getOperation($context);
+        $page = $this->getPage($pageable, $operation, $context);
+        $operation ??= $this->getOperation($context);
 
         /** @psalm-suppress InternalMethod */
         $urlGenerationStrategy = $operation?->getUrlGenerationStrategy()
