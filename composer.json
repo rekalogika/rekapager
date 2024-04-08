@@ -20,7 +20,8 @@
             "Rekalogika\\Rekapager\\Doctrine\\ORM\\": "packages/rekapager-doctrine-orm-adapter/src/",
             "Rekalogika\\Rekapager\\Keyset\\": "packages/rekapager-keyset-pagination/src/",
             "Rekalogika\\Rekapager\\Offset\\": "packages/rekapager-offset-pagination/src/",
-            "Rekalogika\\Rekapager\\Pagerfanta\\": "packages/rekapager-pagerfanta-adapter/src/"
+            "Rekalogika\\Rekapager\\Pagerfanta\\": "packages/rekapager-pagerfanta-adapter/src/",
+            "Rekalogika\\Rekapager\\Symfony\\": "packages/rekapager-symfony-bridge/src/"
         }
     },
     "autoload-dev": {
@@ -90,7 +91,7 @@
         }
     },
     "replace": {
-        "rekalogika/rekapager-api-platform-bundle": "self.version",
+        "rekalogika/rekapager-api-platform": "self.version",
         "rekalogika/rekapager-bundle": "0.7.2",
         "rekalogika/rekapager-contracts": "0.7.2",
         "rekalogika/rekapager-core": "0.7.2",
@@ -98,6 +99,7 @@
         "rekalogika/rekapager-doctrine-orm-adapter": "0.7.2",
         "rekalogika/rekapager-keyset-pagination": "0.7.2",
         "rekalogika/rekapager-offset-pagination": "0.7.2",
-        "rekalogika/rekapager-pagerfanta-adapter": "0.7.2"
+        "rekalogika/rekapager-pagerfanta-adapter": "0.7.2",
+        "rekalogika/rekapager-symfony-bridge": "self.version"
     }
 }

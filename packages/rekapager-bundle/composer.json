@@ -31,6 +31,7 @@
         "psr/container": "^2.0",
         "rekalogika/rekapager-contracts": "^0.7.2",
         "rekalogika/rekapager-core": "^0.7.2",
+        "rekalogika/rekapager-symfony-bridge": "^0.7.2",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/flex": "^2.4",

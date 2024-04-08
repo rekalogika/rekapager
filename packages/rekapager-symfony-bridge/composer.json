@@ -1,21 +1,18 @@
 {
-    "name": "rekalogika/rekapager-api-platform",
-    "description": "Integrates Rekapager with API Platform",
+    "name": "rekalogika/rekapager-symfony-bridge",
+    "description": "Common classes for Symfony integration.",
     "homepage": "https://rekalogika.dev/rekapager",
     "keywords": [
-        "pagination",
         "symfony",
         "api-platform",
-        "api",
-        "bundle",
-        "symfony-bundle",
+        "pagination",
         "rekapager",
         "pager",
         "keyset-pagination",
         "offset-pagination"
     ],
     "license": "MIT",
-    "type": "symfony-bundle",
+    "type": "library",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
@@ -24,20 +21,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "Rekalogika\\Rekapager\\ApiPlatform\\": "src/"
+            "Rekalogika\\Rekapager\\Symfony\\": "src/"
         }
     },
     "require": {
         "php": "^8.2",
-        "api-platform/core": "^3.2",
-        "psr/container": "^2.0",
         "rekalogika/rekapager-contracts": "^0.7.2",
         "rekalogika/rekapager-core": "^0.7.2",
-        "rekalogika/rekapager-symfony-bridge": "^0.7.2",
         "symfony/config": "^6.4 || ^7.0",
-        "symfony/dependency-injection": "^6.4 || ^7.0",
-        "symfony/flex": "^2.4",
-        "symfony/http-foundation": "^6.4 || ^7.0",
-        "symfony/http-kernel": "^6.4 || ^7.0"
+        "symfony/dependency-injection": "^6.4 || ^7.0"
     }
 }

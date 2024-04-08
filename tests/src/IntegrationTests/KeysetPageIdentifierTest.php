@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\IntegrationTests;
 
-use Rekalogika\Rekapager\Bundle\Implementation\SymfonyPageIdentifierEncoderLocator;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
 use Rekalogika\Rekapager\Keyset\PageIdentifierEncoder\SymfonySerializerKeysetPageIdentifierEncoder;
+use Rekalogika\Rekapager\Symfony\PageIdentifierEncoderLocator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class KeysetPageIdentifierTest extends KernelTestCase
@@ -34,7 +34,7 @@ class KeysetPageIdentifierTest extends KernelTestCase
 
         $encoderLocator = static::getContainer()->get(PageIdentifierEncoderLocatorInterface::class);
 
-        self::assertInstanceOf(SymfonyPageIdentifierEncoderLocator::class, $encoderLocator);
+        self::assertInstanceOf(PageIdentifierEncoderLocator::class, $encoderLocator);
         $encoder = $encoderLocator->getPageIdentifierEncoder($identifier::class);
 
         self::assertInstanceOf(SymfonySerializerKeysetPageIdentifierEncoder::class, $encoder);

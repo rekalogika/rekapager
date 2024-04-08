@@ -11,8 +11,10 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
+use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Keyset\PageIdentifierEncoder\SymfonySerializerKeysetPageIdentifierEncoder;
 use Rekalogika\Rekapager\Offset\OffsetPageIdentifierEncoder;
+use Rekalogika\Rekapager\Symfony\PageIdentifierEncoderLocator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
@@ -20,9 +22,22 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
+
+    $services
+        ->set(
+            PageIdentifierEncoderLocatorInterface::class,
+            PageIdentifierEncoderLocator::class
+        )
+        ->args([
+            tagged_locator(
+                'rekalogika.rekapager.page_identifier_encoder',
+                defaultIndexMethod: 'getIdentifierClass'
+            )
+        ]);
 
     if (class_exists(SymfonySerializerKeysetPageIdentifierEncoder::class)) {
         $services

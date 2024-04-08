@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Bundle\DependencyInjection;
 
 use Rekalogika\Contracts\Rekapager\PageIdentifierEncoderInterface;
+use Rekalogika\Rekapager\Symfony\RekapagerSymfonyBridge;
 use Symfony\Component\AssetMapper\AssetMapperInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,26 +26,37 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
+        // load configuration
+
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $debug = (bool) $container->getParameter('kernel.debug');
+        // load our services
 
         $loader = new PhpFileLoader(
             $container,
             new FileLocator(__DIR__ . '/../../config')
         );
         $loader->load('services.php');
-        $loader->load('encoders.php');
+
+        // load debug services
+
+        $debug = (bool) $container->getParameter('kernel.debug');
 
         if ($debug) {
             $loader->load('debug.php');
         }
 
+        // load services from symfony-bridge package
+
+        RekapagerSymfonyBridge::loadServices($container);
+
+        // setup autoconfiguration
+
         $container->registerForAutoconfiguration(PageIdentifierEncoderInterface::class)
             ->addTag('rekalogika.rekapager.page_identifier_encoder');
 
-        // config
+        // process config
 
         $defaultTwigTemplate = $config['default_template'] ?? null;
         if (null === $defaultTwigTemplate || !\is_string($defaultTwigTemplate)) {
