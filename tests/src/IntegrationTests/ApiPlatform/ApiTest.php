@@ -34,7 +34,7 @@ class ApiTest extends ApiTestCase
         ]);
 
         $nextPage = $response->toArray()['hydra:view']['hydra:next'] ?? null;
-        self::assertNotNull($nextPage);
+        self::assertIsString($nextPage);
 
         $previousPage = $response->toArray()['hydra:view']['hydra:previous'] ?? null;
         self::assertNull($previousPage);
@@ -43,7 +43,7 @@ class ApiTest extends ApiTestCase
         self::assertNull($firstPage);
 
         $lastPage = $response->toArray()['hydra:view']['hydra:last'] ?? null;
-        self::assertNotNull($lastPage);
+        self::assertIsString($lastPage);
 
         // test next page
 
@@ -59,17 +59,21 @@ class ApiTest extends ApiTestCase
             ],
         ]);
 
+        /** @var ?string */
         $nextPage = $response->toArray()['hydra:view']['hydra:next'] ?? null;
-        self::assertNotNull($nextPage);
+        self::assertIsString($nextPage);
 
+        /** @var ?string */
         $previousPage = $response->toArray()['hydra:view']['hydra:previous'] ?? null;
-        self::assertNotNull($previousPage);
+        self::assertIsString($previousPage);
 
+        /** @var ?string */
         $firstPage = $response->toArray()['hydra:view']['hydra:first'] ?? null;
-        self::assertNotNull($firstPage);
+        self::assertIsString($firstPage);
 
+        /** @var ?string */
         $lastPage = $response->toArray()['hydra:view']['hydra:last'] ?? null;
-        self::assertNotNull($lastPage);
+        self::assertIsString($lastPage);
 
         // test last page
 
@@ -85,15 +89,19 @@ class ApiTest extends ApiTestCase
             ],
         ]);
 
+        /** @var ?string */
         $nextPage = $response->toArray()['hydra:view']['hydra:next'] ?? null;
         self::assertNull($nextPage);
 
+        /** @var ?string */
         $previousPage = $response->toArray()['hydra:view']['hydra:previous'] ?? null;
-        self::assertNotNull($previousPage);
+        self::assertIsString($previousPage);
 
+        /** @var ?string */
         $firstPage = $response->toArray()['hydra:view']['hydra:first'] ?? null;
-        self::assertNotNull($firstPage);
+        self::assertIsString($firstPage);
 
+        /** @var ?string */
         $lastPage = $response->toArray()['hydra:view']['hydra:last'] ?? null;
         self::assertNull($lastPage);
     }
