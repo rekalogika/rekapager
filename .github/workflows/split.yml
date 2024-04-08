@@ -18,32 +18,17 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # define package to repository map
-                package:
-                    -
-                        local_path: 'rekapager-bundle'
-                        split_repository: 'rekapager-bundle'
-                    -
-                        local_path: 'rekapager-contracts'
-                        split_repository: 'rekapager-contracts'
-                    -
-                        local_path: 'rekapager-core'
-                        split_repository: 'rekapager-core'
-                    -
-                        local_path: 'rekapager-doctrine-collections-adapter'
-                        split_repository: 'rekapager-doctrine-collections-adapter'
-                    -
-                        local_path: 'rekapager-doctrine-orm-adapter'
-                        split_repository: 'rekapager-doctrine-orm-adapter'
-                    -
-                        local_path: 'rekapager-pagerfanta-adapter'
-                        split_repository: 'rekapager-pagerfanta-adapter'
-                    -
-                        local_path: 'rekapager-keyset-pagination'
-                        split_repository: 'rekapager-keyset-pagination'
-                    -
-                        local_path: 'rekapager-offset-pagination'
-                        split_repository: 'rekapager-offset-pagination'
+                name:
+                    - rekapager-api-platform
+                    - rekapager-bundle
+                    - rekapager-contracts
+                    - rekapager-core
+                    - rekapager-doctrine-collections-adapter
+                    - rekapager-doctrine-orm-adapter
+                    - rekapager-pagerfanta-adapter
+                    - rekapager-keyset-pagination
+                    - rekapager-offset-pagination
+                    - rekapager-symfony-bridge
     
         steps:
             -   uses: actions/checkout@v2
@@ -53,12 +38,11 @@ jobs:
                 if: "!startsWith(github.ref, 'refs/tags/')"
                 uses: "danharrin/monorepo-split-github-action@v2.3.0"
                 with:
-                    # ↓ split "packages/easy-coding-standard" directory
-                    package_directory: 'packages/${{ matrix.package.local_path }}'
+                    package_directory: 'packages/${{ matrix.name }}'
 
                     # ↓ into https://github.com/symplify/easy-coding-standard repository
                     repository_organization: 'rekalogika'
-                    repository_name: '${{ matrix.package.split_repository }}'
+                    repository_name: '${{ matrix.name }}'
 
                     # [optional, with "github.com" as default]
                     repository_host: github.com
@@ -75,11 +59,11 @@ jobs:
                     tag: ${GITHUB_REF#refs/tags/}
 
                     # ↓ split "packages/easy-coding-standard" directory
-                    package_directory: 'packages/${{ matrix.package.local_path }}'
+                    package_directory: 'packages/${{ matrix.name }}'
 
                     # ↓ into https://github.com/symplify/easy-coding-standard repository
                     repository_organization: 'rekalogika'
-                    repository_name: '${{ matrix.package.split_repository }}'
+                    repository_name: '${{ matrix.name }}'
 
                     # [optional, with "github.com" as default]
                     repository_host: github.com
