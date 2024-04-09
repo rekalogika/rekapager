@@ -26,7 +26,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 #[ORM\Index(fields: ['date'])]
 #[ORM\Index(fields: ['title'])]
 #[ORM\Index(fields: ['setName'])]
-#[ApiResource(extraProperties: ['rekapager_orm_enabled' => true])]
+#[ApiResource]
 #[ApiResource(
     operations: [
         new GetCollection(

@@ -22,14 +22,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $parameters = $containerConfigurator->parameters();
-
-    $parameters
-        ->set(
-            'rekalogika.rekapager.api_platform.enable_orm_support_by_default',
-            false
-        );
-
     $services = $containerConfigurator->services();
 
     $services
@@ -65,7 +57,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([
             '$pagerFactory' => service(PagerFactoryInterface::class),
             '$pagination' => service('api_platform.pagination'),
-            '$enabledByDefault' => '%rekalogika.rekapager.api_platform.enable_orm_support_by_default%',
         ])
         ->tag('api_platform.doctrine.orm.query_extension.collection', [
             'priority' => -48,

@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.8.2
+
+* refactor: remove configuration from API Platform bundle, will try to reuse
+  standard API Platform extra properties.
+
 # 0.8.1
 
 * feat: add `PagerFactoryInterface` for API Platform
