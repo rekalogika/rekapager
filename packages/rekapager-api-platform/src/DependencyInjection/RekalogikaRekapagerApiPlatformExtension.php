@@ -23,11 +23,6 @@ class RekalogikaRekapagerApiPlatformExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        // load configuration
-
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
-
         // load our services
 
         $loader = new PhpFileLoader(
@@ -47,16 +42,5 @@ class RekalogikaRekapagerApiPlatformExtension extends Extension
         // load services from symfony-bridge package
 
         RekapagerSymfonyBridge::loadServices($container);
-
-        // process config
-        $enableOrmSupportByDefault = $config['enable_orm_support_by_default'] ?? false;
-        if (!\is_bool($enableOrmSupportByDefault)) {
-            throw new \InvalidArgumentException('The "enable_orm_support_by_default" option must be a boolean.');
-        }
-
-        $container->setParameter(
-            'rekalogika.rekapager.api_platform.enable_orm_support_by_default',
-            $enableOrmSupportByDefault
-        );
     }
 }

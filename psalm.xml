@@ -54,19 +54,16 @@
         <UndefinedInterfaceMethod>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
-                <file name="packages/rekapager-api-platform/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </UndefinedInterfaceMethod>
         <MixedMethodCall>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
-                <file name="packages/rekapager-api-platform/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </MixedMethodCall>
         <PossiblyNullReference>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
-                <file name="packages/rekapager-api-platform/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </PossiblyNullReference>
         <InternalClass>
