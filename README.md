@@ -1,6 +1,8 @@
 Rekapager is a pagination library for PHP, supporting both offset-based and
 keyset-based pagination (also called cursor-based pagination).
 
+Full documentation is available at [rekalogika.dev/rekapager](https://rekalogika.dev/rekapager)
+
 ## Keyset Pagination (or Cursor-Based Pagination)
 
 Keyset pagination is a method of pagination that uses the last row of the
@@ -258,6 +260,10 @@ Then access the demo at [http://localhost:8187](http://localhost:8187).
 * [Pagerfanta](https://www.babdev.com/open-source/packages/pagerfanta/docs/4.x/intro)
 * [PagerWave](https://gitlab.com/pagerwave/PagerWave)
 * [fast-doctrine-paginator](https://github.com/mentionapp/fast-doctrine-paginator)
+
+## Documentation
+
+[rekalogika.dev/rekapager](https://rekalogika.dev/rekapager)
 
 ## License
 
