@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\ORM\Internal;
 
+use Rekalogika\Contracts\Rekapager\Exception\NullBoundaryValueException;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetItemInterface;
 
 /**
@@ -34,6 +35,12 @@ final class QueryBuilderKeysetItem implements KeysetItemInterface
         private readonly mixed $value,
         private readonly array $boundaryValues,
     ) {
+        /** @var mixed $v */
+        foreach ($boundaryValues as $k => $v) {
+            if ($v === null) {
+                throw new NullBoundaryValueException(sprintf('The property "%s" of the value "%s" is a boundary value of this pagination, but it is found to be null. Null value in a boundary value is not supported.', $k, get_debug_type($value)));
+            }
+        }
     }
 
     public function getKey(): mixed

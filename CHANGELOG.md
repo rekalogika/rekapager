@@ -4,6 +4,7 @@
 
 * refactor: remove configuration from API Platform bundle, will try to reuse
   standard API Platform extra properties.
+* feat: throw exception if a boundary value is null
 
 # 0.8.1
 
