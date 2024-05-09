@@ -20,6 +20,7 @@ class RekapagerExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {
+        /** @psalm-suppress InvalidArgument */
         return [
             new TwigFunction(
                 'rekapager',
@@ -38,7 +39,7 @@ class RekapagerExtension extends AbstractExtension
         ];
     }
 
-    private function renderInfiniteScrolling(): string
+    public function renderInfiniteScrolling(): string
     {
         return 'data-controller="rekalogika--rekapager-bundle--infinite-scrolling"';
     }
