@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.8.4
+
+* fix: assertion in QueryCounter
+
 # 0.8.3
 
 * fix(keyset): going from 2nd last page to last page now works properly
