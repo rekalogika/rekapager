@@ -57,7 +57,7 @@ final class QueryCounter implements \Countable
             }
         }
 
-        \assert($this->count > 0);
+        \assert($this->count >= 0);
 
         return $this->count;
     }
