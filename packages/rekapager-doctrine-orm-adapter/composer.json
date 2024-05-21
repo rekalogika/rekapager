@@ -29,6 +29,6 @@
     "require": {
         "php": "^8.2",
         "doctrine/orm": "^2.14 || ^3.0",
-        "rekalogika/rekapager-keyset-pagination": "^0.8"
+        "rekalogika/rekapager-keyset-pagination": "^0.8.3"
     }
 }
