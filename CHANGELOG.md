@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.8.3
+
+* fix(keyset): going from 2nd last page to last page now works properly
+
 # 0.8.2
 
 * refactor: remove configuration from API Platform bundle, will try to reuse

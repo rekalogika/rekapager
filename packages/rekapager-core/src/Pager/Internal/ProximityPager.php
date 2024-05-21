@@ -202,9 +202,9 @@ final class ProximityPager implements PagerInterface
             $this->lastPage = null;
         } elseif ($lastIsLastPage && $this->lastPage !== null) {
             // if the last page in the pager is the last page, remove the last
-            // page link
-            // $this->lastPage = null;
-            array_pop($this->nextNeighboringPages);
+            // page from the next neighboring pages, and set it as the last page
+            $lastPage = array_pop($this->nextNeighboringPages);
+            $this->lastPage = $lastPage;
         } else {
             if ($hasGapToLastPage) {
                 $this->hasHiddenPagesAfter = true;
@@ -345,7 +345,7 @@ final class ProximityPager implements PagerInterface
             \count($this->nextNeighboringPages) === 0
             && $this->nextPage !== null
         ) {
-            $this->nextPage = $this->lastPage;
+            // $this->nextPage = $this->lastPage;
         }
     }
 
