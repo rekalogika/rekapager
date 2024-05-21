@@ -249,7 +249,7 @@ foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
 You can try the demo by running the following command:
 
 ```bash
-docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:main
+docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:latest
 ```
 
 Then access the demo at [http://localhost:8187](http://localhost:8187).
