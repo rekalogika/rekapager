@@ -24,7 +24,7 @@
     },
     "require": {
         "php": "^8.2",
-        "rekalogika/rekapager-contracts": "^0.8.3",
+        "rekalogika/rekapager-contracts": "^0.8.5",
         "spomky-labs/base64url": "^2.0"
     }
 }
