@@ -1,6 +1,6 @@
 # Changelog
 
-# 0.8.5
+# 0.9.0
 
 * build: Symfony 7.1 compatibility
 * fix: bug of extra first & last page showing up in small data set.
