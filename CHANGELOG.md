@@ -3,6 +3,7 @@
 # 0.8.5
 
 * build: Symfony 7.1 compatibility
+* fix: bug of extra first & last page showing up in small data set.
 
 # 0.8.4
 

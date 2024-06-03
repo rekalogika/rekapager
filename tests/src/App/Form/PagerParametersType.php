@@ -48,6 +48,7 @@ class PagerParametersType extends AbstractType // @phpstan-ignore-line
             ])
             ->add('itemsPerPage', ChoiceType::class, [
                 'choices' => [
+                    '3' => 3,
                     '5' => 5,
                     '10' => 10,
                     '20' => 20,

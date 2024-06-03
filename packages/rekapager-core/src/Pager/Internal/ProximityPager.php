@@ -88,23 +88,43 @@ final class ProximityPager implements PagerInterface
             $this->lastPage = $this->decorate($lastPage->withPageNumber(null));
         }
 
-        // check previous pages
+        // preps
 
         if ($currentIsFirstPage) {
             $previousPages = [];
         } else {
-            $previousPages = $currentPage->getPreviousPages($this->proximity * 2);
+            $previousPages = $currentPage->getPreviousPages($this->proximity * 2 + 2);
         }
 
-        if (\count($previousPages) >= $this->proximity + 2) {
+        $nextPages = $currentPage->getNextPages($this->proximity * 2 + 2);
+
+        // calculate the number of neighboring pages to show
+
+        $previousPagesCount = \count($previousPages);
+        $nextPagesCount = \count($nextPages);
+
+        $neighboringPreviousPagesCount = min($previousPagesCount, $this->proximity);
+        $neighboringNextPagesCount = min($nextPagesCount, $this->proximity);
+
+        if ($neighboringPreviousPagesCount < $this->proximity) {
+            $neighboringNextPagesCount += $this->proximity - $neighboringPreviousPagesCount;
+        }
+
+        if ($neighboringNextPagesCount < $this->proximity) {
+            $neighboringPreviousPagesCount += $this->proximity - $neighboringNextPagesCount;
+        }
+
+        // check previous pages
+
+        if ($previousPagesCount >= $neighboringPreviousPagesCount + 2) {
             $currentIsFirstPage = false;
             $firstIsFirstPage = false;
             $hasGapToFirstPage = true;
-        } elseif (\count($previousPages) === $this->proximity + 1) {
+        } elseif ($previousPagesCount === $neighboringPreviousPagesCount + 1) {
             $currentIsFirstPage = false;
             $firstIsFirstPage = false;
             $hasGapToFirstPage = false;
-        } elseif (\count($previousPages) === 0) {
+        } elseif ($previousPagesCount === 0) {
             $currentIsFirstPage = true;
             $firstIsFirstPage = false;
             $hasGapToFirstPage = false;
@@ -116,17 +136,15 @@ final class ProximityPager implements PagerInterface
 
         // check next pages
 
-        $nextPages = $currentPage->getNextPages($this->proximity * 2);
-
-        if (\count($nextPages) >= $this->proximity + 2) {
+        if ($nextPagesCount >= $neighboringNextPagesCount + 2) {
             $currentIsLastPage = false;
             $lastIsLastPage = false;
             $hasGapToLastPage = true;
-        } elseif (\count($nextPages) === $this->proximity + 1) {
+        } elseif ($nextPagesCount === $neighboringNextPagesCount + 1) {
             $currentIsLastPage = false;
             $lastIsLastPage = false;
             $hasGapToLastPage = false;
-        } elseif (\count($nextPages) === 0) {
+        } elseif ($nextPagesCount === 0) {
             $currentIsLastPage = true;
             $lastIsLastPage = false;
             $hasGapToLastPage = false;
@@ -136,22 +154,9 @@ final class ProximityPager implements PagerInterface
             $hasGapToLastPage = false;
         }
 
-        // calculate the number of neighboring pages to show
-
-        $previousPagesCount = min(\count($previousPages), $this->proximity);
-        $nextPagesCount = min(\count($nextPages), $this->proximity);
-
-        if ($previousPagesCount < $this->proximity) {
-            $nextPagesCount += $this->proximity - $previousPagesCount;
-        }
-
-        if ($nextPagesCount < $this->proximity) {
-            $previousPagesCount += $this->proximity - $nextPagesCount;
-        }
-
         // add previous pages
 
-        foreach (range(0, $previousPagesCount - 1) as $i) {
+        foreach (range(0, $neighboringPreviousPagesCount - 1) as $i) {
             $page = array_pop($previousPages);
 
             if ($page === null) {
@@ -163,7 +168,7 @@ final class ProximityPager implements PagerInterface
 
         // add next pages
 
-        foreach (range(0, $nextPagesCount - 1) as $i) {
+        foreach (range(0, $neighboringNextPagesCount - 1) as $i) {
             $page = array_shift($nextPages);
 
             if ($page === null) {
@@ -196,6 +201,14 @@ final class ProximityPager implements PagerInterface
             $this->hasHiddenPagesBefore = true;
         }
 
+        // if first page in the previous neighboring pages is the first page,
+        // then remove it
+
+        $firstInPreviousPages = reset($this->previousNeighboringPages) ?: null;
+        if ($firstInPreviousPages?->getPageNumber() === 1) {
+            array_shift($this->previousNeighboringPages);
+        }
+
         // append last page
 
         if ($currentIsLastPage) {
@@ -205,6 +218,9 @@ final class ProximityPager implements PagerInterface
             // page from the next neighboring pages, and set it as the last page
             $lastPage = array_pop($this->nextNeighboringPages);
             $this->lastPage = $lastPage;
+        // } elseif (!$lastIsLastPage && !$hasGapToLastPage) {
+        //     $lastPage = array_pop($this->nextNeighboringPages);
+        //     $this->lastPage = $lastPage;
         } else {
             if ($hasGapToLastPage) {
                 $this->hasHiddenPagesAfter = true;
