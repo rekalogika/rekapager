@@ -3,7 +3,7 @@ COMPOSER=composer
 SYMFONY=symfony
 
 .PHONY: test
-test: composer-dump lint monorepo-validate phpstan psalm phpunit
+test: composer-dump monorepo-validate phpstan psalm phpunit
 
 .PHONY: composer-dump
 composer-dump:

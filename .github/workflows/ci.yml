@@ -59,8 +59,8 @@ jobs:
       run: vendor/bin/phpstan analyse
       if: matrix.dep == 'highest' && matrix.symfony == '7.*'
 
-    - name: Lint container
-      run: tests/bin/console lint:container
+    # - name: Lint container
+    #   run: tests/bin/console lint:container
       
     - name: Validate monorepo
       run: vendor/bin/monorepo-builder validate

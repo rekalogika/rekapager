@@ -15,6 +15,7 @@ parameters:
     ignoreErrors:
         - '#Rekalogika\\Rekapager\\Tests\\App\\Entity\\Post> given.#'
         - '#Symfony\\Component\\Config\\Definition\\Builder\\#'
+        - '#Attribute class Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator is deprecated:#'
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon

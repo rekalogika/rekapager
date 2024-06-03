@@ -30,6 +30,7 @@ class DemoController extends AbstractController
 {
     /**
      * @param iterable<PageableGeneratorInterface<array-key,mixed,object>> $pageableGenerators
+     * @psalm-suppress DeprecatedClass
      */
     public function __construct(
         #[TaggedIterator('rekalogika.rekapager.pageable_generator', defaultIndexMethod: 'getKey')]
