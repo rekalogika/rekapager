@@ -230,10 +230,12 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
             $queryBuilder->andWhere($queryBuilder->expr()->andX(...$expressions));
         }
 
-        // adds the boundary values to the query
+        // adds the boundary values to the select statement
 
+        $i = 1;
         foreach ($this->getBoundaryFieldNames() as $field) {
-            $queryBuilder->addSelect($field);
+            $queryBuilder->addSelect(sprintf('%s AS rekapager_boundary_%s', $field, $i));
+            $i++;
         }
 
         return $queryBuilder;
