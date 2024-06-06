@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.9.1
+
+* fix(`QueryBuilderAdapter`): use generated field names for our boundary fields
+  in the select statement, avoids conflict with other fields in the query.
+
 # 0.9.0
 
 * build: Symfony 7.1 compatibility
