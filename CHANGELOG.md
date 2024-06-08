@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.9.2
+
+* build: limit `zenstruck/foundry` to 1.37.* for now
+
 # 0.9.1
 
 * fix(`QueryBuilderAdapter`): use generated field names for our boundary fields
