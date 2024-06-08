@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Bundle;
 
+use Rekalogika\Contracts\Rekapager\Exception\OutOfBoundsException as ContractsOutOfBoundsException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
+use Rekalogika\Rekapager\Bundle\Exception\OutOfBoundsException;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
@@ -113,7 +115,11 @@ class PagerFactory implements PagerFactoryInterface
             pageIdentifierEncoderLocator: $this->pageIdentifierEncoderLocator,
         );
 
-        foreach ($pager->getCurrentPage() as $i);
+        try {
+            foreach ($pager->getCurrentPage() as $i);
+        } catch (ContractsOutOfBoundsException $e) {
+            throw new OutOfBoundsException($e, $pager, $options);
+        }
 
         return $pager;
     }
