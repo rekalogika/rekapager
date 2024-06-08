@@ -93,15 +93,15 @@
         }
     },
     "replace": {
-        "rekalogika/rekapager-api-platform": "0.9.1",
-        "rekalogika/rekapager-bundle": "0.9.1",
-        "rekalogika/rekapager-contracts": "0.9.1",
-        "rekalogika/rekapager-core": "0.9.1",
-        "rekalogika/rekapager-doctrine-collections-adapter": "0.9.1",
-        "rekalogika/rekapager-doctrine-orm-adapter": "0.9.1",
-        "rekalogika/rekapager-keyset-pagination": "0.9.1",
-        "rekalogika/rekapager-offset-pagination": "0.9.1",
-        "rekalogika/rekapager-pagerfanta-adapter": "0.9.1",
-        "rekalogika/rekapager-symfony-bridge": "0.9.1"
+        "rekalogika/rekapager-api-platform": "0.9.2",
+        "rekalogika/rekapager-bundle": "0.9.2",
+        "rekalogika/rekapager-contracts": "0.9.2",
+        "rekalogika/rekapager-core": "0.9.2",
+        "rekalogika/rekapager-doctrine-collections-adapter": "0.9.2",
+        "rekalogika/rekapager-doctrine-orm-adapter": "0.9.2",
+        "rekalogika/rekapager-keyset-pagination": "0.9.2",
+        "rekalogika/rekapager-offset-pagination": "0.9.2",
+        "rekalogika/rekapager-pagerfanta-adapter": "0.9.2",
+        "rekalogika/rekapager-symfony-bridge": "0.9.2"
     }
 }
