@@ -3,6 +3,8 @@
 # 0.9.2
 
 * build: limit `zenstruck/foundry` to 1.37.* for now
+* fix(`PagerFactory`): pager should not be lazy, so that if the page does not
+  exist, it will throw an exception immediately, not inside template.
 
 # 0.9.1
 

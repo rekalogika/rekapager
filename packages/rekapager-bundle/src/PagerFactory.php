@@ -96,7 +96,6 @@ class PagerFactory implements PagerFactoryInterface
         $queryParams = $request->query->all();
         $routeParams = array_merge($queryParams, $routeParams);
 
-
         /** @var array<string,string|int> $routeParams */
 
         $pageUrlGenerator = $this->pageUrlGeneratorFactory->createPageUrlGenerator(
@@ -106,13 +105,17 @@ class PagerFactory implements PagerFactoryInterface
             routeParams: $routeParams
         );
 
-        return new Pager(
+        $pager = new Pager(
             page: $page,
             proximity: $proximity,
             pageLimit: $pageLimit,
             pageUrlGenerator: $pageUrlGenerator,
             pageIdentifierEncoderLocator: $this->pageIdentifierEncoderLocator,
         );
+
+        foreach ($pager->getCurrentPage() as $i);
+
+        return $pager;
     }
 
     /**
