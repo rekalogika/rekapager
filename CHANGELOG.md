@@ -5,6 +5,10 @@
 * build: limit `zenstruck/foundry` to 1.37.* for now
 * fix(`PagerFactory`): pager should not be lazy, so that if the page does not
   exist, it will throw an exception immediately, not inside template.
+* feat(`PagerFactory`): wrap `OutOfBoundsException` and add the pager and
+  options to the exception class.
+* fix(`Pager`): fix offset pagination bug where the last page points to the
+  first page.
 
 # 0.9.1
 
