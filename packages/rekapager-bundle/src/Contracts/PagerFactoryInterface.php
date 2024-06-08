@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Bundle\Contracts;
 
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Rekapager\Bundle\Exception\OutOfBoundsException;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,6 +30,7 @@ interface PagerFactoryInterface
      * @param PageableInterface<TKey,T,TIdentifier> $pageable
      * @param TOptions|null $options
      * @return PagerInterface<TKey,T,TIdentifier>
+     * @throws OutOfBoundsException
      */
     public function createPager(
         PageableInterface $pageable,
