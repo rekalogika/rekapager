@@ -78,11 +78,19 @@ an exact count.
 ## Offset Pagination
 
 The library also supports the traditional offset pagination method with several
-important improvements. First, it can paginate without the total count of the
-data. If the count is not available, the pager won't allow the user to navigate
-to the last page:
+important improvements. 
+
+### No Counting by Default
+
+It can paginate without the total count of the data. If the count is not known,
+the pager won't allow the user to navigate to the last page:
 
 ![no last page](https://rekalogika.dev/rekapager/unknown-last.png)
+
+As with keyset pagination, the count can be supplied by the caller, or the pager
+can query the count from the underlying data.
+
+### Page Number Limit
 
 It also limits the maximum page number that can be navigated to. By default, the
 limit is 100. The UI will indicate that the disabled page exists, but the user
@@ -90,19 +98,29 @@ is not allowed to navigate to it:
 
 ![page limit](https://rekalogika.dev/rekapager/limit.png)
 
-### Secure by Default
-
-By not counting by default, and limiting pages in offset pagination, the library
-is secure by default. It prevents denials of service, either maliciously or
-accidentally. In most cases, a real user won't have a good reason for accessing
-page 56267264, but doing so can cause a denial of service to the web server,
-application, and the database.
+This limit can be configured, or disabled entirely. But if you need the function
+to seek beyond a certain number of pages, you should consider switching to
+keyset pagination instead.
 
 ### Pagerfanta Interoperability
 
 For interoperability, the library supports offset pagination using any of the
 existing Pagerfanta adapters, as well as adapting a Pagerfanta instance into an
 `OffsetPageableInterface` instance.
+
+## Secure by Default (or Prevents AI Crawlers from Wreaking Havoc)
+
+With keyset pagination, not counting by default, and limiting pages in
+offset pagination, the library is secure by default. It prevents denials of
+service, either maliciously or accidentally. In most cases, a real user won't
+have a good reason for accessing page 56267264, but doing so can cause a denial
+of service to the web server, application, and the database.
+
+After the AI craze, there is a surge of web crawlers that are looking for
+contents for AI training. Unlike traditional search engine crawlers, these new
+crawlers tend to be much dumber and much less respectful. Some would foolishly
+traverse thousands of paginated contents with a sub-second delay, causing a
+denial of service to the server. This library can help to prevent that.
 
 ## Supported Underlying Data Types
 
