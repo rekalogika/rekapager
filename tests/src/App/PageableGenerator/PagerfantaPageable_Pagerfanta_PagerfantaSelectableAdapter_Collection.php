@@ -17,7 +17,6 @@ use Doctrine\Common\Collections\Criteria;
 use Pagerfanta\Doctrine\Collections\SelectableAdapter;
 use Pagerfanta\Pagerfanta;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
-use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Pagerfanta\PagerfantaPageable;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;

@@ -17,7 +17,6 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
-use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;

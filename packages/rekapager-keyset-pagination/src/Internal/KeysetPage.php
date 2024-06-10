@@ -19,7 +19,6 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetItemInterface;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
-use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageInterface;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
 
@@ -28,12 +27,12 @@ use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
  *
  * @template TKey of array-key
  * @template T
- * @implements KeysetPageInterface<TKey,T>
+ * @implements PageInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  *
  * @internal
  */
-final class KeysetPage implements KeysetPageInterface, \IteratorAggregate
+final class KeysetPage implements PageInterface, \IteratorAggregate
 {
     /**
      * @var null|array<int,KeysetItemInterface<TKey,T>>

@@ -14,15 +14,15 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Pagerfanta;
 
 use Pagerfanta\PagerfantaInterface;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
-use Rekalogika\Rekapager\Offset\Contracts\OffsetPageableInterface;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 
 /**
  * @template T
- * @implements OffsetPageableInterface<array-key,T>
+ * @implements PageableInterface<array-key,T>
  */
-final class PagerfantaPageable implements OffsetPageableInterface
+final class PagerfantaPageable implements PageableInterface
 {
     /**
      * @var OffsetPageable<array-key,T>

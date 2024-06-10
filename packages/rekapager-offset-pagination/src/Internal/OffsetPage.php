@@ -17,7 +17,6 @@ use Rekalogika\Contracts\Rekapager\Exception\LimitException;
 use Rekalogika\Contracts\Rekapager\Exception\OutOfBoundsException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
-use Rekalogika\Rekapager\Offset\Contracts\OffsetPageInterface;
 use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
@@ -25,12 +24,12 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
 /**
  * @template TKey of array-key
  * @template T
- * @implements OffsetPageInterface<TKey,T>
+ * @implements PageInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  *
  * @internal
  */
-final class OffsetPage implements OffsetPageInterface, \IteratorAggregate
+final class OffsetPage implements PageInterface, \IteratorAggregate
 {
     /**
      * @var null|array<TKey,T>

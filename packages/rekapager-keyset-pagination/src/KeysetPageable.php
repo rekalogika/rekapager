@@ -14,20 +14,19 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Keyset;
 
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Contracts\Rekapager\Trait\TotalPagesTrait;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
-use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageableInterface;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
-use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageInterface;
 use Rekalogika\Rekapager\Keyset\Internal\KeysetPage;
 
 /**
  * @template TKey of array-key
  * @template T
- * @implements KeysetPageableInterface<TKey,T>
+ * @implements PageableInterface<TKey,T>
  */
-final class KeysetPageable implements KeysetPageableInterface
+final class KeysetPageable implements PageableInterface
 {
     use TotalPagesTrait;
 
@@ -77,9 +76,9 @@ final class KeysetPageable implements KeysetPageableInterface
     }
 
     /**
-     * @return KeysetPageInterface<TKey,T>
+     * @return PageInterface<TKey,T>
      */
-    public function getFirstPage(): KeysetPageInterface
+    public function getFirstPage(): PageInterface
     {
         $pageIdentifier = new KeysetPageIdentifier(
             pageNumber: 1,
@@ -98,9 +97,9 @@ final class KeysetPageable implements KeysetPageableInterface
     }
 
     /**
-     * @return KeysetPageInterface<TKey,T>
+     * @return PageInterface<TKey,T>
      */
-    public function getLastPage(): KeysetPageInterface
+    public function getLastPage(): PageInterface
     {
         $totalPages = $this->getTotalPages();
 
