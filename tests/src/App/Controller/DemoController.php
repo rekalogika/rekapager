@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class DemoController extends AbstractController
 {
     /**
-     * @param iterable<PageableGeneratorInterface<array-key,mixed,object>> $pageableGenerators
+     * @param iterable<PageableGeneratorInterface<array-key,mixed>> $pageableGenerators
      * @psalm-suppress DeprecatedClass
      */
     public function __construct(
@@ -57,7 +57,7 @@ class DemoController extends AbstractController
         /** @psalm-suppress InvalidArgument */
         $pageableGenerators = iterator_to_array($this->pageableGenerators);
 
-        /** @var array<string,PageableGeneratorInterface<array-key,mixed,object>> $pageableGenerators */
+        /** @var array<string,PageableGeneratorInterface<array-key,mixed>> $pageableGenerators */
 
         if ($key === null) {
             foreach ($pageableGenerators as $pageableGenerator) {

@@ -23,10 +23,9 @@ interface PagerFactoryInterface
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
+     * @param PageableInterface<TKey,T> $pageable
      * @param array<array-key,mixed> $context
-     * @return PageInterface<TKey,T,TIdentifier>
+     * @return PageInterface<TKey,T>
      */
     public function getPage(
         PageableInterface $pageable,
@@ -37,10 +36,9 @@ interface PagerFactoryInterface
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
+     * @param PageableInterface<TKey,T> $pageable
      * @param array<array-key,mixed> $context
-     * @return TraversablePagerInterface<TKey,T,TIdentifier>
+     * @return TraversablePagerInterface<TKey,T>
      */
     public function createPager(
         PageableInterface $pageable,

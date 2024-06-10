@@ -16,7 +16,6 @@ namespace Rekalogika\Rekapager\Contracts;
 /**
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
  */
 interface PagerInterface
 {
@@ -31,27 +30,27 @@ interface PagerInterface
     public function withProximity(int $proximity): static;
 
     /**
-     * @return PagerItemInterface<TKey,T,TIdentifier>
+     * @return PagerItemInterface<TKey,T>
      */
     public function getCurrentPage(): PagerItemInterface;
 
     /**
-     * @return PagerItemInterface<TKey,T,TIdentifier>|null
+     * @return PagerItemInterface<TKey,T>|null
      */
     public function getPreviousPage(): ?PagerItemInterface;
 
     /**
-     * @return PagerItemInterface<TKey,T,TIdentifier>|null
+     * @return PagerItemInterface<TKey,T>|null
      */
     public function getNextPage(): ?PagerItemInterface;
 
     /**
-     * @return PagerItemInterface<TKey,T,TIdentifier>|null
+     * @return PagerItemInterface<TKey,T>|null
      */
     public function getFirstPage(): ?PagerItemInterface;
 
     /**
-     * @return PagerItemInterface<TKey,T,TIdentifier>|null
+     * @return PagerItemInterface<TKey,T>|null
      */
     public function getLastPage(): ?PagerItemInterface;
 
@@ -60,12 +59,12 @@ interface PagerInterface
     public function hasGapToLastPage(): bool;
 
     /**
-     * @return iterable<int,PagerItemInterface<TKey,T,TIdentifier>>
+     * @return iterable<int,PagerItemInterface<TKey,T>>
      */
     public function getPreviousNeighboringPages(): iterable;
 
     /**
-     * @return iterable<int,PagerItemInterface<TKey,T,TIdentifier>>
+     * @return iterable<int,PagerItemInterface<TKey,T>>
      */
     public function getNextNeighboringPages(): iterable;
 }

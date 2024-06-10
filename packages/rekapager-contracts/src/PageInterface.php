@@ -20,15 +20,12 @@ namespace Rekalogika\Contracts\Rekapager;
  *
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
  * @extends \Traversable<TKey,T>
  */
 interface PageInterface extends \Traversable, \Countable
 {
     /**
      * Gets the page identifier
-     *
-     * @return TIdentifier
      */
     public function getPageIdentifier(): object;
 
@@ -41,12 +38,12 @@ interface PageInterface extends \Traversable, \Countable
     public function getPageNumber(): ?int;
 
     /**
-     * @return self<TKey,T,TIdentifier>
+     * @return self<TKey,T>
      */
     public function withPageNumber(?int $pageNumber): self;
 
     /**
-     * @return PageableInterface<TKey,T,TIdentifier>
+     * @return PageableInterface<TKey,T>
      */
     public function getPageable(): PageableInterface;
 
@@ -56,12 +53,12 @@ interface PageInterface extends \Traversable, \Countable
     public function getItemsPerPage(): int;
 
     /**
-     * @return null|PageInterface<TKey,T,TIdentifier>
+     * @return null|PageInterface<TKey,T>
      */
     public function getNextPage(): ?PageInterface;
 
     /**
-     * @return null|PageInterface<TKey,T,TIdentifier>
+     * @return null|PageInterface<TKey,T>
      */
     public function getPreviousPage(): ?PageInterface;
 
@@ -69,7 +66,7 @@ interface PageInterface extends \Traversable, \Countable
      * Gets n next pages
      *
      * @param int<1,max> $numberOfPages
-     * @return array<int,PageInterface<TKey,T,TIdentifier>>
+     * @return array<int,PageInterface<TKey,T>>
      */
     public function getNextPages(int $numberOfPages): array;
 
@@ -77,7 +74,7 @@ interface PageInterface extends \Traversable, \Countable
      * Gets n previous pages
      *
      * @param int<1,max> $numberOfPages
-     * @return array<int,PageInterface<TKey,T,TIdentifier>>
+     * @return array<int,PageInterface<TKey,T>>
      */
     public function getPreviousPages(int $numberOfPages): array;
 }

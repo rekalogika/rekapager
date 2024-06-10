@@ -23,7 +23,7 @@ interface ObjectPaginatorInterface
 {
     /**
      * @param null|TOptions $options
-     * @return PagerInterface<array-key,mixed,object>
+     * @return PagerInterface<array-key,mixed>
      */
     public function paginate(
         object $object,

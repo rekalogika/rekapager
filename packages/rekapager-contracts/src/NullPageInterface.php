@@ -19,8 +19,7 @@ namespace Rekalogika\Contracts\Rekapager;
  *
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @extends PageInterface<TKey,T,TIdentifier>
+ * @extends PageInterface<TKey,T>
  */
 interface NullPageInterface extends PageInterface
 {

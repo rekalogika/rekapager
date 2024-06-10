@@ -18,8 +18,7 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
 /**
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @extends PageInterface<TKey,T,TIdentifier>
+ * @extends PageInterface<TKey,T>
  */
 interface PagerItemInterface extends PageInterface
 {
@@ -32,12 +31,12 @@ interface PagerItemInterface extends PageInterface
     //
 
     /**
-     * @return null|PagerItemInterface<TKey,T,TIdentifier>
+     * @return null|PagerItemInterface<TKey,T>
      */
     public function getNextPage(): ?PagerItemInterface;
 
     /**
-     * @return null|PagerItemInterface<TKey,T,TIdentifier>
+     * @return null|PagerItemInterface<TKey,T>
      */
     public function getPreviousPage(): ?PagerItemInterface;
 
@@ -45,7 +44,7 @@ interface PagerItemInterface extends PageInterface
      * Gets n next pages
      *
      * @param int<1,max> $numberOfPages
-     * @return array<int,PagerItemInterface<TKey,T,TIdentifier>>
+     * @return array<int,PagerItemInterface<TKey,T>>
      */
     public function getNextPages(int $numberOfPages): array;
 
@@ -53,7 +52,7 @@ interface PagerItemInterface extends PageInterface
      * Gets n previous pages
      *
      * @param int<1,max> $numberOfPages
-     * @return array<int,PagerItemInterface<TKey,T,TIdentifier>>
+     * @return array<int,PagerItemInterface<TKey,T>>
      */
     public function getPreviousPages(int $numberOfPages): array;
 }

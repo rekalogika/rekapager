@@ -21,15 +21,14 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
  *
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @implements NullPageInterface<TKey,T,TIdentifier>
+ * @implements NullPageInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  * @internal
  */
 final class NullPageDecorator implements NullPageInterface, \IteratorAggregate
 {
     /**
-     * @param PageInterface<TKey,T,TIdentifier> $page
+     * @param PageInterface<TKey,T> $page
      */
     public function __construct(
         private readonly PageInterface $page,

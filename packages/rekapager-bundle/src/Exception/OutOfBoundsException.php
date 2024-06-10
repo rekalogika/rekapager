@@ -19,7 +19,7 @@ use Rekalogika\Rekapager\Contracts\PagerInterface;
 class OutOfBoundsException extends ContractsOutOfBoundsException
 {
     /**
-     * @param PagerInterface<array-key,mixed,object> $pager
+     * @param PagerInterface<array-key,mixed> $pager
      */
     public function __construct(
         ContractsOutOfBoundsException $exception,
@@ -34,7 +34,7 @@ class OutOfBoundsException extends ContractsOutOfBoundsException
     }
 
     /**
-     * @return PagerInterface<array-key,mixed,object>
+     * @return PagerInterface<array-key,mixed>
      */
     public function getPager(): PagerInterface
     {

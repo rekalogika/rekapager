@@ -22,14 +22,13 @@ use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
  *
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @implements TraversablePagerInterface<TKey,T,TIdentifier>
+ * @implements TraversablePagerInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  */
 final class TraversablePager implements TraversablePagerInterface, \IteratorAggregate
 {
     /**
-     * @param PagerInterface<TKey,T,TIdentifier> $decorated
+     * @param PagerInterface<TKey,T> $decorated
      */
     public function __construct(
         private PagerInterface $decorated

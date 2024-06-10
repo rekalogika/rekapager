@@ -24,7 +24,7 @@ class RekapagerRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * @param PagerInterface<array-key,mixed,object> $pager
+     * @param PagerInterface<array-key,mixed> $pager
      * @param int<0,max>|null $proximity
      * @return string
      */

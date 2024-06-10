@@ -23,8 +23,7 @@ interface PagerUrlGeneratorInterface
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageInterface<TKey,T,TIdentifier> $page
+     * @param PageInterface<TKey,T> $page
      * @return string|null
      */
     public function generateUrl(PageInterface $page): ?string;

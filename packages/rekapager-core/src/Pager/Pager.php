@@ -28,19 +28,18 @@ use Rekalogika\Rekapager\Pager\Internal\ZeroProximityPager;
 /**
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @implements PagerInterface<TKey,T,TIdentifier>
+ * @implements PagerInterface<TKey,T>
  */
 final class Pager implements PagerInterface
 {
     /**
-     * @var PagerInterface<TKey,T,TIdentifier>|null
+     * @var PagerInterface<TKey,T>|null
      */
     private ?PagerInterface $pager = null;
     private PagerUrlGeneratorInterface $pagerUrlGenerator;
 
     /**
-     * @param PageInterface<TKey,T,TIdentifier> $page
+     * @param PageInterface<TKey,T> $page
      * @param int<0,max> $proximity
      */
     public function __construct(
@@ -77,7 +76,7 @@ final class Pager implements PagerInterface
     }
 
     /**
-     * @return PagerInterface<TKey,T,TIdentifier>
+     * @return PagerInterface<TKey,T>
      */
     private function getPager(): PagerInterface
     {

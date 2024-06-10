@@ -18,33 +18,31 @@ namespace Rekalogika\Contracts\Rekapager;
  *
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
  */
 interface PageableInterface
 {
     /**
-     * @param TIdentifier $pageIdentifier
-     * @return PageInterface<TKey,T,TIdentifier>
+     * @return PageInterface<TKey,T>
      */
-    public function getPageByIdentifier(object $pageIdentifier): mixed;
+    public function getPageByIdentifier(object $pageIdentifier): PageInterface;
 
     /**
-     * @return class-string<TIdentifier>
+     * @return class-string
      */
     public static function getPageIdentifierClass(): string;
 
     /**
-     * @return PageInterface<TKey,T,TIdentifier>
+     * @return PageInterface<TKey,T>
      */
     public function getFirstPage(): PageInterface;
 
     /**
-     * @return PageInterface<TKey,T,TIdentifier>|null
+     * @return PageInterface<TKey,T>|null
      */
     public function getLastPage(): ?PageInterface;
 
     /**
-     * @return \Traversable<PageInterface<TKey,T,TIdentifier>>
+     * @return \Traversable<PageInterface<TKey,T>>
      */
     public function getPages(): \Traversable;
 

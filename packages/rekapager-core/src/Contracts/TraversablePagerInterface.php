@@ -20,8 +20,7 @@ namespace Rekalogika\Rekapager\Contracts;
  *
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @extends PagerInterface<TKey,T,TIdentifier>
+ * @extends PagerInterface<TKey,T>
  * @extends \Traversable<TKey,T>
  */
 interface TraversablePagerInterface extends PagerInterface, \Traversable

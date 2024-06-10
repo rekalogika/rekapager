@@ -25,8 +25,8 @@ use Rekalogika\Rekapager\Tests\UnitTests\Fixtures\Entity;
 class OffsetPageableTest extends TestCase
 {
     /**
-     * @param PageableInterface<array-key,Entity,PageNumber> $pageable
-     * @param PageInterface<array-key,Entity,PageNumber>|null $page
+     * @param PageableInterface<array-key,Entity> $pageable
+     * @param PageInterface<array-key,Entity>|null $page
      * @param array<array-key,int> $values
      * @param int<1,max> $pageNumber
      * @param int<1,max> $itemsPerPage
