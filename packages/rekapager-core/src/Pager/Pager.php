@@ -104,7 +104,7 @@ final class Pager implements PagerInterface
     public function getCurrentPage(): PagerItemInterface
     {
         return new PagerItem(
-            $this->page,
+            $this->getPager()->getCurrentPage(),
             $this->pagerUrlGenerator
         );
     }

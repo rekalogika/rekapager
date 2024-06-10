@@ -231,30 +231,6 @@ final class ProximityPager implements PagerInterface
 
         $this->nextPage = $this->nextNeighboringPages[0] ?? $this->lastPage;
 
-        // renumber pages if there is no gap from first page to the current page
-
-        if ($this->hasHiddenPagesBefore === false) {
-            $currentPageNumber = 1;
-
-            if ($this->firstPage !== null) {
-                $this->firstPage = $this->firstPage->withPageNumber($currentPageNumber);
-                $currentPageNumber++;
-            }
-
-            foreach ($this->previousNeighboringPages as $page) {
-                $page = $page->withPageNumber($currentPageNumber);
-                $currentPageNumber++;
-            }
-
-            $this->currentPage = $this->currentPage->withPageNumber($currentPageNumber);
-            $currentPageNumber++;
-
-            foreach ($this->nextNeighboringPages as $page) {
-                $page = $page->withPageNumber($currentPageNumber);
-                $currentPageNumber++;
-            }
-        }
-
         // if we have page number larger than the last page, then the count
         // must be wrong
 
@@ -362,6 +338,34 @@ final class ProximityPager implements PagerInterface
             && $this->nextPage !== null
         ) {
             // $this->nextPage = $this->lastPage;
+        }
+
+        // renumber pages if there is no gap from first page to the current page
+
+        if ($this->hasHiddenPagesBefore === false) {
+            $currentPageNumber = 1;
+
+            if ($this->firstPage !== null) {
+                $this->firstPage = $this->firstPage->withPageNumber($currentPageNumber);
+                $currentPageNumber++;
+            }
+
+            $newPreviousNeighboringPages = [];
+            foreach ($this->previousNeighboringPages as $page) {
+                $newPreviousNeighboringPages[] = $page->withPageNumber($currentPageNumber);
+                $currentPageNumber++;
+            }
+            $this->previousNeighboringPages = $newPreviousNeighboringPages;
+
+            $this->currentPage = $this->currentPage->withPageNumber($currentPageNumber);
+            $currentPageNumber++;
+
+            $newNextNeighboringPages = [];
+            foreach ($this->nextNeighboringPages as $page) {
+                $newNextNeighboringPages[] = $page->withPageNumber($currentPageNumber);
+                $currentPageNumber++;
+            }
+            $this->nextNeighboringPages = $newNextNeighboringPages;
         }
     }
 

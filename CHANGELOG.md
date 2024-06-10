@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.9.3
+
+* fix: renumbering of pages if anchored to the first page.
+
 # 0.9.2
 
 * build: limit `zenstruck/foundry` to 1.37.* for now

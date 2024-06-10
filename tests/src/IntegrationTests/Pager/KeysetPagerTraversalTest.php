@@ -40,4 +40,40 @@ class KeysetPagerTraversalTest extends PagerTestCase
         static::assertEquals(BoundaryType::Lower, $nextPageIdentifier->getBoundaryType());
         static::assertCount(3, $nextPage);
     }
+
+    #[DataProviderExternal(PageableGeneratorProvider::class, 'keyset')]
+    public function testTraversalFromLastToStart(string $pageableGeneratorClass): void
+    {
+        $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
+
+        $lastPage = $pageable->getLastPage();
+        self::assertNotNull($lastPage);
+        $pager = $this->createPagerFromPage($lastPage);
+
+        foreach (range(1, 19) as $i) {
+            $previousPage = $pager->getPreviousPage();
+            self::assertNotNull($previousPage);
+
+            $pager = $this->createPagerFromPage($previousPage);
+        }
+
+        $this->assertPager(
+            $pager,
+            proximity: 2,
+            hasPrevious: true,
+            hasNext: true,
+            hasFirst: true,
+            hasLast: true,
+            hasGapToFirstPage: false,
+            hasGapToLastPage: true,
+            numOfPreviousNeighboringPages: 0,
+            numOfNextNeighboringPages: 3,
+            firstPageNumber: 1,
+            lastPageNumber: -1,
+            currentPageNumber: 2,
+            previousPageNumbers: [],
+            nextPageNumbers: [3, 4, 5],
+            currentCount: 5,
+        );
+    }
 }
