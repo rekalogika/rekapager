@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.10.1
+
+* chore: remove unneeded intermediate interfaces
+
 # 0.10.0
 
 * chore: remove TIdentifier template as it feels superfluous in userland

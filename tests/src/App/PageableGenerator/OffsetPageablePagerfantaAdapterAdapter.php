@@ -16,7 +16,6 @@ namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 use Doctrine\Common\Collections\Criteria;
 use Pagerfanta\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
-use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 use Rekalogika\Rekapager\Pagerfanta\PagerfantaAdapterAdapter;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;

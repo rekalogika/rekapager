@@ -16,7 +16,6 @@ namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 use Doctrine\DBAL\Types\Types;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
-use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;

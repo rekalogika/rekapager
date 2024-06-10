@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Offset;
 
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Contracts\Rekapager\Trait\TotalPagesTrait;
-use Rekalogika\Rekapager\Offset\Contracts\OffsetPageableInterface;
 use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Offset\Internal\NullOffsetPage;
 use Rekalogika\Rekapager\Offset\Internal\OffsetPage;
@@ -24,9 +24,9 @@ use Rekalogika\Rekapager\Offset\Internal\OffsetPage;
 /**
  * @template TKey of array-key
  * @template T
- * @implements OffsetPageableInterface<TKey,T>
+ * @implements PageableInterface<TKey,T>
  */
-final class OffsetPageable implements OffsetPageableInterface
+final class OffsetPageable implements PageableInterface
 {
     use TotalPagesTrait;
 
