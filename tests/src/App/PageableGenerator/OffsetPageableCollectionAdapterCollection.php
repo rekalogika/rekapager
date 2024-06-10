@@ -24,7 +24,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
 
 /**
- * @implements PageableGeneratorInterface<int,Post,PageNumber>
+ * @implements PageableGeneratorInterface<int,Post>
  */
 class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInterface
 {

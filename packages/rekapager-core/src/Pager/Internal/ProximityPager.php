@@ -24,46 +24,45 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
 /**
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @implements PagerInterface<TKey,T,TIdentifier>
+ * @implements PagerInterface<TKey,T>
  * @internal
  */
 final class ProximityPager implements PagerInterface
 {
-    /** @var PageableInterface<TKey,T,TIdentifier> */
+    /** @var PageableInterface<TKey,T> */
     private readonly PageableInterface $pageable;
 
     //
     // pager components
     //
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $previousPage = null;
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $firstPage = null;
 
     private bool $hasHiddenPagesBefore = false;
 
-    /** @var array<int,PagerItem<TKey,T,TIdentifier>> */
+    /** @var array<int,PagerItem<TKey,T>> */
     private array $previousNeighboringPages = [];
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $currentPage = null;
 
-    /** @var array<int,PagerItem<TKey,T,TIdentifier>> */
+    /** @var array<int,PagerItem<TKey,T>> */
     private array $nextNeighboringPages = [];
 
     private bool $hasHiddenPagesAfter = false;
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $lastPage = null;
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $nextPage = null;
 
     /**
-     * @param PageInterface<TKey,T,TIdentifier> $page
+     * @param PageInterface<TKey,T> $page
      * @param int<1,max> $proximity
      */
     public function __construct(
@@ -391,9 +390,8 @@ final class ProximityPager implements PagerInterface
     /**
      * @template TKey2 of array-key
      * @template T2
-     * @template TIdentifier2 of object
-     * @param PageInterface<TKey2,T2,TIdentifier2> $page
-     * @return PagerItem<TKey2,T2,TIdentifier2>
+     * @param PageInterface<TKey2,T2> $page
+     * @return PagerItem<TKey2,T2>
      */
     private function decorate(PageInterface $page): PagerItem
     {

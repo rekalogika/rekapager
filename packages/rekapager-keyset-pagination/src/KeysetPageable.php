@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Keyset;
 
+use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
+use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Contracts\Rekapager\Trait\TotalPagesTrait;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageableInterface;
@@ -129,8 +131,12 @@ final class KeysetPageable implements KeysetPageableInterface
         );
     }
 
-    public function getPageByIdentifier(mixed $pageIdentifier): mixed
+    public function getPageByIdentifier(object $pageIdentifier): PageInterface
     {
+        if (!$pageIdentifier instanceof KeysetPageIdentifier) {
+            throw new InvalidArgumentException('Invalid page identifier');
+        }
+
         return new KeysetPage(
             pageable: $this,
             adapter: $this->adapter,

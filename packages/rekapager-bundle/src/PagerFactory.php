@@ -116,6 +116,7 @@ class PagerFactory implements PagerFactoryInterface
         );
 
         try {
+            /** @psalm-suppress NoValue */
             foreach ($pager->getCurrentPage() as $i);
         } catch (ContractsOutOfBoundsException $e) {
             throw new OutOfBoundsException($e, $pager, $options);
@@ -125,9 +126,7 @@ class PagerFactory implements PagerFactoryInterface
     }
 
     /**
-     * @template T of object
-     * @param PageableInterface<array-key,mixed,T> $pageable
-     * @return T|null
+     * @param PageableInterface<array-key,mixed> $pageable
      */
     private function getPageIdentifier(
         PageableInterface $pageable,
@@ -146,7 +145,6 @@ class PagerFactory implements PagerFactoryInterface
             ->getPageIdentifierEncoder($pageIdentifierClass)
             ->decode($pageIdentifier);
 
-        /** @var T */
         return $pageIdentifier;
     }
 }

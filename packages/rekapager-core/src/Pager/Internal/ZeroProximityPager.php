@@ -22,8 +22,7 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
 /**
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @implements PagerInterface<TKey,T,TIdentifier>
+ * @implements PagerInterface<TKey,T>
  * @internal
  */
 class ZeroProximityPager implements PagerInterface
@@ -32,23 +31,23 @@ class ZeroProximityPager implements PagerInterface
     // pager components
     //
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $previousPage = null;
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $firstPage = null;
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $currentPage = null;
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $lastPage = null;
 
-    /** @var PagerItem<TKey,T,TIdentifier>|null */
+    /** @var PagerItem<TKey,T>|null */
     private ?PagerItem $nextPage = null;
 
     /**
-     * @param PageInterface<TKey,T,TIdentifier> $page
+     * @param PageInterface<TKey,T> $page
      */
     public function __construct(
         PageInterface $page,
@@ -112,9 +111,8 @@ class ZeroProximityPager implements PagerInterface
     /**
      * @template TKey2 of array-key
      * @template T2
-     * @template TIdentifier2 of object
-     * @param PageInterface<TKey2,T2,TIdentifier2>|null $page
-     * @return PagerItem<TKey2,T2,TIdentifier2>|null
+     * @param PageInterface<TKey2,T2>|null $page
+     * @return PagerItem<TKey2,T2>|null
      */
     private function decorate(PageInterface|null $page): ?PagerItem
     {

@@ -47,7 +47,7 @@ final class PagerfantaPageable implements OffsetPageableInterface
         );
     }
 
-    public function getPageByIdentifier(object $pageIdentifier): mixed
+    public function getPageByIdentifier(object $pageIdentifier): PageInterface
     {
         return $this->pageable->getPageByIdentifier($pageIdentifier);
     }

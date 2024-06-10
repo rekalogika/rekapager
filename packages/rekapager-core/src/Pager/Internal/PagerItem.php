@@ -24,8 +24,7 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
  *
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
- * @implements PagerItemInterface<TKey,T,TIdentifier>
+ * @implements PagerItemInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  *
  * @internal
@@ -35,7 +34,7 @@ final class PagerItem implements PagerItemInterface, \IteratorAggregate
     private int|null|NullPageNumber $pageNumber;
 
     /**
-     * @param PageInterface<TKey,T,TIdentifier> $wrapped
+     * @param PageInterface<TKey,T> $wrapped
      */
     public function __construct(
         private PageInterface $wrapped,
@@ -45,7 +44,7 @@ final class PagerItem implements PagerItemInterface, \IteratorAggregate
     }
 
     /**
-     * @return self<TKey,T,TIdentifier>
+     * @return self<TKey,T>
      */
     public function withPageNumber(?int $pageNumber): self
     {
@@ -146,9 +145,8 @@ final class PagerItem implements PagerItemInterface, \IteratorAggregate
     /**
      * @template TKey2 of array-key
      * @template T2
-     * @template TIdentifier2 of object
-     * @param PageInterface<TKey2,T2,TIdentifier2> $page
-     * @return PagerItem<TKey2,T2,TIdentifier2>
+     * @param PageInterface<TKey2,T2> $page
+     * @return PagerItem<TKey2,T2>
      */
     private function decorate(PageInterface $page): PagerItem
     {

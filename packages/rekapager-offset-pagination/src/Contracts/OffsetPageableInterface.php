@@ -20,7 +20,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  *
  * @template TKey of array-key
  * @template T
- * @extends PageableInterface<TKey,T,PageNumber>
+ * @extends PageableInterface<TKey,T>
  */
 interface OffsetPageableInterface extends PageableInterface
 {

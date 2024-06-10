@@ -49,7 +49,7 @@ abstract class PageableTestCase extends KernelTestCase
     }
 
     /**
-     * @return PageableInterface<array-key,mixed,object> $pageable
+     * @return PageableInterface<array-key,mixed> $pageable
      */
     public function createPageableFromGenerator(string $pageableGeneratorClass): PageableInterface
     {

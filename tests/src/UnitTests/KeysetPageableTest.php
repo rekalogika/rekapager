@@ -28,8 +28,8 @@ use Rekalogika\Rekapager\Tests\UnitTests\Fixtures\Entity;
 class KeysetPageableTest extends TestCase
 {
     /**
-     * @param PageableInterface<array-key,Entity,KeysetPageIdentifier> $pageable
-     * @param PageInterface<array-key,Entity,KeysetPageIdentifier>|null $page
+     * @param PageableInterface<array-key,Entity> $pageable
+     * @param PageInterface<array-key,Entity>|null $page
      * @param null|array<string,mixed> $boundaryValues
      * @param array<array-key,int> $values
      */
@@ -45,8 +45,10 @@ class KeysetPageableTest extends TestCase
     ): void {
         self::assertNotNull($page);
 
-        self::assertEquals($boundaryType, $page->getPageIdentifier()->getBoundaryType());
-        self::assertEquals($boundaryValues, $page->getPageIdentifier()->getBoundaryValues());
+        $pageIdentifier = $page->getPageIdentifier();
+        self::assertInstanceOf(KeysetPageIdentifier::class, $pageIdentifier);
+        self::assertEquals($boundaryType, $pageIdentifier->getBoundaryType());
+        self::assertEquals($boundaryValues, $pageIdentifier->getBoundaryValues());
         self::assertEquals($values, array_map(fn (Entity $entity) => $entity->getId(), array_values(iterator_to_array($page))));
         self::assertEquals($hasPreviousPage, null !== $page->getPreviousPage());
         self::assertEquals($hasNextPage, null !== $page->getNextPage());
@@ -54,8 +56,10 @@ class KeysetPageableTest extends TestCase
         $bound = $page->getPageIdentifier();
         $fromCollection = $pageable->getPageByIdentifier($bound);
 
-        self::assertEquals($boundaryType, $fromCollection->getPageIdentifier()->getBoundaryType());
-        self::assertEquals($boundaryValues, $fromCollection->getPageIdentifier()->getBoundaryValues());
+        $pageIdentifier = $fromCollection->getPageIdentifier();
+        self::assertInstanceOf(KeysetPageIdentifier::class, $pageIdentifier);
+        self::assertEquals($boundaryType, $pageIdentifier->getBoundaryType());
+        self::assertEquals($boundaryValues, $pageIdentifier->getBoundaryValues());
         self::assertEquals($values, array_map(fn (Entity $entity) => $entity->getId(), array_values(iterator_to_array($fromCollection))));
         self::assertEquals($hasPreviousPage, null !== $fromCollection->getPreviousPage());
         self::assertEquals($hasNextPage, null !== $fromCollection->getNextPage());

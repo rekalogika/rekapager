@@ -26,10 +26,9 @@ interface PagerFactoryInterface
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
+     * @param PageableInterface<TKey,T> $pageable
      * @param TOptions|null $options
-     * @return PagerInterface<TKey,T,TIdentifier>
+     * @return PagerInterface<TKey,T>
      * @throws OutOfBoundsException
      */
     public function createPager(

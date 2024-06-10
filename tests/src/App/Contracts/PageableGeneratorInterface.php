@@ -19,7 +19,6 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 /**
  * @template TKey of array-key
  * @template T
- * @template TIdentifier of object
  */
 #[AutoconfigureTag('rekalogika.rekapager.pageable_generator')]
 interface PageableGeneratorInterface extends \Countable
@@ -31,7 +30,7 @@ interface PageableGeneratorInterface extends \Countable
      * @param int<1,max> $itemsPerPage
      * @param bool|int<0,max> $count
      * @param int<1,max>|null $pageLimit
-     * @return PageableInterface<TKey,T,TIdentifier>
+     * @return PageableInterface<TKey,T>
      */
     public function generatePageable(
         int $itemsPerPage,

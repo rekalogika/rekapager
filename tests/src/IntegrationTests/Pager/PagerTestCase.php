@@ -40,10 +40,8 @@ abstract class PagerTestCase extends PageableTestCase
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
-     * @param TIdentifier|null $pageIdentifier
-     * @return PagerInterface<TKey,T,TIdentifier>
+     * @param PageableInterface<TKey,T> $pageable
+     * @return PagerInterface<TKey,T>
      */
     protected function createPagerFromPageable(
         PageableInterface $pageable,
@@ -62,7 +60,7 @@ abstract class PagerTestCase extends PageableTestCase
         );
 
         /**
-         * @var PagerInterface<TKey,T,TIdentifier>
+         * @var PagerInterface<TKey,T>
          * @phpstan-ignore-next-line
          */
         return $pager;
@@ -71,9 +69,8 @@ abstract class PagerTestCase extends PageableTestCase
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageInterface<TKey,T,TIdentifier> $page
-     * @return PagerInterface<TKey,T,TIdentifier>
+     * @param PageInterface<TKey,T> $page
+     * @return PagerInterface<TKey,T>
      */
     protected function createPagerFromPage(
         PageInterface $page,
@@ -85,7 +82,7 @@ abstract class PagerTestCase extends PageableTestCase
         );
 
         /**
-         * @var PagerInterface<TKey,T,TIdentifier>
+         * @var PagerInterface<TKey,T>
          * @phpstan-ignore-next-line
          */
         return $pager;
@@ -94,8 +91,7 @@ abstract class PagerTestCase extends PageableTestCase
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PagerInterface<TKey,T,TIdentifier> $pager
+     * @param PagerInterface<TKey,T> $pager
      * @param array<int,int> $previousPageNumbers
      * @param array<int,int> $nextPageNumbers
      */
@@ -155,9 +151,8 @@ abstract class PagerTestCase extends PageableTestCase
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
-     * @return PageInterface<TKey,T,TIdentifier>
+     * @param PageableInterface<TKey,T> $pageable
+     * @return PageInterface<TKey,T>
      */
     protected function getNthPageFromBeginning(
         PageableInterface $pageable,
@@ -177,9 +172,8 @@ abstract class PagerTestCase extends PageableTestCase
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
-     * @return PageInterface<TKey,T,TIdentifier>
+     * @param PageableInterface<TKey,T> $pageable
+     * @return PageInterface<TKey,T>
      */
     protected function getNthPageFromEnd(
         PageableInterface $pageable,
@@ -200,9 +194,8 @@ abstract class PagerTestCase extends PageableTestCase
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
-     * @return PageInterface<TKey,T,TIdentifier>
+     * @param PageableInterface<TKey,T> $pageable
+     * @return PageInterface<TKey,T>
      */
     protected function getLastPageByIteration(
         PageableInterface $pageable,
@@ -225,9 +218,8 @@ abstract class PagerTestCase extends PageableTestCase
     /**
      * @template TKey of array-key
      * @template T
-     * @template TIdentifier of object
-     * @param PageableInterface<TKey,T,TIdentifier> $pageable
-     * @return PageInterface<TKey,T,TIdentifier>
+     * @param PageableInterface<TKey,T> $pageable
+     * @return PageInterface<TKey,T>
      */
     protected function getNthPageFromEndByIteration(
         PageableInterface $pageable,

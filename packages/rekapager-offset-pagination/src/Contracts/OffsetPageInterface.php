@@ -20,7 +20,7 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
  *
  * @template TKey of array-key
  * @template T
- * @extends PageInterface<TKey,T,PageNumber>
+ * @extends PageInterface<TKey,T>
  */
 interface OffsetPageInterface extends PageInterface
 {

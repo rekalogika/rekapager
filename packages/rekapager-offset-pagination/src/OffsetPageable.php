@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Offset;
 
+use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Contracts\Rekapager\Trait\TotalPagesTrait;
 use Rekalogika\Rekapager\Offset\Contracts\OffsetPageableInterface;
@@ -102,8 +103,12 @@ final class OffsetPageable implements OffsetPageableInterface
         return $this->getPageByIdentifier(new PageNumber($totalPages));
     }
 
-    public function getPageByIdentifier(object $pageIdentifier): mixed
+    public function getPageByIdentifier(object $pageIdentifier): PageInterface
     {
+        if (!$pageIdentifier instanceof PageNumber) {
+            throw new InvalidArgumentException('Invalid page identifier');
+        }
+
         return new OffsetPage(
             pageable: $this,
             adapter: $this->adapter,

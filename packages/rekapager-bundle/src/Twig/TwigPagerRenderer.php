@@ -25,7 +25,7 @@ class TwigPagerRenderer
     }
 
     /**
-     * @param PagerInterface<array-key,mixed,object> $pager
+     * @param PagerInterface<array-key,mixed> $pager
      * @param int<0,max>|null $proximity
      */
     public function render(

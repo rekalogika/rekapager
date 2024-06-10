@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.10.0
+
+* chore: remove TIdentifier template as it feels superfluous in userland
+
 # 0.9.3
 
 * fix: renumbering of pages if anchored to the first page.

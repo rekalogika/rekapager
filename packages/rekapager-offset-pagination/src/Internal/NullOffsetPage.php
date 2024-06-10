@@ -22,14 +22,14 @@ use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
  *
  * @template TKey of array-key
  * @template T
- * @implements NullPageInterface<TKey,T,PageNumber>
+ * @implements NullPageInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  * @internal
  */
 final class NullOffsetPage implements NullPageInterface, \IteratorAggregate
 {
     /**
-     * @param PageableInterface<TKey,T,PageNumber> $pageable
+     * @param PageableInterface<TKey,T> $pageable
      * @param int<1,max> $pageNumber
      * @param int<1,max> $itemsPerPage
      */

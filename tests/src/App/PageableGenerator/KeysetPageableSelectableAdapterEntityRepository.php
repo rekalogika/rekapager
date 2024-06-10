@@ -24,7 +24,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 
 /**
- * @implements PageableGeneratorInterface<int,Post,KeysetPageIdentifier>
+ * @implements PageableGeneratorInterface<int,Post>
  */
 class KeysetPageableSelectableAdapterEntityRepository implements PageableGeneratorInterface
 {
