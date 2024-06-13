@@ -108,6 +108,12 @@ For interoperability, the library supports offset pagination using any of the
 existing Pagerfanta adapters, as well as adapting a Pagerfanta instance into an
 `OffsetPageableInterface` instance.
 
+### Same Interface for Both Offset and Keyset Pagination
+
+Both offset pagination and keyset pagination use the same interface. This allows
+you to keep using offset pagination and later switch to keyset pagination
+without too much effort.
+
 ## Secure by Default (or Prevents AI Crawlers from Wreaking Havoc)
 
 With keyset pagination, not counting by default, and limiting pages in
@@ -120,7 +126,8 @@ After the AI craze, there is a surge of web crawlers that are looking for
 contents for AI training. Unlike traditional search engine crawlers, these new
 crawlers tend to be much dumber and much less respectful. Some would foolishly
 traverse thousands of paginated contents with a sub-second delay, causing a
-denial of service to the server. This library can help to prevent that.
+denial of service to the server. If your application is public and uses
+pagination, this library can help to prevent this problem.
 
 ## Supported Underlying Data Types
 
