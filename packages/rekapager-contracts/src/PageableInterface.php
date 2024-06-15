@@ -29,7 +29,7 @@ interface PageableInterface
     /**
      * @return class-string
      */
-    public static function getPageIdentifierClass(): string;
+    public function getPageIdentifierClass(): string;
 
     /**
      * @return PageInterface<TKey,T>

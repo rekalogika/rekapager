@@ -54,7 +54,7 @@ final class KeysetPageable implements PageableInterface
         return $new;
     }
 
-    public static function getPageIdentifierClass(): string
+    public function getPageIdentifierClass(): string
     {
         return KeysetPageIdentifier::class;
     }

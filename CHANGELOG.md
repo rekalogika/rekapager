@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.11.0
+
+* refactor: change `PageableInterface::getPageIdentifierClass()` from static to
+  instance method to simplify decoration
+
 # 0.10.1
 
 * chore: remove unneeded intermediate interfaces

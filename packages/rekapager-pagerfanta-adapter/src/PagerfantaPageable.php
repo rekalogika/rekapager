@@ -52,9 +52,9 @@ final class PagerfantaPageable implements PageableInterface
         return $this->pageable->getPageByIdentifier($pageIdentifier);
     }
 
-    public static function getPageIdentifierClass(): string
+    public function getPageIdentifierClass(): string
     {
-        return OffsetPageable::getPageIdentifierClass();
+        return $this->pageable->getPageIdentifierClass();
     }
 
     public function getPages(): \Traversable
