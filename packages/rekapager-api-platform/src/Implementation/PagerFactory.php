@@ -51,7 +51,7 @@ class PagerFactory implements PagerFactoryInterface
         }
 
         $pageIdentifierEncoder = $this->pageIdentifierEncoderLocator
-            ->getPageIdentifierEncoder($pageable::getPageIdentifierClass());
+            ->getPageIdentifierEncoder($pageable->getPageIdentifierClass());
 
         $iri = $this->getIriFromContext($context);
         $encodedPageIdentifier = $this->getEncodedPageIdentifierFromIri($iri);

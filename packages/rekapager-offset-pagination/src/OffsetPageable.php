@@ -57,7 +57,7 @@ final class OffsetPageable implements PageableInterface
         return $new;
     }
 
-    public static function getPageIdentifierClass(): string
+    public function getPageIdentifierClass(): string
     {
         return PageNumber::class;
     }
