@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.11.1
+
+* test: add `UnsupportedCollectionTest`
+
 # 0.11.0
 
 * refactor: change `PageableInterface::getPageIdentifierClass()` from static to
