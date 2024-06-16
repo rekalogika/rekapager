@@ -68,7 +68,7 @@ final class SelectableKeysetItem implements KeysetItemInterface
             $value = ClosureExpressionVisitor::getObjectFieldValue($this->objectOrArrayValue, $property);
 
             if ($value === null) {
-                throw new NullBoundaryValueException(sprintf('The property "%s" of the value "%s" is a boundary value of this pagination, but it is found to be null. Null value in a boundary value is not supported.', $property, get_debug_type($value)));
+                throw new NullBoundaryValueException(sprintf('The property "%s" is a boundary property of this pagination, but it is either null or does not exist. All properties involved in the order-by clause must exist and the value must not be null.', $property));
             }
 
             /** @psalm-suppress MixedAssignment */
