@@ -3,6 +3,7 @@
 # 0.11.1
 
 * test: add `UnsupportedCollectionTest`
+* fix: improve error message if a property does not exist or the value is null
 
 # 0.11.0
 
