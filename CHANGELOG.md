@@ -7,6 +7,9 @@
 * feat: friendly error message if the underlying collection's item is not an array or object
 * feat(`SelectableAdapter`): refuse to continue if the supplied criteria has a
   first result or max results parameter set
+* feat(`QueryBuilderAdapter`): refuse to continue if the supplied criteria has a
+  first result or max results parameter set
+* legal: add LICENSE to each of the subpackages
 
 # 0.11.0
 
