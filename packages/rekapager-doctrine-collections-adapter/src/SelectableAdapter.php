@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCollectionItemException;
+use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCriteriaException;
 use Rekalogika\Rekapager\Doctrine\Collections\Internal\SelectableKeysetItem;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
@@ -43,6 +44,10 @@ final class SelectableAdapter implements
     ) {
         $criteria ??= Criteria::create();
         $orderings = $criteria->orderings();
+
+        if ($criteria->getFirstResult() !== null || $criteria->getMaxResults() !== null) {
+            throw new UnsupportedCriteriaException();
+        }
 
         // if no criteria is set, assume that 'id' is the primary key
         if (\count($orderings) === 0) {
