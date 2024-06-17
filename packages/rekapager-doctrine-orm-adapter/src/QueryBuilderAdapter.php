@@ -22,6 +22,7 @@ use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
+use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryCounter;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
@@ -46,6 +47,9 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
         private array $typeMapping = [],
         private bool|null $useOutputWalkers = null,
     ) {
+        if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
+            throw new UnsupportedQueryBuilderException();
+        }
     }
 
     public function countItems(): ?int
