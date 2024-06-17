@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\Doctrine\Collections;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
+use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCollectionItemException;
 use Rekalogika\Rekapager\Doctrine\Collections\Internal\SelectableKeysetItem;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
@@ -72,7 +73,15 @@ final class SelectableAdapter implements
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 
-        return $this->collection->matching($criteria)->toArray();
+        try {
+            return $this->collection->matching($criteria)->toArray();
+        } catch (\TypeError $e) {
+            if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
+                throw new UnsupportedCollectionItemException($matches[1], $e);
+            }
+            throw $e;
+
+        }
     }
 
     public function countOffsetItems(int $offset = 0, ?int $limit = null): int
@@ -256,7 +265,15 @@ final class SelectableAdapter implements
     ): array {
         $criteria = $this->getCriteria($offset, $limit, $boundaryValues, $boundaryType);
 
-        $items = $this->collection->matching($criteria)->toArray();
+        try {
+            $items = $this->collection->matching($criteria)->toArray();
+        } catch (\TypeError $e) {
+            if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
+                throw new UnsupportedCollectionItemException($matches[1], $e);
+            }
+            throw $e;
+
+        }
 
         if ($boundaryType === BoundaryType::Upper) {
             $items = array_reverse($items);

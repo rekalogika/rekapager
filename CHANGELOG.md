@@ -4,6 +4,7 @@
 
 * test: add `UnsupportedCollectionTest`
 * fix: improve error message if a property does not exist or the value is null
+* feat: friendly error message if the underlying collection's item is not an array or object
 
 # 0.11.0
 
