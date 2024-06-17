@@ -14,37 +14,31 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\UnitTests;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPUnit\Framework\Attributes\RequiresPhp;
 use PHPUnit\Framework\TestCase;
+use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCollectionItemException;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 
 class UnsupportedCollectionTest extends TestCase
 {
-    /**
-     * @todo Fix after the resolution of https://github.com/doctrine/collections/pull/421
-     */
-    #[RequiresPhp('99999')]
     public function testCollectionOfScalarWithKeysetPagination(): void
     {
         $collection = new ArrayCollection([1, 2, 3, 4, 5]);
         $adapter = new SelectableAdapter($collection);
         $pageable = new KeysetPageable($adapter, 2);
 
+        $this->expectException(UnsupportedCollectionItemException::class);
         foreach ($pageable->getFirstPage() as $item);
     }
 
-    /**
-     * @todo Fix after the resolution of https://github.com/doctrine/collections/pull/421
-     */
-    #[RequiresPhp('99999')]
     public function testCollectionOfScalarWithOffsetPagination(): void
     {
         $collection = new ArrayCollection([1, 2, 3, 4, 5]);
         $adapter = new SelectableAdapter($collection);
         $pageable = new OffsetPageable($adapter, 2);
 
+        $this->expectException(UnsupportedCollectionItemException::class);
         foreach ($pageable->getFirstPage() as $item);
     }
 }
