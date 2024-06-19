@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.11.2
+
+* fix: add interface covariance where applicable
+
 # 0.11.1
 
 * test: add `UnsupportedCollectionTest`
