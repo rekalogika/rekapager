@@ -19,8 +19,8 @@ use Rekalogika\Rekapager\Keyset\Contracts\KeysetItemInterface;
 /**
  * Represents a collection that can be partitioned into pages
  *
- * @template-covariant TKey of array-key
- * @template T
+ * @template TKey of array-key
+ * @template-covariant T
  */
 interface KeysetPaginationAdapterInterface
 {

@@ -18,7 +18,7 @@ namespace Rekalogika\Contracts\Rekapager;
  * provide the data.
  *
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  * @extends PageInterface<TKey,T>
  */
 interface NullPageInterface extends PageInterface

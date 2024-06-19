@@ -19,7 +19,7 @@ namespace Rekalogika\Contracts\Rekapager;
  * it must return an empty list.
  *
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  * @extends \Traversable<TKey,T>
  */
 interface PageInterface extends \Traversable, \Countable

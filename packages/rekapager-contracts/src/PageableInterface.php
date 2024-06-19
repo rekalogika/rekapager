@@ -17,7 +17,7 @@ namespace Rekalogika\Contracts\Rekapager;
  * Represents a collection that can be partitioned into pages
  *
  * @template TKey of array-key
- * @template T
+ * @template-covariant T
  */
 interface PageableInterface
 {
