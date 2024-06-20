@@ -43,10 +43,7 @@ final class PagerItem implements PagerItemInterface, \IteratorAggregate
         $this->pageNumber = new NullPageNumber();
     }
 
-    /**
-     * @return self<TKey,T>
-     */
-    public function withPageNumber(?int $pageNumber): self
+    public function withPageNumber(?int $pageNumber): static
     {
         return new self(
             wrapped: $this->wrapped->withPageNumber($pageNumber),
