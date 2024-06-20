@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.12.0
+
+* fix(`PagerItem`): `withPageNumber` should return static
+
 # 0.11.2
 
 * fix: add interface covariance where applicable
