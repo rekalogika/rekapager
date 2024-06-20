@@ -217,9 +217,6 @@ final class ProximityPager implements PagerInterface
             // page from the next neighboring pages, and set it as the last page
             $lastPage = array_pop($this->nextNeighboringPages);
             $this->lastPage = $lastPage;
-        // } elseif (!$lastIsLastPage && !$hasGapToLastPage) {
-        //     $lastPage = array_pop($this->nextNeighboringPages);
-        //     $this->lastPage = $lastPage;
         } else {
             if ($hasGapToLastPage) {
                 $this->hasHiddenPagesAfter = true;
