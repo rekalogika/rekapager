@@ -17,6 +17,8 @@ namespace Rekalogika\Contracts\Rekapager;
  * Represents a page that is known to exist, but the implementation refuses to
  * provide the data.
  *
+ * @see https://rekalogika.dev/rekapager/pageable-page
+ *
  * @template TKey of array-key
  * @template-covariant T
  * @extends PageInterface<TKey,T>
