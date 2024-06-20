@@ -3,6 +3,7 @@
 # 0.12.0
 
 * fix(`PagerItem`): `withPageNumber` should return static
+* build: update php-cs-fixer
 
 # 0.11.2
 
