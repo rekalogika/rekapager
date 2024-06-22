@@ -22,10 +22,10 @@ use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
+use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryCounter;
-use Rekalogika\Rekapager\Doctrine\ORM\Internal\Utils;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
 use Symfony\Bridge\Doctrine\Types\UlidType;
@@ -282,7 +282,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
             }
 
             if ($this->indexBy !== null) {
-                $key = Utils::resolveIndex($row, $this->indexBy);
+                $key = IndexResolver::resolveIndex($row, $this->indexBy);
             }
 
             $results[] = new QueryBuilderKeysetItem($key, $row, $boundaryValues);

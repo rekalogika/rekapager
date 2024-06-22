@@ -11,17 +11,17 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Doctrine\ORM\Internal;
+namespace Rekalogika\Rekapager\Adapter\Common;
 
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
-use Rekalogika\Rekapager\Doctrine\ORM\Exception\CannotResolveIndexException;
-use Rekalogika\Rekapager\Doctrine\ORM\Exception\IncompatibleKeyTypeException;
-use Rekalogika\Rekapager\Doctrine\ORM\Exception\RowNotCompatibleWithIndexByException;
+use Rekalogika\Rekapager\Adapter\Common\Exception\CannotResolveIndexException;
+use Rekalogika\Rekapager\Adapter\Common\Exception\IncompatibleIndexTypeException;
+use Rekalogika\Rekapager\Adapter\Common\Exception\RowNotCompatibleWithIndexByException;
 
 /**
  * @internal
  */
-final class Utils
+final class IndexResolver
 {
     private function __construct()
     {
@@ -41,7 +41,7 @@ final class Utils
         }
 
         if (!\is_string($key) && !\is_int($key) && !$key instanceof \Stringable) {
-            throw new IncompatibleKeyTypeException($row, $indexBy, $key);
+            throw new IncompatibleIndexTypeException($row, $indexBy, $key);
         }
 
         if ($key instanceof \Stringable) {

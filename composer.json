@@ -14,6 +14,7 @@
         "psr-4": {
             "Rekalogika\\Contracts\\Rekapager\\": "packages/rekapager-contracts/src/",
             "Rekalogika\\Rekapager\\": "packages/rekapager-core/src/",
+            "Rekalogika\\Rekapager\\Adapter\\Common\\": "packages/rekapager-adapter-common/src/",
             "Rekalogika\\Rekapager\\ApiPlatform\\": "packages/rekapager-api-platform/src/",
             "Rekalogika\\Rekapager\\Bundle\\": "packages/rekapager-bundle/src/",
             "Rekalogika\\Rekapager\\Doctrine\\Collections\\": "packages/rekapager-doctrine-collections-adapter/src/",
@@ -94,6 +95,7 @@
         }
     },
     "replace": {
+        "rekalogika/rekapager-adapter-common": "self.version",
         "rekalogika/rekapager-api-platform": "0.11.2",
         "rekalogika/rekapager-bundle": "0.11.2",
         "rekalogika/rekapager-contracts": "0.11.2",
