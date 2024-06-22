@@ -41,7 +41,6 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
 
     private ?bool $hasPreviousPage = null;
     private ?bool $hasNextPage = null;
-    private ?bool $resultIsList = null;
 
     /**
      * @param KeysetPageable<TKey,T> $pageable
@@ -155,29 +154,6 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
                 $this->hasPreviousPage = false;
             }
             $this->hasNextPage = false;
-        }
-
-        // determine if the result is a list
-
-        $this->resultIsList = true;
-        /** @var null|int */
-        $lastKey = null;
-        foreach ($result as $_ => $item) {
-            $key = $item->getKey();
-
-            if ($lastKey !== null) {
-                if (!\is_int($key) || !\is_int($lastKey)) {
-                    $this->resultIsList = false;
-                    break;
-                }
-
-                if ($key !== $lastKey + 1) {
-                    $this->resultIsList = false;
-                    break;
-                }
-            }
-
-            $lastKey = $key;
         }
 
         return $result;
@@ -419,10 +395,6 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
 
         foreach ($this->getResult() as $result) {
             $results[$result->getKey()] = $result->getValue();
-        }
-
-        if ($this->resultIsList) {
-            $results = array_values($results);
         }
 
         /** @psalm-suppress InvalidReturnStatement */

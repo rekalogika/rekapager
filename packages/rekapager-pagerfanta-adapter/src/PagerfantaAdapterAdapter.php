@@ -37,7 +37,7 @@ final class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
         /** @psalm-suppress InvalidArgument */
         $items = iterator_to_array($this->pagerfanta->getSlice($offset, $limit));
 
-        if ($this->indexBy !== null && array_is_list($items)) {
+        if ($this->indexBy !== null) {
             $newItems = [];
 
             /** @var T $item */
