@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Pagerfanta;
 
 use Pagerfanta\Adapter\AdapterInterface;
+use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
 
 /**
@@ -26,16 +27,30 @@ final class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
      * @param AdapterInterface<T> $pagerfanta
      */
     public function __construct(
-        private readonly AdapterInterface $pagerfanta
+        private readonly AdapterInterface $pagerfanta,
+        private readonly string|null $indexBy = null,
     ) {
     }
 
     public function getOffsetItems(int $offset, int $limit): array
     {
-        $this->pagerfanta->getSlice($offset, $limit);
-
         /** @psalm-suppress InvalidArgument */
-        return iterator_to_array($this->pagerfanta->getSlice($offset, $limit));
+        $items = iterator_to_array($this->pagerfanta->getSlice($offset, $limit));
+
+        if ($this->indexBy !== null && array_is_list($items)) {
+            $newItems = [];
+
+            /** @var T $item */
+            foreach ($items as $item) {
+                $key = IndexResolver::resolveIndex($item, $this->indexBy);
+                $newItems[$key] = $item;
+            }
+
+            /** @var array<array-key,T> */
+            $items = $newItems;
+        }
+
+        return $items;
     }
 
     public function countOffsetItems(int $offset = 0, ?int $limit = null): ?int

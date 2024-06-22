@@ -9,6 +9,7 @@
   ease batch resuming.
 * refactor: move common indexBy logic to separate package
 * feat(`SelectableAdapter`): add `indexBy` parameter
+* feat(`PagerfantaAdapterAdapter`): add `indexBy` parameter
 
 # 0.11.2
 

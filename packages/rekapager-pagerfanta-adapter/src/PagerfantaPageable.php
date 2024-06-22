@@ -38,9 +38,13 @@ final class PagerfantaPageable implements PageableInterface
         private readonly PagerfantaInterface $pagerfanta,
         private readonly int|bool $count = false,
         private readonly ?int $pageLimit = 100,
+        string|null $indexBy = null,
     ) {
         $this->pageable = new OffsetPageable(
-            adapter: new PagerfantaAdapterAdapter($pagerfanta->getAdapter()),
+            adapter: new PagerfantaAdapterAdapter(
+                pagerfanta: $pagerfanta->getAdapter(),
+                indexBy: $indexBy,
+            ),
             itemsPerPage: $pagerfanta->getMaxPerPage(),
             count: $count,
             pageLimit: $pageLimit,

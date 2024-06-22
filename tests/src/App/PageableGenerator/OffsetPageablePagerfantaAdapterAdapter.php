@@ -54,10 +54,13 @@ class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterfa
 
         // @highlight-start
         $criteria = Criteria::create()
-                ->where(Criteria::expr()->eq('setName', $setName));
+            ->where(Criteria::expr()->eq('setName', $setName));
 
         $pagerfantaAdapter = new SelectableAdapter($user->getPosts(), $criteria);
-        $adapter = new PagerfantaAdapterAdapter($pagerfantaAdapter);
+        $adapter = new PagerfantaAdapterAdapter(
+            pagerfanta: $pagerfantaAdapter,
+            indexBy: 'id',
+        );
 
         $pageable = new OffsetPageable(
             adapter: $adapter,
