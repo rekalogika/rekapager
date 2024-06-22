@@ -69,6 +69,7 @@
         "symfony/debug-bundle": "^6.4 || ^7.0",
         "symfony/doctrine-bridge": "^6.4 || ^7.0",
         "symfony/dotenv": "^6.4 || ^7.0",
+        "symfony/error-handler": "^6.4 || ^7.0",
         "symfony/form": "^6.4 || ^7.0",
         "symfony/framework-bundle": "^6.4 || ^7.0",
         "symfony/http-client": "^6.4 || ^7.0",

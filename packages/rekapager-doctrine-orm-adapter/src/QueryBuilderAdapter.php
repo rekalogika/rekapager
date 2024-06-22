@@ -25,6 +25,7 @@ use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryCounter;
+use Rekalogika\Rekapager\Doctrine\ORM\Internal\Utils;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
 use Symfony\Bridge\Doctrine\Types\UlidType;
@@ -44,8 +45,9 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
      */
     public function __construct(
         private readonly QueryBuilder $queryBuilder,
-        private array $typeMapping = [],
-        private bool|null $useOutputWalkers = null,
+        private readonly array $typeMapping = [],
+        private readonly bool|null $useOutputWalkers = null,
+        private readonly string|null $indexBy = null,
     ) {
         if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
             throw new UnsupportedQueryBuilderException();
@@ -264,9 +266,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
         $boundaryFieldNames = $this->getBoundaryFieldNames();
         $results = [];
 
-        $i = 0;
-
-        foreach ($result as $row) {
+        foreach ($result as $key => $row) {
             /** @var array<string,mixed> */
             $boundaryValues = [];
             foreach (array_reverse($boundaryFieldNames) as $field) {
@@ -281,9 +281,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 $row = array_pop($row);
             }
 
-            $results[] = new QueryBuilderKeysetItem($i, $row, $boundaryValues);
+            if ($this->indexBy !== null) {
+                $key = Utils::resolveIndex($row, $this->indexBy);
+            }
 
-            $i++;
+            $results[] = new QueryBuilderKeysetItem($key, $row, $boundaryValues);
         }
 
         /**
