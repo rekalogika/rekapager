@@ -42,11 +42,9 @@ doctrine:
 	$(PHP) tests/bin/console doctrine:fixtures:load --no-interaction
 
 .PHONY: fixtures
-fixtures: tests/var/data.db
-
-tests/var/data.db:
-	rm -f $@
-	sqlite3 $@ < tests/data.sql
+fixtures:
+	rm -f tests/var/data.db
+	sqlite3 tests/var/data.db < tests/data.sql
 
 .PHONY: serve
 serve:
