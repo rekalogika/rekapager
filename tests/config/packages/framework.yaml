@@ -6,6 +6,7 @@ framework:
     http_method_override: false
     handle_all_throwables: true
     php_errors:
+        throw: true
         log: true
     uid:
         default_uuid_version: 7

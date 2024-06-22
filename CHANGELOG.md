@@ -4,6 +4,7 @@
 
 * fix(`PagerItem`): `withPageNumber` should return static
 * build: update php-cs-fixer
+* feat(`QueryBuilderAdapter`): add `indexBy` parameter
 
 # 0.11.2
 

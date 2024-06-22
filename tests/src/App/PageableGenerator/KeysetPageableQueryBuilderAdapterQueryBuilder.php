@@ -59,7 +59,8 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             queryBuilder: $queryBuilder,
             typeMapping: [
                 'p.date' => Types::DATE_MUTABLE
-            ]
+            ],
+            indexBy: 'id'
         );
 
         $pageable = new KeysetPageable(
