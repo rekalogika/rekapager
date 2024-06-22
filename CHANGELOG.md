@@ -10,6 +10,7 @@
 * refactor: move common indexBy logic to separate package
 * feat(`SelectableAdapter`): add `indexBy` parameter
 * feat(`PagerfantaAdapterAdapter`): add `indexBy` parameter
+* test: use SQL file for fixtures population. should fix CI race condition.
 
 # 0.11.2
 

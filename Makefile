@@ -20,6 +20,7 @@ psalm:
 .PHONY: phpunit
 phpunit:
 	$(eval c ?=)
+	make fixtures
 	$(PHP) vendor/bin/phpunit $(c)
 
 .PHONY: lint
@@ -39,6 +40,11 @@ doctrine:
 	rm -f tests/var/data.db
 	$(PHP) tests/bin/console doctrine:schema:create
 	$(PHP) tests/bin/console doctrine:fixtures:load --no-interaction
+
+.PHONY: fixtures
+fixtures:
+	rm -f tests/var/data.db
+	sqlite3 tests/var/data.db < tests/data.sql
 
 .PHONY: serve
 serve:
