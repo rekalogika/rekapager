@@ -86,7 +86,7 @@ final class SelectableAdapter implements
             // workaround: use indexBy
             $items = $this->collection->matching($criteria)->toArray();
 
-            if ($this->indexBy !== null && array_is_list($items)) {
+            if ($this->indexBy !== null) {
                 $newItems = [];
 
                 /** @var T $item */
@@ -296,7 +296,7 @@ final class SelectableAdapter implements
             // workaround: use indexBy
             $items = $this->collection->matching($criteria)->toArray();
 
-            if ($this->indexBy !== null && array_is_list($items)) {
+            if ($this->indexBy !== null) {
                 $newItems = [];
 
                 /** @var T $item */

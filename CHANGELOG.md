@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.12.1
+
+* fix: remove all `array_is_list()` checks
+
 # 0.12.0
 
 * fix(`PagerItem`): `withPageNumber` should return static
