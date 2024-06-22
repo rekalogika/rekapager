@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Keyset;
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
-use Rekalogika\Contracts\Rekapager\Trait\TotalPagesTrait;
+use Rekalogika\Contracts\Rekapager\Trait\PageableTrait;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
 use Rekalogika\Rekapager\Keyset\Internal\KeysetPage;
@@ -28,7 +28,10 @@ use Rekalogika\Rekapager\Keyset\Internal\KeysetPage;
  */
 final class KeysetPageable implements PageableInterface
 {
-    use TotalPagesTrait;
+    /**
+     * @use PageableTrait<TKey,T>
+     */
+    use PageableTrait;
 
     /**
      * @var int<0,max>|null
@@ -62,17 +65,6 @@ final class KeysetPageable implements PageableInterface
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
-    }
-
-    public function getPages(): \Traversable
-    {
-        $page = $this->getFirstPage();
-
-        while ($page !== null) {
-            yield $page;
-
-            $page = $page->getNextPage();
-        }
     }
 
     /**

@@ -56,9 +56,11 @@ interface PageableInterface
     /**
      * Gets an iterable of all pages in the pageable object.
      *
+     * @param object|null $start The identifier of the starting page. If null,
+     * it will start from the first page.
      * @return \Traversable<PageInterface<TKey,T>>
      */
-    public function getPages(): \Traversable;
+    public function getPages(?object $start = null): \Traversable;
 
     /**
      * Gets the number of items per page. The actual items in the page may be

@@ -46,4 +46,46 @@ class BatchTest extends PageableTestCase
         static::assertSame(21, $pagesCount);
         static::assertCount(1003, $ids);
     }
+
+    #[DataProviderExternal(PageableGeneratorProvider::class, 'all')]
+    public function testBatchResuming(string $pageableGeneratorClass): void
+    {
+        $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
+
+        $itemsCount = 0;
+        $pagesCount = 0;
+        $ids = [];
+
+        $currentIdentifier = null;
+
+        foreach ($pageable->withItemsPerPage(50)->getPages() as $page) {
+            $currentIdentifier = $page->getPageIdentifier();
+
+            if ($pagesCount === 5) {
+                break;
+            }
+
+            /** @var Post $post */
+            foreach ($page as $post) {
+                $ids[$post->getId()] = true;
+                $itemsCount++;
+            }
+            $pagesCount++;
+        }
+
+        foreach ($pageable->withItemsPerPage(50)->getPages($currentIdentifier) as $page) {
+            $currentIdentifier = $page->getPageIdentifier();
+
+            /** @var Post $post */
+            foreach ($page as $post) {
+                $ids[$post->getId()] = true;
+                $itemsCount++;
+            }
+            $pagesCount++;
+        }
+
+        static::assertSame(1003, $itemsCount);
+        static::assertSame(21, $pagesCount);
+        static::assertCount(1003, $ids);
+    }
 }

@@ -57,9 +57,9 @@ final class PagerfantaPageable implements PageableInterface
         return $this->pageable->getPageIdentifierClass();
     }
 
-    public function getPages(): \Traversable
+    public function getPages(?object $start = null): \Traversable
     {
-        return $this->pageable->getPages();
+        return $this->pageable->getPages($start);
     }
 
     public function getFirstPage(): PageInterface
