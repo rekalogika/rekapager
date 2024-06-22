@@ -1,4 +1,4 @@
-# rekalogika/rekapager-api-platform
+# rekalogika/rekapager-adapter-common
 
 Common utilities for Rekapager adapters. Not intended to be used directly.
 
