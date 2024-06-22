@@ -1,6 +1,6 @@
 # rekalogika/rekapager-api-platform
 
-Integrates Rekapager with the API Platform framework.
+Common utilities for Rekapager adapters. Not intended to be used directly.
 
 Rekapager is a pagination library for PHP, supporting both offset-based and
 keyset-based pagination.
