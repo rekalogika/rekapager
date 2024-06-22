@@ -11,11 +11,11 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Doctrine\ORM\Exception;
+namespace Rekalogika\Rekapager\Adapter\Common\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class IncompatibleKeyTypeException extends UnexpectedValueException
+class IncompatibleIndexTypeException extends UnexpectedValueException
 {
     public function __construct(mixed $row, string $indexBy, mixed $key)
     {

@@ -7,6 +7,7 @@
 * feat(`QueryBuilderAdapter`): add `indexBy` parameter
 * feat(`PageableInterface`): add `$start` parameter to `getPages()` method to
   ease batch resuming.
+* refactor: move common indexBy logic to separate package
 
 # 0.11.2
 

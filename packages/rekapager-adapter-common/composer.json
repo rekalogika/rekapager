@@ -1,0 +1,22 @@
+{
+    "name": "rekalogika/rekapager-adapter-common",
+    "description": "Common utilities for Rekapager adapters. Not intended to be used directly.",
+    "homepage": "https://rekalogika.dev/rekapager",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Rekapager\\Adapter\\Common\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "doctrine/collections": "^2.2"
+    }
+}

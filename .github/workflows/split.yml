@@ -19,6 +19,7 @@ jobs:
             fail-fast: false
             matrix:
                 name:
+                    - rekapager-adapter-common
                     - rekapager-api-platform
                     - rekapager-bundle
                     - rekapager-contracts
