@@ -5,6 +5,8 @@
 * fix(`PagerItem`): `withPageNumber` should return static
 * build: update php-cs-fixer
 * feat(`QueryBuilderAdapter`): add `indexBy` parameter
+* feat(`PageableInterface`): add `$start` parameter to `getPages()` method to
+  ease batch resuming.
 
 # 0.11.2
 

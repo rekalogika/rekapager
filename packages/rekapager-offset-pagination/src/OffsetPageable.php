@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Offset;
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
-use Rekalogika\Contracts\Rekapager\Trait\TotalPagesTrait;
+use Rekalogika\Contracts\Rekapager\Trait\PageableTrait;
 use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Offset\Internal\NullOffsetPage;
 use Rekalogika\Rekapager\Offset\Internal\OffsetPage;
@@ -28,7 +28,10 @@ use Rekalogika\Rekapager\Offset\Internal\OffsetPage;
  */
 final class OffsetPageable implements PageableInterface
 {
-    use TotalPagesTrait;
+    /**
+     * @use PageableTrait<TKey,T>
+     */
+    use PageableTrait;
 
     /**
      * @var int<0,max>|null
@@ -65,17 +68,6 @@ final class OffsetPageable implements PageableInterface
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
-    }
-
-    public function getPages(): \Traversable
-    {
-        $page = $this->getFirstPage();
-
-        while ($page !== null) {
-            yield $page;
-
-            $page = $page->getNextPage();
-        }
     }
 
     public function getFirstPage(): PageInterface

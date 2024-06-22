@@ -13,8 +13,21 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Rekapager\Trait;
 
-trait TotalPagesTrait
+use Rekalogika\Contracts\Rekapager\PageInterface;
+
+/**
+ * @template TKey of array-key
+ * @template-covariant T
+ */
+trait PageableTrait
 {
+    /**
+     * @return PageInterface<TKey,T>
+     */
+    abstract public function getFirstPage(): PageInterface;
+
+    abstract public function getPageByIdentifier(object $pageIdentifier): PageInterface;
+
     /**
      * @return int<1,max>
      */
@@ -40,5 +53,23 @@ trait TotalPagesTrait
         \assert($result >= 0);
 
         return $result;
+    }
+
+    /**
+     * @return \Traversable<PageInterface<TKey,T>>
+     */
+    public function getPages(?object $start = null): \Traversable
+    {
+        if ($start === null) {
+            $page = $this->getFirstPage();
+        } else {
+            $page = $this->getPageByIdentifier($start);
+        }
+
+        while ($page !== null) {
+            yield $page;
+
+            $page = $page->getNextPage();
+        }
     }
 }
