@@ -58,7 +58,11 @@ class KeysetPageableSelectableAdapterEntityRepository implements PageableGenerat
                 'id' => Order::Ascending
             ]);
 
-        $adapter = new SelectableAdapter($selectable, $criteria);
+        $adapter = new SelectableAdapter(
+            collection: $selectable,
+            criteria: $criteria,
+            indexBy: 'id',
+        );
 
         $pageable = new KeysetPageable(
             adapter: $adapter,
