@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\Doctrine\Collections;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
+use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCollectionItemException;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCriteriaException;
 use Rekalogika\Rekapager\Doctrine\Collections\Internal\SelectableKeysetItem;
@@ -41,6 +42,7 @@ final class SelectableAdapter implements
     public function __construct(
         private readonly Selectable $collection,
         ?Criteria $criteria = null,
+        private readonly string|null $indexBy = null,
     ) {
         $criteria ??= Criteria::create();
         $orderings = $criteria->orderings();
@@ -79,7 +81,25 @@ final class SelectableAdapter implements
             ->setMaxResults($limit);
 
         try {
-            return $this->collection->matching($criteria)->toArray();
+            // @todo: does not preserve keys due to a longstanding Doctrine bug
+            // https://github.com/doctrine/orm/issues/4693
+            // workaround: use indexBy
+            $items = $this->collection->matching($criteria)->toArray();
+
+            if ($this->indexBy !== null && array_is_list($items)) {
+                $newItems = [];
+
+                /** @var T $item */
+                foreach ($items as $item) {
+                    $key = IndexResolver::resolveIndex($item, $this->indexBy);
+                    $newItems[$key] = $item;
+                }
+
+                /** @var array<TKey,T> */
+                $items = $newItems;
+            }
+
+            return $items;
         } catch (\TypeError $e) {
             if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
                 throw new UnsupportedCollectionItemException($matches[1], $e);
@@ -271,7 +291,23 @@ final class SelectableAdapter implements
         $criteria = $this->getCriteria($offset, $limit, $boundaryValues, $boundaryType);
 
         try {
+            // @todo: does not preserve keys due to a longstanding Doctrine bug
+            // https://github.com/doctrine/orm/issues/4693
+            // workaround: use indexBy
             $items = $this->collection->matching($criteria)->toArray();
+
+            if ($this->indexBy !== null && array_is_list($items)) {
+                $newItems = [];
+
+                /** @var T $item */
+                foreach ($items as $item) {
+                    $key = IndexResolver::resolveIndex($item, $this->indexBy);
+                    $newItems[$key] = $item;
+                }
+
+                /** @var array<TKey,T> */
+                $items = $newItems;
+            }
         } catch (\TypeError $e) {
             if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
                 throw new UnsupportedCollectionItemException($matches[1], $e);
@@ -281,7 +317,7 @@ final class SelectableAdapter implements
         }
 
         if ($boundaryType === BoundaryType::Upper) {
-            $items = array_reverse($items);
+            $items = array_reverse($items, true);
         }
 
         $properties = array_keys($this->criteria->orderings());

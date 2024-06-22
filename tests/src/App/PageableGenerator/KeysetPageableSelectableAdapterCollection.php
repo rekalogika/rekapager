@@ -66,6 +66,7 @@ class KeysetPageableSelectableAdapterCollection implements PageableGeneratorInte
         $adapter = new SelectableAdapter(
             collection: $selectable,
             criteria: $criteria,
+            indexBy: 'id',
         );
 
         $pageable = new KeysetPageable(

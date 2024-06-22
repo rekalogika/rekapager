@@ -35,7 +35,7 @@ class User
     /**
      * @var Collection<array-key,Post>
      */
-    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'user', fetch: 'EXTRA_LAZY')]
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'user', fetch: 'EXTRA_LAZY', indexBy: 'id')]
     private Collection $posts;
 
     public function __construct()
