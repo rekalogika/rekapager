@@ -66,9 +66,7 @@ jobs:
       run: vendor/bin/monorepo-builder validate
 
     - name: Load fixtures
-      run: |
-        tests/bin/console doctrine:schema:create
-        tests/bin/console doctrine:fixtures:load --no-interaction
+      run: make fixtures
 
     - name: Run phpunit
       run: |
