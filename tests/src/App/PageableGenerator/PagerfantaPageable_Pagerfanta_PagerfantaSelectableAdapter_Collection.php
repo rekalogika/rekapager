@@ -54,13 +54,18 @@ class PagerfantaPageable_Pagerfanta_PagerfantaSelectableAdapter_Collection imple
 
         // @highlight-start
         $criteria = Criteria::create()
-                ->where(Criteria::expr()->eq('setName', $setName));
+            ->where(Criteria::expr()->eq('setName', $setName));
 
         $pagerfantaAdapter = new SelectableAdapter($user->getPosts(), $criteria);
         $pagerfanta = new Pagerfanta($pagerfantaAdapter);
         $pagerfanta->setMaxPerPage($itemsPerPage);
 
-        $pageable = new PagerfantaPageable($pagerfanta, $count, $pageLimit);
+        $pageable = new PagerfantaPageable(
+            pagerfanta: $pagerfanta,
+            count: $count,
+            pageLimit: $pageLimit,
+            indexBy: 'id',
+        );
         // @highlight-end
 
         // @phpstan-ignore-next-line
