@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.12.2
+
+* fix(`PagerFantaAdapterAdapter`): rename `$pagerfanta` to `$adapter`
+
 # 0.12.1
 
 * fix: remove all `array_is_list()` checks

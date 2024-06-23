@@ -42,7 +42,7 @@ final class PagerfantaPageable implements PageableInterface
     ) {
         $this->pageable = new OffsetPageable(
             adapter: new PagerfantaAdapterAdapter(
-                pagerfanta: $pagerfanta->getAdapter(),
+                adapter: $pagerfanta->getAdapter(),
                 indexBy: $indexBy,
             ),
             itemsPerPage: $pagerfanta->getMaxPerPage(),

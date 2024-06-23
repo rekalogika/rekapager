@@ -24,10 +24,10 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
 final class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
 {
     /**
-     * @param AdapterInterface<T> $pagerfanta
+     * @param AdapterInterface<T> $adapter
      */
     public function __construct(
-        private readonly AdapterInterface $pagerfanta,
+        private readonly AdapterInterface $adapter,
         private readonly string|null $indexBy = null,
     ) {
     }
@@ -35,7 +35,7 @@ final class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
     public function getOffsetItems(int $offset, int $limit): array
     {
         /** @psalm-suppress InvalidArgument */
-        $items = iterator_to_array($this->pagerfanta->getSlice($offset, $limit));
+        $items = iterator_to_array($this->adapter->getSlice($offset, $limit));
 
         if ($this->indexBy !== null) {
             $newItems = [];
@@ -59,7 +59,7 @@ final class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
             return null;
         }
 
-        $slice = $this->pagerfanta->getSlice($offset, $limit);
+        $slice = $this->adapter->getSlice($offset, $limit);
         $count = 0;
 
         foreach ($slice as $item) {
@@ -71,6 +71,6 @@ final class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
 
     public function countItems(): int
     {
-        return $this->pagerfanta->getNbResults();
+        return $this->adapter->getNbResults();
     }
 }
