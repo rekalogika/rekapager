@@ -58,7 +58,7 @@ class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterfa
 
         $pagerfantaAdapter = new SelectableAdapter($user->getPosts(), $criteria);
         $adapter = new PagerfantaAdapterAdapter(
-            pagerfanta: $pagerfantaAdapter,
+            adapter: $pagerfantaAdapter,
             indexBy: 'id',
         );
 
