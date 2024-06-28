@@ -41,11 +41,12 @@ final class KeysetPageable implements PageableInterface
     /**
      * @param KeysetPaginationAdapterInterface<TKey,T> $adapter
      * @param int<1,max> $itemsPerPage
+     * @param int<0,max>|bool|\Closure():(int<0,max>|bool) $count
      */
     public function __construct(
         private readonly KeysetPaginationAdapterInterface $adapter,
         private readonly int $itemsPerPage = 50,
-        private readonly int|bool $count = false,
+        private readonly int|bool|\Closure $count = false,
     ) {
     }
 
@@ -138,11 +139,17 @@ final class KeysetPageable implements PageableInterface
 
     public function getTotalItems(): ?int
     {
-        if (\is_int($this->count) && $this->count >= 0) {
-            return $this->count;
+        if ($this->count instanceof \Closure) {
+            $count = ($this->count)();
+        } else {
+            $count = $this->count;
         }
 
-        if ($this->count === false) {
+        if (\is_int($count) && $count >= 0) {
+            return $count;
+        }
+
+        if ($count === false) {
             return null;
         }
 

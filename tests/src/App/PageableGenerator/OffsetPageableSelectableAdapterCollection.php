@@ -43,7 +43,7 @@ class OffsetPageableSelectableAdapterCollection implements PageableGeneratorInte
 
     public function generatePageable(
         int $itemsPerPage,
-        bool|int $count,
+        bool|int|\Closure $count,
         string $setName,
         ?int $pageLimit = null,
     ): PageableInterface {

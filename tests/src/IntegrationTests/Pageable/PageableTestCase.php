@@ -28,9 +28,9 @@ abstract class PageableTestCase extends KernelTestCase
     }
 
     /**
-     * @return bool|int<0,max>
+     * @return bool|int<0,max>|(\Closure():int<0,max>|bool)
      */
-    protected function getPagerCount(): bool|int
+    protected function getPagerCount(): bool|int|\Closure
     {
         return false;
     }
