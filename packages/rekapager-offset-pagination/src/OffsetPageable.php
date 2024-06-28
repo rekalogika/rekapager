@@ -41,13 +41,13 @@ final class OffsetPageable implements PageableInterface
     /**
      * @param OffsetPaginationAdapterInterface<TKey,T> $adapter
      * @param int<1,max> $itemsPerPage
-     * @param int<0,max>|bool $count
+     * @param int<0,max>|bool|\Closure():(int<0,max>|bool) $count
      * @param null|int<1,max> $pageLimit
      */
     public function __construct(
         private readonly OffsetPaginationAdapterInterface $adapter,
         private readonly int $itemsPerPage = 50,
-        private readonly int|bool $count = false,
+        private readonly int|bool|\Closure $count = false,
         private readonly ?int $pageLimit = 100,
     ) {
     }
@@ -114,11 +114,17 @@ final class OffsetPageable implements PageableInterface
 
     public function getTotalItems(): ?int
     {
-        if (\is_int($this->count) && $this->count >= 0) {
-            return $this->count;
+        if ($this->count instanceof \Closure) {
+            $count = ($this->count)();
+        } else {
+            $count = $this->count;
         }
 
-        if ($this->count === false) {
+        if (\is_int($count) && $count >= 0) {
+            return $count;
+        }
+
+        if ($count === false) {
             return null;
         }
 

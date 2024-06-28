@@ -28,13 +28,13 @@ interface PageableGeneratorInterface extends \Countable
 
     /**
      * @param int<1,max> $itemsPerPage
-     * @param bool|int<0,max> $count
+     * @param bool|int<0,max>|\Closure():(int<0,max>|bool) $count
      * @param int<1,max>|null $pageLimit
      * @return PageableInterface<TKey,T>
      */
     public function generatePageable(
         int $itemsPerPage,
-        bool|int $count,
+        bool|int|\Closure $count,
         string $setName,
         ?int $pageLimit = null,
     ): PageableInterface;

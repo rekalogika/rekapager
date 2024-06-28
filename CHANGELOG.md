@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.12.3
+
+* feat: add `Closure` type parameter for count in all Pageable implementations
+
 # 0.12.2
 
 * fix(`PagerFantaAdapterAdapter`): rename `$pagerfanta` to `$adapter`

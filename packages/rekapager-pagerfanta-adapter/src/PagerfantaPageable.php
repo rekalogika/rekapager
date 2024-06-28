@@ -31,12 +31,12 @@ final class PagerfantaPageable implements PageableInterface
 
     /**
      * @param PagerfantaInterface<T> $pagerfanta
-     * @param int<0,max>|bool $count
+     * @param int<0,max>|bool|\Closure():(int<0,max>|bool) $count
      * @param null|int<1,max> $pageLimit
      */
     public function __construct(
         private readonly PagerfantaInterface $pagerfanta,
-        private readonly int|bool $count = false,
+        private readonly int|bool|\Closure $count = false,
         private readonly ?int $pageLimit = 100,
         string|null $indexBy = null,
     ) {
