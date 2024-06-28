@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\Tests\UnitTests;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Selectable;
 use Pagerfanta\Doctrine\Collections\SelectableAdapter as PagerfantaSelectableAdapter;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
@@ -29,10 +30,12 @@ class CountTest extends TestCase
 {
     /**
      * @psalm-suppress InvalidReturnType
-     * @return iterable<array-key,array{Collection<int,Entity>,PageableInterface<int,Entity>,mixed}>
+     * @psalm-suppress MixedReturnTypeCoercion
+     * @return iterable<array-key,array{Collection<array-key,Entity>,PageableInterface<array-key,Entity>,mixed}>
      */
     public static function provider(): iterable
     {
+        /** @var Collection<array-key,Entity>&Selectable<array-key,Entity> */
         $collection = new ArrayCollection([
             new Entity(1),
             new Entity(2),
@@ -64,6 +67,7 @@ class CountTest extends TestCase
             5,
         ];
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         yield [
             $collection,
             new OffsetPageable(
@@ -100,6 +104,7 @@ class CountTest extends TestCase
             5,
         ];
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         yield [
             $collection,
             new KeysetPageable(
@@ -135,6 +140,7 @@ class CountTest extends TestCase
             5,
         ];
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         yield [
             $collection,
             new OffsetPageable(
@@ -150,8 +156,8 @@ class CountTest extends TestCase
     }
 
     /**
-     * @param Collection<int,Entity> $collection
-     * @param PageableInterface<int,Entity> $pageable
+     * @param Collection<array-key,Entity> $collection
+     * @param PageableInterface<array-key,Entity> $pageable
      * @dataProvider provider
      */
     public function testNoCount(
