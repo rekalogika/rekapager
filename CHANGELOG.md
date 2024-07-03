@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.12.4
+
+* fix: fix deprecations
+
 # 0.12.3
 
 * feat: add `Closure` type parameter for count in all Pageable implementations
