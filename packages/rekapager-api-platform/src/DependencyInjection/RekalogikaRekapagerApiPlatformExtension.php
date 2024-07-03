@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class RekalogikaRekapagerApiPlatformExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         // load our services
 

@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class RekalogikaRekapagerExtension extends Extension implements PrependExtensionInterface
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         // load configuration
 
