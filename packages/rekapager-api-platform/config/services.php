@@ -16,7 +16,7 @@ use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerNormalizer;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerExtension;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerOpenApiFactoryDecorator;
 use Rekalogika\Rekapager\ApiPlatform\PagerFactoryInterface;
-use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
+use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -37,7 +37,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->class(PagerFactory::class)
         ->args([
             '$resourceMetadataFactory' => service('api_platform.metadata.resource.metadata_collection_factory'),
-            '$pageIdentifierEncoderLocator' => service(PageIdentifierEncoderLocatorInterface::class),
+            '$pageIdentifierEncoderResolver' => service(PageIdentifierEncoderResolverInterface::class),
             '$pagination' => service('api_platform.pagination'),
             '$pageParameterName' => '%api_platform.collection.pagination.page_parameter_name%',
             '$urlGenerationStrategy' => '%api_platform.url_generation_strategy%'

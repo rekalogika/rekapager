@@ -23,7 +23,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Rekapager\ApiPlatform\PagerFactoryInterface;
 use Rekalogika\Rekapager\ApiPlatform\Util\IriHelper;
-use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
+use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
 use Rekalogika\Rekapager\Pager\TraversablePager;
@@ -32,7 +32,7 @@ class PagerFactory implements PagerFactoryInterface
 {
     public function __construct(
         private readonly ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
-        private readonly PageIdentifierEncoderLocatorInterface $pageIdentifierEncoderLocator,
+        private readonly PageIdentifierEncoderResolverInterface $pageIdentifierEncoderResolver,
         private readonly Pagination $pagination,
         private readonly string $pageParameterName = 'page',
         private readonly int $urlGenerationStrategy = UrlGeneratorInterface::ABS_PATH,
@@ -50,9 +50,6 @@ class PagerFactory implements PagerFactoryInterface
             $pageable = $pageable->withItemsPerPage($itemsPerPage);
         }
 
-        $pageIdentifierEncoder = $this->pageIdentifierEncoderLocator
-            ->getPageIdentifierEncoder($pageable->getPageIdentifierClass());
-
         $iri = $this->getIriFromContext($context);
         $encodedPageIdentifier = $this->getEncodedPageIdentifierFromIri($iri);
 
@@ -63,7 +60,9 @@ class PagerFactory implements PagerFactoryInterface
         ) {
             $page = $pageable->getFirstPage();
         } else {
-            $pageIdentifier = $pageIdentifierEncoder->decode($encodedPageIdentifier);
+            $pageIdentifier = $this->pageIdentifierEncoderResolver
+                ->decode($pageable, $encodedPageIdentifier);
+
             $page = $pageable->getPageByIdentifier($pageIdentifier);
         }
 
@@ -88,10 +87,13 @@ class PagerFactory implements PagerFactoryInterface
             urlGenerationStrategy: $urlGenerationStrategy
         );
 
+        $pageIdentifierEncoder = $this->pageIdentifierEncoderResolver
+            ->getEncoderFromPageable($pageable);
+
         return new TraversablePager(new Pager(
             page: $page,
             proximity: 0,
-            pageIdentifierEncoderLocator: $this->pageIdentifierEncoderLocator,
+            pageIdentifierEncoder: $pageIdentifierEncoder,
             pageUrlGenerator: $pageUrlGenerator
         ));
     }

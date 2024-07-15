@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Pager\Internal;
 
 use Rekalogika\Contracts\Rekapager\NullPageInterface;
+use Rekalogika\Contracts\Rekapager\PageIdentifierEncoderInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
-use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 
 /**
@@ -23,9 +23,12 @@ use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
  */
 class PagerUrlGenerator implements PagerUrlGeneratorInterface
 {
+    /**
+     * @param PageIdentifierEncoderInterface<object> $pageIdentifierEncoder
+     */
     public function __construct(
         private readonly PageUrlGeneratorInterface $pageUrlGenerator,
-        private readonly PageIdentifierEncoderLocatorInterface $pageIdentifierEncoderFactory,
+        private readonly PageIdentifierEncoderInterface $pageIdentifierEncoder,
     ) {
     }
 
@@ -41,11 +44,8 @@ class PagerUrlGenerator implements PagerUrlGeneratorInterface
 
         $pageIdentifier = $page->getPageIdentifier();
 
-        $pageIdentifierEncoder = $this->pageIdentifierEncoderFactory
-            ->getPageIdentifierEncoder($pageIdentifier::class);
-
         return $this->pageUrlGenerator->generateUrl(
-            $pageIdentifierEncoder->encode($pageIdentifier)
+            $this->pageIdentifierEncoder->encode($pageIdentifier)
         );
     }
 }
