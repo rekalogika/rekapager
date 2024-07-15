@@ -46,9 +46,15 @@ final class BatchProcess
         $this->logger = $logger ?? new NullLogger();
     }
 
-    final public function stop(): void
+    final public function stop(): bool
     {
-        $this->stopFlag = true;
+        if ($this->stopFlag === false) {
+            $this->stopFlag = true;
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -143,9 +143,11 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
             return false;
         }
 
-        $this->io?->warning('Interrupt received, stopping batch processing');
+        $result = (bool) $this->batchProcess?->stop();
 
-        $this->batchProcess?->stop();
+        if ($result === true) {
+            $this->io?->warning('Interrupt received, stopping batch processing');
+        }
 
         return false;
     }
