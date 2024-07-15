@@ -37,7 +37,8 @@ class BatchProcessorDecorator implements BatchProcessorInterface
      */
     public function __construct(
         private BatchProcessorInterface $decorated,
-        private SymfonyStyle $io
+        private SymfonyStyle $io,
+        private ?string $progressFile,
     ) {
     }
 
@@ -59,6 +60,8 @@ class BatchProcessorDecorator implements BatchProcessorInterface
 
         $this->io->definitionList(
             ['Start page' => $event->getStartPageIdentifier() ?? '(first page)'],
+            ['Progress file' => $this->progressFile ?? '(not used)'],
+            ['Items per page' => $this->getItemsPerPage()],
             ['Total pages' => $event->getTotalPages() ?? '(unknown)'],
             ['Total items' => $event->getTotalItems() ?? '(unknown)'],
         );
@@ -70,6 +73,10 @@ class BatchProcessorDecorator implements BatchProcessorInterface
     {
         $this->decorated->afterProcess($event);
 
+        if ($this->progressFile !== null && file_exists($this->progressFile)) {
+            unlink($this->progressFile);
+        }
+
         $this->io->success('Batch process completed');
         $this->showStats($event);
     }
@@ -77,6 +84,11 @@ class BatchProcessorDecorator implements BatchProcessorInterface
     public function beforePage(BeforePageEvent $event): void
     {
         $this->pageStart = microtime(true);
+
+        if ($this->progressFile !== null) {
+            file_put_contents($this->progressFile, $event->getEncodedPageIdentifier());
+        }
+
         $this->decorated->beforePage($event);
     }
 
@@ -105,7 +117,12 @@ class BatchProcessorDecorator implements BatchProcessorInterface
 
         $nextPageIdentifier = $event->getNextPageIdentifier();
 
-        if ($nextPageIdentifier !== null) {
+        if ($this->progressFile !== null) {
+            $this->io->warning(sprintf(
+                'Batch process interrupted. To resume, use the argument "-f %s"',
+                $this->progressFile
+            ));
+        } elseif ($nextPageIdentifier !== null) {
             $this->io->warning(sprintf(
                 'Batch process interrupted. To resume, use the argument "-r %s"',
                 $nextPageIdentifier
