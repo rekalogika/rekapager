@@ -18,7 +18,7 @@ use Rekalogika\Rekapager\Bundle\PagerFactory;
 use Rekalogika\Rekapager\Bundle\Twig\RekapagerExtension;
 use Rekalogika\Rekapager\Bundle\Twig\RekapagerRuntime;
 use Rekalogika\Rekapager\Bundle\Twig\TwigPagerRenderer;
-use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
+use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -64,7 +64,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             PagerFactory::class
         )
         ->args([
-            '$pageIdentifierEncoderLocator' => service(PageIdentifierEncoderLocatorInterface::class),
+            '$pageIdentifierEncoderResolver' => service(PageIdentifierEncoderResolverInterface::class),
             '$pageUrlGeneratorFactory' => service(PageUrlGeneratorFactoryInterface::class),
             '$defaultPageParameterName' => '%rekalogika.rekapager.config.default_page_parameter_name%',
             '$defaultProximity' => '%rekalogika.rekapager.config.default_proximity%',

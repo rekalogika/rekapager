@@ -18,7 +18,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
 use Rekalogika\Rekapager\Bundle\Exception\OutOfBoundsException;
-use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
+use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +34,7 @@ class PagerFactory implements PagerFactoryInterface
      * @param UrlGeneratorInterface::* $defaultUrlReferenceType
      */
     public function __construct(
-        private readonly PageIdentifierEncoderLocatorInterface $pageIdentifierEncoderLocator,
+        private readonly PageIdentifierEncoderResolverInterface $pageIdentifierEncoderResolver,
         private readonly PageUrlGeneratorFactoryInterface $pageUrlGeneratorFactory,
         private readonly string $defaultPageParameterName,
         private readonly int $defaultProximity,
@@ -107,12 +107,15 @@ class PagerFactory implements PagerFactoryInterface
             routeParams: $routeParams
         );
 
+        $pageIdentifierEncoder = $this->pageIdentifierEncoderResolver
+            ->getEncoderFromPageable($pageable);
+
         $pager = new Pager(
             page: $page,
             proximity: $proximity,
             pageLimit: $pageLimit,
             pageUrlGenerator: $pageUrlGenerator,
-            pageIdentifierEncoderLocator: $this->pageIdentifierEncoderLocator,
+            pageIdentifierEncoder: $pageIdentifierEncoder,
         );
 
         try {
@@ -139,11 +142,8 @@ class PagerFactory implements PagerFactoryInterface
             return null;
         }
 
-        $pageIdentifierClass = $pageable->getPageIdentifierClass();
-
-        $pageIdentifier = $this->pageIdentifierEncoderLocator
-            ->getPageIdentifierEncoder($pageIdentifierClass)
-            ->decode($pageIdentifier);
+        $pageIdentifier = $this->pageIdentifierEncoderResolver
+            ->decode($pageable, $pageIdentifier);
 
         return $pageIdentifier;
     }

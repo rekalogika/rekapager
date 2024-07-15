@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Pager;
 
+use Rekalogika\Contracts\Rekapager\PageIdentifierEncoderInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
-use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Rekalogika\Rekapager\Contracts\PagerItemInterface;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
@@ -41,18 +41,19 @@ final class Pager implements PagerInterface
     /**
      * @param PageInterface<TKey,T> $page
      * @param int<0,max> $proximity
+     * @param PageIdentifierEncoderInterface<object>|null $pageIdentifierEncoder
      */
     public function __construct(
         private readonly PageInterface $page,
         private readonly int $proximity = 2,
         private readonly ?int $pageLimit = null,
         private ?PageUrlGeneratorInterface $pageUrlGenerator = null,
-        private ?PageIdentifierEncoderLocatorInterface $pageIdentifierEncoderLocator = null
+        private ?PageIdentifierEncoderInterface $pageIdentifierEncoder = null
     ) {
-        if ($pageUrlGenerator !== null && $pageIdentifierEncoderLocator !== null) {
+        if ($pageUrlGenerator !== null && $pageIdentifierEncoder !== null) {
             $this->pagerUrlGenerator = new PagerUrlGenerator(
                 $pageUrlGenerator,
-                $pageIdentifierEncoderLocator
+                $pageIdentifierEncoder
             );
         } else {
             $this->pagerUrlGenerator = new NullPagerUrlGenerator();
@@ -71,7 +72,7 @@ final class Pager implements PagerInterface
             proximity: $proximity,
             pageLimit: $this->pageLimit,
             pageUrlGenerator: $this->pageUrlGenerator,
-            pageIdentifierEncoderLocator: $this->pageIdentifierEncoderLocator
+            pageIdentifierEncoder: $this->pageIdentifierEncoder
         );
     }
 

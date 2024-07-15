@@ -12,6 +12,8 @@ declare(strict_types=1);
  */
 
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
+use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
+use Rekalogika\Rekapager\Implementation\PageIdentifierEncoderResolver;
 use Rekalogika\Rekapager\Keyset\PageIdentifierEncoder\SymfonySerializerKeysetPageIdentifierEncoder;
 use Rekalogika\Rekapager\Offset\OffsetPageIdentifierEncoder;
 use Rekalogika\Rekapager\Symfony\PageIdentifierEncoderLocator;
@@ -26,6 +28,13 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_lo
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
+
+    $services
+        ->set(PageIdentifierEncoderResolverInterface::class)
+        ->class(PageIdentifierEncoderResolver::class)
+        ->args([
+            '$locator' => service(PageIdentifierEncoderLocatorInterface::class)
+        ]);
 
     $services
         ->set(

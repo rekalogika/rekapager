@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.13.0
+
+* refactor: add `PageIdentifierEncoderResolverInterface` for simplification
+
 # 0.12.4
 
 * fix: fix deprecations
