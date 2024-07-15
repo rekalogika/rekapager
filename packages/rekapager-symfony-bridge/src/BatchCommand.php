@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Symfony;
 
-use Doctrine\DBAL\Driver\PgSQL\Exception\UnexpectedValue;
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
@@ -103,7 +102,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         if ($progressFile !== null && file_exists($progressFile) && $resume === null) {
             $resume = file_get_contents($progressFile);
 
-            if (!is_string($resume)) {
+            if (!\is_string($resume)) {
                 throw new UnexpectedValueException(sprintf('Invalid resume data in progress file "%s"', $progressFile));
             }
         }
@@ -143,9 +142,11 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
             return false;
         }
 
-        $this->io?->warning('Interrupt received, stopping batch processing');
+        $result = (bool) $this->batchProcess?->stop();
 
-        $this->batchProcess?->stop();
+        if ($result === true) {
+            $this->io?->warning('Interrupt received, stopping batch processing');
+        }
 
         return false;
     }

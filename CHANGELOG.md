@@ -5,6 +5,7 @@
 * feat: add `BatchProcess` and related classes
 * feat(`BatchProcess`): add `SimpleBatchProcess`, simplify wiring, add
   process-file feature
+* fix(`BatchProcess`): show interrupt message only once
 
 # 0.13.0
 
