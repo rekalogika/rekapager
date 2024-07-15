@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Symfony;
 
+use Doctrine\DBAL\Driver\PgSQL\Exception\UnexpectedValue;
+use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
+use Rekalogika\Contracts\Rekapager\Exception\LogicException;
+use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Batch\BatchProcess;
 use Rekalogika\Rekapager\Batch\BatchProcessFactoryInterface;
@@ -66,7 +70,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
     final protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$this->batchProcessFactory) {
-            throw new \LogicException('Batch process factory is not set. Did you forget to call setBatchProcessFactory()?');
+            throw new LogicException('Batch process factory is not set. Did you forget to call setBatchProcessFactory()?');
         }
 
         // input checking
@@ -77,11 +81,11 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
 
         /** @psalm-suppress TypeDoesNotContainType */
         if (!\is_string($resume) && $resume !== null) {
-            throw new \InvalidArgumentException('Invalid resume option');
+            throw new InvalidArgumentException('Invalid resume option');
         }
 
         if (!is_numeric($pageSize) && $pageSize !== null) {
-            throw new \InvalidArgumentException('Invalid pagesize option');
+            throw new InvalidArgumentException('Invalid pagesize option');
         }
 
         if ($pageSize !== null) {
@@ -91,13 +95,17 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
 
         /** @psalm-suppress TypeDoesNotContainType */
         if (!\is_string($progressFile) && $progressFile !== null) {
-            throw new \InvalidArgumentException('Invalid progress-file option');
+            throw new InvalidArgumentException('Invalid progress-file option');
         }
 
         // check resuming
 
         if ($progressFile !== null && file_exists($progressFile) && $resume === null) {
             $resume = file_get_contents($progressFile);
+
+            if (!is_string($resume)) {
+                throw new UnexpectedValueException(sprintf('Invalid resume data in progress file "%s"', $progressFile));
+            }
         }
 
         // batch processing
