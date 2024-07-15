@@ -3,6 +3,8 @@
 # 0.13.1
 
 * feat: add `BatchProcess` and related classes
+* feat(`BatchProcess`): add `SimpleBatchProcess`, simplify wiring, add
+  process-file feature
 
 # 0.13.0
 

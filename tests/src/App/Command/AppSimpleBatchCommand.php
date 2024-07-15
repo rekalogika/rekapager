@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
-use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
+use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
-use Rekalogika\Rekapager\Symfony\BatchCommand;
-use Rekalogika\Rekapager\Tests\App\BatchProcessor\PostBatchProcessor;
+use Rekalogika\Rekapager\Symfony\SimpleBatchCommand;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -26,17 +26,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @extends BatchCommand<int,Post>
+ * @extends SimpleBatchCommand<int,Post>
  */
 #[AsCommand(
-    name: 'app:batch',
-    description: 'Batch command'
+    name: 'app:simplebatch',
+    description: 'Simple batch command'
 )]
-class AppBatchCommand extends BatchCommand
+class AppSimpleBatchCommand extends SimpleBatchCommand
 {
     public function __construct(
         private PostRepository $postRepository,
-        private PostBatchProcessor $postBatchProcessor
+        private EntityManagerInterface $entityManager,
     ) {
         parent::__construct();
     }
@@ -48,8 +48,13 @@ class AppBatchCommand extends BatchCommand
         return new KeysetPageable($adapter);
     }
 
-    protected function getBatchProcessor(): BatchProcessorInterface
+    public function processItem(int|string $key, mixed $item): void
     {
-        return $this->postBatchProcessor;
+        usleep(20000);
+    }
+
+    public function afterPage(AfterPageEvent $event): void
+    {
+        $this->entityManager->clear();
     }
 }

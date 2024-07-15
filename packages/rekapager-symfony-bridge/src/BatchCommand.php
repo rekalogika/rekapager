@@ -23,6 +23,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * @template TKey of array-key
@@ -35,14 +36,21 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
      */
     private ?BatchProcess $batchProcess = null;
     private ?SymfonyStyle $io = null;
+    private ?BatchProcessFactoryInterface $batchProcessFactory = null;
 
     public function __construct(
-        private BatchProcessFactoryInterface $batchProcessFactory
     ) {
         parent::__construct();
 
         $this->addOption('resume', 'r', InputOption::VALUE_OPTIONAL, 'Page identifier to resume from');
         $this->addOption('pagesize', 'p', InputOption::VALUE_OPTIONAL, 'Batch/page/chunk size');
+        $this->addOption('progress-file', 'f', InputOption::VALUE_OPTIONAL, 'Temporary file to store progress data');
+    }
+
+    #[Required]
+    public function setBatchProcessFactory(BatchProcessFactoryInterface $batchProcessFactory): void
+    {
+        $this->batchProcessFactory = $batchProcessFactory;
     }
 
     /**
@@ -57,8 +65,15 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
 
     final protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (!$this->batchProcessFactory) {
+            throw new \LogicException('Batch process factory is not set. Did you forget to call setBatchProcessFactory()?');
+        }
+
+        // input checking
+
         $resume = $input->getOption('resume');
         $pageSize = $input->getOption('pagesize');
+        $progressFile = $input->getOption('progress-file');
 
         /** @psalm-suppress TypeDoesNotContainType */
         if (!\is_string($resume) && $resume !== null) {
@@ -74,12 +89,26 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
             \assert($pageSize > 0);
         }
 
+        /** @psalm-suppress TypeDoesNotContainType */
+        if (!\is_string($progressFile) && $progressFile !== null) {
+            throw new \InvalidArgumentException('Invalid progress-file option');
+        }
+
+        // check resuming
+
+        if ($progressFile !== null && file_exists($progressFile) && $resume === null) {
+            $resume = file_get_contents($progressFile);
+        }
+
+        // batch processing
+
         $pageable = $this->getPageable($input, $output);
         $this->io = new SymfonyStyle($input, $output);
 
         $batchProcessor = new BatchProcessorDecorator(
             decorated: $this->getBatchProcessor(),
-            io: $this->io
+            io: $this->io,
+            progressFile: $progressFile,
         );
 
         $this->batchProcess = $this->batchProcessFactory->createBatchProcess(
