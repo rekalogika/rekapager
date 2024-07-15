@@ -30,6 +30,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 abstract class BatchCommand extends Command implements SignalableCommandInterface
 {
+    /**
+     * @var BatchProcess<TKey,T>|null
+     */
     private ?BatchProcess $batchProcess = null;
     private ?SymfonyStyle $io = null;
 
@@ -89,6 +92,9 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         return Command::SUCCESS;
     }
 
+    /**
+     * @return list<int>
+     */
     public function getSubscribedSignals(): array
     {
         return [\SIGINT, \SIGTERM];
