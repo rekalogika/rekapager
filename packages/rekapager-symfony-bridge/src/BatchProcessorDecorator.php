@@ -117,6 +117,10 @@ class BatchProcessorDecorator implements BatchProcessorInterface
         $this->showStats($event);
     }
 
+    /**
+     * @param AfterPageEvent<TKey,T>|AfterProcessEvent|InterruptEvent $event
+     * @return void
+     */
     private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent $event): void
     {
         $this->io->writeln('');
