@@ -11,6 +11,8 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
+use Rekalogika\Rekapager\Batch\BatchProcessFactoryInterface;
+use Rekalogika\Rekapager\Batch\Implementation\DefaultBatchProcessFactory;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 use Rekalogika\Rekapager\Implementation\PageIdentifierEncoderResolver;
@@ -28,6 +30,14 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_lo
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
+
+    $services
+        ->set(BatchProcessFactoryInterface::class)
+        ->class(DefaultBatchProcessFactory::class)
+        ->args([
+            '$pageableIdentifierResolver' => service(PageIdentifierEncoderResolverInterface::class),
+            '$logger' => service('logger')->nullOnInvalid()
+        ]);
 
     $services
         ->set(PageIdentifierEncoderResolverInterface::class)

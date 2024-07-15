@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.13.1
+
+* feat: add `BatchProcess` and related classes
+
 # 0.13.0
 
 * refactor: add `PageIdentifierEncoderResolverInterface` for simplification
