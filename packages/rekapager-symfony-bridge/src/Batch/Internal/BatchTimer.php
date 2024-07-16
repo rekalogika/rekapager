@@ -11,10 +11,13 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony\Batch;
+namespace Rekalogika\Rekapager\Symfony\Batch\Internal;
 
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 
+/**
+ * @internal
+ */
 class BatchTimer
 {
     public const TIMER_PROCESS = 'process';

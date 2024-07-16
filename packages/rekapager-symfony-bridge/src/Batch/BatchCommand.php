@@ -20,6 +20,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Batch\BatchProcess;
 use Rekalogika\Rekapager\Batch\BatchProcessFactoryInterface;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
+use Rekalogika\Rekapager\Symfony\Batch\Internal\CommandBatchProcessorDecorator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\SignalableCommandInterface;
 use Symfony\Component\Console\Input\InputInterface;

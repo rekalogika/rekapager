@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony\Batch;
+namespace Rekalogika\Rekapager\Symfony\Batch\Internal;
 
 use Rekalogika\Rekapager\Batch\BatchProcessorDecorator;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
@@ -20,6 +20,7 @@ use Rekalogika\Rekapager\Batch\Event\AfterProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforePageEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
+use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -27,10 +28,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @template TKey of array-key
  * @template T
  * @extends BatchProcessorDecorator<TKey,T>
+ * @internal
  */
 class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private readonly BatchTimer $timer;
+    private int $pageNumber = 0;
+    private int $itemNumber = 0;
 
     /**
      * @param BatchProcessorInterface<TKey,T> $decorated
@@ -71,14 +75,13 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             unlink($this->progressFile);
         }
 
-        $batchDuration = $this->timer->stop(BatchTimer::TIMER_PROCESS);
-
         $this->io->success('Batch process completed');
         $this->showStats($event);
     }
 
     public function beforePage(BeforePageEvent $event): void
     {
+        $this->pageNumber++;
         $this->timer->start(BatchTimer::TIMER_PAGE);
 
         if ($this->progressFile !== null) {
@@ -106,6 +109,13 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             $this->timer->restart(BatchTimer::TIMER_DISPLAY);
             $this->showStats($event);
         }
+    }
+
+    public function processItem(ItemEvent $itemEvent): void
+    {
+        $this->itemNumber++;
+
+        $this->decorated->processItem($itemEvent);
     }
 
     public function onInterrupt(InterruptEvent $event): void
@@ -138,13 +148,14 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent $event): void
     {
         $this->io->writeln('');
+        $processDuration = $this->timer->getDuration(BatchTimer::TIMER_PROCESS);
         $this->io->definitionList(
-            // ['Time elapsed' => Helper::formatTime($event->getProcessDuration())],
+            ['Time elapsed' => Helper::formatTime($processDuration ?? 0)],
+            ['Page processed' => $this->pageNumber],
+            ['Item processed' => $this->itemNumber],
             ['Memory usage' => Helper::formatMemory(memory_get_usage(true))],
-            // ['Pages processed' => $event->getPagesProcessed()],
-            // ['Items processed' => $event->getItemsProcessed()],
-            // ['Pages/minute' =>  round($event->getPagesProcessed() / $event->getProcessDuration() * 60, 2)],
-            // ['Items/minute' => round($event->getItemsProcessed() / $event->getProcessDuration() * 60, 2)],
+            ['Pages/minute' =>  round($this->pageNumber / $processDuration * 60, 2)],
+            ['Items/minute' => round($this->itemNumber / $processDuration * 60, 2)],
         );
     }
 }
