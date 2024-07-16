@@ -28,7 +28,7 @@ use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 abstract class BatchProcessorDecorator implements BatchProcessorInterface
 {
     /**
-     * @param BatchProcessorInterface<TKey,T> $decorated
+     * @return BatchProcessorInterface<TKey,T>
      */
     abstract protected function getDecorated(): BatchProcessorInterface;
 
