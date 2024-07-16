@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\Tests\App\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
+use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Symfony\SimpleBatchCommand;
@@ -48,7 +49,7 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         return new KeysetPageable($adapter);
     }
 
-    public function processItem(int|string $key, mixed $item): void
+    public function processItem(ItemEvent $itemEvent): void
     {
         usleep(20000);
     }

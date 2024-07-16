@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Symfony;
 
+use Rekalogika\Rekapager\Batch\BatchProcessorDecorator as CoreBatchProcessorDecorator;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
 use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
 use Rekalogika\Rekapager\Batch\Event\AfterProcessEvent;
@@ -25,9 +26,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * @template TKey of array-key
  * @template T
- * @implements BatchProcessorInterface<TKey,T>
+ * @extends CoreBatchProcessorDecorator<TKey,T>
  */
-class BatchProcessorDecorator implements BatchProcessorInterface
+class BatchProcessorDecorator extends CoreBatchProcessorDecorator
 {
     private float $pageStart = 0;
     private float $lastStat = 0;
@@ -42,14 +43,9 @@ class BatchProcessorDecorator implements BatchProcessorInterface
     ) {
     }
 
-    public function processItem(int|string $key, mixed $item): void
+    protected function getDecorated(): BatchProcessorInterface
     {
-        $this->decorated->processItem($key, $item);
-    }
-
-    public function getItemsPerPage(): int
-    {
-        return $this->decorated->getItemsPerPage();
+        return $this->decorated;
     }
 
     public function beforeProcess(BeforeProcessEvent $event): void

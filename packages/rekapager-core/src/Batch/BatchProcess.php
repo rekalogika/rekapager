@@ -21,6 +21,7 @@ use Rekalogika\Rekapager\Batch\Event\AfterProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforePageEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
+use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 
 /**
@@ -143,7 +144,15 @@ final class BatchProcess
 
             foreach ($page as $key => $item) {
                 $numOfItems++;
-                $this->batchProcessor->processItem($key, $item);
+
+                $itemEvent = new ItemEvent(
+                    itemNumber: $numOfItems,
+                    pageNumber: $numOfPages,
+                    key: $key,
+                    item: $item,
+                );
+
+                $this->batchProcessor->processItem($itemEvent);
             }
 
             $pageDuration = (microtime(true) - $pageStartTime) * 1000000;
