@@ -30,7 +30,7 @@ class PostBatchProcessor extends AbstractBatchProcessor
 
     public function processItem(ItemEvent $itemEvent): void
     {
-        usleep(20000);
+        usleep(50000);
     }
 
     public function afterPage(AfterPageEvent $event): void

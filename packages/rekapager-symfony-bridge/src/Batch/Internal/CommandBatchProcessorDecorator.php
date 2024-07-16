@@ -22,6 +22,7 @@ use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
 use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 use Symfony\Component\Console\Helper\Helper;
+use Symfony\Component\Console\Helper\ProgressIndicator;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -35,6 +36,8 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     private readonly BatchTimer $timer;
     private int $pageNumber = 0;
     private int $itemNumber = 0;
+    private ?\DateTimeInterface $startTime = null;
+    private readonly ProgressIndicator $progressIndicator;
 
     /**
      * @param BatchProcessorInterface<TKey,T> $decorated
@@ -47,21 +50,29 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         parent::__construct($decorated);
 
         $this->timer = new BatchTimer();
+        $this->progressIndicator = new ProgressIndicator($this->io, 'very_verbose');
+    }
+
+    private static function formatTime(\DateTimeInterface $time): string
+    {
+        return $time->format('Y-m-d H:i:s T');
     }
 
     public function beforeProcess(BeforeProcessEvent $event): void
     {
+        $this->startTime = new \DateTimeImmutable();
         $this->timer->start(BatchTimer::TIMER_DISPLAY);
         $this->timer->start(BatchTimer::TIMER_PROCESS);
 
         $this->io->success('Starting batch process');
 
         $this->io->definitionList(
+            ['Start time' => self::formatTime($this->startTime)],
             ['Start page' => $event->getStartPageIdentifier() ?? '(first page)'],
             ['Progress file' => $this->progressFile ?? '(not used)'],
             ['Items per page' => $event->getPageable()->getItemsPerPage()],
-            // ['Total pages' => $event->getTotalPages() ?? '(unknown)'],
-            // ['Total items' => $event->getTotalItems() ?? '(unknown)'],
+            ['Total pages' => $event->getPageable()->getTotalPages() ?? '(unknown)'],
+            ['Total items' => $event->getPageable()->getTotalItems() ?? '(unknown)'],
         );
 
         $this->decorated->beforeProcess($event);
@@ -82,11 +93,17 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     public function beforePage(BeforePageEvent $event): void
     {
         $this->pageNumber++;
-        $this->timer->start(BatchTimer::TIMER_PAGE);
+        // $this->timer->start(BatchTimer::TIMER_PAGE);
 
         if ($this->progressFile !== null) {
             file_put_contents($this->progressFile, $event->getEncodedPageIdentifier());
         }
+
+        $this->progressIndicator->start(sprintf(
+            'Page <info>%s</info>, identifier <info>%s</info>',
+            $event->getPage()->getPageNumber() ?? '(unknown)',
+            $event->getEncodedPageIdentifier(),
+        ));
 
         $this->decorated->beforePage($event);
     }
@@ -94,13 +111,12 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     public function afterPage(AfterPageEvent $event): void
     {
         $this->decorated->afterPage($event);
-        $pageDuration = $this->timer->stop(BatchTimer::TIMER_PAGE);
+        // $pageDuration = $this->timer->stop(BatchTimer::TIMER_PAGE);
 
-        $this->io->writeln(sprintf(
-            'Page processed, page number: <info>%s</info>, identifier: <info>%s</info>, duration: <info>%s</info>',
+        $this->progressIndicator->finish(sprintf(
+            'Page <info>%s</info>, identifier <info>%s</info>',
             $event->getPage()->getPageNumber() ?? '(unknown)',
             $event->getEncodedPageIdentifier(),
-            Helper::formatTime($pageDuration)
         ));
 
         $displayDuration = $this->timer->getDuration(BatchTimer::TIMER_DISPLAY);
@@ -114,6 +130,13 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     public function processItem(ItemEvent $itemEvent): void
     {
         $this->itemNumber++;
+
+        $sinceLast = $this->timer->getDuration(BatchTimer::TIMER_ITEM);
+
+        if ($sinceLast === null || $sinceLast > 1) {
+            $this->timer->restart(BatchTimer::TIMER_ITEM);
+            $this->progressIndicator->advance();
+        }
 
         $this->decorated->processItem($itemEvent);
     }
@@ -147,15 +170,40 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
      */
     private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent $event): void
     {
-        $this->io->writeln('');
+        if ($event instanceof AfterPageEvent) {
+            $this->io->writeln('');
+        }
+
         $processDuration = $this->timer->getDuration(BatchTimer::TIMER_PROCESS);
-        $this->io->definitionList(
-            ['Time elapsed' => Helper::formatTime($processDuration ?? 0)],
+
+        $stats = [];
+
+        if ($this->startTime !== null) {
+            $stats[] = ['Start time' => self::formatTime($this->startTime)];
+        }
+
+        if ($event instanceof AfterPageEvent) {
+            $stats[] = ['Current time' => self::formatTime(new \DateTimeImmutable())];
+        } else {
+            $stats[] = ['End time' => self::formatTime(new \DateTimeImmutable())];
+        }
+
+        if ($processDuration !== null) {
+            $stats[] = ['Time elapsed' => Helper::formatTime($processDuration)];
+        }
+
+        $stats = [
+            ...$stats,
             ['Page processed' => $this->pageNumber],
             ['Item processed' => $this->itemNumber],
             ['Memory usage' => Helper::formatMemory(memory_get_usage(true))],
-            ['Pages/minute' =>  round($this->pageNumber / $processDuration * 60, 2)],
-            ['Items/minute' => round($this->itemNumber / $processDuration * 60, 2)],
-        );
+        ];
+
+        if ($processDuration !== null) {
+            $stats[] = ['Pages/minute' =>  round($this->pageNumber / $processDuration * 60, 2)];
+            $stats[] = ['Items/minute' => round($this->itemNumber / $processDuration * 60, 2)];
+        }
+
+        $this->io->definitionList(...$stats);
     }
 }

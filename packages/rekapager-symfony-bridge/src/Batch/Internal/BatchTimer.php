@@ -78,18 +78,6 @@ class BatchTimer
     /**
      * @param BatchTimer::TIMER_* $timer
      */
-    public function getStart(string $timer): float
-    {
-        if (!isset($this->timers[$timer])) {
-            throw new LogicException(sprintf('Timer "%s" is not started.', $timer));
-        }
-
-        return $this->timers[$timer] / 1e9;
-    }
-
-    /**
-     * @param BatchTimer::TIMER_* $timer
-     */
     public function getDuration(string $timer): ?float
     {
         if (!isset($this->timers[$timer])) {
