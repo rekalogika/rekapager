@@ -23,17 +23,9 @@ final class AfterPageEvent
 {
     /**
      * @param BeforePageEvent<TKey,T> $beforePageEvent
-     * @param int<0,max> $afterMemoryUsage
-     * @param int<0,max> $pagesProcessed
-     * @param int<0,max> $itemsProcessed
      */
     public function __construct(
         private readonly BeforePageEvent $beforePageEvent,
-        private readonly float $pageDuration,
-        private readonly float $processDuration,
-        private readonly int $afterMemoryUsage,
-        private readonly int $pagesProcessed,
-        private readonly int $itemsProcessed,
     ) {
     }
 
@@ -48,39 +40,5 @@ final class AfterPageEvent
     public function getEncodedPageIdentifier(): string
     {
         return $this->beforePageEvent->getEncodedPageIdentifier();
-    }
-
-    public function getPageDuration(): float
-    {
-        return $this->pageDuration;
-    }
-
-    public function getProcessDuration(): float
-    {
-        return $this->processDuration;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getAfterMemoryUsage(): int
-    {
-        return $this->afterMemoryUsage;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getPagesProcessed(): int
-    {
-        return $this->pagesProcessed;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getItemsProcessed(): int
-    {
-        return $this->itemsProcessed;
     }
 }

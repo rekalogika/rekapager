@@ -20,33 +20,13 @@ namespace Rekalogika\Rekapager\Batch\Event;
 final class ItemEvent
 {
     /**
-     * @param int<1,max> $itemNumber
-     * @param int<0,max> $pageNumber
      * @param TKey $key
      * @param T $item
      */
     public function __construct(
-        private readonly int $itemNumber,
-        private readonly int $pageNumber,
         private readonly int|string $key,
         private readonly mixed $item,
     ) {
-    }
-
-    /**
-     * @return int<1,max>
-     */
-    public function getItemNumber(): int
-    {
-        return $this->itemNumber;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getPageNumber(): int
-    {
-        return $this->pageNumber;
     }
 
     /**
