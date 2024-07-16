@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\Tests\App\BatchProcessor;
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Rekapager\Batch\AbstractBatchProcessor;
 use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
+use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 
 /**
@@ -27,7 +28,7 @@ class PostBatchProcessor extends AbstractBatchProcessor
     {
     }
 
-    public function processItem(int|string $key, mixed $item): void
+    public function processItem(ItemEvent $itemEvent): void
     {
         usleep(20000);
     }

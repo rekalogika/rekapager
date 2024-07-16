@@ -6,6 +6,7 @@
 * feat(`BatchProcess`): add `SimpleBatchProcess`, simplify wiring, add
   process-file feature
 * fix(`BatchProcess`): show interrupt message only once
+* refactor(`BatchProcess`): `processItem` now accept an event
 
 # 0.13.0
 

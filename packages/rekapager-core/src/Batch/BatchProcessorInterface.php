@@ -18,6 +18,7 @@ use Rekalogika\Rekapager\Batch\Event\AfterProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforePageEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
+use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 
 /**
  * @template TKey of array-key
@@ -26,10 +27,9 @@ use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
 interface BatchProcessorInterface
 {
     /**
-     * @param TKey $key
-     * @param T $item
+     * @param ItemEvent<TKey,T> $itemEvent
      */
-    public function processItem(int|string $key, mixed $item): void;
+    public function processItem(ItemEvent $itemEvent): void;
 
     /**
      * @return int<1,max>

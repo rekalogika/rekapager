@@ -25,32 +25,45 @@ use Rekalogika\Rekapager\Batch\Event\ItemEvent;
  * @template T
  * @implements BatchProcessorInterface<TKey,T>
  */
-abstract class AbstractBatchProcessor implements BatchProcessorInterface
+abstract class BatchProcessorDecorator implements BatchProcessorInterface
 {
-    abstract public function processItem(ItemEvent $itemEvent): void;
+    /**
+     * @return BatchProcessorInterface<TKey,T>
+     */
+    abstract protected function getDecorated(): BatchProcessorInterface;
+
+    public function processItem(ItemEvent $itemEvent): void
+    {
+        $this->getDecorated()->processItem($itemEvent);
+    }
 
     public function getItemsPerPage(): int
     {
-        return 1000;
+        return $this->getDecorated()->getItemsPerPage();
     }
 
     public function beforeProcess(BeforeProcessEvent $event): void
     {
+        $this->getDecorated()->beforeProcess($event);
     }
 
     public function afterProcess(AfterProcessEvent $event): void
     {
+        $this->getDecorated()->afterProcess($event);
     }
 
     public function beforePage(BeforePageEvent $event): void
     {
+        $this->getDecorated()->beforePage($event);
     }
 
     public function afterPage(AfterPageEvent $event): void
     {
+        $this->getDecorated()->afterPage($event);
     }
 
     public function onInterrupt(InterruptEvent $event): void
     {
+        $this->getDecorated()->onInterrupt($event);
     }
 }
