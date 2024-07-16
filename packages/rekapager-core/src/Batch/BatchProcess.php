@@ -60,6 +60,8 @@ final class BatchProcess
         ?string $resume = null,
         ?int $pageSize = null
     ): void {
+        // determine start page identifier
+
         if ($resume !== null) {
             $startPageIdentifier = $this->pageableIdentifierResolver
                 ->decode($this->pageable, $resume);
@@ -67,28 +69,28 @@ final class BatchProcess
             $startPageIdentifier = null;
         }
 
+        // prepare pages
+
         $itemsPerPage = $pageSize ?? $this->batchProcessor->getItemsPerPage();
         $pageable = $this->pageable->withItemsPerPage($itemsPerPage);
+        $pages = $pageable->getPages($startPageIdentifier);
+
+        // emit event
 
         $beforeProcessEvent = new BeforeProcessEvent(
+            pageable: $pageable,
             startPageIdentifier: $resume,
         );
 
         $this->batchProcessor->beforeProcess($beforeProcessEvent);
 
-        $pages = $pageable->getPages($startPageIdentifier);
-
-        $numOfPages = 0;
-        $numOfItems = 0;
-
         foreach ($pages as $page) {
-            $numOfPages++;
-
             $pageIdentifier = $page->getPageIdentifier();
             $pageIdentifierString = $this->pageableIdentifierResolver->encode($pageIdentifier);
 
             if ($this->stopFlag) {
                 $interruptEvent = new InterruptEvent(
+                    pageable: $pageable,
                     nextPageIdentifier: $pageIdentifierString,
                 );
 
@@ -105,8 +107,6 @@ final class BatchProcess
             $this->batchProcessor->beforePage($beforePageEvent);
 
             foreach ($page as $key => $item) {
-                $numOfItems++;
-
                 $itemEvent = new ItemEvent(
                     key: $key,
                     item: $item,
@@ -122,7 +122,9 @@ final class BatchProcess
             $this->batchProcessor->afterPage($afterPageEvent);
         }
 
-        $afterProcessEvent = new AfterProcessEvent();
+        $afterProcessEvent = new AfterProcessEvent(
+            pageable: $pageable,
+        );
 
         $this->batchProcessor->afterProcess($afterProcessEvent);
     }

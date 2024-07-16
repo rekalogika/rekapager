@@ -19,7 +19,7 @@ use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
 use Rekalogika\Rekapager\Batch\Event\ItemEvent;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
-use Rekalogika\Rekapager\Symfony\SimpleBatchCommand;
+use Rekalogika\Rekapager\Symfony\Batch\SimpleBatchCommand;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -51,7 +51,7 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
 
     public function processItem(ItemEvent $itemEvent): void
     {
-        usleep(20000);
+        usleep(50000);
     }
 
     public function afterPage(AfterPageEvent $event): void

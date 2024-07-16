@@ -36,7 +36,14 @@ interface BatchProcessorInterface
      */
     public function getItemsPerPage(): int;
 
+    /**
+     * @param BeforeProcessEvent<TKey,T> $event
+     */
     public function beforeProcess(BeforeProcessEvent $event): void;
+
+    /**
+     * @param AfterProcessEvent<TKey,T> $event
+     */
     public function afterProcess(AfterProcessEvent $event): void;
 
     /**
@@ -49,5 +56,8 @@ interface BatchProcessorInterface
      */
     public function afterPage(AfterPageEvent $event): void;
 
+    /**
+     * @param InterruptEvent<TKey,T> $event
+     */
     public function onInterrupt(InterruptEvent $event): void;
 }
