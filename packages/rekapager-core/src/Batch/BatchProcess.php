@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Batch;
 
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
 use Rekalogika\Rekapager\Batch\Event\AfterProcessEvent;
@@ -30,7 +28,6 @@ use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
  */
 final class BatchProcess
 {
-    private readonly LoggerInterface $logger;
     private bool $stopFlag = false;
 
     /**
@@ -42,9 +39,7 @@ final class BatchProcess
         private readonly PageableInterface $pageable,
         private readonly BatchProcessorInterface $batchProcessor,
         private readonly PageIdentifierEncoderResolverInterface $pageableIdentifierResolver,
-        ?LoggerInterface $logger = null
     ) {
-        $this->logger = $logger ?? new NullLogger();
     }
 
     final public function stop(): bool
@@ -65,10 +60,6 @@ final class BatchProcess
         ?string $resume = null,
         ?int $pageSize = null
     ): void {
-        $processStartTime = microtime(true);
-
-        $this->logger->info('Batch processing started');
-
         if ($resume !== null) {
             $startPageIdentifier = $this->pageableIdentifierResolver
                 ->decode($this->pageable, $resume);
@@ -80,10 +71,7 @@ final class BatchProcess
         $pageable = $this->pageable->withItemsPerPage($itemsPerPage);
 
         $beforeProcessEvent = new BeforeProcessEvent(
-            processStartTime: $processStartTime,
             startPageIdentifier: $resume,
-            totalPages: $pageable->getTotalPages(),
-            totalItems: $pageable->getTotalItems()
         );
 
         $this->batchProcessor->beforeProcess($beforeProcessEvent);
@@ -100,54 +88,26 @@ final class BatchProcess
             $pageIdentifierString = $this->pageableIdentifierResolver->encode($pageIdentifier);
 
             if ($this->stopFlag) {
-                $processEndTime = microtime(true);
-                $processDuration = $processEndTime - $processStartTime;
-
                 $interruptEvent = new InterruptEvent(
                     nextPageIdentifier: $pageIdentifierString,
-                    processEndTime: $processEndTime,
-                    processDuration: $processDuration,
-                    itemsProcessed: $numOfItems,
-                    pagesProcessed: $numOfPages,
                 );
 
                 $this->batchProcessor->onInterrupt($interruptEvent);
 
-                $this->logger->warning('Batch processing interrupted', [
-                    'next_page_identifier' => $pageIdentifierString,
-                    'process_duration' => $processDuration,
-                    'items_processed' => $numOfItems,
-                    'pages_processed' => $numOfPages,
-                ]);
-
                 return;
             }
-
-            /** @var int<1,max> */
-            $memoryUsage = memory_get_usage(true);
-
-            $this->logger->info('Starting to process a page', [
-                'page_identifier' => $pageIdentifierString,
-                'page_number' => $page->getPageNumber(),
-            ]);
 
             $beforePageEvent = new BeforePageEvent(
                 page: $page,
                 encodedPageIdentifier: $pageIdentifierString,
-                beforeMemoryUsage: $memoryUsage,
-                itemsProcessed: $numOfItems
             );
 
             $this->batchProcessor->beforePage($beforePageEvent);
-
-            $pageStartTime = microtime(true);
 
             foreach ($page as $key => $item) {
                 $numOfItems++;
 
                 $itemEvent = new ItemEvent(
-                    itemNumber: $numOfItems,
-                    pageNumber: $numOfPages,
                     key: $key,
                     item: $item,
                 );
@@ -155,48 +115,15 @@ final class BatchProcess
                 $this->batchProcessor->processItem($itemEvent);
             }
 
-            $pageDuration = (microtime(true) - $pageStartTime) * 1000000;
-            /** @var int<1,max> */
-            $memoryUsage = memory_get_usage(true);
-            $processDuration = microtime(true) - $processStartTime;
-
             $afterPageEvent = new AfterPageEvent(
                 beforePageEvent: $beforePageEvent,
-                pageDuration: $pageDuration,
-                processDuration: $processDuration,
-                afterMemoryUsage: $memoryUsage,
-                pagesProcessed: $numOfPages,
-                itemsProcessed: $numOfItems
             );
-
-            $this->logger->info('Finished processing a page', [
-                'page_identifier' => $pageIdentifierString,
-                'page_duration' => $pageDuration,
-                'process_duration' => $pageDuration,
-                'memory_usage' => $memoryUsage,
-                'page_processed' => $numOfPages,
-                'items_processed' => $numOfItems,
-            ]);
 
             $this->batchProcessor->afterPage($afterPageEvent);
         }
 
-        $processEndTime = microtime(true);
-        $processDuration = $processEndTime - $processStartTime;
-
-        $afterProcessEvent = new AfterProcessEvent(
-            processEndTime: $processEndTime,
-            processDuration: $processDuration,
-            itemsProcessed: $numOfItems,
-            pagesProcessed: $numOfPages,
-        );
+        $afterProcessEvent = new AfterProcessEvent();
 
         $this->batchProcessor->afterProcess($afterProcessEvent);
-
-        $this->logger->info('Batch processing finished', [
-            'process_duration' => $processDuration,
-            'items_processed' => $numOfItems,
-            'pages_processed' => $numOfPages,
-        ]);
     }
 }

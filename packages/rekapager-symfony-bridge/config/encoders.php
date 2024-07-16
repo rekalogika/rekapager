@@ -36,7 +36,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->class(DefaultBatchProcessFactory::class)
         ->args([
             '$pageableIdentifierResolver' => service(PageIdentifierEncoderResolverInterface::class),
-            '$logger' => service('logger')->nullOnInvalid()
         ]);
 
     $services

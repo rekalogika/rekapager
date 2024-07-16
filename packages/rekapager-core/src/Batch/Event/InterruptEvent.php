@@ -15,47 +15,13 @@ namespace Rekalogika\Rekapager\Batch\Event;
 
 final class InterruptEvent
 {
-    /**
-     * @param int<0,max> $itemsProcessed
-     * @param int<0,max> $pagesProcessed
-     */
     public function __construct(
         private readonly ?string $nextPageIdentifier,
-        private readonly float $processEndTime,
-        private readonly float $processDuration,
-        private readonly int $itemsProcessed,
-        private readonly int $pagesProcessed,
     ) {
     }
 
     public function getNextPageIdentifier(): ?string
     {
         return $this->nextPageIdentifier;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getItemsProcessed(): int
-    {
-        return $this->itemsProcessed;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getPagesProcessed(): int
-    {
-        return $this->pagesProcessed;
-    }
-
-    public function getProcessEndTime(): float
-    {
-        return $this->processEndTime;
-    }
-
-    public function getProcessDuration(): float
-    {
-        return $this->processDuration;
     }
 }

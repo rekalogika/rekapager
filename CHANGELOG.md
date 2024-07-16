@@ -7,6 +7,7 @@
   process-file feature
 * fix(`BatchProcess`): show interrupt message only once
 * refactor(`BatchProcess`): `processItem` now accept an event
+* refactor(`BatchProcess`): remove metric collection & logging from main class
 
 # 0.13.0
 

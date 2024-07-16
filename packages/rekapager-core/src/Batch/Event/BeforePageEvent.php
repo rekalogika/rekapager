@@ -24,14 +24,10 @@ final class BeforePageEvent
     /**
      * @param PageInterface<TKey,T> $page
      * @param string $encodedPageIdentifier
-     * @param int<0,max> $beforeMemoryUsage
-     * @param int<0,max> $itemsProcessed
      */
     public function __construct(
         private readonly PageInterface $page,
         private readonly string $encodedPageIdentifier,
-        private readonly int $beforeMemoryUsage,
-        private readonly int $itemsProcessed,
     ) {
     }
 
@@ -46,21 +42,5 @@ final class BeforePageEvent
     public function getEncodedPageIdentifier(): string
     {
         return $this->encodedPageIdentifier;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getBeforeMemoryUsage(): int
-    {
-        return $this->beforeMemoryUsage;
-    }
-
-    /**
-     * @return int<0,max>
-     */
-    public function getItemsProcessed(): int
-    {
-        return $this->itemsProcessed;
     }
 }

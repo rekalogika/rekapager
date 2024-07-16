@@ -58,8 +58,8 @@ class BatchProcessorDecorator extends CoreBatchProcessorDecorator
             ['Start page' => $event->getStartPageIdentifier() ?? '(first page)'],
             ['Progress file' => $this->progressFile ?? '(not used)'],
             ['Items per page' => $this->getItemsPerPage()],
-            ['Total pages' => $event->getTotalPages() ?? '(unknown)'],
-            ['Total items' => $event->getTotalItems() ?? '(unknown)'],
+            // ['Total pages' => $event->getTotalPages() ?? '(unknown)'],
+            // ['Total items' => $event->getTotalItems() ?? '(unknown)'],
         );
 
         $this->decorated->beforeProcess($event);
@@ -138,12 +138,12 @@ class BatchProcessorDecorator extends CoreBatchProcessorDecorator
     {
         $this->io->writeln('');
         $this->io->definitionList(
-            ['Time elapsed' => Helper::formatTime($event->getProcessDuration())],
+            // ['Time elapsed' => Helper::formatTime($event->getProcessDuration())],
             ['Memory usage' => Helper::formatMemory(memory_get_usage(true))],
-            ['Pages processed' => $event->getPagesProcessed()],
-            ['Items processed' => $event->getItemsProcessed()],
-            ['Pages/minute' =>  round($event->getPagesProcessed() / $event->getProcessDuration() * 60, 2)],
-            ['Items/minute' => round($event->getItemsProcessed() / $event->getProcessDuration() * 60, 2)],
+            // ['Pages processed' => $event->getPagesProcessed()],
+            // ['Items processed' => $event->getItemsProcessed()],
+            // ['Pages/minute' =>  round($event->getPagesProcessed() / $event->getProcessDuration() * 60, 2)],
+            // ['Items/minute' => round($event->getItemsProcessed() / $event->getProcessDuration() * 60, 2)],
         );
     }
 }
