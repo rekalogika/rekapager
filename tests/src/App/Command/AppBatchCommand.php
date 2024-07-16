@@ -17,7 +17,7 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
-use Rekalogika\Rekapager\Symfony\BatchCommand;
+use Rekalogika\Rekapager\Symfony\Batch\BatchCommand;
 use Rekalogika\Rekapager\Tests\App\BatchProcessor\PostBatchProcessor;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;

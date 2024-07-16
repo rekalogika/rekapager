@@ -11,7 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony;
+namespace Rekalogika\Rekapager\Symfony\Batch;
 
 use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
@@ -112,7 +112,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         $pageable = $this->getPageable($input, $output);
         $this->io = new SymfonyStyle($input, $output);
 
-        $batchProcessor = new BatchProcessorDecorator(
+        $batchProcessor = new CommandBatchProcessorDecorator(
             decorated: $this->getBatchProcessor(),
             io: $this->io,
             progressFile: $progressFile,

@@ -11,9 +11,9 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
-namespace Rekalogika\Rekapager\Symfony;
+namespace Rekalogika\Rekapager\Symfony\Batch;
 
-use Rekalogika\Rekapager\Batch\BatchProcessorDecorator as CoreBatchProcessorDecorator;
+use Rekalogika\Rekapager\Batch\BatchProcessorDecorator;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
 use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
 use Rekalogika\Rekapager\Batch\Event\AfterProcessEvent;
@@ -26,9 +26,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * @template TKey of array-key
  * @template T
- * @extends CoreBatchProcessorDecorator<TKey,T>
+ * @extends BatchProcessorDecorator<TKey,T>
  */
-class BatchProcessorDecorator extends CoreBatchProcessorDecorator
+class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private float $pageStart = 0;
     private float $lastStat = 0;
