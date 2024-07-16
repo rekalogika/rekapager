@@ -57,7 +57,7 @@ class BatchProcessorDecorator extends CoreBatchProcessorDecorator
         $this->io->definitionList(
             ['Start page' => $event->getStartPageIdentifier() ?? '(first page)'],
             ['Progress file' => $this->progressFile ?? '(not used)'],
-            ['Items per page' => $this->getItemsPerPage()],
+            ['Items per page' => $event->getPageable()->getItemsPerPage()],
             // ['Total pages' => $event->getTotalPages() ?? '(unknown)'],
             // ['Total items' => $event->getTotalItems() ?? '(unknown)'],
         );
@@ -131,7 +131,7 @@ class BatchProcessorDecorator extends CoreBatchProcessorDecorator
     }
 
     /**
-     * @param AfterPageEvent<TKey,T>|AfterProcessEvent|InterruptEvent $event
+     * @param AfterPageEvent<TKey,T>|AfterProcessEvent<TKey,T>|InterruptEvent<TKey,T> $event
      * @return void
      */
     private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent $event): void

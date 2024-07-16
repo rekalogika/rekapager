@@ -13,9 +13,27 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Batch\Event;
 
+use Rekalogika\Contracts\Rekapager\PageableInterface;
+
+/**
+ * @template TKey of array-key
+ * @template T
+ */
 final class AfterProcessEvent
 {
-    public function __construct()
+    /**
+     * @param PageableInterface<TKey,T> $pageable
+     */
+    public function __construct(
+        private readonly PageableInterface $pageable,
+    ) {
+    }
+
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    public function getPageable(): PageableInterface
     {
+        return $this->pageable;
     }
 }
