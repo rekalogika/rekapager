@@ -22,7 +22,6 @@ return RectorConfig::configure()
     ->withPreparedSets(
         // codeQuality: true,
         // codingStyle: true,
-        // deadCode: true,
         // earlyReturn: true,
         // instanceOf: true,
         // privatization: true,
@@ -31,12 +30,13 @@ return RectorConfig::configure()
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withTypeCoverageLevel(45)
-    ->withDeadCodeLevel(20)
+    ->withDeadCodeLevel(30)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
     ->withSkip([
         SimplifyUselessVariableRector::class => [
+            // used for demo
             __DIR__ . '/tests/src/App/PageableGenerator/*',
         ],
         RemoveUselessReturnTagRector::class => [
