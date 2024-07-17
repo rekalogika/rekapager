@@ -6,6 +6,7 @@ use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\TryCatch\RemoveDeadTryCatchRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 
@@ -36,6 +37,9 @@ return RectorConfig::configure()
     ->withSkip([
         SimplifyUselessVariableRector::class => [
             __DIR__ . '/tests/src/App/PageableGenerator/*',
+        ],
+        RemoveUselessReturnTagRector::class => [
+            __DIR__ . '/packages/rekapager-contracts/src/PageableInterface.php',
         ],
         // FlipTypeControlToUseExclusiveTypeRector::class,
         // SimplifyIfElseToTernaryRector::class,
