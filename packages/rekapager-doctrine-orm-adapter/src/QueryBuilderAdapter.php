@@ -232,7 +232,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
             $i++;
         }
 
-        if (\count($expressions) > 0) {
+        if ($expressions !== []) {
             $queryBuilder->andWhere($queryBuilder->expr()->andX(...$expressions));
         }
 

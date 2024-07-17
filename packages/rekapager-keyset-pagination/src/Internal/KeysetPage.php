@@ -112,7 +112,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
             $this->result = $this->getRealResult();
         }
 
-        if (\count($this->result) === 0 && $this->pageIdentifier->getBoundaryValues() !== null) {
+        if ($this->result === [] && $this->pageIdentifier->getBoundaryValues() !== null) {
             throw new OutOfBoundsException('The page does not exist.');
         }
 

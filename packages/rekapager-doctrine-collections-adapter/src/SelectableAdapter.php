@@ -275,7 +275,7 @@ final readonly class SelectableAdapter implements
             $i++;
         }
 
-        if (\count($expressions) > 0) {
+        if ($expressions !== []) {
             $criteria->andWhere(Criteria::expr()->andX(...$expressions));
         }
 
