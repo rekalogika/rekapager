@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\TryCatch\RemoveDeadTryCatchRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 
 return RectorConfig::configure()
@@ -30,5 +32,7 @@ return RectorConfig::configure()
         AddOverrideAttributeToOverriddenMethodsRector::class
     ])
     ->withSkip([
-        FlipTypeControlToUseExclusiveTypeRector::class
+        FlipTypeControlToUseExclusiveTypeRector::class,
+        SimplifyIfElseToTernaryRector::class,
+        RemoveDeadTryCatchRector::class,
     ]);
