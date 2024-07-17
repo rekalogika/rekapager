@@ -6,6 +6,7 @@ use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\DeadCode\Rector\TryCatch\RemoveDeadTryCatchRector;
@@ -30,7 +31,7 @@ return RectorConfig::configure()
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withTypeCoverageLevel(45)
-    ->withDeadCodeLevel(30)
+    ->withDeadCodeLevel(41)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
@@ -47,6 +48,9 @@ return RectorConfig::configure()
             // workaround psalm
             __DIR__ . '/packages/rekapager-symfony-bridge/src/PageIdentifierEncoderLocator.php',
         ],
+        // static analysis tools don't like this
+        RemoveUnusedVariableAssignRector::class,
+
         // FlipTypeControlToUseExclusiveTypeRector::class,
         // SimplifyIfElseToTernaryRector::class,
         // RemoveDeadTryCatchRector::class,
