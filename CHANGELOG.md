@@ -2,12 +2,13 @@
 
 # 0.13.3
 
-* fix: batch size CLI option
-* feat(batch): show remaining time if the count is known
+* build: add pcntl extension to Dockerfile
 
 # 0.13.2
 
 * feat: batch time limit
+* fix: batch size CLI option
+* feat(batch): show remaining time if the count is known
 
 # 0.13.1
 
