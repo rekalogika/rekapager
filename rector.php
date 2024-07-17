@@ -21,7 +21,8 @@ return RectorConfig::configure()
         __DIR__ . '/tests/src',
     ])
     ->withPreparedSets(
-        // codeQuality: true,
+        typeDeclarations: true,
+        deadCode: true,
         // codingStyle: true,
         // earlyReturn: true,
         // instanceOf: true,
@@ -30,11 +31,10 @@ return RectorConfig::configure()
     )
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
-    ->withTypeCoverageLevel(45)
-    ->withDeadCodeLevel(44)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
+    ->withCodeQualityLevel(3)
     ->withSkip([
         SimplifyUselessVariableRector::class => [
             // used for demo
