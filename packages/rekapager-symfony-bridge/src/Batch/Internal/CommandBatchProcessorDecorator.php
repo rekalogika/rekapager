@@ -21,6 +21,7 @@ use Rekalogika\Rekapager\Batch\Event\BeforePageEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
 use Rekalogika\Rekapager\Batch\Event\ItemEvent;
+use Rekalogika\Rekapager\Batch\Event\TimeLimitEvent;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProgressIndicator;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -143,6 +144,12 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 
     public function onInterrupt(InterruptEvent $event): void
     {
+        $nextPageIdentifier = $event->getNextPageIdentifier();
+
+        if ($this->progressFile !== null && $nextPageIdentifier !== null) {
+            file_put_contents($this->progressFile, $nextPageIdentifier);
+        }
+
         $this->decorated->onInterrupt($event);
 
         $nextPageIdentifier = $event->getNextPageIdentifier();
@@ -164,11 +171,35 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->showStats($event);
     }
 
+    public function onTimeLimit(TimeLimitEvent $event): void
+    {
+        $nextPageIdentifier = $event->getNextPageIdentifier();
+
+        if ($this->progressFile !== null && $nextPageIdentifier !== null) {
+            file_put_contents($this->progressFile, $nextPageIdentifier);
+        }
+
+        $this->decorated->onTimeLimit($event);
+
+        $nextPageIdentifier = $event->getNextPageIdentifier();
+
+        if ($nextPageIdentifier !== null) {
+            $this->io->warning(sprintf(
+                'Time limit reached. To resume, use the argument "-r %s"',
+                $nextPageIdentifier
+            ));
+        } else {
+            $this->io->error('Time limit reached, but there does not seem to be a next page identifier for you to resume');
+        }
+
+        $this->showStats($event);
+    }
+
     /**
-     * @param AfterPageEvent<TKey,T>|AfterProcessEvent<TKey,T>|InterruptEvent<TKey,T> $event
+     * @param AfterPageEvent<TKey,T>|AfterProcessEvent<TKey,T>|InterruptEvent<TKey,T>|TimeLimitEvent<TKey,T> $event
      * @return void
      */
-    private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent $event): void
+    private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent|TimeLimitEvent $event): void
     {
         if ($event instanceof AfterPageEvent) {
             $this->io->writeln('');

@@ -19,6 +19,7 @@ use Rekalogika\Rekapager\Batch\Event\BeforePageEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
 use Rekalogika\Rekapager\Batch\Event\ItemEvent;
+use Rekalogika\Rekapager\Batch\Event\TimeLimitEvent;
 
 /**
  * @template TKey of array-key
@@ -67,5 +68,10 @@ abstract class BatchProcessorDecorator implements BatchProcessorInterface
     public function onInterrupt(InterruptEvent $event): void
     {
         $this->decorated->onInterrupt($event);
+    }
+
+    public function onTimeLimit(TimeLimitEvent $event): void
+    {
+        $this->decorated->onTimeLimit($event);
     }
 }

@@ -20,6 +20,7 @@ use Rekalogika\Rekapager\Batch\Event\BeforePageEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
 use Rekalogika\Rekapager\Batch\Event\ItemEvent;
+use Rekalogika\Rekapager\Batch\Event\TimeLimitEvent;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 
 /**
@@ -56,10 +57,13 @@ final class BatchProcess
     /**
      * @param int<1,max>|null $pageSize
      */
-    final public function process(
+    final public function run(
         ?string $resume = null,
-        ?int $pageSize = null
+        ?int $pageSize = null,
+        ?int $timeLimit = null,
     ): void {
+        $startTime = time();
+
         // determine start page identifier
 
         if ($resume !== null) {
@@ -88,6 +92,21 @@ final class BatchProcess
             $pageIdentifier = $page->getPageIdentifier();
             $pageIdentifierString = $this->pageableIdentifierResolver->encode($pageIdentifier);
 
+            // check time limit
+
+            if ($timeLimit !== null && time() - $startTime >= $timeLimit) {
+                $timeLimitEvent = new TimeLimitEvent(
+                    pageable: $pageable,
+                    nextPageIdentifier: $pageIdentifierString,
+                );
+
+                $this->batchProcessor->onTimeLimit($timeLimitEvent);
+
+                return;
+            }
+
+            // check stop flag
+
             if ($this->stopFlag) {
                 $interruptEvent = new InterruptEvent(
                     pageable: $pageable,
@@ -98,6 +117,8 @@ final class BatchProcess
 
                 return;
             }
+
+            // process page
 
             $beforePageEvent = new BeforePageEvent(
                 page: $page,

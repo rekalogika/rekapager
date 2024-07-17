@@ -42,13 +42,14 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
     private ?SymfonyStyle $io = null;
     private ?BatchProcessFactoryInterface $batchProcessFactory = null;
 
-    public function __construct(
-    ) {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->addOption('resume', 'r', InputOption::VALUE_OPTIONAL, 'Page identifier to resume from');
         $this->addOption('pagesize', 'p', InputOption::VALUE_OPTIONAL, 'Batch/page/chunk size');
         $this->addOption('progress-file', 'f', InputOption::VALUE_OPTIONAL, 'Temporary file to store progress data');
+        $this->addOption('time-limit', 't', InputOption::VALUE_OPTIONAL, 'Runs the batch up to the specified time limit (in seconds)');
     }
 
     #[Required]
@@ -78,6 +79,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         $resume = $input->getOption('resume');
         $pageSize = $input->getOption('pagesize');
         $progressFile = $input->getOption('progress-file');
+        $timeLimit = $input->getOption('time-limit');
 
         /** @psalm-suppress TypeDoesNotContainType */
         if (!\is_string($resume) && $resume !== null) {
@@ -96,6 +98,15 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         /** @psalm-suppress TypeDoesNotContainType */
         if (!\is_string($progressFile) && $progressFile !== null) {
             throw new InvalidArgumentException('Invalid progress-file option');
+        }
+
+        if (!is_numeric($timeLimit) && $timeLimit !== null) {
+            throw new InvalidArgumentException('Invalid time-limit option');
+        }
+
+        if ($timeLimit !== null) {
+            $timeLimit = (int) $timeLimit;
+            \assert($timeLimit > 0);
         }
 
         // check resuming
@@ -124,7 +135,11 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
             batchProcessor: $batchProcessor,
         );
 
-        $this->batchProcess->process($resume, $pageSize);
+        $this->batchProcess->run(
+            resume: $resume,
+            pageSize: $pageSize,
+            timeLimit: $timeLimit,
+        );
 
         return Command::SUCCESS;
     }
