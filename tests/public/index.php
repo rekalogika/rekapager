@@ -15,4 +15,4 @@ use Rekalogika\Rekapager\Tests\App\Kernel;
 
 require_once __DIR__ . '/../../vendor/autoload_runtime.php';
 
-return fn(array $context) => new Kernel();
+return fn(array $context): Kernel => new Kernel();

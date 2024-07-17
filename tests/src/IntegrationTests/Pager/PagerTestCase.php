@@ -127,7 +127,7 @@ abstract class PagerTestCase extends PageableTestCase
 
         /** @psalm-suppress InvalidArgument */
         $numbers = array_map(
-            fn (PageInterface $page) => $page->getPageNumber(),
+            fn (PageInterface $page): ?int => $page->getPageNumber(),
             iterator_to_array($pager->getPreviousNeighboringPages())
         );
 
@@ -139,7 +139,7 @@ abstract class PagerTestCase extends PageableTestCase
 
         /** @psalm-suppress InvalidArgument */
         $numbers = array_map(
-            fn (PageInterface $page) => $page->getPageNumber(),
+            fn (PageInterface $page): ?int => $page->getPageNumber(),
             iterator_to_array($pager->getNextNeighboringPages())
         );
 

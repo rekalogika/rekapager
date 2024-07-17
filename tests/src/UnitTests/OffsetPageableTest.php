@@ -49,7 +49,7 @@ class OffsetPageableTest extends TestCase
         self::assertEquals($itemsPerPage, $page->getItemsPerPage());
         self::assertEquals($totalPages, $pageable->getTotalPages());
         self::assertEquals($totalItems, $pageable->getTotalItems());
-        self::assertEquals($values, array_map(fn (Entity $entity) => $entity->getId(), array_values(iterator_to_array($page))));
+        self::assertEquals($values, array_map(fn (Entity $entity): int => $entity->getId(), array_values(iterator_to_array($page))));
         self::assertEquals($hasPreviousPage, null !== $page->getPreviousPage());
         self::assertEquals($hasNextPage, null !== $page->getNextPage());
 
@@ -59,7 +59,7 @@ class OffsetPageableTest extends TestCase
         self::assertEquals($itemsPerPage, $fromPageable->getItemsPerPage());
         self::assertEquals($totalPages, $pageable->getTotalPages());
         self::assertEquals($totalItems, $pageable->getTotalItems());
-        self::assertEquals($values, array_map(fn (Entity $entity) => $entity->getId(), array_values(iterator_to_array($fromPageable))));
+        self::assertEquals($values, array_map(fn (Entity $entity): int => $entity->getId(), array_values(iterator_to_array($fromPageable))));
         self::assertEquals($hasPreviousPage, null !== $fromPageable->getPreviousPage());
         self::assertEquals($hasNextPage, null !== $fromPageable->getNextPage());
     }
