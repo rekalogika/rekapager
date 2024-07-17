@@ -247,6 +247,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         }
 
         $estimatedEnd = null;
+        $eta = null;
 
         $stats = [
             ['Description' => $this->description],
@@ -263,12 +264,12 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             $stats[] = ['Current time' => $this->formatTime(new \DateTimeImmutable())];
 
             if ($this->totalItems !== null) {
-                $remainingPages = $this->totalPages - $this->pageNumber;
-                if ($remainingPages < 0) {
-                    $remainingPages = 0;
+                $remainingItems = $this->totalItems - $this->itemNumber;
+                if ($remainingItems < 0) {
+                    $remainingItems = 0;
                 }
 
-                $eta = $remainingPages / $pagesPerSecond;
+                $eta = $remainingItems / $itemsPerSecond;
                 $estimatedEnd = time() + $eta;
                 $stats[] = ['Estimated end time' => $this->formatTime((new \DateTimeImmutable('@' . $estimatedEnd))->setTimezone(new \DateTimeZone(date_default_timezone_get())))];
             }
@@ -283,7 +284,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         if ($processDuration !== null) {
             $stats[] = ['Time elapsed' => Helper::formatTime($processDuration)];
 
-            if ($estimatedEnd !== null && $event instanceof AfterPageEvent) {
+            if ($eta !== null && $event instanceof AfterPageEvent) {
                 $stats[] = ['Estimated time remaining' => Helper::formatTime($eta)];
             }
         }
