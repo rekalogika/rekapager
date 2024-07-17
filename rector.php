@@ -14,6 +14,7 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\DeadCode\Rector\TryCatch\RemoveDeadTryCatchRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
+use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -31,7 +32,7 @@ return RectorConfig::configure()
         // earlyReturn: true,
         // instanceOf: true,
         // privatization: true,
-        // strictBooleans: true,
+        strictBooleans: true,
     )
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
@@ -66,6 +67,9 @@ return RectorConfig::configure()
 
         // results in too long variables
         CatchExceptionNameMatchingTypeRector::class,
+
+        // makes code unreadable
+        DisallowedShortTernaryRuleFixerRector::class,
 
         // FlipTypeControlToUseExclusiveTypeRector::class,
         // RemoveDeadTryCatchRector::class,
