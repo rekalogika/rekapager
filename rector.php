@@ -31,7 +31,7 @@ return RectorConfig::configure()
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withTypeCoverageLevel(45)
-    ->withDeadCodeLevel(41)
+    ->withDeadCodeLevel(44)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
