@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
@@ -34,7 +35,7 @@ return RectorConfig::configure()
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
-    ->withCodeQualityLevel(21)
+    ->withCodeQualityLevel(22)
     ->withSkip([
         SimplifyUselessVariableRector::class => [
             // used for demo
@@ -53,6 +54,11 @@ return RectorConfig::configure()
 
         // cognitive burden to many people
         SimplifyIfElseToTernaryRector::class,
+
+        CombineIfRector::class => [
+            // this 'fixes' symfony makerbundle boilerplate code
+            __DIR__ . '/tests/src/App/Entity/*',
+        ],
 
         // FlipTypeControlToUseExclusiveTypeRector::class,
         // RemoveDeadTryCatchRector::class,
