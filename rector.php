@@ -17,22 +17,22 @@ return RectorConfig::configure()
         __DIR__ . '/tests/src',
     ])
     ->withPreparedSets(
-        codeQuality: true,
-        codingStyle: true,
-        deadCode: true,
+        // codeQuality: true,
+        // codingStyle: true,
+        // deadCode: true,
         // earlyReturn: true,
         // instanceOf: true,
         // privatization: true,
         // strictBooleans: true,
     )
     // uncomment to reach your current PHP version
-    // ->withPhpSets()
+    ->withPhpSets(php74: true)
     ->withTypeCoverageLevel(0)
     ->withRules([
-        AddOverrideAttributeToOverriddenMethodsRector::class
+        // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
     ->withSkip([
-        FlipTypeControlToUseExclusiveTypeRector::class,
-        SimplifyIfElseToTernaryRector::class,
-        RemoveDeadTryCatchRector::class,
+        // FlipTypeControlToUseExclusiveTypeRector::class,
+        // SimplifyIfElseToTernaryRector::class,
+        // RemoveDeadTryCatchRector::class,
     ]);
