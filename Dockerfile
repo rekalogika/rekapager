@@ -15,7 +15,8 @@ RUN a2enmod rewrite
 # Install PHP extensions and other dependencies
 RUN apt-get update && \
     apt-get install -y libicu-dev && \
-    docker-php-ext-install intl
+    docker-php-ext-install intl && \
+    docker-php-ext-install pcntl
 
 # Expose the port Apache listens on
 EXPOSE 80
