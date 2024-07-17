@@ -30,8 +30,8 @@ return RectorConfig::configure()
         codeQuality: true,
         codingStyle: true,
         // earlyReturn: true,
-        // instanceOf: true,
-        // privatization: true,
+        instanceOf: true,
+        privatization: true,
         strictBooleans: true,
     )
     // uncomment to reach your current PHP version
