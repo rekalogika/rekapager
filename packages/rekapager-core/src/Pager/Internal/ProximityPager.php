@@ -83,7 +83,7 @@ final class ProximityPager implements PagerInterface
         $this->currentPage = $this->decorate($currentPage);
         $this->firstPage = $this->decorate($this->pageable->getFirstPage());
 
-        if ($lastPage = $this->pageable->getLastPage()) {
+        if (($lastPage = $this->pageable->getLastPage()) !== null) {
             $this->lastPage = $this->decorate($lastPage);
         }
 

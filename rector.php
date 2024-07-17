@@ -34,7 +34,7 @@ return RectorConfig::configure()
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
-    ->withCodeQualityLevel(17)
+    ->withCodeQualityLevel(21)
     ->withSkip([
         SimplifyUselessVariableRector::class => [
             // used for demo
@@ -51,7 +51,9 @@ return RectorConfig::configure()
         // static analysis tools don't like this
         RemoveUnusedVariableAssignRector::class,
 
+        // cognitive burden to many people
+        SimplifyIfElseToTernaryRector::class,
+
         // FlipTypeControlToUseExclusiveTypeRector::class,
-        // SimplifyIfElseToTernaryRector::class,
         // RemoveDeadTryCatchRector::class,
     ]);
