@@ -24,6 +24,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -42,13 +43,21 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         parent::__construct();
     }
 
+    protected function configure(): void
+    {
+        $this->addOption('count', null, InputOption::VALUE_NONE, 'Count the total items');
+    }
+
     protected function getPageable(
         InputInterface $input,
         OutputInterface $output
     ): PageableInterface {
+        /** @psalm-suppress RedundantCast */
+        $count = (bool) $input->getOption('count');
+
         $adapter = new SelectableAdapter($this->postRepository);
 
-        return new KeysetPageable($adapter);
+        return new KeysetPageable($adapter, count: $count);
     }
 
     public function processItem(ItemEvent $itemEvent): void

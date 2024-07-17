@@ -127,6 +127,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         $this->io = new SymfonyStyle($input, $output);
 
         $batchProcessor = new CommandBatchProcessorDecorator(
+            description: $this->getDescription(),
             decorated: $this->getBatchProcessor(),
             io: $this->io,
             progressFile: $progressFile,

@@ -3,6 +3,7 @@
 # 0.13.3
 
 * fix: batch size CLI option
+* feat(batch): show remaining time if the count is known
 
 # 0.13.2
 
