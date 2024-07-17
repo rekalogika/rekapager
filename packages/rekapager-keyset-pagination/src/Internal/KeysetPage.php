@@ -303,7 +303,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         foreach (range(1, $countNextPages) as $i) {
             $pageNumber = $this->getPageNumber();
             if ($pageNumber !== null) {
-                $pageNumber = $pageNumber + $i;
+                $pageNumber += $i;
             }
 
             $identifier = new KeysetPageIdentifier(
@@ -351,7 +351,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         foreach (range($countPreviousPages, 1) as $i) {
             $pageNumber = $this->getPageNumber();
             if ($pageNumber !== null) {
-                $pageNumber = $pageNumber - $i;
+                $pageNumber -= $i;
             }
 
             $identifier = new KeysetPageIdentifier(
