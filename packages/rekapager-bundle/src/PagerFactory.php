@@ -120,7 +120,9 @@ class PagerFactory implements PagerFactoryInterface
 
         try {
             /** @psalm-suppress NoValue */
-            foreach ($pager->getCurrentPage() as $i);
+            foreach ($pager->getCurrentPage() as $i) {
+                // noop
+            }
         } catch (ContractsOutOfBoundsException $e) {
             throw new OutOfBoundsException($e, $pager, $options);
         }
