@@ -369,7 +369,7 @@ final class ProximityPager implements PagerInterface
             throw new LogicException('Proximity must be greater than zero');
         }
 
-        return new static(
+        return new self(
             page: $this->page,
             proximity: $proximity,
             pageLimit: $this->pageLimit,

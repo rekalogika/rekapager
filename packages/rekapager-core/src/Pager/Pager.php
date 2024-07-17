@@ -67,7 +67,7 @@ final class Pager implements PagerInterface
 
     public function withProximity(int $proximity): static
     {
-        return new static(
+        return new self(
             page: $this->page,
             proximity: $proximity,
             pageLimit: $this->pageLimit,

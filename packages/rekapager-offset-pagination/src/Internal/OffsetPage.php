@@ -63,7 +63,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
             $pageNumber = 1;
         }
 
-        return new static(
+        return new self(
             pageable: $this->pageable,
             adapter: $this->adapter,
             pageNumber: $pageNumber,

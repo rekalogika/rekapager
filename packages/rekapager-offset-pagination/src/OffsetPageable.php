@@ -54,7 +54,7 @@ final class OffsetPageable implements PageableInterface
 
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        $new = new static($this->adapter, $itemsPerPage, $this->count, $this->pageLimit);
+        $new = new self($this->adapter, $itemsPerPage, $this->count, $this->pageLimit);
         $new->totalItemsCache = $this->totalItemsCache;
 
         return $new;

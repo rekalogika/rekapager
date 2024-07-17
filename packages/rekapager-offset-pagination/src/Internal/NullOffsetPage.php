@@ -47,7 +47,7 @@ final readonly class NullOffsetPage implements NullPageInterface, \IteratorAggre
             $pageNumber = 1;
         }
 
-        return new static($this->pageable, $pageNumber, $this->itemsPerPage);
+        return new self($this->pageable, $pageNumber, $this->itemsPerPage);
     }
 
     public function getIterator(): \Traversable

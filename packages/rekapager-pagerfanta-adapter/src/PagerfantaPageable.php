@@ -83,7 +83,7 @@ final readonly class PagerfantaPageable implements PageableInterface
 
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        return new static(
+        return new self(
             pagerfanta: $this->pagerfanta,
             count: $this->count,
             pageLimit: $this->pageLimit,

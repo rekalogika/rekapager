@@ -47,7 +47,7 @@ final readonly class NullPageDecorator implements NullPageInterface, \IteratorAg
 
     public function withPageNumber(?int $pageNumber): static
     {
-        return new static($this->page->withPageNumber($pageNumber));
+        return new self($this->page->withPageNumber($pageNumber));
     }
 
     public function getPageable(): PageableInterface

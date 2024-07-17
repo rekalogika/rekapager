@@ -42,7 +42,7 @@ final readonly class TraversablePager implements TraversablePagerInterface, \Ite
 
     public function withProximity(int $proximity): static
     {
-        return new static($this->decorated->withProximity($proximity));
+        return new self($this->decorated->withProximity($proximity));
     }
 
     public function getCurrentPage(): PagerItemInterface
