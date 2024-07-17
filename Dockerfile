@@ -1,6 +1,7 @@
 # Use an official PHP runtime as a parent image
 FROM php:8.3-apache
 ENV APACHE_DOCUMENT_ROOT /var/www/html/tests/public
+ENV TERM xterm-256color
 
 # Set the working directory in the container
 WORKDIR /var/www/html

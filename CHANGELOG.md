@@ -3,6 +3,7 @@
 # 0.13.3
 
 * build: add pcntl extension to Dockerfile
+* build: fix docker terminal issue
 
 # 0.13.2
 
