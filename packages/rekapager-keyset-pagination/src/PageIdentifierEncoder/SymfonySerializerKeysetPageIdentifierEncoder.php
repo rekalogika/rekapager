@@ -60,7 +60,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
     private function isWhitelistedBoundaryValueType(object|string $value): bool
     {
         if (\is_object($value)) {
-            $value = \get_class($value);
+            $value = $value::class;
         }
 
         foreach ($this->whitelistedBoundaryValueTypes as $type) {

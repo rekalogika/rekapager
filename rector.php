@@ -26,7 +26,7 @@ return RectorConfig::configure()
         // strictBooleans: true,
     )
     // uncomment to reach your current PHP version
-    ->withPhpSets(php74: true)
+    ->withPhpSets(php80: true)
     ->withTypeCoverageLevel(0)
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
