@@ -55,7 +55,6 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
 
     /**
      * @param object|class-string $value
-     * @return boolean
      */
     private function isWhitelistedBoundaryValueType(object|string $value): bool
     {

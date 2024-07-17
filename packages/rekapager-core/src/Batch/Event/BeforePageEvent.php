@@ -23,7 +23,6 @@ final readonly class BeforePageEvent
 {
     /**
      * @param PageInterface<TKey,T> $page
-     * @param string $encodedPageIdentifier
      */
     public function __construct(
         private PageInterface $page,

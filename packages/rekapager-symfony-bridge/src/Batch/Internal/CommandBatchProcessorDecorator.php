@@ -197,7 +197,6 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 
     /**
      * @param AfterPageEvent<TKey,T>|AfterProcessEvent<TKey,T>|InterruptEvent<TKey,T>|TimeLimitEvent<TKey,T> $event
-     * @return void
      */
     private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent|TimeLimitEvent $event): void
     {

@@ -107,7 +107,6 @@ class DemoController extends AbstractController
 
     /**
      * @param class-string $class
-     * @return string
      */
     private function getSourceCode(string $class): string
     {

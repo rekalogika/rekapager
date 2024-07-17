@@ -24,7 +24,6 @@ interface PagerUrlGeneratorInterface
      * @template TKey of array-key
      * @template T
      * @param PageInterface<TKey,T> $page
-     * @return string|null
      */
     public function generateUrl(PageInterface $page): ?string;
 }

@@ -47,7 +47,6 @@ class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncode
 
     /**
      * @param object|class-string $value
-     * @return boolean
      */
     private function isWhitelistedBoundaryValueType(object|string $value): bool
     {
