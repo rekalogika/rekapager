@@ -48,6 +48,11 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         $this->addOption('count', null, InputOption::VALUE_NONE, 'Count the total items');
     }
 
+    public function getItemsPerPage(): int
+    {
+        return 100;
+    }
+
     protected function getPageable(
         InputInterface $input,
         OutputInterface $output
