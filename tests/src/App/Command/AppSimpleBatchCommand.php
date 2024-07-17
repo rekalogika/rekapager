@@ -42,8 +42,10 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         parent::__construct();
     }
 
-    protected function getPageable(InputInterface $input, OutputInterface $output): PageableInterface
-    {
+    protected function getPageable(
+        InputInterface $input,
+        OutputInterface $output
+    ): PageableInterface {
         $adapter = new SelectableAdapter($this->postRepository);
 
         return new KeysetPageable($adapter);
