@@ -35,8 +35,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class AppBatchCommand extends BatchCommand
 {
     public function __construct(
-        private PostRepository $postRepository,
-        private PostBatchProcessor $postBatchProcessor
+        private readonly PostRepository $postRepository,
+        private readonly PostBatchProcessor $postBatchProcessor
     ) {
         parent::__construct();
     }

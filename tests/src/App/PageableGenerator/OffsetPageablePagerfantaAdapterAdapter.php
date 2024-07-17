@@ -27,7 +27,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
  */
 class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterface
 {
-    public function __construct(private UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository)
     {
     }
 

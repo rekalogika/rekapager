@@ -25,8 +25,8 @@ class ApiPageUrlGenerator implements PageUrlGeneratorInterface
 
     public function __construct(
         string $iri,
-        private string $pageParameterName,
-        private int $urlGenerationStrategy,
+        private readonly string $pageParameterName,
+        private readonly int $urlGenerationStrategy,
     ) {
         $this->parsed = IriHelper::parseIri($iri, $this->pageParameterName);
     }

@@ -29,7 +29,7 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
  *
  * @internal
  */
-final class PagerItem implements PagerItemInterface, \IteratorAggregate
+final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
 {
     private int|null|NullPageNumber $pageNumber;
 

@@ -28,8 +28,8 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 class PostProvider implements ProviderInterface
 {
     public function __construct(
-        private PostRepository $postRepository,
-        private PagerFactoryInterface $pagerFactory,
+        private readonly PostRepository $postRepository,
+        private readonly PagerFactoryInterface $pagerFactory,
     ) {
     }
 
@@ -46,8 +46,7 @@ class PostProvider implements ProviderInterface
     ): object|array|null {
         $adapter = new SelectableAdapter($this->postRepository);
         $pageable = new KeysetPageable($adapter);
-        $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 
-        return $pager;
+        return $this->pagerFactory->createPager($pageable, $operation, $context);
     }
 }

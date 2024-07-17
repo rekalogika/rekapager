@@ -21,14 +21,14 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
  * @template T
  * @implements OffsetPaginationAdapterInterface<array-key,T>
  */
-final class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
+final readonly class PagerfantaAdapterAdapter implements OffsetPaginationAdapterInterface
 {
     /**
      * @param AdapterInterface<T> $adapter
      */
     public function __construct(
-        private readonly AdapterInterface $adapter,
-        private readonly string|null $indexBy = null,
+        private AdapterInterface $adapter,
+        private string|null $indexBy = null,
     ) {
     }
 

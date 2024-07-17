@@ -33,7 +33,6 @@ final class BatchProcess
 
     /**
      * @param PageableInterface<TKey,T> $pageable
-     * @param PageIdentifierEncoderResolverInterface $pageableIdentifierResolver
      * @param BatchProcessorInterface<TKey,T> $batchProcessor
      */
     public function __construct(

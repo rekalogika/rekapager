@@ -24,6 +24,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 interface PageableGeneratorInterface extends \Countable
 {
     public static function getKey(): string;
+
     public function getTitle(): string;
 
     /**

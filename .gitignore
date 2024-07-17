@@ -4,3 +4,4 @@ vendor
 tools
 .php-cs-fixer.cache
 .vscode
+rector.log

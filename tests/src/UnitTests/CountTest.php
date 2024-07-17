@@ -74,9 +74,7 @@ class CountTest extends TestCase
                 adapter: new SelectableAdapter(
                     collection: $collection
                 ),
-                count: function () use ($collection) {
-                    return $collection->count();
-                },
+                count: fn () => $collection->count(),
             ),
             5,
         ];
@@ -111,9 +109,7 @@ class CountTest extends TestCase
                 adapter: new SelectableAdapter(
                     collection: $collection
                 ),
-                count: function () use ($collection) {
-                    return $collection->count();
-                },
+                count: fn () => $collection->count(),
             ),
             5,
         ];
@@ -147,9 +143,7 @@ class CountTest extends TestCase
                 adapter: new PagerfantaAdapterAdapter(
                     adapter: new PagerfantaSelectableAdapter($collection, Criteria::create())
                 ),
-                count: function () use ($collection) {
-                    return $collection->count();
-                },
+                count: fn () => $collection->count(),
             ),
             5,
         ];

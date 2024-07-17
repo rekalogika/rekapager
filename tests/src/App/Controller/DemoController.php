@@ -34,7 +34,7 @@ class DemoController extends AbstractController
      */
     public function __construct(
         #[TaggedIterator('rekalogika.rekapager.pageable_generator', defaultIndexMethod: 'getKey')]
-        private iterable $pageableGenerators,
+        private readonly iterable $pageableGenerators,
     ) {
     }
 
@@ -64,6 +64,7 @@ class DemoController extends AbstractController
                 $key = $pageableGenerator::getKey();
                 break;
             }
+
             \assert($key !== null);
             $pageableGenerator = $pageableGenerators[$key];
         } else {
@@ -107,7 +108,6 @@ class DemoController extends AbstractController
 
     /**
      * @param class-string $class
-     * @return string
      */
     private function getSourceCode(string $class): string
     {
@@ -136,9 +136,7 @@ class DemoController extends AbstractController
             $contents,
         ) ?? throw new \RuntimeException('Regex fail');
 
-        $contents = $this->unindent($contents);
-
-        return $contents;
+        return $this->unindent($contents);
     }
 
     private function unindent(string $text): string

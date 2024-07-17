@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class DoctrineSqlLoggingPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $doctrineLoggingMiddlewareDef = $container->getDefinition('doctrine.dbal.logging_middleware');
         $doctrineLoggingMiddlewareDef->replaceArgument(0, new Reference(SqlLogger::class));

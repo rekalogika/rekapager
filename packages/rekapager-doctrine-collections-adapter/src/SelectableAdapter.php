@@ -30,19 +30,19 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
  * @implements KeysetPaginationAdapterInterface<TKey,T>
  * @implements OffsetPaginationAdapterInterface<TKey,T>
  */
-final class SelectableAdapter implements
+final readonly class SelectableAdapter implements
     OffsetPaginationAdapterInterface,
     KeysetPaginationAdapterInterface
 {
-    private readonly Criteria $criteria;
+    private Criteria $criteria;
 
     /**
      * @param Selectable<TKey,T> $collection
      */
     public function __construct(
-        private readonly Selectable $collection,
+        private Selectable $collection,
         ?Criteria $criteria = null,
-        private readonly string|null $indexBy = null,
+        private string|null $indexBy = null,
     ) {
         $criteria ??= Criteria::create();
         $orderings = $criteria->orderings();
@@ -104,6 +104,7 @@ final class SelectableAdapter implements
             if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
                 throw new UnsupportedCollectionItemException($matches[1], $e);
             }
+
             throw $e;
 
         }
@@ -275,7 +276,7 @@ final class SelectableAdapter implements
             $i++;
         }
 
-        if (\count($expressions) > 0) {
+        if ($expressions !== []) {
             $criteria->andWhere(Criteria::expr()->andX(...$expressions));
         }
 
@@ -312,6 +313,7 @@ final class SelectableAdapter implements
             if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
                 throw new UnsupportedCollectionItemException($matches[1], $e);
             }
+
             throw $e;
 
         }

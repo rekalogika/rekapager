@@ -27,7 +27,7 @@ use Symfony\Component\Uid\AbstractUid;
 class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncoderInterface
 {
     public function __construct(
-        private string $secret
+        private readonly string $secret
     ) {
     }
 
@@ -47,12 +47,11 @@ class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncode
 
     /**
      * @param object|class-string $value
-     * @return boolean
      */
     private function isWhitelistedBoundaryValueType(object|string $value): bool
     {
         if (\is_object($value)) {
-            $value = \get_class($value);
+            $value = $value::class;
         }
 
         foreach ($this->whitelistedBoundaryValueTypes as $type) {

@@ -21,7 +21,7 @@ use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 class PageIdentifierEncoderResolver implements PageIdentifierEncoderResolverInterface
 {
     public function __construct(
-        private PageIdentifierEncoderLocatorInterface $locator
+        private readonly PageIdentifierEncoderLocatorInterface $locator
     ) {
     }
 

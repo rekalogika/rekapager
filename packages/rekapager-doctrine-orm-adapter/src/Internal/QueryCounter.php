@@ -150,7 +150,7 @@ final class QueryCounter implements \Countable
         foreach ($parameters as $key => $parameter) {
             $parameterName = $parameter->getName();
 
-            if (!(isset($parameterMappings[$parameterName]) || \array_key_exists($parameterName, $parameterMappings))) {
+            if (!isset($parameterMappings[$parameterName]) && !\array_key_exists($parameterName, $parameterMappings)) {
                 /** @psalm-suppress MixedArgumentTypeCoercion */
                 unset($parameters[$key]);
             }

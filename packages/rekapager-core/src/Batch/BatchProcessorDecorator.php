@@ -31,7 +31,7 @@ abstract class BatchProcessorDecorator implements BatchProcessorInterface
     /**
      * @param BatchProcessorInterface<TKey,T> $decorated
      */
-    public function __construct(private BatchProcessorInterface $decorated)
+    public function __construct(private readonly BatchProcessorInterface $decorated)
     {
     }
 

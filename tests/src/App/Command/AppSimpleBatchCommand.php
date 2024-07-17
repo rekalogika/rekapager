@@ -36,8 +36,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class AppSimpleBatchCommand extends SimpleBatchCommand
 {
     public function __construct(
-        private PostRepository $postRepository,
-        private EntityManagerInterface $entityManager,
+        private readonly PostRepository $postRepository,
+        private readonly EntityManagerInterface $entityManager,
     ) {
         parent::__construct();
     }

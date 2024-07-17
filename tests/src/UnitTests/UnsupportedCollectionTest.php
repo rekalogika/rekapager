@@ -29,7 +29,9 @@ class UnsupportedCollectionTest extends TestCase
         $pageable = new KeysetPageable($adapter, 2);
 
         $this->expectException(UnsupportedCollectionItemException::class);
-        foreach ($pageable->getFirstPage() as $item);
+        foreach ($pageable->getFirstPage() as $item) {
+            // noop
+        }
     }
 
     public function testCollectionOfScalarWithOffsetPagination(): void
@@ -39,6 +41,8 @@ class UnsupportedCollectionTest extends TestCase
         $pageable = new OffsetPageable($adapter, 2);
 
         $this->expectException(UnsupportedCollectionItemException::class);
-        foreach ($pageable->getFirstPage() as $item);
+        foreach ($pageable->getFirstPage() as $item) {
+            // noop
+        }
     }
 }

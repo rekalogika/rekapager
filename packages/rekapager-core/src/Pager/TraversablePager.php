@@ -25,7 +25,7 @@ use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
  * @implements TraversablePagerInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  */
-final class TraversablePager implements TraversablePagerInterface, \IteratorAggregate
+final readonly class TraversablePager implements TraversablePagerInterface, \IteratorAggregate
 {
     /**
      * @param PagerInterface<TKey,T> $decorated
@@ -42,7 +42,7 @@ final class TraversablePager implements TraversablePagerInterface, \IteratorAggr
 
     public function withProximity(int $proximity): static
     {
-        return new static($this->decorated->withProximity($proximity));
+        return new self($this->decorated->withProximity($proximity));
     }
 
     public function getCurrentPage(): PagerItemInterface

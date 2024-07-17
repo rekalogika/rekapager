@@ -63,7 +63,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
             $pageNumber = 1;
         }
 
-        return new static(
+        return new self(
             pageable: $this->pageable,
             adapter: $this->adapter,
             pageNumber: $pageNumber,
@@ -90,7 +90,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
     private function getResult(): array
     {
         if ($this->result !== null) {
-            if (\count($this->result) === 0 && $this->pageNumber !== 1) {
+            if ($this->result === [] && $this->pageNumber !== 1) {
                 throw new OutOfBoundsException('The page does not exist.');
             }
 
@@ -115,7 +115,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
 
         $this->result = $result;
 
-        if (\count($this->result) === 0 && $this->pageNumber !== 1) {
+        if ($this->result === [] && $this->pageNumber !== 1) {
             throw new OutOfBoundsException('The page does not exist.');
         }
 

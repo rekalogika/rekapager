@@ -19,15 +19,14 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
  * @template TKey of array-key
  * @template T
  */
-final class BeforePageEvent
+final readonly class BeforePageEvent
 {
     /**
      * @param PageInterface<TKey,T> $page
-     * @param string $encodedPageIdentifier
      */
     public function __construct(
-        private readonly PageInterface $page,
-        private readonly string $encodedPageIdentifier,
+        private PageInterface $page,
+        private string $encodedPageIdentifier,
     ) {
     }
 

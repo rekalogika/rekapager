@@ -130,17 +130,17 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                     if ($property['order'] === 'ASC') {
                         $expressions[] = $queryBuilder->expr()->gt(
                             $property['property'],
-                            ":rekapager_where_{$z}"
+                            ':rekapager_where_' . $z
                         );
                     } else {
                         $expressions[] = $queryBuilder->expr()->lt(
                             $property['property'],
-                            ":rekapager_where_{$z}"
+                            ':rekapager_where_' . $z
                         );
                     }
 
                     $queryBuilder->setParameter(
-                        "rekapager_where_{$z}",
+                        'rekapager_where_' . $z,
                         $property['value'],
                         // @phpstan-ignore-next-line
                         $this->getType($property['property'], $property['value'])
@@ -154,18 +154,18 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
                 if ($property['order'] === 'ASC') {
                     $expressions[] = $queryBuilder->expr()->gte(
                         $property['property'],
-                        ":rekapager_where_{$z}"
+                        ':rekapager_where_' . $z
                     );
                 } else {
                     $expressions[] = $queryBuilder->expr()->lte(
                         $property['property'],
-                        ":rekapager_where_{$z}"
+                        ':rekapager_where_' . $z
                         // $property['value']
                     );
                 }
 
                 $queryBuilder->setParameter(
-                    "rekapager_where_{$z}",
+                    'rekapager_where_' . $z,
                     $property['value'],
                     // @phpstan-ignore-next-line
                     $this->getType($property['property'], $property['value'])
@@ -180,11 +180,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
             foreach (\array_slice($properties, 0, $i) as $equalProperty) {
                 $subExpressions[] = $queryBuilder->expr()->eq(
                     $equalProperty['property'],
-                    ":rekapager_where_{$z}"
+                    ':rekapager_where_' . $z
                 );
 
                 $queryBuilder->setParameter(
-                    "rekapager_where_{$z}",
+                    'rekapager_where_' . $z,
                     $equalProperty['value'],
                     // @phpstan-ignore-next-line
                     $this->getType($equalProperty['property'], $equalProperty['value'])
@@ -196,11 +196,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
             if ($property['order'] === 'ASC') {
                 $subExpressions[] = $queryBuilder->expr()->lte(
                     $property['property'],
-                    ":rekapager_where_{$z}"
+                    ':rekapager_where_' . $z
                 );
 
                 $queryBuilder->setParameter(
-                    "rekapager_where_{$z}",
+                    'rekapager_where_' . $z,
                     $property['value'],
                     // @phpstan-ignore-next-line
                     $this->getType($property['property'], $property['value'])
@@ -210,11 +210,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
             } else {
                 $subExpressions[] = $queryBuilder->expr()->gte(
                     $property['property'],
-                    ":rekapager_where_{$z}"
+                    ':rekapager_where_' . $z
                 );
 
                 $queryBuilder->setParameter(
-                    "rekapager_where_{$z}",
+                    'rekapager_where_' . $z,
                     $property['value'],
                     // @phpstan-ignore-next-line
                     $this->getType($property['property'], $property['value'])
@@ -232,7 +232,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
             $i++;
         }
 
-        if (\count($expressions) > 0) {
+        if ($expressions !== []) {
             $queryBuilder->andWhere($queryBuilder->expr()->andX(...$expressions));
         }
 

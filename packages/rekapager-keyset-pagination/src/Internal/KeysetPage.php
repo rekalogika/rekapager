@@ -40,6 +40,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
     private ?array $result = null;
 
     private ?bool $hasPreviousPage = null;
+
     private ?bool $hasNextPage = null;
 
     /**
@@ -112,7 +113,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
             $this->result = $this->getRealResult();
         }
 
-        if (\count($this->result) === 0 && $this->pageIdentifier->getBoundaryValues() !== null) {
+        if ($this->result === [] && $this->pageIdentifier->getBoundaryValues() !== null) {
             throw new OutOfBoundsException('The page does not exist.');
         }
 
@@ -153,6 +154,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
             } else {
                 $this->hasPreviousPage = false;
             }
+
             $this->hasNextPage = false;
         }
 
@@ -270,23 +272,22 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
      */
     private function countPreviousItems(int $maxItems): int
     {
-        $return = $this->adapter->countKeysetItems(
+        return $this->adapter->countKeysetItems(
             offset: 0,
             limit: $maxItems,
             boundaryType: BoundaryType::Upper,
             boundaryValues: $this->getValuesForBoundaryFromFirstItem(),
         );
-
-        return $return;
     }
 
     public function getNextPages(int $numberOfPages): array
     {
         // optimization
         if ($numberOfPages === 1) {
-            if ($nextPage = $this->getNextPage()) {
+            if (($nextPage = $this->getNextPage()) !== null) {
                 return [$nextPage];
             }
+
             return [];
         }
 
@@ -305,7 +306,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         foreach (range(1, $countNextPages) as $i) {
             $pageNumber = $this->getPageNumber();
             if ($pageNumber !== null) {
-                $pageNumber = $pageNumber + $i;
+                $pageNumber += $i;
             }
 
             $identifier = new KeysetPageIdentifier(
@@ -331,9 +332,10 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
     {
         // optimization
         if ($numberOfPages === 1) {
-            if ($previousPage = $this->getPreviousPage()) {
+            if (($previousPage = $this->getPreviousPage()) !== null) {
                 return [$previousPage];
             }
+
             return [];
         }
 
@@ -353,7 +355,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         foreach (range($countPreviousPages, 1) as $i) {
             $pageNumber = $this->getPageNumber();
             if ($pageNumber !== null) {
-                $pageNumber = $pageNumber - $i;
+                $pageNumber -= $i;
             }
 
             $identifier = new KeysetPageIdentifier(

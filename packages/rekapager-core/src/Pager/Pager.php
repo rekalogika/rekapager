@@ -36,6 +36,7 @@ final class Pager implements PagerInterface
      * @var PagerInterface<TKey,T>|null
      */
     private ?PagerInterface $pager = null;
+
     private PagerUrlGeneratorInterface $pagerUrlGenerator;
 
     /**
@@ -47,8 +48,8 @@ final class Pager implements PagerInterface
         private readonly PageInterface $page,
         private readonly int $proximity = 2,
         private readonly ?int $pageLimit = null,
-        private ?PageUrlGeneratorInterface $pageUrlGenerator = null,
-        private ?PageIdentifierEncoderInterface $pageIdentifierEncoder = null
+        private readonly ?PageUrlGeneratorInterface $pageUrlGenerator = null,
+        private readonly ?PageIdentifierEncoderInterface $pageIdentifierEncoder = null
     ) {
         if ($pageUrlGenerator !== null && $pageIdentifierEncoder !== null) {
             $this->pagerUrlGenerator = new PagerUrlGenerator(
@@ -67,7 +68,7 @@ final class Pager implements PagerInterface
 
     public function withProximity(int $proximity): static
     {
-        return new static(
+        return new self(
             page: $this->page,
             proximity: $proximity,
             pageLimit: $this->pageLimit,

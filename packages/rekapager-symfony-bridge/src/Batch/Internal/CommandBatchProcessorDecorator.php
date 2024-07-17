@@ -35,9 +35,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private readonly BatchTimer $timer;
+
     private int $pageNumber = 0;
+
     private int $itemNumber = 0;
+
     private ?\DateTimeInterface $startTime = null;
+
     private readonly ProgressIndicator $progressIndicator;
 
     /**
@@ -54,7 +58,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->progressIndicator = new ProgressIndicator($this->io, 'very_verbose');
     }
 
-    private static function formatTime(\DateTimeInterface $time): string
+    private function formatTime(\DateTimeInterface $time): string
     {
         return $time->format('Y-m-d H:i:s T');
     }
@@ -68,7 +72,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->io->success('Starting batch process');
 
         $this->io->definitionList(
-            ['Start time' => self::formatTime($this->startTime)],
+            ['Start time' => $this->formatTime($this->startTime)],
             ['Start page' => $event->getStartPageIdentifier() ?? '(first page)'],
             ['Progress file' => $this->progressFile ?? '(not used)'],
             ['Items per page' => $event->getPageable()->getItemsPerPage()],
@@ -197,7 +201,6 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 
     /**
      * @param AfterPageEvent<TKey,T>|AfterProcessEvent<TKey,T>|InterruptEvent<TKey,T>|TimeLimitEvent<TKey,T> $event
-     * @return void
      */
     private function showStats(AfterPageEvent|AfterProcessEvent|InterruptEvent|TimeLimitEvent $event): void
     {
@@ -210,13 +213,13 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $stats = [];
 
         if ($this->startTime !== null) {
-            $stats[] = ['Start time' => self::formatTime($this->startTime)];
+            $stats[] = ['Start time' => $this->formatTime($this->startTime)];
         }
 
         if ($event instanceof AfterPageEvent) {
-            $stats[] = ['Current time' => self::formatTime(new \DateTimeImmutable())];
+            $stats[] = ['Current time' => $this->formatTime(new \DateTimeImmutable())];
         } else {
-            $stats[] = ['End time' => self::formatTime(new \DateTimeImmutable())];
+            $stats[] = ['End time' => $this->formatTime(new \DateTimeImmutable())];
         }
 
         if ($processDuration !== null) {

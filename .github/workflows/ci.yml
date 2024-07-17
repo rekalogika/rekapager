@@ -65,6 +65,9 @@ jobs:
     - name: Validate monorepo
       run: vendor/bin/monorepo-builder validate
 
+    # - name: Rector
+    #   run: vendor/bin/rector process --no-progress-bar --no-diffs --dry-run --no-ansi
+
     - name: Load fixtures
       run: make fixtures
 

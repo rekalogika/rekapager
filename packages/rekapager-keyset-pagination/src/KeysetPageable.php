@@ -52,7 +52,7 @@ final class KeysetPageable implements PageableInterface
 
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        $new = new static($this->adapter, $itemsPerPage, $this->count);
+        $new = new self($this->adapter, $itemsPerPage, $this->count);
         $new->totalItemsCache = $this->totalItemsCache;
 
         return $new;

@@ -23,7 +23,7 @@ use Rekalogika\Rekapager\Keyset\Contracts\KeysetItemInterface;
  *
  * @internal
  */
-final class QueryBuilderKeysetItem implements KeysetItemInterface
+final readonly class QueryBuilderKeysetItem implements KeysetItemInterface
 {
     /**
      * @param TKey $key
@@ -31,9 +31,9 @@ final class QueryBuilderKeysetItem implements KeysetItemInterface
      * @param array<string,mixed> $boundaryValues
      */
     public function __construct(
-        private readonly int|string $key,
-        private readonly mixed $value,
-        private readonly array $boundaryValues,
+        private int|string $key,
+        private mixed $value,
+        private array $boundaryValues,
     ) {
         /** @var mixed $v */
         foreach ($boundaryValues as $k => $v) {

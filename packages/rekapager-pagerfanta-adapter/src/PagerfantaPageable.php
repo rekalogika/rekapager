@@ -22,12 +22,12 @@ use Rekalogika\Rekapager\Offset\OffsetPageable;
  * @template T
  * @implements PageableInterface<array-key,T>
  */
-final class PagerfantaPageable implements PageableInterface
+final readonly class PagerfantaPageable implements PageableInterface
 {
     /**
      * @var OffsetPageable<array-key,T>
      */
-    private readonly OffsetPageable $pageable;
+    private OffsetPageable $pageable;
 
     /**
      * @param PagerfantaInterface<T> $pagerfanta
@@ -35,9 +35,9 @@ final class PagerfantaPageable implements PageableInterface
      * @param null|int<1,max> $pageLimit
      */
     public function __construct(
-        private readonly PagerfantaInterface $pagerfanta,
-        private readonly int|bool|\Closure $count = false,
-        private readonly ?int $pageLimit = 100,
+        private PagerfantaInterface $pagerfanta,
+        private int|bool|\Closure $count = false,
+        private ?int $pageLimit = 100,
         string|null $indexBy = null,
     ) {
         $this->pageable = new OffsetPageable(
@@ -83,7 +83,7 @@ final class PagerfantaPageable implements PageableInterface
 
     public function withItemsPerPage(int $itemsPerPage): static
     {
-        return new static(
+        return new self(
             pagerfanta: $this->pagerfanta,
             count: $this->count,
             pageLimit: $this->pageLimit,

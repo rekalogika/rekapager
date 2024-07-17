@@ -36,11 +36,11 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
  * @template T of object
  * @implements QueryResultCollectionExtensionInterface<T>
  */
-final class RekapagerExtension implements QueryResultCollectionExtensionInterface
+final readonly class RekapagerExtension implements QueryResultCollectionExtensionInterface
 {
     public function __construct(
-        private readonly PagerFactory $pagerFactory,
-        private readonly Pagination $pagination,
+        private PagerFactory $pagerFactory,
+        private Pagination $pagination,
     ) {
     }
 
@@ -91,8 +91,7 @@ final class RekapagerExtension implements QueryResultCollectionExtensionInterfac
         array $context = []
     ): iterable {
         $pageable = new KeysetPageable(new QueryBuilderAdapter($queryBuilder));
-        $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 
-        return $pager;
+        return $this->pagerFactory->createPager($pageable, $operation, $context);
     }
 }

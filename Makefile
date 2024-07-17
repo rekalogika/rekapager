@@ -27,6 +27,11 @@ phpunit:
 lint:
 	$(PHP) tests/bin/console lint:container
 
+.PHONY: rector
+rector:
+	$(PHP) vendor/bin/rector process > rector.log
+	make php-cs-fixer
+
 .PHONY: php-cs-fixer
 php-cs-fixer: tools/php-cs-fixer
 	$(PHP) $< fix --config=.php-cs-fixer.dist.php --verbose --allow-risky=yes

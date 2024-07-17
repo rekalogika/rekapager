@@ -39,7 +39,9 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
      * @var BatchProcess<TKey,T>|null
      */
     private ?BatchProcess $batchProcess = null;
+
     private ?SymfonyStyle $io = null;
+
     private ?BatchProcessFactoryInterface $batchProcessFactory = null;
 
     public function __construct()
@@ -70,7 +72,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
 
     final protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if (!$this->batchProcessFactory) {
+        if ($this->batchProcessFactory === null) {
             throw new LogicException('Batch process factory is not set. Did you forget to call setBatchProcessFactory()?');
         }
 
@@ -160,7 +162,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
 
         $result = (bool) $this->batchProcess?->stop();
 
-        if ($result === true) {
+        if ($result) {
             $this->io?->warning('Interrupt received, stopping batch processing');
         }
 

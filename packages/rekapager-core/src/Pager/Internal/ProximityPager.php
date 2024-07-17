@@ -83,7 +83,7 @@ final class ProximityPager implements PagerInterface
         $this->currentPage = $this->decorate($currentPage);
         $this->firstPage = $this->decorate($this->pageable->getFirstPage());
 
-        if ($lastPage = $this->pageable->getLastPage()) {
+        if (($lastPage = $this->pageable->getLastPage()) !== null) {
             $this->lastPage = $this->decorate($lastPage);
         }
 
@@ -179,7 +179,7 @@ final class ProximityPager implements PagerInterface
 
         // add previous page
 
-        if (\count($this->previousNeighboringPages) > 0) {
+        if ($this->previousNeighboringPages !== []) {
             $previousPage = $this->previousNeighboringPages[\count($this->previousNeighboringPages) - 1];
             $this->previousPage = $previousPage;
         } else {
@@ -217,10 +217,8 @@ final class ProximityPager implements PagerInterface
             // page from the next neighboring pages, and set it as the last page
             $lastPage = array_pop($this->nextNeighboringPages);
             $this->lastPage = $lastPage;
-        } else {
-            if ($hasGapToLastPage) {
-                $this->hasHiddenPagesAfter = true;
-            }
+        } elseif ($hasGapToLastPage) {
+            $this->hasHiddenPagesAfter = true;
         }
 
         // append next page
@@ -253,7 +251,7 @@ final class ProximityPager implements PagerInterface
 
         if (
             $firstPageFromPreviousNeighboringPages !== false
-            && $this->hasHiddenPagesBefore === true
+            && $this->hasHiddenPagesBefore
             && $firstPageFromPreviousNeighboringPages->getPageNumber() === 3
             && $secondPage = array_pop($previousPages)
         ) {
@@ -268,7 +266,7 @@ final class ProximityPager implements PagerInterface
 
         if (
             $lastPageFromNextNeighboringPages !== false
-            && $this->hasHiddenPagesAfter === true
+            && $this->hasHiddenPagesAfter
             && !\is_null($lastPageNumber = $this->lastPage?->getPageNumber())
             && !\is_null($lastPageFromNextNeighboringPagesNumber = $lastPageFromNextNeighboringPages->getPageNumber())
             && $lastPageFromNextNeighboringPagesNumber - $lastPageNumber === -2
@@ -310,7 +308,7 @@ final class ProximityPager implements PagerInterface
         // if no gap to last page, set the last page number to the last + 1
 
         if ($hasGapToLastPage === false && $this->lastPage !== null) {
-            if (\count($this->nextNeighboringPages) === 0) {
+            if ($this->nextNeighboringPages === []) {
                 $pageNumber = $this->currentPage->getPageNumber();
 
                 if ($pageNumber !== null) {
@@ -330,7 +328,7 @@ final class ProximityPager implements PagerInterface
         // page
 
         if (
-            \count($this->nextNeighboringPages) === 0
+            $this->nextNeighboringPages === []
             && $this->nextPage !== null
         ) {
             // $this->nextPage = $this->lastPage;
@@ -351,6 +349,7 @@ final class ProximityPager implements PagerInterface
                 $newPreviousNeighboringPages[] = $page->withPageNumber($currentPageNumber);
                 $currentPageNumber++;
             }
+
             $this->previousNeighboringPages = $newPreviousNeighboringPages;
 
             $this->currentPage = $this->currentPage->withPageNumber($currentPageNumber);
@@ -361,6 +360,7 @@ final class ProximityPager implements PagerInterface
                 $newNextNeighboringPages[] = $page->withPageNumber($currentPageNumber);
                 $currentPageNumber++;
             }
+
             $this->nextNeighboringPages = $newNextNeighboringPages;
         }
     }
@@ -371,7 +371,7 @@ final class ProximityPager implements PagerInterface
             throw new LogicException('Proximity must be greater than zero');
         }
 
-        return new static(
+        return new self(
             page: $this->page,
             proximity: $proximity,
             pageLimit: $this->pageLimit,
