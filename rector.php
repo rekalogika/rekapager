@@ -25,14 +25,15 @@ return RectorConfig::configure()
         __DIR__ . '/tests/src',
     ])
     ->withPreparedSets(
-        typeDeclarations: true,
         deadCode: true,
         codeQuality: true,
         codingStyle: true,
-        // earlyReturn: true,
-        instanceOf: true,
+        typeDeclarations: true,
         privatization: true,
+        instanceOf: true,
         strictBooleans: true,
+        symfonyCodeQuality: true,
+        doctrineCodeQuality: true,
     )
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
@@ -70,7 +71,4 @@ return RectorConfig::configure()
 
         // makes code unreadable
         DisallowedShortTernaryRuleFixerRector::class,
-
-        // FlipTypeControlToUseExclusiveTypeRector::class,
-        // RemoveDeadTryCatchRector::class,
     ]);
