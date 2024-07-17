@@ -35,13 +35,21 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private readonly BatchTimer $timer;
+
     private int $pageNumber = 0;
+
     private int $itemNumber = 0;
+
     private ?\DateTimeInterface $startTime = null;
+
     private readonly ProgressIndicator $progressIndicator;
+
     private ?string $startPageIdentifier = null;
+
     private ?int $totalPages = null;
+
     private ?int $totalItems = null;
+
     private int $itemsPerPage = 0;
 
     /**
@@ -78,6 +86,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->startTime = new \DateTimeImmutable();
         $this->timer->start(BatchTimer::TIMER_DISPLAY);
         $this->timer->start(BatchTimer::TIMER_PROCESS);
+
         $this->startPageIdentifier = $event->getStartPageIdentifier();
         $this->totalPages = $event->getPageable()->getTotalPages();
         $this->totalItems = $event->getPageable()->getTotalItems();
@@ -113,14 +122,14 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
                 $event->getPage()->getPageNumber() ?? '?',
                 $event->getEncodedPageIdentifier(),
             );
-        } else {
-            return sprintf(
-                'Page <info>%s</info>/<info>%s</info>, identifier <info>%s</info>',
-                $event->getPage()->getPageNumber() ?? '?',
-                $this->totalPages,
-                $event->getEncodedPageIdentifier(),
-            );
         }
+        return sprintf(
+            'Page <info>%s</info>/<info>%s</info>, identifier <info>%s</info>',
+            $event->getPage()->getPageNumber() ?? '?',
+            $this->totalPages,
+            $event->getEncodedPageIdentifier(),
+        );
+
     }
 
     public function beforePage(BeforePageEvent $event): void
