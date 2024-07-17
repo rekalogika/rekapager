@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Batch\Event;
 
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 
 /**
@@ -36,6 +37,14 @@ final readonly class BeforePageEvent
     public function getPage(): PageInterface
     {
         return $this->page;
+    }
+
+    /**
+     * @return PageableInterface<TKey,T>
+     */
+    public function getPageable(): PageableInterface
+    {
+        return $this->page->getPageable();
     }
 
     public function getEncodedPageIdentifier(): string
