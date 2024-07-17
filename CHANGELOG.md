@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.13.3
+
+* fix: batch size CLI option
+
 # 0.13.2
 
 * feat: batch time limit

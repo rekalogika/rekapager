@@ -49,7 +49,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         parent::__construct();
 
         $this->addOption('resume', 'r', InputOption::VALUE_OPTIONAL, 'Page identifier to resume from');
-        $this->addOption('pagesize', 'p', InputOption::VALUE_OPTIONAL, 'Batch/page/chunk size');
+        $this->addOption('page-size', 'p', InputOption::VALUE_OPTIONAL, 'Batch/page/chunk size');
         $this->addOption('progress-file', 'f', InputOption::VALUE_OPTIONAL, 'Temporary file to store progress data');
         $this->addOption('time-limit', 't', InputOption::VALUE_OPTIONAL, 'Runs the batch up to the specified time limit (in seconds)');
     }
@@ -79,7 +79,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         // input checking
 
         $resume = $input->getOption('resume');
-        $pageSize = $input->getOption('pagesize');
+        $pageSize = $input->getOption('page-size');
         $progressFile = $input->getOption('progress-file');
         $timeLimit = $input->getOption('time-limit');
 
@@ -89,7 +89,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         }
 
         if (!is_numeric($pageSize) && $pageSize !== null) {
-            throw new InvalidArgumentException('Invalid pagesize option');
+            throw new InvalidArgumentException('Invalid page-size option');
         }
 
         if ($pageSize !== null) {
