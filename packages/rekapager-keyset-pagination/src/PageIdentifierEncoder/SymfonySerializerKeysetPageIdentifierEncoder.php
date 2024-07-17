@@ -152,6 +152,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
         if (!\is_int($limit) && null !== $limit) {
             throw new PageIdentifierDecodingFailureException('Invalid limit');
         }
+
         if ($limit < 1 && null !== $limit) {
             throw new PageIdentifierDecodingFailureException('Invalid limit');
         }

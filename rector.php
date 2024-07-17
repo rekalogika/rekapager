@@ -6,6 +6,8 @@ use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
+use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
+use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
@@ -24,6 +26,7 @@ return RectorConfig::configure()
     ->withPreparedSets(
         typeDeclarations: true,
         deadCode: true,
+        codeQuality: true,
         // codingStyle: true,
         // earlyReturn: true,
         // instanceOf: true,
@@ -33,9 +36,8 @@ return RectorConfig::configure()
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withRules([
-        // AddOverrideAttributeToOverriddenMethodsRector::class
+        NewlineAfterStatementRector::class,
     ])
-    ->withCodeQualityLevel(75)
     ->withSkip([
         SimplifyUselessVariableRector::class => [
             // used for demo
@@ -62,6 +64,9 @@ return RectorConfig::configure()
 
         // potential cognitive burden
         FlipTypeControlToUseExclusiveTypeRector::class,
+
+        // results in too long variables
+        CatchExceptionNameMatchingTypeRector::class,
 
         // FlipTypeControlToUseExclusiveTypeRector::class,
         // RemoveDeadTryCatchRector::class,

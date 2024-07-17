@@ -180,6 +180,7 @@ abstract class PagerTestCase extends PageableTestCase
             static::assertNotNull($page);
             $n--;
         }
+
         static::assertNotNull($page);
 
         return $page;

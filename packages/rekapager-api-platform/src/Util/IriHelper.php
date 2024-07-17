@@ -75,6 +75,7 @@ final class IriHelper
             } else {
                 $scheme = 'http';
             }
+
             $url .= UrlGeneratorInterface::NET_PATH === $urlGenerationStrategy ? '//' : "$scheme://";
 
             if (isset($parts['user'])) {

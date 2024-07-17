@@ -21,8 +21,11 @@ use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 class BatchTimer
 {
     public const TIMER_PROCESS = 'process';
+
     public const TIMER_PAGE = 'page';
+
     public const TIMER_ITEM = 'item';
+
     public const TIMER_DISPLAY = 'display';
 
     /**

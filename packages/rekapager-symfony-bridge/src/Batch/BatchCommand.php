@@ -39,7 +39,9 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
      * @var BatchProcess<TKey,T>|null
      */
     private ?BatchProcess $batchProcess = null;
+
     private ?SymfonyStyle $io = null;
+
     private ?BatchProcessFactoryInterface $batchProcessFactory = null;
 
     public function __construct()

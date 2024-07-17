@@ -349,6 +349,7 @@ final class ProximityPager implements PagerInterface
                 $newPreviousNeighboringPages[] = $page->withPageNumber($currentPageNumber);
                 $currentPageNumber++;
             }
+
             $this->previousNeighboringPages = $newPreviousNeighboringPages;
 
             $this->currentPage = $this->currentPage->withPageNumber($currentPageNumber);
@@ -359,6 +360,7 @@ final class ProximityPager implements PagerInterface
                 $newNextNeighboringPages[] = $page->withPageNumber($currentPageNumber);
                 $currentPageNumber++;
             }
+
             $this->nextNeighboringPages = $newNextNeighboringPages;
         }
     }

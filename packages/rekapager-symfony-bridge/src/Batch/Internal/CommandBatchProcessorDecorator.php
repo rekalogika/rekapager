@@ -35,9 +35,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private readonly BatchTimer $timer;
+
     private int $pageNumber = 0;
+
     private int $itemNumber = 0;
+
     private ?\DateTimeInterface $startTime = null;
+
     private readonly ProgressIndicator $progressIndicator;
 
     /**

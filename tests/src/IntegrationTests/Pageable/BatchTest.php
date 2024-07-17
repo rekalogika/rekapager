@@ -39,6 +39,7 @@ class BatchTest extends PageableTestCase
                 $ids[$post->getId()] = true;
                 $itemsCount++;
             }
+
             $pagesCount++;
         }
 
@@ -70,6 +71,7 @@ class BatchTest extends PageableTestCase
                 $ids[$post->getId()] = true;
                 $itemsCount++;
             }
+
             $pagesCount++;
         }
 
@@ -81,6 +83,7 @@ class BatchTest extends PageableTestCase
                 $ids[$post->getId()] = true;
                 $itemsCount++;
             }
+
             $pagesCount++;
         }
 

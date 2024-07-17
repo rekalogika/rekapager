@@ -104,6 +104,7 @@ final readonly class SelectableAdapter implements
             if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
                 throw new UnsupportedCollectionItemException($matches[1], $e);
             }
+
             throw $e;
 
         }
@@ -312,6 +313,7 @@ final readonly class SelectableAdapter implements
             if (preg_match('|ClosureExpressionVisitor::getObjectFieldValue\(\): Argument \#1 \(\$object\) must be of type object\|array, (\S+) given|', $e->getMessage(), $matches)) {
                 throw new UnsupportedCollectionItemException($matches[1], $e);
             }
+
             throw $e;
 
         }

@@ -40,6 +40,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
     private ?array $result = null;
 
     private ?bool $hasPreviousPage = null;
+
     private ?bool $hasNextPage = null;
 
     /**
@@ -153,6 +154,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
             } else {
                 $this->hasPreviousPage = false;
             }
+
             $this->hasNextPage = false;
         }
 
@@ -285,6 +287,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
             if (($nextPage = $this->getNextPage()) !== null) {
                 return [$nextPage];
             }
+
             return [];
         }
 
@@ -332,6 +335,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
             if (($previousPage = $this->getPreviousPage()) !== null) {
                 return [$previousPage];
             }
+
             return [];
         }
 

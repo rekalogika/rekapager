@@ -36,6 +36,7 @@ final class Pager implements PagerInterface
      * @var PagerInterface<TKey,T>|null
      */
     private ?PagerInterface $pager = null;
+
     private PagerUrlGeneratorInterface $pagerUrlGenerator;
 
     /**

@@ -64,6 +64,7 @@ class DemoController extends AbstractController
                 $key = $pageableGenerator::getKey();
                 break;
             }
+
             \assert($key !== null);
             $pageableGenerator = $pageableGenerators[$key];
         } else {
