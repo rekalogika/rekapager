@@ -35,7 +35,7 @@ return RectorConfig::configure()
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
-    ->withCodeQualityLevel(57)
+    ->withCodeQualityLevel(59)
     ->withSkip([
         SimplifyUselessVariableRector::class => [
             // used for demo
@@ -59,6 +59,9 @@ return RectorConfig::configure()
             // this 'fixes' symfony makerbundle boilerplate code
             __DIR__ . '/tests/src/App/Entity/*',
         ],
+
+        // potential cognitive burden
+        FlipTypeControlToUseExclusiveTypeRector::class,
 
         // FlipTypeControlToUseExclusiveTypeRector::class,
         // RemoveDeadTryCatchRector::class,
