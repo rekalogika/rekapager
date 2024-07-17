@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.13.2
+
+* feat: batch time limit
+
 # 0.13.1
 
 * feat: add `BatchProcess` and related classes

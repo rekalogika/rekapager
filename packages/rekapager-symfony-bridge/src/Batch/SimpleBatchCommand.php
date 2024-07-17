@@ -19,6 +19,7 @@ use Rekalogika\Rekapager\Batch\Event\AfterProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforePageEvent;
 use Rekalogika\Rekapager\Batch\Event\BeforeProcessEvent;
 use Rekalogika\Rekapager\Batch\Event\InterruptEvent;
+use Rekalogika\Rekapager\Batch\Event\TimeLimitEvent;
 
 /**
  * @template TKey of array-key
@@ -55,6 +56,10 @@ abstract class SimpleBatchCommand extends BatchCommand implements BatchProcessor
     }
 
     public function onInterrupt(InterruptEvent $event): void
+    {
+    }
+
+    public function onTimeLimit(TimeLimitEvent $event): void
     {
     }
 }
