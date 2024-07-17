@@ -142,9 +142,7 @@ class PagerFactory implements PagerFactoryInterface
             return null;
         }
 
-        $pageIdentifier = $this->pageIdentifierEncoderResolver
+        return $this->pageIdentifierEncoderResolver
             ->decode($pageable, $pageIdentifier);
-
-        return $pageIdentifier;
     }
 }

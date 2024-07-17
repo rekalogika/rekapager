@@ -270,14 +270,12 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
      */
     private function countPreviousItems(int $maxItems): int
     {
-        $return = $this->adapter->countKeysetItems(
+        return $this->adapter->countKeysetItems(
             offset: 0,
             limit: $maxItems,
             boundaryType: BoundaryType::Upper,
             boundaryValues: $this->getValuesForBoundaryFromFirstItem(),
         );
-
-        return $return;
     }
 
     public function getNextPages(int $numberOfPages): array

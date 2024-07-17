@@ -46,8 +46,7 @@ class PostProvider implements ProviderInterface
     ): object|array|null {
         $adapter = new SelectableAdapter($this->postRepository);
         $pageable = new KeysetPageable($adapter);
-        $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 
-        return $pager;
+        return $this->pagerFactory->createPager($pageable, $operation, $context);
     }
 }

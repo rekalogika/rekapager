@@ -91,8 +91,7 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
         array $context = []
     ): iterable {
         $pageable = new KeysetPageable(new QueryBuilderAdapter($queryBuilder));
-        $pager = $this->pagerFactory->createPager($pageable, $operation, $context);
 
-        return $pager;
+        return $this->pagerFactory->createPager($pageable, $operation, $context);
     }
 }

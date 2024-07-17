@@ -136,9 +136,7 @@ class DemoController extends AbstractController
             $contents,
         ) ?? throw new \RuntimeException('Regex fail');
 
-        $contents = $this->unindent($contents);
-
-        return $contents;
+        return $this->unindent($contents);
     }
 
     private function unindent(string $text): string
