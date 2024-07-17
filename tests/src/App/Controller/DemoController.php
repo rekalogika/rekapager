@@ -34,7 +34,7 @@ class DemoController extends AbstractController
      */
     public function __construct(
         #[TaggedIterator('rekalogika.rekapager.pageable_generator', defaultIndexMethod: 'getKey')]
-        private iterable $pageableGenerators,
+        private readonly iterable $pageableGenerators,
     ) {
     }
 

@@ -26,7 +26,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
  */
 class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGeneratorInterface
 {
-    public function __construct(private PostRepository $postRepository)
+    public function __construct(private readonly PostRepository $postRepository)
     {
     }
 

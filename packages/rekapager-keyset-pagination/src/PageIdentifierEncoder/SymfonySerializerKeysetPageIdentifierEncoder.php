@@ -32,10 +32,10 @@ use Symfony\Component\Uid\AbstractUid;
 class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEncoderInterface
 {
     public function __construct(
-        private NormalizerInterface $normalizer,
-        private DenormalizerInterface $denormalizer,
-        private EncoderInterface $encoder,
-        private DecoderInterface $decoder,
+        private readonly NormalizerInterface $normalizer,
+        private readonly DenormalizerInterface $denormalizer,
+        private readonly EncoderInterface $encoder,
+        private readonly DecoderInterface $decoder,
     ) {
     }
 

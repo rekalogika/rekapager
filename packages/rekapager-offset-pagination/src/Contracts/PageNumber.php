@@ -19,7 +19,7 @@ class PageNumber
      * @param int<1,max> $number
      */
     public function __construct(
-        private int $number,
+        private readonly int $number,
     ) {
     }
 

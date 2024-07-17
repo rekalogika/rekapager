@@ -31,14 +31,14 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
  */
 final class PagerItem implements PagerItemInterface, \IteratorAggregate
 {
-    private int|null|NullPageNumber $pageNumber;
+    private readonly int|null|NullPageNumber $pageNumber;
 
     /**
      * @param PageInterface<TKey,T> $wrapped
      */
     public function __construct(
-        private PageInterface $wrapped,
-        private PagerUrlGeneratorInterface $pagerUrlGenerator,
+        private readonly PageInterface $wrapped,
+        private readonly PagerUrlGeneratorInterface $pagerUrlGenerator,
     ) {
         $this->pageNumber = new NullPageNumber();
     }

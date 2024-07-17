@@ -31,7 +31,7 @@ final class TraversablePager implements TraversablePagerInterface, \IteratorAggr
      * @param PagerInterface<TKey,T> $decorated
      */
     public function __construct(
-        private PagerInterface $decorated
+        private readonly PagerInterface $decorated
     ) {
     }
 

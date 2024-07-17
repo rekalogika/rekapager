@@ -21,7 +21,7 @@ use ApiPlatform\OpenApi\OpenApi;
 class RekapagerOpenApiFactoryDecorator implements OpenApiFactoryInterface
 {
     public function __construct(
-        private OpenApiFactoryInterface $decorated,
+        private readonly OpenApiFactoryInterface $decorated,
     ) {
     }
 

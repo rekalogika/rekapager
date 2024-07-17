@@ -28,8 +28,8 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 class PostProvider implements ProviderInterface
 {
     public function __construct(
-        private PostRepository $postRepository,
-        private PagerFactoryInterface $pagerFactory,
+        private readonly PostRepository $postRepository,
+        private readonly PagerFactoryInterface $pagerFactory,
     ) {
     }
 

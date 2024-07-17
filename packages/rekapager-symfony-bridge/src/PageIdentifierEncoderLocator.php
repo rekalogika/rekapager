@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class PageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterface
 {
-    public function __construct(private ContainerInterface $container)
+    public function __construct(private readonly ContainerInterface $container)
     {
     }
 
