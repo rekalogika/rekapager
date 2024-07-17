@@ -21,13 +21,13 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
  * @template T
  * @implements OffsetPaginationAdapterInterface<TKey,T>
  */
-final class CollectionAdapter implements OffsetPaginationAdapterInterface
+final readonly class CollectionAdapter implements OffsetPaginationAdapterInterface
 {
     /**
      * @param ReadableCollection<TKey,T> $collection
      */
     public function __construct(
-        private readonly ReadableCollection $collection,
+        private ReadableCollection $collection,
     ) {
     }
 

@@ -24,12 +24,12 @@ use Rekalogika\Rekapager\Keyset\Contracts\KeysetItemInterface;
  *
  * @internal
  */
-final class SelectableKeysetItem implements KeysetItemInterface
+final readonly class SelectableKeysetItem implements KeysetItemInterface
 {
     /**
      * @var object|array<array-key,mixed>
      */
-    private readonly object|array $objectOrArrayValue;
+    private object|array $objectOrArrayValue;
 
     /**
      * @param TKey $key
@@ -37,9 +37,9 @@ final class SelectableKeysetItem implements KeysetItemInterface
      * @param array<int,string> $boundaryProperties
      */
     public function __construct(
-        private readonly int|string $key,
-        private readonly mixed $value,
-        private readonly array $boundaryProperties,
+        private int|string $key,
+        private mixed $value,
+        private array $boundaryProperties,
     ) {
         if (!\is_object($value) && !\is_array($value)) {
             throw new \LogicException('The value must be an object or an array');

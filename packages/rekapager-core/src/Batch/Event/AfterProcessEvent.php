@@ -19,13 +19,13 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
  * @template TKey of array-key
  * @template T
  */
-final class AfterProcessEvent
+final readonly class AfterProcessEvent
 {
     /**
      * @param PageableInterface<TKey,T> $pageable
      */
     public function __construct(
-        private readonly PageableInterface $pageable,
+        private PageableInterface $pageable,
     ) {
     }
 

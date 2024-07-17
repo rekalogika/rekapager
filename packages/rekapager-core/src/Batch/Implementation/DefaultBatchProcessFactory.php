@@ -19,10 +19,10 @@ use Rekalogika\Rekapager\Batch\BatchProcessFactoryInterface;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 
-final class DefaultBatchProcessFactory implements BatchProcessFactoryInterface
+final readonly class DefaultBatchProcessFactory implements BatchProcessFactoryInterface
 {
     public function __construct(
-        private readonly PageIdentifierEncoderResolverInterface $pageableIdentifierResolver,
+        private PageIdentifierEncoderResolverInterface $pageableIdentifierResolver,
     ) {
     }
 

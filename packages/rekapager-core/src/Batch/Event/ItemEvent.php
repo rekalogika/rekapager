@@ -17,15 +17,15 @@ namespace Rekalogika\Rekapager\Batch\Event;
  * @template TKey of array-key
  * @template T
  */
-final class ItemEvent
+final readonly class ItemEvent
 {
     /**
      * @param TKey $key
      * @param T $item
      */
     public function __construct(
-        private readonly int|string $key,
-        private readonly mixed $item,
+        private int|string $key,
+        private mixed $item,
     ) {
     }
 

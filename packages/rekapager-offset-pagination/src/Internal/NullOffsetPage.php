@@ -26,7 +26,7 @@ use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
  * @implements \IteratorAggregate<TKey,T>
  * @internal
  */
-final class NullOffsetPage implements NullPageInterface, \IteratorAggregate
+final readonly class NullOffsetPage implements NullPageInterface, \IteratorAggregate
 {
     /**
      * @param PageableInterface<TKey,T> $pageable
@@ -34,9 +34,9 @@ final class NullOffsetPage implements NullPageInterface, \IteratorAggregate
      * @param int<1,max> $itemsPerPage
      */
     public function __construct(
-        private readonly PageableInterface $pageable,
-        private readonly int $pageNumber,
-        private readonly int $itemsPerPage,
+        private PageableInterface $pageable,
+        private int $pageNumber,
+        private int $itemsPerPage,
     ) {
     }
 

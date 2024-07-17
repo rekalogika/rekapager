@@ -30,19 +30,19 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
  * @implements KeysetPaginationAdapterInterface<TKey,T>
  * @implements OffsetPaginationAdapterInterface<TKey,T>
  */
-final class SelectableAdapter implements
+final readonly class SelectableAdapter implements
     OffsetPaginationAdapterInterface,
     KeysetPaginationAdapterInterface
 {
-    private readonly Criteria $criteria;
+    private Criteria $criteria;
 
     /**
      * @param Selectable<TKey,T> $collection
      */
     public function __construct(
-        private readonly Selectable $collection,
+        private Selectable $collection,
         ?Criteria $criteria = null,
-        private readonly string|null $indexBy = null,
+        private string|null $indexBy = null,
     ) {
         $criteria ??= Criteria::create();
         $orderings = $criteria->orderings();

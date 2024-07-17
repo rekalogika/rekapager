@@ -25,13 +25,13 @@ use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
  * @implements TraversablePagerInterface<TKey,T>
  * @implements \IteratorAggregate<TKey,T>
  */
-final class TraversablePager implements TraversablePagerInterface, \IteratorAggregate
+final readonly class TraversablePager implements TraversablePagerInterface, \IteratorAggregate
 {
     /**
      * @param PagerInterface<TKey,T> $decorated
      */
     public function __construct(
-        private readonly PagerInterface $decorated
+        private PagerInterface $decorated
     ) {
     }
 

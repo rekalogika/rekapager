@@ -25,13 +25,13 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
  * @implements \IteratorAggregate<TKey,T>
  * @internal
  */
-final class NullPageDecorator implements NullPageInterface, \IteratorAggregate
+final readonly class NullPageDecorator implements NullPageInterface, \IteratorAggregate
 {
     /**
      * @param PageInterface<TKey,T> $page
      */
     public function __construct(
-        private readonly PageInterface $page,
+        private PageInterface $page,
     ) {
     }
 
