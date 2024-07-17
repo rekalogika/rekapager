@@ -35,7 +35,7 @@ return RectorConfig::configure()
     ->withRules([
         // AddOverrideAttributeToOverriddenMethodsRector::class
     ])
-    ->withCodeQualityLevel(22)
+    ->withCodeQualityLevel(30)
     ->withSkip([
         SimplifyUselessVariableRector::class => [
             // used for demo
