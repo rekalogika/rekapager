@@ -63,6 +63,7 @@
         "psalm/plugin-symfony": "^5.1",
         "psr/log": "^2.0 || ^3.0",
         "ramsey/uuid": "^4.7",
+        "rector/rector": "^1.2",
         "rekalogika/doctrine-collections-decorator": "^2.3",
         "symfony/asset": "^6.4 || ^7.0",
         "symfony/asset-mapper": "^6.4 || ^7.0",
