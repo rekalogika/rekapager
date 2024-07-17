@@ -123,13 +123,13 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
                 $event->getEncodedPageIdentifier(),
             );
         }
+
         return sprintf(
             'Page <info>%s</info>/<info>%s</info>, identifier <info>%s</info>',
             $event->getPage()->getPageNumber() ?? '?',
             $this->totalPages,
             $event->getEncodedPageIdentifier(),
         );
-
     }
 
     public function beforePage(BeforePageEvent $event): void
@@ -187,17 +187,20 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $nextPageIdentifier = $event->getNextPageIdentifier();
 
         if ($this->progressFile !== null) {
-            $this->io->warning(sprintf(
-                'Batch process interrupted. To resume, use the argument "-f %s"',
-                $this->progressFile
-            ));
+            $this->io->warning([
+                'Batch process interrupted. To resume, use the argument:',
+                '-f ' . $this->progressFile,
+            ]);
         } elseif ($nextPageIdentifier !== null) {
-            $this->io->warning(sprintf(
-                'Batch process interrupted. To resume, use the argument "-r %s"',
-                $nextPageIdentifier
-            ));
+            $this->io->warning([
+                'Batch process interrupted. To resume, use the argument:',
+                '-r ' . $nextPageIdentifier,
+            ]);
         } else {
-            $this->io->error('Batch process interrupted, but there does not seem to be a next page identifier for you to resume');
+            $this->io->warning([
+                'Batch process interrupted, but there does not seem',
+                'to be a next page identifier for you to resume',
+            ]);
         }
 
         $this->showStats($event);
@@ -215,13 +218,21 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 
         $nextPageIdentifier = $event->getNextPageIdentifier();
 
-        if ($nextPageIdentifier !== null) {
-            $this->io->warning(sprintf(
-                'Time limit reached. To resume, use the argument "-r %s"',
-                $nextPageIdentifier
-            ));
+        if ($this->progressFile !== null) {
+            $this->io->warning([
+                'Time limit reached. To resume, use the argument:',
+                '-f ' . $this->progressFile,
+            ]);
+        } elseif ($nextPageIdentifier !== null) {
+            $this->io->warning([
+                'Time limit reached. To resume, use the argument:',
+                '-r ' . $nextPageIdentifier,
+            ]);
         } else {
-            $this->io->error('Time limit reached, but there does not seem to be a next page identifier for you to resume');
+            $this->io->warning([
+                'Time limit reached, but there does not seem',
+                'to be a next page identifier for you to resume',
+            ]);
         }
 
         $this->showStats($event);
@@ -254,8 +265,6 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             ['Start page' => $this->startPageIdentifier ?? '(first page)'],
             ['Progress file' => $this->progressFile ?? '(not used)'],
             ['Items per page' => $this->itemsPerPage],
-            ['Total pages' => $this->totalPages ?? '(unknown)'],
-            ['Total items' => $this->totalItems ?? '(unknown)'],
         ];
 
         $stats[] = ['Start time' => $this->formatTime($this->getStartTime())];
@@ -282,24 +291,57 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         }
 
         if ($processDuration !== null) {
-            $stats[] = ['Time elapsed' => Helper::formatTime($processDuration)];
-
-            if ($eta !== null && $event instanceof AfterPageEvent) {
-                $stats[] = ['Estimated time remaining' => Helper::formatTime($eta)];
+            if ($eta === null) {
+                $stats[] = ['Time elapsed' => Helper::formatTime($processDuration)];
+            } else {
+                $stats[] = ['Time elapsed - remaining' => sprintf(
+                    '%s - %s',
+                    Helper::formatTime($processDuration),
+                    Helper::formatTime($eta)
+                )];
             }
         }
 
-        $stats = [
-            ...$stats,
-            ['Page processed' => $this->pageNumber],
-            ['Item processed' => $this->itemNumber],
-            ['Memory usage' => Helper::formatMemory(memory_get_usage(true))],
-        ];
+        if ($event instanceof BeforeProcessEvent) {
+            $pagesInfo = $this->totalPages ?? '(unknown)';
+            $itemsInfo = $this->totalItems ?? '(unknown)';
+        } elseif ($event instanceof AfterProcessEvent) {
+            $pagesInfo = $this->pageNumber;
+            $itemsInfo = $this->itemNumber;
+        } elseif ($this->totalPages === null) {
+            $pagesInfo = $this->pageNumber;
+            $itemsInfo = $this->itemNumber;
+        } else {
+            $pagesInfo = sprintf(
+                '%s/%s',
+                $this->pageNumber,
+                $this->totalPages
+            );
 
-        if ($processDuration !== null) {
-            $stats[] = ['Pages/minute' =>  round($pagesPerSecond * 60, 2)];
-            $stats[] = ['Items/minute' => round($itemsPerSecond * 60, 2)];
+            $itemsInfo = sprintf(
+                '%s/%s',
+                $this->itemNumber,
+                $this->totalItems ?? '?'
+            );
         }
+
+        if ($pagesPerSecond > 0) {
+            $pagesInfo .= sprintf(' (%s/minute)', round($pagesPerSecond * 60, 2));
+        }
+
+        if ($itemsPerSecond > 0) {
+            $itemsInfo .= sprintf(' (%s/minute)', round($itemsPerSecond * 60, 2));
+        }
+
+        $stats[] = ['Pages' => $pagesInfo];
+        $stats[] = ['Items' => $itemsInfo];
+
+
+        $stats[] = ['Memory (current/peak)' => sprintf(
+            '%s / %s',
+            Helper::formatMemory(memory_get_usage(true)),
+            Helper::formatMemory(memory_get_peak_usage(true))
+        )];
 
         $this->io->definitionList(...$stats);
     }
