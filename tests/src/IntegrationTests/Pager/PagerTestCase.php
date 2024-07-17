@@ -53,17 +53,14 @@ abstract class PagerTestCase extends PageableTestCase
             $page = $pageable->getPageByIdentifier($pageIdentifier);
         }
 
-        $pager = new Pager(
+        /**
+         * @phpstan-ignore-next-line
+         */
+        return new Pager(
             page: $page,
             proximity: $this->getProximity(),
             pageLimit: $this->getPagerPageLimit(),
         );
-
-        /**
-         * @var PagerInterface<TKey,T>
-         * @phpstan-ignore-next-line
-         */
-        return $pager;
     }
 
     /**
@@ -75,17 +72,14 @@ abstract class PagerTestCase extends PageableTestCase
     protected function createPagerFromPage(
         PageInterface $page,
     ): PagerInterface {
-        $pager = new Pager(
+        /**
+         * @phpstan-ignore-next-line
+         */
+        return new Pager(
             page: $page,
             proximity: $this->getProximity(),
             pageLimit: $this->getPagerPageLimit(),
         );
-
-        /**
-         * @var PagerInterface<TKey,T>
-         * @phpstan-ignore-next-line
-         */
-        return $pager;
     }
 
     /**
