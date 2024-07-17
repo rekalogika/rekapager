@@ -27,7 +27,7 @@ return RectorConfig::configure()
         typeDeclarations: true,
         deadCode: true,
         codeQuality: true,
-        // codingStyle: true,
+        codingStyle: true,
         // earlyReturn: true,
         // instanceOf: true,
         // privatization: true,
@@ -36,7 +36,6 @@ return RectorConfig::configure()
     // uncomment to reach your current PHP version
     ->withPhpSets(php82: true)
     ->withRules([
-        NewlineAfterStatementRector::class,
     ])
     ->withSkip([
         SimplifyUselessVariableRector::class => [
