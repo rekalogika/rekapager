@@ -64,9 +64,13 @@ monorepo: monorepo-validate monorepo-merge
 monorepo-validate:
 	vendor/bin/monorepo-builder validate
 
-.PHONY: merge
+.PHONY: monorepo-merge
 monorepo-merge:
 	$(PHP) vendor/bin/monorepo-builder merge
+
+.PHONY: monorepo-release-%
+monorepo-release-%:
+	$(PHP) vendor/bin/monorepo-builder release $*
 
 .PHONY: clean
 clean:
