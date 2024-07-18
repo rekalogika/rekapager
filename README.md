@@ -269,15 +269,28 @@ foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
 }
 ```
 
+There is also a console command framework, so you can easily create console
+commands to run your batch jobs. Your console commands will come with all these
+features: informative output, batch process resuming, progress file, running the
+command up to the specified duration, signal handling, and more.
+
 ## Demo
 
-You can try the demo by running the following command:
+You can try the web application demo by running the following command:
 
 ```bash
 docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:latest
 ```
 
 Then access the demo at [http://localhost:8187](http://localhost:8187).
+
+To run the demo of the batch console command, run the following command:
+
+```bash
+docker run --rm -it ghcr.io/rekalogika/rekapager:latest tests/bin/console app:simplebatch
+```
+
+Try adding the `--help` option to see all the available options.
 
 ## Acknowledgements
 
