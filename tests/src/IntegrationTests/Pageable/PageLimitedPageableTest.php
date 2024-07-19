@@ -19,6 +19,7 @@ use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorPr
 
 class PageLimitedPageableTest extends PageableTestCase
 {
+    #[\Override]
     protected function getPageLimit(): ?int
     {
         return 10;

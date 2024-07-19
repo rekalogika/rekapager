@@ -30,16 +30,19 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
     {
     }
 
+    #[\Override]
     public static function getKey(): string
     {
         return 'keysetpageable-querybuilderadapter-querybuilder';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'KeysetPageable - QueryBuilderAdapter - QueryBuilder';
     }
 
+    #[\Override]
     public function generatePageable(
         int $itemsPerPage,
         bool|int|\Closure $count,
@@ -74,6 +77,7 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
         return $pageable;
     }
 
+    #[\Override]
     public function count(): int
     {
         /** @var int<0,max> */

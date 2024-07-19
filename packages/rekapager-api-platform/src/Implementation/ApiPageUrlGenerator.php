@@ -31,6 +31,7 @@ class ApiPageUrlGenerator implements PageUrlGeneratorInterface
         $this->parsed = IriHelper::parseIri($iri, $this->pageParameterName);
     }
 
+    #[\Override]
     public function generateUrl(?string $pageIdentifier): ?string
     {
         return IriHelper::createIri(

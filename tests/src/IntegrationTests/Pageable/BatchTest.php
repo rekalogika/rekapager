@@ -19,6 +19,7 @@ use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorPr
 
 class BatchTest extends PageableTestCase
 {
+    #[\Override]
     protected function getSetName(): string
     {
         return 'large';

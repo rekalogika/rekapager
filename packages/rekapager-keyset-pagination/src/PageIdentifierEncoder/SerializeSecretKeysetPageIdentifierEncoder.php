@@ -31,6 +31,7 @@ class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncode
     ) {
     }
 
+    #[\Override]
     public static function getIdentifierClass(): string
     {
         return KeysetPageIdentifier::class;
@@ -63,6 +64,7 @@ class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncode
         return false;
     }
 
+    #[\Override]
     public function encode(object $identifier): string
     {
         if (!$identifier instanceof KeysetPageIdentifier) {
@@ -91,6 +93,7 @@ class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncode
         return $hash . '.' . $encoded;
     }
 
+    #[\Override]
     public function decode(string $encoded): object
     {
         $parts = explode('.', $encoded, 2);

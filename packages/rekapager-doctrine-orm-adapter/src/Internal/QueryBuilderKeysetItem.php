@@ -43,16 +43,19 @@ final readonly class QueryBuilderKeysetItem implements KeysetItemInterface
         }
     }
 
+    #[\Override]
     public function getKey(): mixed
     {
         return $this->key;
     }
 
+    #[\Override]
     public function getValue(): mixed
     {
         return $this->value;
     }
 
+    #[\Override]
     public function getValuesForBoundary(): array
     {
         return $this->boundaryValues;

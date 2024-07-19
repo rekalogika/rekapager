@@ -20,6 +20,7 @@ use Rekalogika\Rekapager\Tests\App\Factory\UserFactory;
 
 class AppFixtures extends Fixture
 {
+    #[\Override]
     public function load(ObjectManager $manager): void
     {
         $user = UserFactory::createOne();

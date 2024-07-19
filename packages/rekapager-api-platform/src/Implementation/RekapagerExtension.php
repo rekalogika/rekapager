@@ -47,6 +47,7 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
     /**
      * @param array<array-key,mixed> $context
      */
+    #[\Override]
     public function applyToCollection(
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
@@ -59,6 +60,7 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
     /**
      * @param array<array-key,mixed> $context
      */
+    #[\Override]
     public function supportsResult(
         string $resourceClass,
         ?Operation $operation = null,
@@ -84,6 +86,7 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
      * @param array<array-key,mixed> $context
      * @return iterable<array-key,mixed>
      */
+    #[\Override]
     public function getResult(
         QueryBuilder $queryBuilder,
         ?string $resourceClass = null,

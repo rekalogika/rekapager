@@ -24,6 +24,7 @@ class SymfonyPageUrlGeneratorFactory implements PageUrlGeneratorFactoryInterface
     ) {
     }
 
+    #[\Override]
     public function createPageUrlGenerator(
         string $pageParameterName,
         int $referenceType,

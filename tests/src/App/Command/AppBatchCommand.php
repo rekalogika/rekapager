@@ -41,6 +41,7 @@ class AppBatchCommand extends BatchCommand
         parent::__construct();
     }
 
+    #[\Override]
     protected function getPageable(InputInterface $input, OutputInterface $output): PageableInterface
     {
         $adapter = new SelectableAdapter($this->postRepository);
@@ -48,6 +49,7 @@ class AppBatchCommand extends BatchCommand
         return new KeysetPageable($adapter);
     }
 
+    #[\Override]
     protected function getBatchProcessor(): BatchProcessorInterface
     {
         return $this->postBatchProcessor;

@@ -22,16 +22,19 @@ use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
  */
 class OffsetPageIdentifierEncoder implements PageIdentifierEncoderInterface
 {
+    #[\Override]
     public static function getIdentifierClass(): string
     {
         return PageNumber::class;
     }
 
+    #[\Override]
     public function encode(object $identifier): string
     {
         return (string) $identifier->getNumber();
     }
 
+    #[\Override]
     public function decode(string $encoded): object
     {
         $number = (int) $encoded;

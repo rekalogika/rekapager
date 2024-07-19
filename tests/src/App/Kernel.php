@@ -47,11 +47,13 @@ class Kernel extends BaseKernel
         $this->debug = $debug;
     }
 
+    #[\Override]
     protected function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new DoctrineSqlLoggingPass());
     }
 
+    #[\Override]
     public function registerBundles(): iterable
     {
         yield new FrameworkBundle();
@@ -69,6 +71,7 @@ class Kernel extends BaseKernel
         yield new RekalogikaRekapagerApiPlatformBundle();
     }
 
+    #[\Override]
     public function getProjectDir(): string
     {
         return __DIR__ . '/../../';
@@ -79,6 +82,7 @@ class Kernel extends BaseKernel
         return __DIR__ . '/../../config/';
     }
 
+    #[\Override]
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $this->baseRegisterContainerConfiguration($loader);

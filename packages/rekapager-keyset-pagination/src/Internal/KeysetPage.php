@@ -56,6 +56,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
     ) {
     }
 
+    #[\Override]
     public function withPageNumber(?int $pageNumber): static
     {
         $pageIdentifier = new KeysetPageIdentifier(
@@ -74,11 +75,13 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         );
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
     }
 
+    #[\Override]
     public function getPageable(): PageableInterface
     {
         return $this->pageable;
@@ -161,6 +164,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         return $result;
     }
 
+    #[\Override]
     public function getPageNumber(): ?int
     {
         return $this->pageIdentifier->getPageNumber();
@@ -194,6 +198,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         return $last->getValuesForBoundary();
     }
 
+    #[\Override]
     public function getNextPage(): ?PageInterface
     {
         $boundaryValues = $this->getValuesForBoundaryFromLastItem();
@@ -223,6 +228,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         );
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PageInterface
     {
         $boundaryValues = $this->getValuesForBoundaryFromFirstItem();
@@ -280,6 +286,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         );
     }
 
+    #[\Override]
     public function getNextPages(int $numberOfPages): array
     {
         // optimization
@@ -328,6 +335,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         return $nextPages;
     }
 
+    #[\Override]
     public function getPreviousPages(int $numberOfPages): array
     {
         // optimization
@@ -377,11 +385,13 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         return $previousPages;
     }
 
+    #[\Override]
     public function getPageIdentifier(): KeysetPageIdentifier
     {
         return $this->pageIdentifier;
     }
 
+    #[\Override]
     public function count(): int
     {
         return \count($this->getResult());
@@ -391,6 +401,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
      * @psalm-suppress InvalidReturnType
      * @return \Traversable<TKey,T>
      */
+    #[\Override]
     public function getIterator(): \Traversable
     {
         $results = [];

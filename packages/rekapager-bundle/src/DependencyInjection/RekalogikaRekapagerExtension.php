@@ -24,6 +24,7 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class RekalogikaRekapagerExtension extends Extension implements PrependExtensionInterface
 {
+    #[\Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         // load configuration
@@ -89,6 +90,7 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
         );
     }
 
+    #[\Override]
     public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasExtension('twig')) {

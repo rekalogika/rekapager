@@ -32,6 +32,7 @@ class PagerUrlGenerator implements PagerUrlGeneratorInterface
     ) {
     }
 
+    #[\Override]
     public function generateUrl(PageInterface $page): ?string
     {
         if ($page instanceof NullPageInterface) {

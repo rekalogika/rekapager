@@ -40,6 +40,7 @@ final readonly class NullOffsetPage implements NullPageInterface, \IteratorAggre
     ) {
     }
 
+    #[\Override]
     public function withPageNumber(?int $pageNumber): static
     {
         $pageNumber ??= 1;
@@ -50,51 +51,61 @@ final readonly class NullOffsetPage implements NullPageInterface, \IteratorAggre
         return new self($this->pageable, $pageNumber, $this->itemsPerPage);
     }
 
+    #[\Override]
     public function getIterator(): \Traversable
     {
         yield from [];
     }
 
+    #[\Override]
     public function getPageIdentifier(): object
     {
         return new PageNumber($this->pageNumber);
     }
 
+    #[\Override]
     public function getPageNumber(): int
     {
         return $this->pageNumber;
     }
 
+    #[\Override]
     public function getPageable(): PageableInterface
     {
         return $this->pageable;
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
     }
 
+    #[\Override]
     public function getNextPage(): ?PageInterface
     {
         return null;
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PageInterface
     {
         return null;
     }
 
+    #[\Override]
     public function getNextPages(int $numberOfPages): array
     {
         return [];
     }
 
+    #[\Override]
     public function getPreviousPages(int $numberOfPages): array
     {
         return [];
     }
 
+    #[\Override]
     public function count(): int
     {
         return 0;

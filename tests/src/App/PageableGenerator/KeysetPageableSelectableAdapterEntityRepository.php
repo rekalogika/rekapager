@@ -31,16 +31,19 @@ class KeysetPageableSelectableAdapterEntityRepository implements PageableGenerat
     {
     }
 
+    #[\Override]
     public static function getKey(): string
     {
         return 'keysetpageable-selectableadapter-repository';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'KeysetPageable - SelectableAdapter - EntityRepository';
     }
 
+    #[\Override]
     public function generatePageable(
         int $itemsPerPage,
         bool|int|\Closure $count,
@@ -74,6 +77,7 @@ class KeysetPageableSelectableAdapterEntityRepository implements PageableGenerat
         return $pageable;
     }
 
+    #[\Override]
     public function count(): int
     {
         /** @var int<0,max> */

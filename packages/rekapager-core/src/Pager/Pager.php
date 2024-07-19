@@ -61,11 +61,13 @@ final class Pager implements PagerInterface
         }
     }
 
+    #[\Override]
     public function getProximity(): int
     {
         return $this->proximity;
     }
 
+    #[\Override]
     public function withProximity(int $proximity): static
     {
         return new self(
@@ -102,6 +104,7 @@ final class Pager implements PagerInterface
         );
     }
 
+    #[\Override]
     public function getCurrentPage(): PagerItemInterface
     {
         return new PagerItem(
@@ -110,41 +113,49 @@ final class Pager implements PagerInterface
         );
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PagerItemInterface
     {
         return $this->getPager()->getPreviousPage();
     }
 
+    #[\Override]
     public function getNextPage(): ?PagerItemInterface
     {
         return $this->getPager()->getNextPage();
     }
 
+    #[\Override]
     public function getFirstPage(): ?PagerItemInterface
     {
         return $this->getPager()->getFirstPage();
     }
 
+    #[\Override]
     public function getLastPage(): ?PagerItemInterface
     {
         return $this->getPager()->getLastPage();
     }
 
+    #[\Override]
     public function hasGapToFirstPage(): bool
     {
         return $this->getPager()->hasGapToFirstPage();
     }
 
+    #[\Override]
     public function hasGapToLastPage(): bool
     {
         return $this->getPager()->hasGapToLastPage();
     }
 
+    #[\Override]
     public function getPreviousNeighboringPages(): iterable
     {
         return $this->getPager()->getPreviousNeighboringPages();
     }
 
+    #[\Override]
     public function getNextNeighboringPages(): iterable
     {
         return $this->getPager()->getNextNeighboringPages();

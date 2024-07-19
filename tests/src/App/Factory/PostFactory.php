@@ -71,6 +71,7 @@ final class PostFactory extends ModelFactory
      *
      * @todo add your default values here
      */
+    #[\Override]
     protected function getDefaults(): array
     {
         return [
@@ -83,6 +84,7 @@ final class PostFactory extends ModelFactory
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
      */
+    #[\Override]
     protected function initialize(): self
     {
         return $this
@@ -90,6 +92,7 @@ final class PostFactory extends ModelFactory
         ;
     }
 
+    #[\Override]
     protected static function getClass(): string
     {
         return Post::class;

@@ -56,6 +56,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
     ) {
     }
 
+    #[\Override]
     public function withPageNumber(?int $pageNumber): static
     {
         $pageNumber ??= 1;
@@ -74,11 +75,13 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
         );
     }
 
+    #[\Override]
     public function getPageIdentifier(): object
     {
         return new PageNumber($this->pageNumber);
     }
 
+    #[\Override]
     public function getPageable(): PageableInterface
     {
         return $this->pageable;
@@ -122,21 +125,25 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
         return $this->result;
     }
 
+    #[\Override]
     public function getIterator(): \Traversable
     {
         yield from $this->getResult();
     }
 
+    #[\Override]
     public function getPageNumber(): int
     {
         return $this->pageNumber;
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
     }
 
+    #[\Override]
     public function getNextPage(): ?PageInterface
     {
         $this->getResult();
@@ -186,6 +193,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
         );
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PageInterface
     {
         $pageNumber = $this->pageNumber - 1;
@@ -205,6 +213,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
         );
     }
 
+    #[\Override]
     public function getNextPages(int $numberOfPages): array
     {
         $count = $this->adapter->countOffsetItems(
@@ -252,6 +261,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
         return $pages;
     }
 
+    #[\Override]
     public function getPreviousPages(int $numberOfPages): array
     {
         $start = max(1, $this->pageNumber - $numberOfPages);
@@ -275,6 +285,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
         return $pages;
     }
 
+    #[\Override]
     public function count(): int
     {
         return \count($this->getResult());

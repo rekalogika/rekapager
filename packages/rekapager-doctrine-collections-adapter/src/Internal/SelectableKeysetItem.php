@@ -48,16 +48,19 @@ final readonly class SelectableKeysetItem implements KeysetItemInterface
         $this->objectOrArrayValue = $value;
     }
 
+    #[\Override]
     public function getKey(): mixed
     {
         return $this->key;
     }
 
+    #[\Override]
     public function getValue(): mixed
     {
         return $this->value;
     }
 
+    #[\Override]
     public function getValuesForBoundary(): array
     {
         /** @var array<string,mixed> */

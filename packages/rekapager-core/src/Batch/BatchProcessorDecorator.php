@@ -35,41 +35,49 @@ abstract class BatchProcessorDecorator implements BatchProcessorInterface
     {
     }
 
+    #[\Override]
     public function processItem(ItemEvent $itemEvent): void
     {
         $this->decorated->processItem($itemEvent);
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->decorated->getItemsPerPage();
     }
 
+    #[\Override]
     public function beforeProcess(BeforeProcessEvent $event): void
     {
         $this->decorated->beforeProcess($event);
     }
 
+    #[\Override]
     public function afterProcess(AfterProcessEvent $event): void
     {
         $this->decorated->afterProcess($event);
     }
 
+    #[\Override]
     public function beforePage(BeforePageEvent $event): void
     {
         $this->decorated->beforePage($event);
     }
 
+    #[\Override]
     public function afterPage(AfterPageEvent $event): void
     {
         $this->decorated->afterPage($event);
     }
 
+    #[\Override]
     public function onInterrupt(InterruptEvent $event): void
     {
         $this->decorated->onInterrupt($event);
     }
 
+    #[\Override]
     public function onTimeLimit(TimeLimitEvent $event): void
     {
         $this->decorated->onTimeLimit($event);

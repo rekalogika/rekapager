@@ -42,6 +42,7 @@ final class QueryCounter implements \Countable
     ) {
     }
 
+    #[\Override]
     public function count(): int
     {
         if ($this->count === null) {

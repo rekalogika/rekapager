@@ -26,6 +26,7 @@ final readonly class DefaultBatchProcessFactory implements BatchProcessFactoryIn
     ) {
     }
 
+    #[\Override]
     public function createBatchProcess(
         PageableInterface $pageable,
         BatchProcessorInterface $batchProcessor

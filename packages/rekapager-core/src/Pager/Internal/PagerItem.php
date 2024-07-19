@@ -43,6 +43,7 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         $this->pageNumber = new NullPageNumber();
     }
 
+    #[\Override]
     public function withPageNumber(?int $pageNumber): static
     {
         return new self(
@@ -51,21 +52,25 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         );
     }
 
+    #[\Override]
     public function isDisabled(): bool
     {
         return $this->wrapped instanceof NullPageInterface;
     }
 
+    #[\Override]
     public function getIterator(): \Traversable
     {
         yield from $this->wrapped;
     }
 
+    #[\Override]
     public function getPageIdentifier(): object
     {
         return $this->wrapped->getPageIdentifier();
     }
 
+    #[\Override]
     public function getPageNumber(): ?int
     {
         if (!$this->pageNumber instanceof NullPageNumber) {
@@ -75,16 +80,19 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         return $this->wrapped->getPageNumber();
     }
 
+    #[\Override]
     public function getPageable(): PageableInterface
     {
         return $this->wrapped->getPageable();
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->wrapped->getItemsPerPage();
     }
 
+    #[\Override]
     public function getNextPage(): ?PagerItemInterface
     {
         $nextPage = $this->wrapped->getNextPage();
@@ -96,6 +104,7 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         return $this->decorate($nextPage);
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PagerItemInterface
     {
         $previousPage = $this->wrapped->getPreviousPage();
@@ -107,6 +116,7 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         return $this->decorate($previousPage);
     }
 
+    #[\Override]
     public function getNextPages(int $numberOfPages): array
     {
         $pages = [];
@@ -118,6 +128,7 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         return $pages;
     }
 
+    #[\Override]
     public function getPreviousPages(int $numberOfPages): array
     {
         $pages = [];
@@ -129,11 +140,13 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         return $pages;
     }
 
+    #[\Override]
     public function count(): int
     {
         return $this->wrapped->count();
     }
 
+    #[\Override]
     public function getUrl(): ?string
     {
         return $this->pagerUrlGenerator->generateUrl($this);

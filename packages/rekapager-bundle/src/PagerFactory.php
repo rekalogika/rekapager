@@ -42,6 +42,7 @@ class PagerFactory implements PagerFactoryInterface
     ) {
     }
 
+    #[\Override]
     public function createPager(
         PageableInterface $pageable,
         Request $request,

@@ -70,6 +70,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
      */
     abstract protected function getBatchProcessor(): BatchProcessorInterface;
 
+    #[\Override]
     final protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->batchProcessFactory === null) {
@@ -150,11 +151,13 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
     /**
      * @return list<int>
      */
+    #[\Override]
     public function getSubscribedSignals(): array
     {
         return [\SIGINT, \SIGTERM];
     }
 
+    #[\Override]
     public function handleSignal(int $signal, int|false $previousExitCode = 0): int|false
     {
         if (\SIGINT !== $signal && \SIGTERM !== $signal) {

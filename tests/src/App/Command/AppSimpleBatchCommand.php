@@ -43,16 +43,19 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         parent::__construct();
     }
 
+    #[\Override]
     protected function configure(): void
     {
         $this->addOption('count', null, InputOption::VALUE_NONE, 'Count the total items');
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return 100;
     }
 
+    #[\Override]
     protected function getPageable(
         InputInterface $input,
         OutputInterface $output
@@ -65,11 +68,13 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
         return new KeysetPageable($adapter, count: $count);
     }
 
+    #[\Override]
     public function processItem(ItemEvent $itemEvent): void
     {
         usleep(50000);
     }
 
+    #[\Override]
     public function afterPage(AfterPageEvent $event): void
     {
         $this->entityManager->clear();

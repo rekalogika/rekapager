@@ -37,6 +37,7 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
      * @param array<array-key,mixed> $context
      * @return array<array-key,mixed>|string|integer|float|boolean|\ArrayObject<array-key,mixed>|null
      */
+    #[\Override]
     public function normalize(
         mixed $object,
         ?string $format = null,
@@ -86,6 +87,7 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
     /**
      * @param array<array-key,mixed> $context
      */
+    #[\Override]
     public function supportsNormalization(
         mixed $data,
         ?string $format = null,
@@ -95,6 +97,7 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
         return $this->collectionNormalizer->supportsNormalization($data, $format, $context);
     }
 
+    #[\Override]
     public function setNormalizer(NormalizerInterface $normalizer): void
     {
         if ($this->collectionNormalizer instanceof NormalizerAwareInterface) {

@@ -31,16 +31,19 @@ class OffsetPageableSelectableAdapterCollection implements PageableGeneratorInte
     {
     }
 
+    #[\Override]
     public static function getKey(): string
     {
         return 'offsetpageable-selectableadapter-collection';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'OffsetPageable - SelectableAdapter - Collection';
     }
 
+    #[\Override]
     public function generatePageable(
         int $itemsPerPage,
         bool|int|\Closure $count,
@@ -81,6 +84,7 @@ class OffsetPageableSelectableAdapterCollection implements PageableGeneratorInte
         return $pageable;
     }
 
+    #[\Override]
     public function count(): int
     {
         /** @var int<0,max> */

@@ -18,11 +18,13 @@ use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorPr
 
 class KeysetPagerSmallDatasetTest extends PagerTestCase
 {
+    #[\Override]
     protected function getItemsPerPage(): int
     {
         return 3;
     }
 
+    #[\Override]
     protected function getSetName(): string
     {
         return 'small';

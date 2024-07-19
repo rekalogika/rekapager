@@ -31,16 +31,19 @@ class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInte
     {
     }
 
+    #[\Override]
     public static function getKey(): string
     {
         return 'offsetpageable-collectionadapter-collection';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'OffsetPageable - CollectionAdapter - Collection';
     }
 
+    #[\Override]
     public function generatePageable(
         int $itemsPerPage,
         bool|int|\Closure $count,
@@ -73,6 +76,7 @@ class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInte
         return $pageable;
     }
 
+    #[\Override]
     public function count(): int
     {
         /** @var int<0,max> */

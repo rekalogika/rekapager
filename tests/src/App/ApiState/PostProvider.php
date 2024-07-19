@@ -39,6 +39,7 @@ class PostProvider implements ProviderInterface
      * @param array<string,mixed> $context
      * @return Post|PartialPaginatorInterface<Post>|iterable<Post>|null
      */
+    #[\Override]
     public function provide(
         Operation $operation,
         array $uriVariables = [],

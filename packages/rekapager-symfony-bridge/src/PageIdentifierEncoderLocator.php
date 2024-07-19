@@ -31,6 +31,7 @@ class PageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterf
      * @param class-string<T> $pageIdentifierClass
      * @return PageIdentifierEncoderInterface<T>
      */
+    #[\Override]
     public function getPageIdentifierEncoder(
         string $pageIdentifierClass
     ): PageIdentifierEncoderInterface {

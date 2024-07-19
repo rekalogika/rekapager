@@ -35,61 +35,73 @@ final readonly class TraversablePager implements TraversablePagerInterface, \Ite
     ) {
     }
 
+    #[\Override]
     public function getProximity(): int
     {
         return $this->decorated->getProximity();
     }
 
+    #[\Override]
     public function withProximity(int $proximity): static
     {
         return new self($this->decorated->withProximity($proximity));
     }
 
+    #[\Override]
     public function getCurrentPage(): PagerItemInterface
     {
         return $this->decorated->getCurrentPage();
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PagerItemInterface
     {
         return $this->decorated->getPreviousPage();
     }
 
+    #[\Override]
     public function getNextPage(): ?PagerItemInterface
     {
         return $this->decorated->getNextPage();
     }
 
+    #[\Override]
     public function getFirstPage(): ?PagerItemInterface
     {
         return $this->decorated->getFirstPage();
     }
 
+    #[\Override]
     public function getLastPage(): ?PagerItemInterface
     {
         return $this->decorated->getLastPage();
     }
 
+    #[\Override]
     public function hasGapToFirstPage(): bool
     {
         return $this->decorated->hasGapToFirstPage();
     }
 
+    #[\Override]
     public function hasGapToLastPage(): bool
     {
         return $this->decorated->hasGapToLastPage();
     }
 
+    #[\Override]
     public function getPreviousNeighboringPages(): iterable
     {
         return $this->decorated->getPreviousNeighboringPages();
     }
 
+    #[\Override]
     public function getNextNeighboringPages(): iterable
     {
         return $this->decorated->getNextNeighboringPages();
     }
 
+    #[\Override]
     public function getIterator(): \Traversable
     {
         yield from $this->getCurrentPage();
