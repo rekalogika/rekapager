@@ -41,6 +41,11 @@ return RectorConfig::configure()
         AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withSkip([
+        AddOverrideAttributeToOverriddenMethodsRector::class => [
+            // for symfony 6 compatibility
+            __DIR__ . '/packages/rekapager-api-platform/src/Implementation/PagerNormalizer.php',
+        ],
+
         SimplifyUselessVariableRector::class => [
             // used for demo
             __DIR__ . '/tests/src/App/PageableGenerator/*',

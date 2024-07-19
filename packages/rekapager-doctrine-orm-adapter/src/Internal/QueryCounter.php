@@ -52,7 +52,7 @@ final class QueryCounter implements \Countable
                  * @psalm-suppress MixedArgument
                  * @phpstan-ignore-next-line
                  */
-                $this->count = (int) array_sum(array_map('current', $this->getCountQuery()->getScalarResult()));
+                $this->count = (int) array_sum(array_map(current(...), $this->getCountQuery()->getScalarResult()));
             } catch (NoResultException) {
                 $this->count = 0;
             }
