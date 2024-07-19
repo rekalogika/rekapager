@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.13.4
+
+* fix: fix metrics when resuming batch
+
 # 0.13.3
 
 * build: add pcntl extension to Dockerfile

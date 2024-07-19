@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Symfony\Batch\Internal;
 
+use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Rekapager\Batch\BatchProcessorDecorator;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
 use Rekalogika\Rekapager\Batch\Event\AfterPageEvent;
@@ -36,9 +37,11 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private readonly BatchTimer $timer;
 
-    private int $pageNumber = 0;
+    private int $sessionPageNumber = 0;
 
-    private int $itemNumber = 0;
+    private int $sessionItemNumber = 0;
+
+    private int $pagesFinishedInPreviousSessions = 0;
 
     private ?\DateTimeInterface $startTime = null;
 
@@ -51,6 +54,13 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     private ?int $totalItems = null;
 
     private int $itemsPerPage = 0;
+
+    private bool $isFirstPage = true;
+
+    /**
+     * @var PageInterface<TKey,T>|null
+     */
+    private ?PageInterface $firstPage = null;
 
     /**
      * @param BatchProcessorInterface<TKey,T> $decorated
@@ -134,7 +144,19 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 
     public function beforePage(BeforePageEvent $event): void
     {
-        $this->pageNumber++;
+        if ($this->isFirstPage) {
+            $this->firstPage = $event->getPage();
+            $firstPageNumber = $this->firstPage->getPageNumber() ?? 0;
+            $this->pagesFinishedInPreviousSessions = $firstPageNumber - 1;
+
+            if ($this->pagesFinishedInPreviousSessions < 0) {
+                $this->pagesFinishedInPreviousSessions = 0;
+            }
+
+            $this->isFirstPage = false;
+        }
+
+        $this->sessionPageNumber++;
         // $this->timer->start(BatchTimer::TIMER_PAGE);
 
         if ($this->progressFile !== null) {
@@ -162,7 +184,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 
     public function processItem(ItemEvent $itemEvent): void
     {
-        $this->itemNumber++;
+        $this->sessionItemNumber++;
 
         $sinceLast = $this->timer->getDuration(BatchTimer::TIMER_ITEM);
 
@@ -250,8 +272,8 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $processDuration = $this->timer->getDuration(BatchTimer::TIMER_PROCESS);
 
         if ($processDuration !== null) {
-            $pagesPerSecond = $this->pageNumber / $processDuration;
-            $itemsPerSecond = $this->itemNumber / $processDuration;
+            $pagesPerSecond = $this->sessionPageNumber / $processDuration;
+            $itemsPerSecond = $this->sessionItemNumber / $processDuration;
         } else {
             $pagesPerSecond = 0;
             $itemsPerSecond = 0;
@@ -273,7 +295,10 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             $stats[] = ['Current time' => $this->formatTime(new \DateTimeImmutable())];
 
             if ($this->totalItems !== null) {
-                $remainingItems = $this->totalItems - $this->itemNumber;
+                $remainingItems = $this->totalItems
+                    - $this->sessionItemNumber
+                    - $this->pagesFinishedInPreviousSessions * $this->itemsPerPage;
+
                 if ($remainingItems < 0) {
                     $remainingItems = 0;
                 }
@@ -306,21 +331,21 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             $pagesInfo = $this->totalPages ?? '(unknown)';
             $itemsInfo = $this->totalItems ?? '(unknown)';
         } elseif ($event instanceof AfterProcessEvent) {
-            $pagesInfo = $this->pageNumber;
-            $itemsInfo = $this->itemNumber;
+            $pagesInfo = $this->sessionPageNumber;
+            $itemsInfo = $this->sessionItemNumber;
         } elseif ($this->totalPages === null) {
-            $pagesInfo = $this->pageNumber;
-            $itemsInfo = $this->itemNumber;
+            $pagesInfo = $this->sessionPageNumber;
+            $itemsInfo = $this->sessionItemNumber;
         } else {
             $pagesInfo = sprintf(
                 '%s/%s',
-                $this->pageNumber,
+                $this->sessionPageNumber + $this->pagesFinishedInPreviousSessions,
                 $this->totalPages
             );
 
             $itemsInfo = sprintf(
                 '%s/%s',
-                $this->itemNumber,
+                $this->sessionItemNumber + $this->pagesFinishedInPreviousSessions * $this->itemsPerPage,
                 $this->totalItems ?? '?'
             );
         }
