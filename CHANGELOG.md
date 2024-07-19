@@ -4,6 +4,7 @@
 
 * fix: fix metrics when resuming batch
 * chore: add `Override` attribute where applicable
+* chore: rector config updates
 
 # 0.13.3
 
