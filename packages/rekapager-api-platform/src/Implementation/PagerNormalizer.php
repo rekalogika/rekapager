@@ -28,7 +28,6 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
     ) {
     }
 
-    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return $this->collectionNormalizer->getSupportedTypes($format);
