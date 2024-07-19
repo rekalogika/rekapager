@@ -3,11 +3,12 @@
 # 0.13.4
 
 * fix: fix metrics when resuming batch
+* chore: add `Override` attribute where applicable
 
 # 0.13.3
 
 * build: add pcntl extension to Dockerfile
-* build: fix docker terminal issue
+* build: fix docker terminal issu
 
 # 0.13.2
 

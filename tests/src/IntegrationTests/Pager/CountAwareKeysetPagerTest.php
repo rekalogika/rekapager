@@ -18,6 +18,7 @@ use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorPr
 
 class CountAwareKeysetPagerTest extends PagerTestCase
 {
+    #[\Override]
     protected function getPagerCount(): bool|int
     {
         return true;

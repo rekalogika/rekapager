@@ -30,6 +30,7 @@ class SymfonyPageUrlGenerator implements PageUrlGeneratorInterface
     ) {
     }
 
+    #[\Override]
     public function generateUrl(?string $pageIdentifier): ?string
     {
         $routeParams = $this->routeParams;

@@ -52,6 +52,7 @@ final class OffsetPageable implements PageableInterface
     ) {
     }
 
+    #[\Override]
     public function withItemsPerPage(int $itemsPerPage): static
     {
         $new = new self($this->adapter, $itemsPerPage, $this->count, $this->pageLimit);
@@ -60,21 +61,25 @@ final class OffsetPageable implements PageableInterface
         return $new;
     }
 
+    #[\Override]
     public function getPageIdentifierClass(): string
     {
         return PageNumber::class;
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
     }
 
+    #[\Override]
     public function getFirstPage(): PageInterface
     {
         return $this->getPageByIdentifier(new PageNumber(1));
     }
 
+    #[\Override]
     public function getLastPage(): ?PageInterface
     {
         $totalPages = $this->getTotalPages();
@@ -95,6 +100,7 @@ final class OffsetPageable implements PageableInterface
         return $this->getPageByIdentifier(new PageNumber($totalPages));
     }
 
+    #[\Override]
     public function getPageByIdentifier(object $pageIdentifier): PageInterface
     {
         if (!$pageIdentifier instanceof PageNumber) {
@@ -112,6 +118,7 @@ final class OffsetPageable implements PageableInterface
         );
     }
 
+    #[\Override]
     public function getTotalItems(): ?int
     {
         if ($this->count instanceof \Closure) {

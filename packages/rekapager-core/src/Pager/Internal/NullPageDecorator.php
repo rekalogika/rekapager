@@ -35,56 +35,67 @@ final readonly class NullPageDecorator implements NullPageInterface, \IteratorAg
     ) {
     }
 
+    #[\Override]
     public function getPageIdentifier(): object
     {
         return $this->page->getPageIdentifier();
     }
 
+    #[\Override]
     public function getPageNumber(): ?int
     {
         return $this->page->getPageNumber();
     }
 
+    #[\Override]
     public function withPageNumber(?int $pageNumber): static
     {
         return new self($this->page->withPageNumber($pageNumber));
     }
 
+    #[\Override]
     public function getPageable(): PageableInterface
     {
         return $this->page->getPageable();
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->page->getItemsPerPage();
     }
 
+    #[\Override]
     public function getNextPage(): ?PageInterface
     {
         return $this->page->getNextPage();
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PageInterface
     {
         return $this->page->getPreviousPage();
     }
 
+    #[\Override]
     public function getNextPages(int $numberOfPages): array
     {
         return $this->page->getNextPages($numberOfPages);
     }
 
+    #[\Override]
     public function getPreviousPages(int $numberOfPages): array
     {
         return $this->page->getPreviousPages($numberOfPages);
     }
 
+    #[\Override]
     public function count(): int
     {
         return $this->page->count();
     }
 
+    #[\Override]
     public function getIterator(): \Traversable
     {
         yield from $this->page;

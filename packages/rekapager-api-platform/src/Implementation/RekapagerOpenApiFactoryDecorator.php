@@ -28,6 +28,7 @@ class RekapagerOpenApiFactoryDecorator implements OpenApiFactoryInterface
     /**
      * @param array<array-key,mixed> $context
      */
+    #[\Override]
     public function __invoke(array $context = []): OpenApi
     {
         $openApi = ($this->decorated)($context);

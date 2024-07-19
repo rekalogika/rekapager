@@ -365,6 +365,7 @@ final class ProximityPager implements PagerInterface
         }
     }
 
+    #[\Override]
     public function withProximity(int $proximity): static
     {
         if ($proximity === 0) {
@@ -379,6 +380,7 @@ final class ProximityPager implements PagerInterface
         );
     }
 
+    #[\Override]
     public function getProximity(): int
     {
         return $this->proximity;
@@ -410,46 +412,55 @@ final class ProximityPager implements PagerInterface
         );
     }
 
+    #[\Override]
     public function getCurrentPage(): PagerItemInterface
     {
         return $this->currentPage ?? throw new RuntimeException('Current page is not set');
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PagerItemInterface
     {
         return $this->previousPage;
     }
 
+    #[\Override]
     public function getNextPage(): ?PagerItemInterface
     {
         return $this->nextPage;
     }
 
+    #[\Override]
     public function getFirstPage(): ?PagerItemInterface
     {
         return $this->firstPage;
     }
 
+    #[\Override]
     public function getLastPage(): ?PagerItemInterface
     {
         return $this->lastPage;
     }
 
+    #[\Override]
     public function hasGapToFirstPage(): bool
     {
         return $this->hasHiddenPagesBefore;
     }
 
+    #[\Override]
     public function hasGapToLastPage(): bool
     {
         return $this->hasHiddenPagesAfter;
     }
 
+    #[\Override]
     public function getPreviousNeighboringPages(): iterable
     {
         return $this->previousNeighboringPages;
     }
 
+    #[\Override]
     public function getNextNeighboringPages(): iterable
     {
         return $this->nextNeighboringPages;

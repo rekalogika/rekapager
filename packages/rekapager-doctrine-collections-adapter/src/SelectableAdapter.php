@@ -62,6 +62,7 @@ final readonly class SelectableAdapter implements
     /**
      * @return int<0,max>
      */
+    #[\Override]
     public function countItems(): int
     {
         $result = $this->collection->matching($this->criteria)->count();
@@ -74,6 +75,7 @@ final readonly class SelectableAdapter implements
     // offset pagination
     //
 
+    #[\Override]
     public function getOffsetItems(int $offset, int $limit): array
     {
         $criteria = (clone $this->criteria)
@@ -110,6 +112,7 @@ final readonly class SelectableAdapter implements
         }
     }
 
+    #[\Override]
     public function countOffsetItems(int $offset = 0, ?int $limit = null): int
     {
         $criteria = (clone $this->criteria)
@@ -283,6 +286,7 @@ final readonly class SelectableAdapter implements
         return $criteria;
     }
 
+    #[\Override]
     public function getKeysetItems(
         int $offset,
         int $limit,
@@ -333,6 +337,7 @@ final readonly class SelectableAdapter implements
         return $results;
     }
 
+    #[\Override]
     public function countKeysetItems(
         int $offset,
         int $limit,

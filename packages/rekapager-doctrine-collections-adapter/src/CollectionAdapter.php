@@ -34,6 +34,7 @@ final readonly class CollectionAdapter implements OffsetPaginationAdapterInterfa
     /**
      * @return int<0,max>
      */
+    #[\Override]
     public function countItems(): int
     {
         $result = $this->collection->count();
@@ -42,6 +43,7 @@ final readonly class CollectionAdapter implements OffsetPaginationAdapterInterfa
         return $result;
     }
 
+    #[\Override]
     public function getOffsetItems(
         int $offset,
         int $limit,
@@ -49,6 +51,7 @@ final readonly class CollectionAdapter implements OffsetPaginationAdapterInterfa
         return $this->collection->slice($offset, $limit);
     }
 
+    #[\Override]
     public function countOffsetItems(
         int $offset = 0,
         ?int $limit = null,

@@ -39,6 +39,7 @@ class PagerFactory implements PagerFactoryInterface
     ) {
     }
 
+    #[\Override]
     public function getPage(
         PageableInterface $pageable,
         ?Operation $operation = null,
@@ -69,6 +70,7 @@ class PagerFactory implements PagerFactoryInterface
         return $page;
     }
 
+    #[\Override]
     public function createPager(
         PageableInterface $pageable,
         ?Operation $operation = null,

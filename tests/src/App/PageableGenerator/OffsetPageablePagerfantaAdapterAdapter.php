@@ -31,16 +31,19 @@ class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterfa
     {
     }
 
+    #[\Override]
     public static function getKey(): string
     {
         return 'offsetpageable-pagerfantaadapteradapter-collection';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'OffsetPageable - PagerfantaAdapterAdapter - PagerfantaSelectableAdapter - Collection';
     }
 
+    #[\Override]
     public function generatePageable(
         int $itemsPerPage,
         bool|int|\Closure $count,
@@ -74,6 +77,7 @@ class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterfa
         return $pageable;
     }
 
+    #[\Override]
     public function count(): int
     {
         /** @var int<0,max> */

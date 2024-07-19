@@ -18,6 +18,7 @@ use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorPr
 
 class OffsetZeroProximityPagerTest extends PagerTestCase
 {
+    #[\Override]
     protected function getProximity(): int
     {
         return 0;

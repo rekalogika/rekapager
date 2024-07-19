@@ -29,23 +29,27 @@ class PageIdentifierEncoderResolver implements PageIdentifierEncoderResolverInte
      * @param class-string $pageIdentifierClass
      * @return PageIdentifierEncoderInterface<object>
      */
+    #[\Override]
     public function getEncoderFromClass(
         string $pageIdentifierClass
     ): PageIdentifierEncoderInterface {
         return $this->locator->getPageIdentifierEncoder($pageIdentifierClass);
     }
 
+    #[\Override]
     public function getEncoderFromPageable(
         PageableInterface $pageable
     ): PageIdentifierEncoderInterface {
         return $this->getEncoderFromClass($pageable->getPageIdentifierClass());
     }
 
+    #[\Override]
     public function encode(object $identifier): string
     {
         return $this->getEncoderFromClass($identifier::class)->encode($identifier);
     }
 
+    #[\Override]
     public function decode(PageableInterface $pageable, string $encoded): object
     {
         return $this->getEncoderFromPageable($pageable)->decode($encoded);

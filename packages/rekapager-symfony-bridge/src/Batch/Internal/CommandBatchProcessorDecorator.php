@@ -91,6 +91,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         return $this->startTime;
     }
 
+    #[\Override]
     public function beforeProcess(BeforeProcessEvent $event): void
     {
         $this->startTime = new \DateTimeImmutable();
@@ -109,6 +110,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->decorated->beforeProcess($event);
     }
 
+    #[\Override]
     public function afterProcess(AfterProcessEvent $event): void
     {
         $this->decorated->afterProcess($event);
@@ -142,6 +144,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         );
     }
 
+    #[\Override]
     public function beforePage(BeforePageEvent $event): void
     {
         if ($this->isFirstPage) {
@@ -167,6 +170,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->decorated->beforePage($event);
     }
 
+    #[\Override]
     public function afterPage(AfterPageEvent $event): void
     {
         $this->decorated->afterPage($event);
@@ -182,6 +186,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         }
     }
 
+    #[\Override]
     public function processItem(ItemEvent $itemEvent): void
     {
         $this->sessionItemNumber++;
@@ -196,6 +201,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->decorated->processItem($itemEvent);
     }
 
+    #[\Override]
     public function onInterrupt(InterruptEvent $event): void
     {
         $nextPageIdentifier = $event->getNextPageIdentifier();
@@ -228,6 +234,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         $this->showStats($event);
     }
 
+    #[\Override]
     public function onTimeLimit(TimeLimitEvent $event): void
     {
         $nextPageIdentifier = $event->getNextPageIdentifier();

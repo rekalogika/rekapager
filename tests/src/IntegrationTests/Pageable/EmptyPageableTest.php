@@ -18,6 +18,7 @@ use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorPr
 
 class EmptyPageableTest extends PageableTestCase
 {
+    #[\Override]
     protected function getSetName(): string
     {
         return 'empty';

@@ -94,6 +94,7 @@ class ZeroProximityPager implements PagerInterface
         $this->nextPage = $this->decorate($nextPage);
     }
 
+    #[\Override]
     public function withProximity(int $proximity): static
     {
         if ($proximity > 0) {
@@ -103,6 +104,7 @@ class ZeroProximityPager implements PagerInterface
         return $this;
     }
 
+    #[\Override]
     public function getProximity(): int
     {
         return 0;
@@ -138,46 +140,55 @@ class ZeroProximityPager implements PagerInterface
         );
     }
 
+    #[\Override]
     public function getCurrentPage(): PagerItemInterface
     {
         return $this->currentPage ?? throw new RuntimeException('Current page is not set');
     }
 
+    #[\Override]
     public function getPreviousPage(): ?PagerItemInterface
     {
         return $this->previousPage;
     }
 
+    #[\Override]
     public function getNextPage(): ?PagerItemInterface
     {
         return $this->nextPage;
     }
 
+    #[\Override]
     public function getFirstPage(): ?PagerItemInterface
     {
         return $this->firstPage;
     }
 
+    #[\Override]
     public function getLastPage(): ?PagerItemInterface
     {
         return $this->lastPage;
     }
 
+    #[\Override]
     public function hasGapToFirstPage(): bool
     {
         return false;
     }
 
+    #[\Override]
     public function hasGapToLastPage(): bool
     {
         return false;
     }
 
+    #[\Override]
     public function getPreviousNeighboringPages(): iterable
     {
         return [];
     }
 
+    #[\Override]
     public function getNextNeighboringPages(): iterable
     {
         return [];

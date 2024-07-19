@@ -24,6 +24,7 @@ class DebugToolbarReplacerSubscriber implements EventSubscriberInterface
     ) {
     }
 
+    #[\Override]
     public static function getSubscribedEvents()
     {
         return [

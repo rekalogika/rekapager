@@ -54,6 +54,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
         }
     }
 
+    #[\Override]
     public function countItems(): ?int
     {
         $paginator = new Paginator($this->queryBuilder, true);
@@ -248,6 +249,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
     }
 
     /** @psalm-suppress InvalidReturnType */
+    #[\Override]
     public function getKeysetItems(
         int $offset,
         int $limit,
@@ -295,6 +297,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
         return $results;
     }
 
+    #[\Override]
     public function countKeysetItems(
         int $offset,
         int $limit,

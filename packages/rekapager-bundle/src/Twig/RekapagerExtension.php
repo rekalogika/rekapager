@@ -18,6 +18,7 @@ use Twig\TwigFunction;
 
 class RekapagerExtension extends AbstractExtension
 {
+    #[\Override]
     public function getFunctions(): array
     {
         /** @psalm-suppress InvalidArgument */

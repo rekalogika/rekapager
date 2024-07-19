@@ -39,6 +39,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
     ) {
     }
 
+    #[\Override]
     public static function getIdentifierClass(): string
     {
         return KeysetPageIdentifier::class;
@@ -71,6 +72,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
         return false;
     }
 
+    #[\Override]
     public function encode(object $identifier): string
     {
         if (!$identifier instanceof KeysetPageIdentifier) {
@@ -119,6 +121,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
         return Base64Url::encode($encoded);
     }
 
+    #[\Override]
     public function decode(string $encoded): object
     {
         if ($encoded === '') {

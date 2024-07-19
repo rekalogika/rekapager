@@ -50,6 +50,7 @@ final class KeysetPageable implements PageableInterface
     ) {
     }
 
+    #[\Override]
     public function withItemsPerPage(int $itemsPerPage): static
     {
         $new = new self($this->adapter, $itemsPerPage, $this->count);
@@ -58,11 +59,13 @@ final class KeysetPageable implements PageableInterface
         return $new;
     }
 
+    #[\Override]
     public function getPageIdentifierClass(): string
     {
         return KeysetPageIdentifier::class;
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
@@ -71,6 +74,7 @@ final class KeysetPageable implements PageableInterface
     /**
      * @return PageInterface<TKey,T>
      */
+    #[\Override]
     public function getFirstPage(): PageInterface
     {
         $pageIdentifier = new KeysetPageIdentifier(
@@ -92,6 +96,7 @@ final class KeysetPageable implements PageableInterface
     /**
      * @return PageInterface<TKey,T>
      */
+    #[\Override]
     public function getLastPage(): PageInterface
     {
         $totalPages = $this->getTotalPages();
@@ -123,6 +128,7 @@ final class KeysetPageable implements PageableInterface
         );
     }
 
+    #[\Override]
     public function getPageByIdentifier(object $pageIdentifier): PageInterface
     {
         if (!$pageIdentifier instanceof KeysetPageIdentifier) {
@@ -137,6 +143,7 @@ final class KeysetPageable implements PageableInterface
         );
     }
 
+    #[\Override]
     public function getTotalItems(): ?int
     {
         if ($this->count instanceof \Closure) {

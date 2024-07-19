@@ -31,16 +31,19 @@ class PagerfantaPageable_Pagerfanta_PagerfantaSelectableAdapter_Collection imple
     {
     }
 
+    #[\Override]
     public static function getKey(): string
     {
         return 'pagerfantapageable-pagerfanta-pagerfantaselectableadapter-collection';
     }
 
+    #[\Override]
     public function getTitle(): string
     {
         return 'PagerfantaPageable - Pagerfanta - PagerfantaSelectableAdapter - Collection';
     }
 
+    #[\Override]
     public function generatePageable(
         int $itemsPerPage,
         bool|int|\Closure $count,
@@ -72,6 +75,7 @@ class PagerfantaPageable_Pagerfanta_PagerfantaSelectableAdapter_Collection imple
         return $pageable;
     }
 
+    #[\Override]
     public function count(): int
     {
         /** @var int<0,max> */

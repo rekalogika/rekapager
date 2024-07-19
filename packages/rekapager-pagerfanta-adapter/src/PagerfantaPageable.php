@@ -51,36 +51,43 @@ final readonly class PagerfantaPageable implements PageableInterface
         );
     }
 
+    #[\Override]
     public function getPageByIdentifier(object $pageIdentifier): PageInterface
     {
         return $this->pageable->getPageByIdentifier($pageIdentifier);
     }
 
+    #[\Override]
     public function getPageIdentifierClass(): string
     {
         return $this->pageable->getPageIdentifierClass();
     }
 
+    #[\Override]
     public function getPages(?object $start = null): \Traversable
     {
         return $this->pageable->getPages($start);
     }
 
+    #[\Override]
     public function getFirstPage(): PageInterface
     {
         return $this->pageable->getFirstPage();
     }
 
+    #[\Override]
     public function getLastPage(): ?PageInterface
     {
         return $this->pageable->getLastPage();
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return $this->pageable->getItemsPerPage();
     }
 
+    #[\Override]
     public function withItemsPerPage(int $itemsPerPage): static
     {
         return new self(
@@ -90,11 +97,13 @@ final readonly class PagerfantaPageable implements PageableInterface
         );
     }
 
+    #[\Override]
     public function getTotalPages(): ?int
     {
         return $this->pageable->getTotalPages();
     }
 
+    #[\Override]
     public function getTotalItems(): ?int
     {
         return $this->pageable->getTotalItems();

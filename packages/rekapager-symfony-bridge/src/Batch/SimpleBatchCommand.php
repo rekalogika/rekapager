@@ -29,36 +29,44 @@ use Rekalogika\Rekapager\Batch\Event\TimeLimitEvent;
  */
 abstract class SimpleBatchCommand extends BatchCommand implements BatchProcessorInterface
 {
+    #[\Override]
     protected function getBatchProcessor(): BatchProcessorInterface
     {
         return $this;
     }
 
+    #[\Override]
     public function getItemsPerPage(): int
     {
         return 1000;
     }
 
+    #[\Override]
     public function beforeProcess(BeforeProcessEvent $event): void
     {
     }
 
+    #[\Override]
     public function afterProcess(AfterProcessEvent $event): void
     {
     }
 
+    #[\Override]
     public function beforePage(BeforePageEvent $event): void
     {
     }
 
+    #[\Override]
     public function afterPage(AfterPageEvent $event): void
     {
     }
 
+    #[\Override]
     public function onInterrupt(InterruptEvent $event): void
     {
     }
 
+    #[\Override]
     public function onTimeLimit(TimeLimitEvent $event): void
     {
     }

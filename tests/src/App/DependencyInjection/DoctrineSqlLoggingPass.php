@@ -23,6 +23,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class DoctrineSqlLoggingPass implements CompilerPassInterface
 {
+    #[\Override]
     public function process(ContainerBuilder $container): void
     {
         $doctrineLoggingMiddlewareDef = $container->getDefinition('doctrine.dbal.logging_middleware');

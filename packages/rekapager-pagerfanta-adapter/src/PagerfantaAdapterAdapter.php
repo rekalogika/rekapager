@@ -32,6 +32,7 @@ final readonly class PagerfantaAdapterAdapter implements OffsetPaginationAdapter
     ) {
     }
 
+    #[\Override]
     public function getOffsetItems(int $offset, int $limit): array
     {
         /** @psalm-suppress InvalidArgument */
@@ -53,6 +54,7 @@ final readonly class PagerfantaAdapterAdapter implements OffsetPaginationAdapter
         return $items;
     }
 
+    #[\Override]
     public function countOffsetItems(int $offset = 0, ?int $limit = null): ?int
     {
         if ($limit === null) {
@@ -69,6 +71,7 @@ final readonly class PagerfantaAdapterAdapter implements OffsetPaginationAdapter
         return $count;
     }
 
+    #[\Override]
     public function countItems(): int
     {
         return $this->adapter->getNbResults();

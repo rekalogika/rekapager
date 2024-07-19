@@ -28,11 +28,13 @@ class PostBatchProcessor extends AbstractBatchProcessor
     {
     }
 
+    #[\Override]
     public function processItem(ItemEvent $itemEvent): void
     {
         usleep(50000);
     }
 
+    #[\Override]
     public function afterPage(AfterPageEvent $event): void
     {
         $this->entityManager->clear();

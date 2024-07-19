@@ -29,6 +29,7 @@ class SqlLogger extends AbstractLogger
      * @param mixed $level
      * @param array<array-key,mixed> $context
      */
+    #[\Override]
     public function log($level, string|\Stringable $message, array $context = []): void
     {
         if (isset($context['sql'])) {

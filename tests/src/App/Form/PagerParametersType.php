@@ -23,6 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PagerParametersType extends AbstractType // @phpstan-ignore-line
 {
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -119,6 +120,7 @@ class PagerParametersType extends AbstractType // @phpstan-ignore-line
             ]);
     }
 
+    #[\Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

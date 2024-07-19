@@ -18,11 +18,13 @@ use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorPr
 
 class EmptyZeroProximityPagerTest extends PagerTestCase
 {
+    #[\Override]
     protected function getSetName(): string
     {
         return 'empty';
     }
 
+    #[\Override]
     protected function getProximity(): int
     {
         return 0;
