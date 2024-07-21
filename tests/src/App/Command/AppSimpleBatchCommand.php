@@ -23,9 +23,7 @@ use Rekalogika\Rekapager\Symfony\Batch\SimpleBatchCommand;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @extends SimpleBatchCommand<int,Post>
@@ -56,12 +54,10 @@ class AppSimpleBatchCommand extends SimpleBatchCommand
     }
 
     #[\Override]
-    protected function getPageable(
-        InputInterface $input,
-        OutputInterface $output
-    ): PageableInterface {
+    protected function getPageable(): PageableInterface
+    {
         /** @psalm-suppress RedundantCast */
-        $count = (bool) $input->getOption('count');
+        $count = (bool) $this->getInput()->getOption('count');
 
         $adapter = new SelectableAdapter($this->postRepository);
 

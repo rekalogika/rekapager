@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.14.0
+
+* refactor(`BatchCommand`): remove input & output arguments from `getPageable()`
+
 # 0.13.4
 
 * fix: fix metrics when resuming batch
