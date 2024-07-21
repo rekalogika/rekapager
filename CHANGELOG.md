@@ -6,6 +6,7 @@
 * chore: add `Override` attribute where applicable
 * chore: rector config updates
 * feat: add `getInput()` and `getOutput()` to `BatchCommand`
+* build: update target for release process
 
 # 0.13.3
 

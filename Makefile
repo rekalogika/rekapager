@@ -70,7 +70,13 @@ monorepo-merge:
 
 .PHONY: monorepo-release-%
 monorepo-release-%:
+	git update-index --really-refresh > /dev/null; git diff-index --quiet HEAD || (echo "Working directory is not clean, aborting" && exit 1)
+	[ -z "$*" ] && echo "Please provide a version number" && exit 1
+	[ $(git branch --show-current) = 'main' ] || (echo "Not on main branch, aborting" && exit 1)
 	$(PHP) vendor/bin/monorepo-builder release $*
+	git switch -c release/$*
+	git add .
+	git commit -m "release: $*"
 
 .PHONY: clean
 clean:
