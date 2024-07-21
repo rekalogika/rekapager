@@ -44,6 +44,10 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
 
     private ?BatchProcessFactoryInterface $batchProcessFactory = null;
 
+    private ?InputInterface $input = null;
+
+    private ?OutputInterface $output = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -60,6 +64,24 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
         $this->batchProcessFactory = $batchProcessFactory;
     }
 
+    final protected function getInput(): InputInterface
+    {
+        if ($this->input === null) {
+            throw new LogicException('Input is not set');
+        }
+
+        return $this->input;
+    }
+
+    final protected function getOutput(): OutputInterface
+    {
+        if ($this->output === null) {
+            throw new LogicException('Output is not set');
+        }
+
+        return $this->output;
+    }
+
     /**
      * @return PageableInterface<TKey,T>
      */
@@ -73,6 +95,9 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
     #[\Override]
     final protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->input = $input;
+        $this->output = $output;
+
         if ($this->batchProcessFactory === null) {
             throw new LogicException('Batch process factory is not set. Did you forget to call setBatchProcessFactory()?');
         }
