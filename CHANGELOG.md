@@ -5,6 +5,7 @@
 * fix: fix metrics when resuming batch
 * chore: add `Override` attribute where applicable
 * chore: rector config updates
+* feat: add `getInput()` and `getOutput()` to `BatchCommand`
 
 # 0.13.3
 
