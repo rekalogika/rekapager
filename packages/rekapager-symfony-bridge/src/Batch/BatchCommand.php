@@ -85,7 +85,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
     /**
      * @return PageableInterface<TKey,T>
      */
-    abstract protected function getPageable(InputInterface $input, OutputInterface $output): PageableInterface;
+    abstract protected function getPageable(): PageableInterface;
 
     /**
      * @return BatchProcessorInterface<TKey,T>
@@ -149,7 +149,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
 
         // batch processing
 
-        $pageable = $this->getPageable($input, $output);
+        $pageable = $this->getPageable();
         $this->io = new SymfonyStyle($input, $output);
 
         $batchProcessor = new CommandBatchProcessorDecorator(
