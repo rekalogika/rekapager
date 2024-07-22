@@ -3,6 +3,7 @@
 # 0.14.0
 
 * refactor(`BatchCommand`): remove input & output arguments from `getPageable()`
+* feat(`QueryBuilderAdapter`): now supports offset pagination
 
 # 0.13.4
 
