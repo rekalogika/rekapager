@@ -28,6 +28,7 @@ use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryCounter;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
+use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
 use Symfony\Bridge\Doctrine\Types\UlidType;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Ulid;
@@ -37,9 +38,15 @@ use Symfony\Component\Uid\Uuid;
  * @template TKey of array-key
  * @template T
  * @implements KeysetPaginationAdapterInterface<TKey,T>
+ * @implements OffsetPaginationAdapterInterface<TKey,T>
  */
-final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
+final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, OffsetPaginationAdapterInterface
 {
+    /**
+     * @var Paginator<T>
+     */
+    private readonly Paginator $paginator;
+
     /**
      * @param array<string,ParameterType|ArrayParameterType|string|int> $typeMapping
      */
@@ -52,14 +59,17 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
         if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
             throw new UnsupportedQueryBuilderException();
         }
+
+        $this->paginator = new Paginator($queryBuilder, true);
     }
 
+    /**
+     * @return int<0,max>|null
+     */
     #[\Override]
     public function countItems(): ?int
     {
-        $paginator = new Paginator($this->queryBuilder, true);
-
-        $result = $paginator->count();
+        $result = $this->paginator->count();
 
         if ($result < 0) {
             return null;
@@ -471,4 +481,38 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface
 
         return null;
     }
+
+    #[\Override]
+    public function getOffsetItems(int $offset, int $limit): array
+    {
+        /** @var \Traversable<TKey,T> */
+        $iterator = $this->paginator
+            ->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getResult();
+
+        return iterator_to_array($iterator);
+    }
+
+    #[\Override]
+    public function countOffsetItems(int $offset = 0, ?int $limit = null): int
+    {
+        if ($limit === null) {
+            throw new \LogicException('Limit must be set when counting offset items');
+        }
+
+        $queryBuilder = $this->getQueryBuilder($offset, $limit, null, BoundaryType::Lower);
+        $paginator = new QueryCounter($queryBuilder->getQuery(), $this->useOutputWalkers);
+
+        $result = $paginator->count();
+
+        if ($result < 0) {
+            throw new \RuntimeException('Counting keyset items failed');
+        }
+
+        return $result;
+    }
+
+
 }

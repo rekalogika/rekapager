@@ -81,6 +81,11 @@
                 <file name="packages/rekapager-api-platform/src/Implementation/PagerNormalizer.php" />
             </errorLevel>
         </TooManyArguments>
+        <PluginIssue name="QueryBuilderSetParameter">
+            <errorLevel type="suppress">
+                <file name="tests/src/App/PageableGenerator/OffsetPageableQueryBuilderAdapterQueryBuilder.php" />
+            </errorLevel>
+        </PluginIssue>
     </issueHandlers>
 
     <plugins>
