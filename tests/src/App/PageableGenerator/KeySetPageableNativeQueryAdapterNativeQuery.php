@@ -22,7 +22,6 @@ use Rekalogika\Rekapager\Doctrine\ORM\Parameter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
-use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 
 /**
  * @implements PageableGeneratorInterface<int,Post>
@@ -57,11 +56,7 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
         $resultSetMapping = new ResultSetMappingBuilder($this->entityManager);
         $resultSetMapping->addRootEntityFromClassMetadata(Post::class, 'p');
 
-        $orderBy = [
-            'p.date' => Order::Descending,
-            'p.title' => Order::Ascending,
-            'p.id' => Order::Ascending,
-        ];
+
 
         $sql = "
             SELECT {$resultSetMapping}, {{SELECT}}
@@ -93,8 +88,12 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
             resultSetMapping: $resultSetMapping,
             sql: $sql,
             // countSql: $countSql, // optional, will encase $sql in a subquery
-            countAllSql: $countAllSql, // optional, if null, total is not available
-            orderBy: $orderBy,
+            countAllSql: $countAllSql, // optional, if null, total will not be available
+            orderBy: [
+                'p.date' => Order::Descending,
+                'p.title' => Order::Ascending,
+                'p.id' => Order::Ascending,
+            ],
             parameters: [
                 new Parameter('setName', $setName),
             ],

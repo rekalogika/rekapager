@@ -4,6 +4,7 @@
 
 * refactor: move keyset expression logic to a dedicated class
 * feat: `NativeQueryAdapter`
+* feat(`NativeQueryAdapter`): check SQL input
 
 # 0.15.0
 
