@@ -93,7 +93,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         array $templates
     ): void {
         foreach ($templates as $template) {
-            if (str_contains($sql, '{{' .  $template . '}}') === 0 || str_contains($sql, '{{' .  $template . '}}') === false) {
+            if (str_contains($sql, '{{' .  $template . '}}') === false) {
                 throw new MissingPlaceholderInSQLException(
                     sqlVariable: $sqlVariable,
                     template: $template,
