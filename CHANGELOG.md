@@ -3,6 +3,7 @@
 # 0.15.1
 
 * refactor: move keyset expression logic to a dedicated class
+* feat: `NativeQueryAdapter`
 
 # 0.15.0
 
