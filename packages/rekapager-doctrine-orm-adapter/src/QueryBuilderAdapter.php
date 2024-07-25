@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\ORM;
 
+use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Type;
@@ -23,9 +24,12 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
+use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
+use Rekalogika\Rekapager\Doctrine\ORM\Internal\KeysetQueryBuilderVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryCounter;
+use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryParameter;
 use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
 use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
@@ -87,6 +91,20 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         null|array $boundaryValues,
         BoundaryType $boundaryType,
     ): QueryBuilder {
+        // wrap boundary values using QueryParameter
+
+        $newBoundaryValues = [];
+
+        /** @var mixed $value */
+        foreach ($boundaryValues ?? [] as $property => $value) {
+            $type = $this->getType($property, $value);
+            $newBoundaryValues[$property] = new QueryParameter($value, $type);
+        }
+
+        $boundaryValues = $newBoundaryValues;
+
+        // clone the query builder and set the limit and offset
+
         $queryBuilder = (clone $this->queryBuilder)
             ->setFirstResult($offset)
             ->setMaxResults($limit);
@@ -109,142 +127,25 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             $orderings = $this->getSortOrder();
         }
 
-        // construct the metadata for the next step
+        // convert orderings to criteria orderings
 
-        /** @var array<int,array{property:string,value:string,order:'ASC'|'DESC'}> */
-        $properties = [];
+        $orderings = $this->convertQueryBuilderOrderingToCriteriaOrdering($orderings);
 
-        foreach ($orderings as $property => $order) {
-            /** @var mixed */
-            $value = $boundaryValues[$property] ?? null;
+        // calculate keyset expression
 
-            if ($value === null) {
-                continue;
-            }
+        $keysetExpression = KeysetExpressionCalculator::calculate($orderings, $boundaryValues);
 
-            $properties[] = [
-                'property' => $property,
-                'value' => $value,
-                'order' => $order,
-            ];
-        }
+        if ($keysetExpression !== null) {
+            $visitor = new KeysetQueryBuilderVisitor();
+            $queryBuilder->andWhere($visitor->dispatch($keysetExpression));
 
-        // build where expression
-
-        $i = 0;
-        $expressions = [];
-        $z = 1;
-
-        foreach ($properties as $property) {
-            if ($i === 0) {
-                if (\count($properties) === 1) {
-                    if ($property['order'] === 'ASC') {
-                        $expressions[] = $queryBuilder->expr()->gt(
-                            $property['property'],
-                            ':rekapager_where_' . $z
-                        );
-                    } else {
-                        $expressions[] = $queryBuilder->expr()->lt(
-                            $property['property'],
-                            ':rekapager_where_' . $z
-                        );
-                    }
-
-                    $queryBuilder->setParameter(
-                        'rekapager_where_' . $z,
-                        $property['value'],
-                        // @phpstan-ignore-next-line
-                        $this->getType($property['property'], $property['value'])
-                    );
-
-                    $i++;
-                    continue;
-                }
-
-
-                if ($property['order'] === 'ASC') {
-                    $expressions[] = $queryBuilder->expr()->gte(
-                        $property['property'],
-                        ':rekapager_where_' . $z
-                    );
-                } else {
-                    $expressions[] = $queryBuilder->expr()->lte(
-                        $property['property'],
-                        ':rekapager_where_' . $z
-                        // $property['value']
-                    );
-                }
-
+            foreach ($visitor->getParameters() as $template => $parameter) {
                 $queryBuilder->setParameter(
-                    'rekapager_where_' . $z,
-                    $property['value'],
-                    // @phpstan-ignore-next-line
-                    $this->getType($property['property'], $property['value'])
+                    $template,
+                    $parameter->getValue(),
+                    $parameter->getType()
                 );
-
-                $i++;
-                continue;
             }
-
-            $subExpressions = [];
-
-            foreach (\array_slice($properties, 0, $i) as $equalProperty) {
-                $subExpressions[] = $queryBuilder->expr()->eq(
-                    $equalProperty['property'],
-                    ':rekapager_where_' . $z
-                );
-
-                $queryBuilder->setParameter(
-                    'rekapager_where_' . $z,
-                    $equalProperty['value'],
-                    // @phpstan-ignore-next-line
-                    $this->getType($equalProperty['property'], $equalProperty['value'])
-                );
-
-                $z++;
-            }
-
-            if ($property['order'] === 'ASC') {
-                $subExpressions[] = $queryBuilder->expr()->lte(
-                    $property['property'],
-                    ':rekapager_where_' . $z
-                );
-
-                $queryBuilder->setParameter(
-                    'rekapager_where_' . $z,
-                    $property['value'],
-                    // @phpstan-ignore-next-line
-                    $this->getType($property['property'], $property['value'])
-                );
-
-                $z++;
-            } else {
-                $subExpressions[] = $queryBuilder->expr()->gte(
-                    $property['property'],
-                    ':rekapager_where_' . $z
-                );
-
-                $queryBuilder->setParameter(
-                    'rekapager_where_' . $z,
-                    $property['value'],
-                    // @phpstan-ignore-next-line
-                    $this->getType($property['property'], $property['value'])
-                );
-
-                $z++;
-            }
-
-            $subExpression = $queryBuilder->expr()->not(
-                $queryBuilder->expr()->andX(...$subExpressions)
-            );
-
-            $expressions[] = $subExpression;
-
-            $i++;
-        }
-
-        if ($expressions !== []) {
-            $queryBuilder->andWhere($queryBuilder->expr()->andX(...$expressions));
         }
 
         // adds the boundary values to the select statement
@@ -514,5 +415,16 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         return $result;
     }
 
-
+    /**
+     * @param array<string, 'ASC'|'DESC'> $queryBuilderOrdering
+     * @return array<string,Order>
+     */
+    private function convertQueryBuilderOrderingToCriteriaOrdering(
+        array $queryBuilderOrdering
+    ): array {
+        return array_map(
+            static fn (string $direction): Order => $direction === 'ASC' ? Order::Ascending : Order::Descending,
+            $queryBuilderOrdering
+        );
+    }
 }

@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
+use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCollectionItemException;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCriteriaException;
 use Rekalogika\Rekapager\Doctrine\Collections\Internal\SelectableKeysetItem;
@@ -191,96 +192,10 @@ final readonly class SelectableAdapter implements
 
         // construct the metadata for the next step
 
-        /** @var array<int,array{property:string,value:string,order:Order}> */
-        $properties = [];
+        $expression = KeysetExpressionCalculator::calculate($orderings, $boundaryValues);
 
-        foreach ($orderings as $property => $order) {
-            /** @var mixed */
-            $value = $boundaryValues[$property] ?? null;
-
-            if ($value === null) {
-                continue;
-            }
-
-            $properties[] = [
-                'property' => $property,
-                'value' => $value,
-                'order' => $order,
-            ];
-        }
-
-        // build where expression
-
-        $i = 0;
-        $expressions = [];
-
-        foreach ($properties as $property) {
-            if ($i === 0) {
-                if (\count($properties) === 1) {
-                    if ($property['order'] === Order::Ascending) {
-                        $expressions[] = Criteria::expr()->gt(
-                            $property['property'],
-                            $property['value']
-                        );
-                    } else {
-                        $expressions[] = Criteria::expr()->lt(
-                            $property['property'],
-                            $property['value']
-                        );
-                    }
-
-                    $i++;
-                    continue;
-                }
-
-                if ($property['order'] === Order::Ascending) {
-                    $expressions[] = Criteria::expr()->gte(
-                        $property['property'],
-                        $property['value']
-                    );
-                } else {
-                    $expressions[] = Criteria::expr()->lte(
-                        $property['property'],
-                        $property['value']
-                    );
-                }
-
-                $i++;
-                continue;
-            }
-
-            $subExpressions = [];
-
-            foreach (\array_slice($properties, 0, $i) as $equalProperty) {
-                $subExpressions[] = Criteria::expr()->eq(
-                    $equalProperty['property'],
-                    $equalProperty['value']
-                );
-            }
-
-            if ($property['order'] === Order::Ascending) {
-                $subExpressions[] = Criteria::expr()->lte(
-                    $property['property'],
-                    $property['value']
-                );
-            } else {
-                $subExpressions[] = Criteria::expr()->gte(
-                    $property['property'],
-                    $property['value']
-                );
-            }
-
-            $subExpression = Criteria::expr()->not(
-                Criteria::expr()->andX(...$subExpressions)
-            );
-
-            $expressions[] = $subExpression;
-
-            $i++;
-        }
-
-        if ($expressions !== []) {
-            $criteria->andWhere(Criteria::expr()->andX(...$expressions));
+        if ($expression !== null) {
+            $criteria->andWhere($expression);
         }
 
         return $criteria;
