@@ -131,7 +131,7 @@ pagination, this library can help to prevent this problem.
 
 ## Supported Underlying Data Types
 
-* Doctrine ORM `QueryBuilder`
+* Doctrine ORM `QueryBuilder` and `NativeQuery`
 * Doctrine Collections `Selectable` and `Collection`
 * Pagerfanta adapters
 
