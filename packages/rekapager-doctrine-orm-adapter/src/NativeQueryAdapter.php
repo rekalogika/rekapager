@@ -35,6 +35,7 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
 {
     private readonly string $select;
     private readonly ResultSetMapping $resultSetMapping;
+    private readonly string $countSql;
 
     /**
      * @param non-empty-array<string,Order> $orderBy
@@ -44,8 +45,8 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
         private readonly EntityManagerInterface $entityManager,
         ResultSetMapping $resultSetMapping,
         private readonly string $sql,
-        private readonly string $countSql,
         private readonly array $orderBy,
+        ?string $countSql = null,
         private readonly ?string $countAllSql = null,
         private readonly array $parameters = [],
         private readonly string|null $indexBy = null,
@@ -67,6 +68,12 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
 
         $this->select = implode(', ', $selectFields);
         $this->resultSetMapping = $resultSetMapping;
+
+        if ($countSql === null) {
+            $this->countSql = "SELECT COUNT(*) AS count FROM ({$sql})";
+        } else {
+            $this->countSql = $countSql;
+        }
     }
 
     /**

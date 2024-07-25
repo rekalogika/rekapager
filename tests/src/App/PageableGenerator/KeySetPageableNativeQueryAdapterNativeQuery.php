@@ -72,16 +72,16 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
             LIMIT {{LIMIT}} OFFSET {{OFFSET}}
         ";
 
-        $countSql = "
-            SELECT COUNT(*) AS count
-            FROM (
-                SELECT *
-                FROM post p
-                WHERE p.set_name = :setName {{WHERE}}
-                ORDER BY {{ORDER}}
-                LIMIT {{LIMIT}} OFFSET {{OFFSET}}
-            )
-        ";
+        // $countSql = "
+        //     SELECT COUNT(*) AS count
+        //     FROM (
+        //         SELECT *
+        //         FROM post p
+        //         WHERE p.set_name = :setName {{WHERE}}
+        //         ORDER BY {{ORDER}}
+        //         LIMIT {{LIMIT}} OFFSET {{OFFSET}}
+        //     )
+        // ";
 
         $countAllSql = "
             SELECT COUNT(*) AS count
@@ -93,8 +93,8 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
             entityManager: $this->entityManager,
             resultSetMapping: $resultSetMapping,
             sql: $sql,
-            countSql: $countSql, // optional
-            countAllSql: $countAllSql, // optional
+            // countSql: $countSql, // optional
+            countAllSql: $countAllSql, // optional, if null, total is not available
             orderBy: $orderBy,
             parameters: [
                 new Parameter('setName', $setName),
