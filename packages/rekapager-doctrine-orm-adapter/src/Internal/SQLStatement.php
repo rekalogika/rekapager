@@ -21,7 +21,6 @@ use Rekalogika\Rekapager\Doctrine\ORM\Parameter;
 final readonly class SQLStatement
 {
     /**
-     * @param string $sql
      * @param list<Parameter> $parameters
      */
     public function __construct(

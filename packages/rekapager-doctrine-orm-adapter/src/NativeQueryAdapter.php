@@ -33,25 +33,27 @@ use Rekalogika\Rekapager\Keyset\KeysetPaginationAdapterInterface;
  * @template T
  * @implements KeysetPaginationAdapterInterface<TKey,T>
  */
-final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
+final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterface
 {
-    private readonly string $select;
-    private readonly ResultSetMapping $resultSetMapping;
-    private readonly string $countSql;
+    private string $select;
+
+    private ResultSetMapping $resultSetMapping;
+
+    private string $countSql;
 
     /**
      * @param non-empty-array<string,Order> $orderBy
      * @param list<Parameter> $parameters
      */
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private EntityManagerInterface $entityManager,
         ResultSetMapping $resultSetMapping,
-        private readonly string $sql,
-        private readonly array $orderBy,
+        private string $sql,
+        private array $orderBy,
         ?string $countSql = null,
-        private readonly ?string $countAllSql = null,
-        private readonly array $parameters = [],
-        private readonly string|null $indexBy = null,
+        private ?string $countAllSql = null,
+        private array $parameters = [],
+        private string|null $indexBy = null,
     ) {
         $resultSetMapping = clone $resultSetMapping;
 
@@ -72,7 +74,7 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
         $this->resultSetMapping = $resultSetMapping;
 
         if ($countSql === null) {
-            $this->countSql = "SELECT COUNT(*) AS count FROM ({$sql})";
+            $this->countSql = sprintf('SELECT COUNT(*) AS count FROM (%s)', $sql);
         } else {
             $this->countSql = $countSql;
         }
@@ -111,7 +113,7 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
         if ($boundaryType === BoundaryType::Upper) {
             $criteria->orderBy($this->getReversedSortOrder());
         } else {
-            $criteria->orderBy($this->getSortOrder());
+            $criteria->orderBy($this->orderBy);
         }
 
         // construct the metadata for the next step
@@ -126,14 +128,6 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
         }
 
         return $criteria;
-    }
-
-    /**
-     * @return array<string,Order>
-     */
-    private function getSortOrder(): array
-    {
-        return $this->orderBy;
     }
 
     /**
@@ -284,6 +278,7 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
         return $results;
     }
 
+    #[\Override]
     public function countKeysetItems(
         int $offset,
         int $limit,

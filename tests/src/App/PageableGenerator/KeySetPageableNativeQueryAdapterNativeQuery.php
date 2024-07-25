@@ -31,7 +31,6 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly PostRepository $postRepository,
     ) {
     }
 
@@ -93,7 +92,7 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
             entityManager: $this->entityManager,
             resultSetMapping: $resultSetMapping,
             sql: $sql,
-            // countSql: $countSql, // optional
+            // countSql: $countSql, // optional, will encase $sql in a subquery
             countAllSql: $countAllSql, // optional, if null, total is not available
             orderBy: $orderBy,
             parameters: [
@@ -116,6 +115,6 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
     #[\Override]
     public function count(): int
     {
-        return $this->postRepository->count([]);
+        return 0;
     }
 }
