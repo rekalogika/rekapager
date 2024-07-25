@@ -1,6 +1,7 @@
 # rekalogika/rekapager-doctrine-orm-adapter
 
-Doctrine ORM adapter for Rekapager pagination library.
+Doctrine ORM adapter for Rekapager pagination library. Supports Doctrine
+`QueryBuilder` and `NativeQuery`.
 
 Rekapager is a pagination library for PHP, supporting both offset-based and
 keyset-based pagination.

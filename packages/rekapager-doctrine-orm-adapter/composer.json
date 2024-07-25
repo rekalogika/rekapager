@@ -28,6 +28,7 @@
     },
     "require": {
         "php": "^8.2",
+        "doctrine/dbal": "^3.8",
         "doctrine/orm": "^2.14 || ^3.0",
         "doctrine/collections": "^2.2",
         "rekalogika/rekapager-adapter-common": "^0.15",

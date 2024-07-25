@@ -23,6 +23,7 @@ use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
+use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
@@ -221,7 +222,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         $result = $paginator->count();
 
         if ($result < 0) {
-            throw new \RuntimeException('Counting keyset items failed');
+            throw new UnexpectedValueException('Count must be greater than or equal to 0.');
         }
 
         return $result;
@@ -400,7 +401,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     public function countOffsetItems(int $offset = 0, ?int $limit = null): int
     {
         if ($limit === null) {
-            throw new \LogicException('Limit must be set when counting offset items');
+            throw new LogicException('Limit must be set when counting offset items');
         }
 
         $queryBuilder = $this->getQueryBuilder($offset, $limit, null, BoundaryType::Lower);
@@ -409,7 +410,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         $result = $paginator->count();
 
         if ($result < 0) {
-            throw new \RuntimeException('Counting keyset items failed');
+            throw new UnexpectedValueException('Count must be greater than or equal to 0.');
         }
 
         return $result;

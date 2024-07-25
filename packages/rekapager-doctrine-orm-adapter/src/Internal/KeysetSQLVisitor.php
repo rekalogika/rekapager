@@ -17,17 +17,13 @@ use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
-use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\Query\Expr\Andx;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 
 /**
  * @internal
  */
-final class KeysetQueryBuilderVisitor extends ExpressionVisitor
+final class KeysetSQLVisitor extends ExpressionVisitor
 {
-    private readonly Expr $expr;
-
     private int $counter = 1;
 
     /**
@@ -35,23 +31,18 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
      */
     private array $parameters = [];
 
-    public function __construct()
-    {
-        $this->expr = new Expr();
-    }
-
     #[\Override]
     public function walkComparison(Comparison $comparison)
     {
-        /** @var mixed */
+        /** @var string */
         $value = $this->dispatch($comparison->getValue());
 
         return match ($comparison->getOperator()) {
-            Comparison::EQ => $this->expr->eq($comparison->getField(), $value),
-            Comparison::LT => $this->expr->lt($comparison->getField(), $value),
-            Comparison::LTE => $this->expr->lte($comparison->getField(), $value),
-            Comparison::GT => $this->expr->gt($comparison->getField(), $value),
-            Comparison::GTE => $this->expr->gte($comparison->getField(), $value),
+            Comparison::EQ => sprintf('%s = %s', $comparison->getField(), $value),
+            Comparison::LT => sprintf('%s < %s', $comparison->getField(), $value),
+            Comparison::LTE => sprintf('%s <= %s', $comparison->getField(), $value),
+            Comparison::GT => sprintf('%s > %s', $comparison->getField(), $value),
+            Comparison::GTE => sprintf('%s >= %s', $comparison->getField(), $value),
             default => throw new LogicException(sprintf('Unsupported comparison operator "%s", it should never occur in keyset pagination expression.', $comparison->getOperator())),
         };
     }
@@ -80,13 +71,15 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
         $expressionList = [];
 
         foreach ($expr->getExpressionList() as $child) {
-            /** @psalm-suppress MixedAssignment */
-            $expressionList[] = $this->dispatch($child);
+            /** @var string */
+            $expression = $this->dispatch($child);
+
+            $expressionList[] = $expression;
         }
 
         return match ($expr->getType()) {
-            CompositeExpression::TYPE_AND => new Andx($expressionList),
-            CompositeExpression::TYPE_NOT => $this->expr->not($expressionList[0]),
+            CompositeExpression::TYPE_AND => implode(' AND ', $expressionList),
+            CompositeExpression::TYPE_NOT => sprintf('NOT (%s)', $expressionList[0]),
             default => throw new LogicException(sprintf('Unsupported composite expression "%s", it should never occur in keyset pagination expression.', $expr->getType())),
         };
     }
