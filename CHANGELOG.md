@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.15.1
+
+* refactor: move keyset expression logic to a dedicated class
+
 # 0.15.0
 
 * refactor(`BatchCommand`): remove input & output arguments from `getPageable()`
