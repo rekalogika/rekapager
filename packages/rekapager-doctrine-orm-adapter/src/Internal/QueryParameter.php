@@ -19,11 +19,11 @@ use Doctrine\DBAL\ParameterType;
 /**
  * @internal
  */
-final class QueryParameter
+final readonly class QueryParameter
 {
     public function __construct(
-        private readonly mixed $value,
-        private readonly ParameterType|ArrayParameterType|string|int|null $type = null
+        private mixed $value,
+        private ParameterType|ArrayParameterType|string|int|null $type = null
     ) {
     }
 

@@ -194,7 +194,7 @@ final readonly class SelectableAdapter implements
 
         $expression = KeysetExpressionCalculator::calculate($orderings, $boundaryValues);
 
-        if ($expression) {
+        if ($expression !== null) {
             $criteria->andWhere($expression);
         }
 

@@ -27,6 +27,7 @@ use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 final class KeysetQueryBuilderVisitor extends ExpressionVisitor
 {
     private readonly Expr $expr;
+
     private int $counter = 1;
 
     /**
@@ -39,8 +40,10 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
         $this->expr = new Expr();
     }
 
+    #[\Override]
     public function walkComparison(Comparison $comparison)
     {
+        /** @var mixed */
         $value = $this->dispatch($comparison->getValue());
 
         return match ($comparison->getOperator()) {
@@ -53,8 +56,10 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
         };
     }
 
+    #[\Override]
     public function walkValue(Value $value): mixed
     {
+        /** @var mixed */
         $value = $value->getValue();
 
         if (!$value instanceof QueryParameter) {
@@ -69,11 +74,13 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
         return ':' . $template;
     }
 
+    #[\Override]
     public function walkCompositeExpression(CompositeExpression $expr)
     {
         $expressionList = [];
 
         foreach ($expr->getExpressionList() as $child) {
+            /** @psalm-suppress MixedAssignment */
             $expressionList[] = $this->dispatch($child);
         }
 

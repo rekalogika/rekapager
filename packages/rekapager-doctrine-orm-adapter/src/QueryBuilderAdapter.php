@@ -95,6 +95,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
         $newBoundaryValues = [];
 
+        /** @var mixed $value */
         foreach ($boundaryValues ?? [] as $property => $value) {
             $type = $this->getType($property, $value);
             $newBoundaryValues[$property] = new QueryParameter($value, $type);
@@ -422,7 +423,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         array $queryBuilderOrdering
     ): array {
         return array_map(
-            static fn (string $direction) => $direction === 'ASC' ? Order::Ascending : Order::Descending,
+            static fn (string $direction): Order => $direction === 'ASC' ? Order::Ascending : Order::Descending,
             $queryBuilderOrdering
         );
     }
