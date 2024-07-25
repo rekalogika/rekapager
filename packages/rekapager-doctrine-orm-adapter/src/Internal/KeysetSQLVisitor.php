@@ -43,7 +43,7 @@ final class KeysetSQLVisitor extends ExpressionVisitor
             Comparison::LTE => sprintf('%s <= %s', $comparison->getField(), $value),
             Comparison::GT => sprintf('%s > %s', $comparison->getField(), $value),
             Comparison::GTE => sprintf('%s >= %s', $comparison->getField(), $value),
-            default => throw new LogicException('Unsupported comparison operator ' . $comparison->getOperator()),
+            default => throw new LogicException(sprintf('Unsupported comparison operator "%s", it should never occur in keyset pagination expression.', $comparison->getOperator())),
         };
     }
 
@@ -80,7 +80,7 @@ final class KeysetSQLVisitor extends ExpressionVisitor
         return match ($expr->getType()) {
             CompositeExpression::TYPE_AND => implode(' AND ', $expressionList),
             CompositeExpression::TYPE_NOT => sprintf('NOT (%s)', $expressionList[0]),
-            default => throw new LogicException('Unsupported composite expression ' . $expr->getType()),
+            default => throw new LogicException(sprintf('Unsupported composite expression "%s", it should never occur in keyset pagination expression.', $expr->getType())),
         };
     }
 

@@ -17,8 +17,10 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
+use Rekalogika\Rekapager\Doctrine\ORM\Exception\NoCountResultFoundException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\KeysetSQLVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryParameter;
@@ -312,11 +314,18 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
             );
         }
 
-        /** @var array{count:int} */
+        /** @var array<array-key,mixed> */
         $result = $query->getSingleResult();
 
-        $count = $result['count'];
-        \assert($count >= 0);
+        $count = $result['count'] ?? null;
+
+        if (!\is_int($count)) {
+            throw new NoCountResultFoundException();
+        }
+
+        if ($count < 0) {
+            throw new UnexpectedValueException(sprintf('Count result is negative: %d', $count));
+        }
 
         return $count;
     }
@@ -347,11 +356,18 @@ final class NativeQueryAdapter implements KeysetPaginationAdapterInterface
             );
         }
 
-        /** @var array{count:int} */
+        /** @var array<array-key,mixed> */
         $result = $query->getSingleResult();
 
-        $count = $result['count'];
-        \assert($count >= 0);
+        $count = $result['count'] ?? null;
+
+        if (!\is_int($count)) {
+            throw new NoCountResultFoundException();
+        }
+
+        if ($count < 0) {
+            throw new UnexpectedValueException(sprintf('Count result is negative: %d', $count));
+        }
 
         return $count;
     }
