@@ -20,6 +20,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
+use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingPlaceholderInSQLException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\NoCountResultFoundException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\KeysetSQLVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
@@ -55,8 +56,11 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         private array $parameters = [],
         private string|null $indexBy = null,
     ) {
+        // clone the ResultSetMapping to avoid modifying the original
         $resultSetMapping = clone $resultSetMapping;
+        $this->resultSetMapping = $resultSetMapping;
 
+        // generate the SELECT fields
         $boundaryFieldNames = array_keys($orderBy);
         $selectFields = [];
 
@@ -71,12 +75,31 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         }
 
         $this->select = implode(', ', $selectFields);
-        $this->resultSetMapping = $resultSetMapping;
 
-        if ($countSql === null) {
-            $this->countSql = sprintf('SELECT COUNT(*) AS count FROM (%s)', $sql);
-        } else {
-            $this->countSql = $countSql;
+        // generate the COUNT SQL
+        $this->countSql = $countSql ?? sprintf('SELECT COUNT(*) AS count FROM (%s)', $sql);
+
+        // verify SQL
+        $this->verifySQL('sql', $sql, ['SELECT', 'WHERE', 'ORDER', 'LIMIT', 'OFFSET']);
+        $this->verifySQL('countSql', $this->countSql, ['WHERE', 'ORDER', 'LIMIT', 'OFFSET']);
+    }
+
+    /**
+     * @param list<string> $templates
+     */
+    private function verifySQL(
+        string $sqlVariable,
+        string $sql,
+        array $templates
+    ): void {
+        foreach ($templates as $template) {
+            if (str_contains($sql, '{{' .  $template . '}}') === false) {
+                throw new MissingPlaceholderInSQLException(
+                    sqlVariable: $sqlVariable,
+                    template: $template,
+                    templates: $templates
+                );
+            }
         }
     }
 
