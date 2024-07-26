@@ -70,10 +70,10 @@ final class KeysetExpressionCalculator
 
             $subExpressions = [];
 
-            foreach (\array_slice($fields, 0, $i) as $equalProperty) {
+            foreach (\array_slice($fields, 0, $i) as $equalField) {
                 $subExpressions[] = Criteria::expr()->eq(
-                    $equalProperty->getName(),
-                    $equalProperty->getValue()
+                    $equalField->getName(),
+                    $equalField->getValue()
                 );
             }
 
