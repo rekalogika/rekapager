@@ -22,9 +22,9 @@ use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
+use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingPlaceholderInSQLException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\NoCountResultFoundException;
-use Rekalogika\Rekapager\Doctrine\ORM\Internal\KeysetSQLVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryParameter;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\SQLStatement;
@@ -237,7 +237,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $orderBy = $this->generateOrderBy($criteria);
 
         $expression = $criteria->getWhereExpression();
-        $visitor = new KeysetSQLVisitor();
+        $visitor = new KeysetExpressionSQLVisitor();
 
         if ($expression !== null) {
             $result = $visitor->dispatch($expression);
@@ -256,6 +256,10 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $parameters = $this->parameters;
 
         foreach ($visitor->getParameters() as $template => $parameter) {
+            if (!$parameter instanceof QueryParameter) {
+                throw new UnexpectedValueException('Expected QueryParameter');
+            }
+
             $parameters[] = new Parameter(
                 key: $template,
                 value: $parameter->getValue(),
