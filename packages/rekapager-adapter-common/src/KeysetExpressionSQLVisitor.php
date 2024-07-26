@@ -67,19 +67,21 @@ final class KeysetExpressionSQLVisitor extends ExpressionVisitor
     private function getTemplateForValue(mixed $value): string
     {
         if (\is_object($value)) {
-            $valueId = 'o' . spl_object_id($value);
+            $valueHash = 'o:' . spl_object_id($value);
+        } elseif (\is_string($value)) {
+            $valueHash = 's:' . hash('xxh128', $value);
         } else {
-            $valueId = hash('xxh128', serialize($value));
+            $valueHash = 'm:' . hash('xxh128', serialize($value));
         }
 
-        if (!isset($this->valueHashToTemplate[$valueId])) {
+        if (!isset($this->valueHashToTemplate[$valueHash])) {
             $template = 'rekapager_where_' . $this->counter;
-            $this->valueHashToTemplate[$valueId] = $template;
+            $this->valueHashToTemplate[$valueHash] = $template;
 
             $this->counter++;
         }
 
-        return $this->valueHashToTemplate[$valueId];
+        return $this->valueHashToTemplate[$valueHash];
     }
 
     #[\Override]
