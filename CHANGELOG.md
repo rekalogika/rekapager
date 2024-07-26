@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.15.2
+
+* refactor: simplify `KeysetExpressionCalculator`
+
 # 0.15.1
 
 * refactor: move keyset expression logic to a dedicated class
