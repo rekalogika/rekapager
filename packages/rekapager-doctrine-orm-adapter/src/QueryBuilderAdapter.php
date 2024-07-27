@@ -129,32 +129,35 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             $orderings = $this->getSortOrder();
         }
 
-        // adds where expression to the querybuilder
-
-        $fields = $this->createCalculatorFields($boundaryValues, $orderings);
-
-        if ($fields !== []) {
-            // calculate keyset expression
-            $keysetExpression = KeysetExpressionCalculator::calculate($fields);
-
-            $visitor = new KeysetQueryBuilderVisitor();
-            $queryBuilder->andWhere($visitor->dispatch($keysetExpression));
-
-            foreach ($visitor->getParameters() as $template => $parameter) {
-                $queryBuilder->setParameter(
-                    $template,
-                    $parameter->getValue(),
-                    $parameter->getType()
-                );
-            }
-        }
-
         // adds the boundary values to the select statement
 
         $i = 1;
         foreach ($this->getBoundaryFieldNames() as $field) {
             $queryBuilder->addSelect(sprintf('%s AS rekapager_boundary_%s', $field, $i));
             $i++;
+        }
+
+        // returns early if there are no boundary values
+
+        $fields = $this->createCalculatorFields($boundaryValues, $orderings);
+
+        if ($fields === []) {
+            return $queryBuilder;
+        }
+
+        // adds where expression to the querybuilder
+
+        $keysetExpression = KeysetExpressionCalculator::calculate($fields);
+
+        $visitor = new KeysetQueryBuilderVisitor();
+        $queryBuilder->andWhere($visitor->dispatch($keysetExpression));
+
+        foreach ($visitor->getParameters() as $template => $parameter) {
+            $queryBuilder->setParameter(
+                $template,
+                $parameter->getValue(),
+                $parameter->getType()
+            );
         }
 
         return $queryBuilder;
