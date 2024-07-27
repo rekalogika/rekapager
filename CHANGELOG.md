@@ -1,6 +1,6 @@
 # Changelog
 
-# 0.15.2
+# 0.16.0
 
 * refactor: simplify `KeysetExpressionCalculator`
 * chore: cleanup
