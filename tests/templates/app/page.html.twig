@@ -1,0 +1,67 @@
+{% extends "app/base.html.twig" %}
+
+{% block title %}Pagination Demo: {{ title }}{% endblock title %}
+
+{% block content %}
+    <h1 class="h2 mb-4">Pagination Demo: {{ title }}</h1>
+
+    <div class="container p-4 pager-container">
+        <div class="clearfix">
+            <div class="float-start mx-0 my-0 px-3 pt-3">
+                {{ rekapager(pager, template=template, locale=locale, proximity=proximity) }}
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h3 mt-4">Pager Parameters</h2>
+
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    {{ form_end(form) }}
+
+    <h2 class="h3 mt-4">SQL Queries</h2>
+
+    {% for query in sql.logs %}
+        {% set runnable_sql = (query.sql ~ ';')|doctrine_replace_query_parameters(query.params) %}
+        <pre><code class="language-sql">{{- runnable_sql -}}</code></pre>
+    {% endfor %}
+
+    <h2 class="h3 mt-4">Current Page Identifier</h2>
+
+    {{ page_identifier|raw }}
+
+    <h2 class="h3 mt-4">Source Code</h2>
+
+    <pre><code class="language-php">{{- source_code -}}</code></pre>
+
+    <h2 class="h3 mt-4">Results</h2>
+
+    <div class="alert alert-info d-none d-md-block">
+        To test infinite scrolling, make your viewport narrower, and reload the page.
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Result Key</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Content</th>
+            </tr>
+        </thead>
+
+        <tbody {{ rekapager_infinite_scrolling_content() }}>
+            {% for key,post in pager.currentPage %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.date|date("Y-m-d") }}</td>
+                    <td>{{ post.content }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
