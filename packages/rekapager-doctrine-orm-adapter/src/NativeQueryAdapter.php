@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\ORM;
 
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -106,22 +106,13 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
     }
 
     /**
-     * We use Criteria internally only to represent our query parameters
-     *
-     * @param int<0,max> $offset
-     * @param int<1,max> $limit
      * @param null|array<string,mixed> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
+     * @param non-empty-array<string,Order> $orderings
      */
-    private function getCriteria(
-        int $offset,
-        int $limit,
+    private function generateWhereExpression(
         null|array $boundaryValues,
-        BoundaryType $boundaryType,
-    ): Criteria {
-        $criteria = Criteria::create()
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
-
+        array $orderings,
+    ): ?Expression {
         // wrap boundary values using QueryParameter
 
         $newBoundaryValues = [];
@@ -133,30 +124,15 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
         $boundaryValues = $newBoundaryValues;
 
-        // if upper bound, reverse the sort order
-
-        if ($boundaryType === BoundaryType::Upper) {
-            $orderings = $this->getReversedSortOrder();
-        } else {
-            $orderings = $this->orderBy;
-        }
-
-        if ($orderings === []) {
-            throw new LogicException('No ordering is set.');
-        }
-
-        $criteria->orderBy($orderings);
-
         // construct the metadata for the next step
 
         $fields = $this->createCalculatorFields($boundaryValues, $orderings);
 
-        if ($fields !== []) {
-            $expression = KeysetExpressionCalculator::calculate($fields);
-            $criteria->where($expression);
+        if ($fields === []) {
+            return null;
         }
 
-        return $criteria;
+        return KeysetExpressionCalculator::calculate($fields);
     }
 
     /**
@@ -192,23 +168,26 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
     /**
      * @return array<string,Order>
      */
-    private function getReversedSortOrder(): array
+    private function getSortOrder(bool $reverse): array
     {
-        $orderBy = $this->orderBy;
-        $reversed = [];
-
-        foreach ($orderBy as $property => $order) {
-            $reversed[$property] = $order === Order::Ascending ? Order::Descending : Order::Ascending;
+        if (!$reverse) {
+            return $this->orderBy;
         }
 
-        return $reversed;
+        return array_map(
+            static fn (Order $order): Order => $order === Order::Ascending ? Order::Descending : Order::Ascending,
+            $this->orderBy
+        );
     }
 
-    private function generateOrderBy(Criteria $criteria): string
+    /**
+     * @param non-empty-array<string,Order> $orderings
+     */
+    private function generateOrderBy(array $orderings): string
     {
         $orderBy = [];
 
-        foreach ($criteria->orderings() as $field => $order) {
+        foreach ($orderings as $field => $order) {
             $orderBy[] = sprintf('%s %s', $field, $order === Order::Ascending ? 'ASC' : 'DESC');
         }
 
@@ -227,25 +206,30 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         BoundaryType $boundaryType,
         bool $count = false,
     ): SQLStatement {
-        $criteria = $this->getCriteria(
-            offset: $offset,
-            limit: $limit,
+        $orderings = $this->getSortOrder($boundaryType === BoundaryType::Upper);
+
+        if ($orderings === []) {
+            throw new LogicException('No ordering is set.');
+        }
+
+        $expression = $this->generateWhereExpression(
             boundaryValues: $boundaryValues,
-            boundaryType: $boundaryType
+            orderings: $orderings
         );
 
-        $orderBy = $this->generateOrderBy($criteria);
-
-        $expression = $criteria->getWhereExpression();
-        $visitor = new KeysetExpressionSQLVisitor();
-
         if ($expression !== null) {
+            $visitor = new KeysetExpressionSQLVisitor();
             $result = $visitor->dispatch($expression);
             \assert(\is_string($result));
             $where = 'AND ' . $result;
+
+            $parameters = $visitor->getParameters();
         } else {
             $where = '';
+            $parameters = [];
         }
+
+        $orderBy = $this->generateOrderBy($orderings);
 
         $sql = str_replace(
             ['{{SELECT}}', '{{WHERE}}', '{{ORDER}}', '{{LIMIT}}', '{{OFFSET}}'],
@@ -253,21 +237,22 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             $count ? $this->countSql : $this->sql
         );
 
-        $parameters = $this->parameters;
+        $sqlParameters = [];
 
-        foreach ($visitor->getParameters() as $template => $parameter) {
-            if (!$parameter instanceof QueryParameter) {
-                throw new UnexpectedValueException('Expected QueryParameter');
+        /** @var mixed $parameter */
+        foreach ([...$parameters, ...$this->parameters] as $template => $parameter) {
+            if ($parameter instanceof QueryParameter) {
+                $sqlParameters[] = new Parameter(
+                    key: $template,
+                    value: $parameter->getValue(),
+                    type: $parameter->getType()
+                );
+            } elseif ($parameter instanceof Parameter) {
+                $sqlParameters[] = $parameter;
             }
-
-            $parameters[] = new Parameter(
-                key: $template,
-                value: $parameter->getValue(),
-                type: $parameter->getType()
-            );
         }
 
-        return new SQLStatement($sql, $parameters);
+        return new SQLStatement($sql, $sqlParameters);
     }
 
     /** @psalm-suppress InvalidReturnType */

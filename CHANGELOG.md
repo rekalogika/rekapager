@@ -3,6 +3,7 @@
 # 0.15.2
 
 * refactor: simplify `KeysetExpressionCalculator`
+* chore: cleanup
 
 # 0.15.1
 
