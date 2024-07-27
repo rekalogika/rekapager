@@ -22,6 +22,7 @@ use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
+use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingPlaceholderInSQLException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\NoCountResultFoundException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
@@ -56,7 +57,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         private ?string $countAllSql = null,
         private array $parameters = [],
         private string|null $indexBy = null,
-        private bool $useRowValues = false,
+        private SeekMethod $seekMethod = SeekMethod::Approximated,
     ) {
         // clone the ResultSetMapping to avoid modifying the original
         $resultSetMapping = clone $resultSetMapping;
@@ -120,11 +121,30 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             return ['', []];
         }
 
-        if ($this->useRowValues) {
-            return $this->generateRowValuesWhereExpression($fields);
+        return match ($this->seekMethod) {
+            SeekMethod::Approximated => $this->generateApproximatedWhereExpression($fields),
+            SeekMethod::RowValues => $this->generateRowValuesWhereExpression($fields),
+            SeekMethod::Auto => $this->generateAutoWhereExpression($fields),
+        };
+    }
+
+    /**
+     * @param non-empty-list<Field> $fields
+     * @return array{string,array<string,QueryParameter>}
+     */
+    private function generateAutoWhereExpression(array $fields): array
+    {
+        $order = null;
+
+        foreach ($fields as $field) {
+            if ($order === null) {
+                $order = $field->getOrder();
+            } elseif ($order !== $field->getOrder()) {
+                return $this->generateApproximatedWhereExpression($fields);
+            }
         }
 
-        return $this->generateApproximatedWhereExpression($fields);
+        return $this->generateRowValuesWhereExpression($fields);
     }
 
     /**
