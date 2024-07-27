@@ -13,36 +13,59 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Bundle\PagerOptions;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Rekalogika\Rekapager\Tests\App\Doctrine\SqlLogger;
+use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Form\PagerParameters;
 use Rekalogika\Rekapager\Tests\App\Form\PagerParametersType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
 class DemoController extends AbstractController
 {
     /**
+     * @var array<array-key,PageableGeneratorInterface<array-key,mixed>>
+     */
+    private readonly array $pageableGenerators;
+
+    /**
      * @param iterable<PageableGeneratorInterface<array-key,mixed>> $pageableGenerators
      * @psalm-suppress DeprecatedClass
      */
     public function __construct(
-        #[TaggedIterator('rekalogika.rekapager.pageable_generator', defaultIndexMethod: 'getKey')]
-        private readonly iterable $pageableGenerators,
+        #[AutowireIterator('rekalogika.rekapager.pageable_generator', defaultIndexMethod: 'getKey')]
+        iterable $pageableGenerators
     ) {
+        /**
+         * @psalm-suppress InvalidArgument
+         * @psalm-suppress MixedPropertyTypeCoercion
+         */
+        $this->pageableGenerators = iterator_to_array($pageableGenerators);
+    }
+
+    #[Route('/', name: 'index')]
+    public function index(): Response
+    {
+        return $this->render('app/index.html.twig', [
+            'pageable_generators' => $this->pageableGenerators,
+        ]);
     }
 
     /**
      * @param PagerFactoryInterface<PagerOptions> $pagerFactory
      */
-    #[Route('/{key?}', name: 'rekapager')]
-    public function index(
+    #[Route('/page/{key?}', name: 'page')]
+    public function page(
         Request $request,
         SqlLogger $logger,
         PagerFactoryInterface $pagerFactory,
@@ -53,27 +76,7 @@ class DemoController extends AbstractController
         /** @var PagerParameters */
         $pagerParameters = $form->getData();
 
-
-        /** @psalm-suppress InvalidArgument */
-        $pageableGenerators = iterator_to_array($this->pageableGenerators);
-
-        /** @var array<string,PageableGeneratorInterface<array-key,mixed>> $pageableGenerators */
-
-        if ($key === null) {
-            foreach ($pageableGenerators as $pageableGenerator) {
-                $key = $pageableGenerator::getKey();
-                break;
-            }
-
-            \assert($key !== null);
-            $pageableGenerator = $pageableGenerators[$key];
-        } else {
-            $pageableGenerator = $pageableGenerators[$key] ?? null;
-        }
-
-        if ($pageableGenerator === null) {
-            throw $this->createNotFoundException();
-        }
+        $pageableGenerator = $this->pageableGenerators[$key] ?? throw $this->createNotFoundException();
 
         $pageable = $pageableGenerator->generatePageable(
             itemsPerPage: $pagerParameters->itemsPerPage,
@@ -93,16 +96,81 @@ class DemoController extends AbstractController
 
         $title = $pageableGenerator->getTitle();
 
-        return $this->render('app/index.html.twig', [
+        $pageIdentifier = $pager->getCurrentPage()->getPageIdentifier();
+        $cloner = new VarCloner();
+        $dumper = new HtmlDumper();
+
+        $dumper->setTheme('light');
+        $output = fopen('php://memory', 'r+b') ?: throw new \RuntimeException('Failed to open memory stream');
+        $dumper->dump($cloner->cloneVar($pageIdentifier), $output);
+        $output = stream_get_contents($output, -1, 0);
+
+        return $this->render('app/page.html.twig', [
             'title' => $title,
             'pager' => $pager,
             'sql' => $logger,
-            'pageable_generators' => $pageableGenerators,
+            'page_identifier' => $output,
+            'pageable_generators' => $this->pageableGenerators,
             'source_code' => $this->getSourceCode($pageableGenerator::class),
             'form' => $form->createView(),
             'template' => $pagerParameters->template,
             'locale' => $pagerParameters->locale,
             'proximity' => $pagerParameters->viewProximity,
+        ]);
+    }
+
+    #[Route('/batch/{key?}', name: 'batch')]
+    public function batch(
+        SqlLogger $logger,
+        EntityManagerInterface $entityManager,
+        ?string $key,
+    ): Response {
+        $pageableGenerator = $this->pageableGenerators[$key] ?? throw $this->createNotFoundException();
+
+        /** @var PageableInterface<array-key,Post> */
+        $pageable = $pageableGenerator->generatePageable(
+            itemsPerPage: 5,
+            count: false,
+            setName: 'medium',
+        );
+
+        // @highlight-start
+
+        $output = '<ul>';
+
+        foreach ($pageable->withItemsPerPage(5)->getPages() as $page) {
+            $output .= '<li>';
+            $output .= sprintf('Processing page %d', $page->getPageNumber() ?? 'null');
+
+            $output .= '<ul>';
+
+            foreach ($page as $item) {
+                $output .= sprintf(
+                    '<li>Processing item id %s, date %s, title %s</li>',
+                    $item->getId(),
+                    $item->getDate()?->format('Y-m-d') ?? 'null',
+                    $item->getTitle() ?? 'null'
+                );
+            }
+
+            $output .= '</ul>';
+            $output .= '</li>';
+
+            $entityManager->clear();
+        }
+
+        $output .= '</ul>';
+        // @highlight-end
+
+        $title = $pageableGenerator->getTitle();
+
+        return $this->render('app/batch.html.twig', [
+            'title' => $title,
+            'sql' => $logger,
+            'pageable_generators' => $this->pageableGenerators,
+            'source_code' => $this->getSourceCode($pageableGenerator::class) . "\n" .
+                $this->getSourceCode(self::class),
+            'output' => $output,
         ]);
     }
 

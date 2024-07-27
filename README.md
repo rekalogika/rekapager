@@ -32,12 +32,13 @@ your data.
 
 ### Queries
 
-This library supports queries with multiple sort columns.
+Multiple sort columns are supported. The library will automatically generate the
+WHERE query for you, including the complex cases involving more than two sort
+columns. The only requirement is that the query needs to have a deterministic
+sort order.
 
-The required query for performing keyset pagination is complex, especially if
-more than one column is used for sorting. This library handles that task
-automatically. The only requirement is that the query needs to have a
-deterministic sort order. 
+Some backends also have the option to use SQL row values syntax for a slightly
+better performance.
 
 ### Bidirectional Navigation and Page Skipping
 

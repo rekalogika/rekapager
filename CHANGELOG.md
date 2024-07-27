@@ -3,6 +3,7 @@
 # 0.16.1
 
 * fix: fix `QueryBuilderAdapter` error when WHERE statement is empty
+* chore: update demo
 
 # 0.16.0
 
