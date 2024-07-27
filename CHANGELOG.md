@@ -1,10 +1,11 @@
 # Changelog
 
-# 0.15.2
+# 0.16.0
 
 * refactor: simplify `KeysetExpressionCalculator`
 * chore: cleanup
 * feat: native query adapter now supports row values method
+* feat: query builder adapter now supports row values method
 
 # 0.15.1
 

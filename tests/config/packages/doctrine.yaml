@@ -17,3 +17,6 @@ doctrine:
                 dir: "%kernel.project_dir%/src/App/Entity"
                 prefix: 'Rekalogika\Rekapager\Tests\App\Entity'
                 alias: App
+        dql:
+            string_functions:
+                rekapager_row_values: Rekalogika\Rekapager\Doctrine\ORM\RowValuesFunction

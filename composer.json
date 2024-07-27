@@ -34,7 +34,8 @@
         "php": "^8.2",
         "api-platform/core": "^3.2",
         "doctrine/collections": "^2.2",
-        "doctrine/orm": "^2.14 || ^3.0",
+        "doctrine/dbal": "^3.8",
+        "doctrine/orm": "^2.19 || ^3.0",
         "pagerfanta/core": "^4.0",
         "pagerfanta/doctrine-collections-adapter": "^4.0",
         "psr/container": "^2.0",
@@ -91,8 +92,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/runtime": true,
-            "symfony/flex": false
+            "symfony/runtime": true
         }
     },
     "replace": {
