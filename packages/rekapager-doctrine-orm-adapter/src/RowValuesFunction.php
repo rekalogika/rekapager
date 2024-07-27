@@ -24,6 +24,7 @@ class RowValuesFunction extends FunctionNode
     /** @var list<Node|string> */
     public array $values = [];
 
+    #[\Override]
     public function getSql(SqlWalker $sqlWalker): string
     {
         $queryBuilder = [];
@@ -35,6 +36,7 @@ class RowValuesFunction extends FunctionNode
         return '(' . implode(', ', $queryBuilder) . ')';
     }
 
+    #[\Override]
     public function parse(Parser $parser): void
     {
         $parser->match(TokenType::T_IDENTIFIER);

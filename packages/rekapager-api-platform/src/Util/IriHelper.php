@@ -132,8 +132,9 @@ final class IriHelper
 
         /**
          * @psalm-suppress MixedArgumentTypeCoercion
+         * @psalm-suppress InvalidScalarArgument
          * @phpstan-ignore-next-line
          */
-        return array_combine(array_map('hex2bin', array_keys($params)), $params);
+        return array_combine(array_map(hex2bin(...), array_keys($params)), $params);
     }
 }
