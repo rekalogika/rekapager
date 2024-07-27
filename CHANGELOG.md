@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.16.1
+
+* fix: fix `QueryBuilderAdapter` error when WHERE statement is empty
+
 # 0.16.0
 
 * refactor: simplify `KeysetExpressionCalculator`
