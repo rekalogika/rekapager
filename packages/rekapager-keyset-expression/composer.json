@@ -1,0 +1,32 @@
+{
+    "name": "rekalogika/rekapager-keyset-expression",
+    "description": "Simplify the creation of the WHERE expression in keyset pagination",
+    "homepage": "https://rekalogika.dev/rekapager",
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination",
+        "doctrine",
+        "orm",
+        "querybuilder",
+        "query"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Rekapager\\KeysetExpression\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2"
+    }
+}

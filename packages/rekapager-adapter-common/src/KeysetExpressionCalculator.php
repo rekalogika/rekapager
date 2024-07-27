@@ -16,9 +16,6 @@ namespace Rekalogika\Rekapager\Adapter\Common;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Expression;
 
-/**
- * @internal
- */
 final class KeysetExpressionCalculator
 {
     private function __construct()

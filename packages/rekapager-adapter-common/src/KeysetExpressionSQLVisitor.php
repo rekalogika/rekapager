@@ -15,14 +15,12 @@ namespace Rekalogika\Rekapager\Adapter\Common;
 
 use Doctrine\Common\Collections\Expr\Comparison;
 use Doctrine\Common\Collections\Expr\CompositeExpression;
+use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Expr\ExpressionVisitor;
 use Doctrine\Common\Collections\Expr\Value;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 
-/**
- * @internal
- */
-final class KeysetExpressionSQLVisitor extends ExpressionVisitor
+final class KeysetExpressionSQLVisitor extends KeysetExpressionVisitor
 {
     private int $counter = 1;
 
