@@ -26,7 +26,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorInterface
+class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGeneratorInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
@@ -36,13 +36,13 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
     #[\Override]
     public static function getKey(): string
     {
-        return 'keysetpageable-nativequeryadapter-nativequery';
+        return 'keysetpageable-nativequeryadapter-nativequery-row-values';
     }
 
     #[\Override]
     public function getTitle(): string
     {
-        return 'KeysetPageable - NativeQueryAdapter (approximated) - NativeQuery ';
+        return 'KeysetPageable - NativeQueryAdapter (row values) - NativeQuery';
     }
 
     #[\Override]
@@ -76,7 +76,7 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
             sql: $sql,
             countAllSql: $countAllSql, // optional, if null, total will not be available
             orderBy: [
-                'p.date' => Order::Descending,
+                'p.date' => Order::Ascending,
                 'p.title' => Order::Ascending,
                 'p.id' => Order::Ascending,
             ],
@@ -84,6 +84,7 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
                 new Parameter('setName', $setName),
             ],
             indexBy: 'id',
+            useRowValues: true,
         );
 
         $pageable = new KeysetPageable(
