@@ -16,6 +16,8 @@ namespace Rekalogika\Rekapager\Doctrine\Collections;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
+use Rekalogika\Contracts\Rekapager\Exception\LogicException;
+use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCollectionItemException;
@@ -109,7 +111,6 @@ final readonly class SelectableAdapter implements
             }
 
             throw $e;
-
         }
     }
 
@@ -190,15 +191,50 @@ final readonly class SelectableAdapter implements
 
         $orderings = $criteria->orderings();
 
+        if ($orderings === []) {
+            throw new LogicException('No ordering is set.');
+        }
+
         // construct the metadata for the next step
 
-        $expression = KeysetExpressionCalculator::calculate($orderings, $boundaryValues);
+        $fields = $this->createCalculatorFields($boundaryValues ?? [], $orderings);
 
-        if ($expression !== null) {
+        if ($fields !== []) {
+            $expression = KeysetExpressionCalculator::calculate($fields);
             $criteria->andWhere($expression);
         }
 
         return $criteria;
+    }
+
+    /**
+     * @param array<string,mixed> $boundaryValues
+     * @param non-empty-array<string,Order> $orderings
+     * @return list<Field>
+     */
+    private function createCalculatorFields(
+        array $boundaryValues,
+        array $orderings
+    ): array {
+        $fields = [];
+
+        foreach ($orderings as $field => $direction) {
+            /** @var mixed */
+            $value = $boundaryValues[$field] ?? null;
+
+            // if $value is null it means the identifier does not contain
+            // the field, so we just skip it. it might be that the user has
+            // an old URL, but the ordering has been changed in the application.
+            // by skipping, we hope the old identifier still works.
+
+            if ($value === null) {
+                continue;
+            }
+
+            $fields[] = new Field($field, $value, $direction);
+        }
+
+        return $fields;
     }
 
     #[\Override]
@@ -234,7 +270,6 @@ final readonly class SelectableAdapter implements
             }
 
             throw $e;
-
         }
 
         if ($boundaryType === BoundaryType::Upper) {

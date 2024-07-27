@@ -24,6 +24,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
+use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
@@ -84,7 +85,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     }
 
     /**
-     * @param null|array<string,mixed> $boundaryValues
+     * @param null|non-empty-array<string,mixed> $boundaryValues
      */
     private function getQueryBuilder(
         int $offset,
@@ -128,15 +129,14 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             $orderings = $this->getSortOrder();
         }
 
-        // convert orderings to criteria orderings
+        // adds where expression to the querybuilder
 
-        $orderings = $this->convertQueryBuilderOrderingToCriteriaOrdering($orderings);
+        $fields = $this->createCalculatorFields($boundaryValues, $orderings);
 
-        // calculate keyset expression
+        if ($fields !== []) {
+            // calculate keyset expression
+            $keysetExpression = KeysetExpressionCalculator::calculate($fields);
 
-        $keysetExpression = KeysetExpressionCalculator::calculate($orderings, $boundaryValues);
-
-        if ($keysetExpression !== null) {
             $visitor = new KeysetQueryBuilderVisitor();
             $queryBuilder->andWhere($visitor->dispatch($keysetExpression));
 
@@ -160,6 +160,35 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         return $queryBuilder;
     }
 
+    /**
+     * @param array<string,QueryParameter> $boundaryValues
+     * @param non-empty-array<string, 'ASC'|'DESC'> $orderings
+     * @return list<Field>
+     */
+    private function createCalculatorFields(
+        array $boundaryValues,
+        array $orderings
+    ): array {
+        $fields = [];
+
+        foreach ($orderings as $field => $direction) {
+            $value = $boundaryValues[$field] ?? null;
+
+            // if $value is null it means the identifier does not contain
+            // the field, so we just skip it. it might be that the user has
+            // an old URL, but the ordering has been changed in the application.
+            // by skipping, we hope the old identifier still works.
+
+            if ($value === null) {
+                continue;
+            }
+
+            $fields[] = new Field($field, $value, $direction === 'ASC' ? Order::Ascending : Order::Descending);
+        }
+
+        return $fields;
+    }
+
     /** @psalm-suppress InvalidReturnType */
     #[\Override]
     public function getKeysetItems(
@@ -168,6 +197,10 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         null|array $boundaryValues,
         BoundaryType $boundaryType,
     ): array {
+        if ($boundaryValues === []) {
+            $boundaryValues = null;
+        }
+
         $queryBuilder = $this->getQueryBuilder($offset, $limit, $boundaryValues, $boundaryType);
 
         /** @var array<int,array<int,mixed>> */
@@ -216,6 +249,10 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         null|array $boundaryValues,
         BoundaryType $boundaryType,
     ): int {
+        if ($boundaryValues === []) {
+            $boundaryValues = null;
+        }
+
         $queryBuilder = $this->getQueryBuilder($offset, $limit, $boundaryValues, $boundaryType);
         $paginator = new QueryCounter($queryBuilder->getQuery(), $this->useOutputWalkers);
 
@@ -229,12 +266,12 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     }
 
     /**
-     * @var array<string,'ASC'|'DESC'>
+     * @var non-empty-array<string,'ASC'|'DESC'>
      */
     private null|array $sortOrderCache = null;
 
     /**
-     * @return array<string,'ASC'|'DESC'>
+     * @return non-empty-array<string,'ASC'|'DESC'>
      */
     private function getSortOrder(): array
     {
@@ -287,7 +324,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     }
 
     /**
-     * @return array<string,'ASC'|'DESC'>
+     * @return non-empty-array<string,'ASC'|'DESC'>
      */
     private function getReversedSortOrder(): array
     {
@@ -414,18 +451,5 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         }
 
         return $result;
-    }
-
-    /**
-     * @param array<string, 'ASC'|'DESC'> $queryBuilderOrdering
-     * @return array<string,Order>
-     */
-    private function convertQueryBuilderOrderingToCriteriaOrdering(
-        array $queryBuilderOrdering
-    ): array {
-        return array_map(
-            static fn (string $direction): Order => $direction === 'ASC' ? Order::Ascending : Order::Descending,
-            $queryBuilderOrdering
-        );
     }
 }

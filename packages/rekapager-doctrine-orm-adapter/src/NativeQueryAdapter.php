@@ -17,12 +17,14 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
+use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
+use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingPlaceholderInSQLException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\NoCountResultFoundException;
-use Rekalogika\Rekapager\Doctrine\ORM\Internal\KeysetSQLVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryParameter;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\SQLStatement;
@@ -134,23 +136,57 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         // if upper bound, reverse the sort order
 
         if ($boundaryType === BoundaryType::Upper) {
-            $criteria->orderBy($this->getReversedSortOrder());
+            $orderings = $this->getReversedSortOrder();
         } else {
-            $criteria->orderBy($this->orderBy);
+            $orderings = $this->orderBy;
         }
+
+        if ($orderings === []) {
+            throw new LogicException('No ordering is set.');
+        }
+
+        $criteria->orderBy($orderings);
 
         // construct the metadata for the next step
 
-        $expression = KeysetExpressionCalculator::calculate(
-            $criteria->orderings(),
-            $boundaryValues
-        );
+        $fields = $this->createCalculatorFields($boundaryValues, $orderings);
 
-        if ($expression !== null) {
+        if ($fields !== []) {
+            $expression = KeysetExpressionCalculator::calculate($fields);
             $criteria->where($expression);
         }
 
         return $criteria;
+    }
+
+    /**
+     * @param array<string,mixed> $boundaryValues
+     * @param non-empty-array<string,Order> $orderings
+     * @return list<Field>
+     */
+    private function createCalculatorFields(
+        array $boundaryValues,
+        array $orderings
+    ): array {
+        $fields = [];
+
+        foreach ($orderings as $field => $direction) {
+            /** @var mixed */
+            $value = $boundaryValues[$field] ?? null;
+
+            // if $value is null it means the identifier does not contain
+            // the field, so we just skip it. it might be that the user has
+            // an old URL, but the ordering has been changed in the application.
+            // by skipping, we hope the old identifier still works.
+
+            if ($value === null) {
+                continue;
+            }
+
+            $fields[] = new Field($field, $value, $direction);
+        }
+
+        return $fields;
     }
 
     /**
@@ -201,7 +237,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $orderBy = $this->generateOrderBy($criteria);
 
         $expression = $criteria->getWhereExpression();
-        $visitor = new KeysetSQLVisitor();
+        $visitor = new KeysetExpressionSQLVisitor();
 
         if ($expression !== null) {
             $result = $visitor->dispatch($expression);
@@ -220,6 +256,10 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $parameters = $this->parameters;
 
         foreach ($visitor->getParameters() as $template => $parameter) {
+            if (!$parameter instanceof QueryParameter) {
+                throw new UnexpectedValueException('Expected QueryParameter');
+            }
+
             $parameters[] = new Parameter(
                 key: $template,
                 value: $parameter->getValue(),

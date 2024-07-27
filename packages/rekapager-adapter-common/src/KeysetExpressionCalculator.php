@@ -15,7 +15,6 @@ namespace Rekalogika\Rekapager\Adapter\Common;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Expr\Expression;
-use Doctrine\Common\Collections\Order;
 
 /**
  * @internal
@@ -27,48 +26,25 @@ final class KeysetExpressionCalculator
     }
 
     /**
-     * @param array<string,Order> $orderBy
-     * @param null|array<string,mixed> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
+     * @param non-empty-list<Field> $fields
      */
-    public static function calculate(
-        array $orderBy,
-        null|array $boundaryValues,
-    ): ?Expression {
-        /** @var array<int,array{property:string,value:string,order:Order}> */
-        $properties = [];
-
-        foreach ($orderBy as $property => $order) {
-            /** @var mixed */
-            $value = $boundaryValues[$property] ?? null;
-
-            if ($value === null) {
-                continue;
-            }
-
-            $properties[] = [
-                'property' => $property,
-                'value' => $value,
-                'order' => $order,
-            ];
-        }
-
-        // build where expression
-
+    public static function calculate(array $fields): Expression
+    {
         $i = 0;
         $expressions = [];
 
-        foreach ($properties as $property) {
+        foreach ($fields as $field) {
             if ($i === 0) {
-                if (\count($properties) === 1) {
-                    if ($property['order'] === Order::Ascending) {
+                if (\count($fields) === 1) {
+                    if ($field->isAscending()) {
                         $expressions[] = Criteria::expr()->gt(
-                            $property['property'],
-                            $property['value']
+                            $field->getName(),
+                            $field->getValue()
                         );
                     } else {
                         $expressions[] = Criteria::expr()->lt(
-                            $property['property'],
-                            $property['value']
+                            $field->getName(),
+                            $field->getValue()
                         );
                     }
 
@@ -76,15 +52,15 @@ final class KeysetExpressionCalculator
                     continue;
                 }
 
-                if ($property['order'] === Order::Ascending) {
+                if ($field->isAscending()) {
                     $expressions[] = Criteria::expr()->gte(
-                        $property['property'],
-                        $property['value']
+                        $field->getName(),
+                        $field->getValue()
                     );
                 } else {
                     $expressions[] = Criteria::expr()->lte(
-                        $property['property'],
-                        $property['value']
+                        $field->getName(),
+                        $field->getValue()
                     );
                 }
 
@@ -94,22 +70,22 @@ final class KeysetExpressionCalculator
 
             $subExpressions = [];
 
-            foreach (\array_slice($properties, 0, $i) as $equalProperty) {
+            foreach (\array_slice($fields, 0, $i) as $equalField) {
                 $subExpressions[] = Criteria::expr()->eq(
-                    $equalProperty['property'],
-                    $equalProperty['value']
+                    $equalField->getName(),
+                    $equalField->getValue()
                 );
             }
 
-            if ($property['order'] === Order::Ascending) {
+            if ($field->isAscending()) {
                 $subExpressions[] = Criteria::expr()->lte(
-                    $property['property'],
-                    $property['value']
+                    $field->getName(),
+                    $field->getValue()
                 );
             } else {
                 $subExpressions[] = Criteria::expr()->gte(
-                    $property['property'],
-                    $property['value']
+                    $field->getName(),
+                    $field->getValue()
                 );
             }
 
@@ -122,6 +98,6 @@ final class KeysetExpressionCalculator
             $i++;
         }
 
-        return $expressions === [] ? null : Criteria::expr()->andX(...$expressions);
+        return Criteria::expr()->andX(...$expressions);
     }
 }
