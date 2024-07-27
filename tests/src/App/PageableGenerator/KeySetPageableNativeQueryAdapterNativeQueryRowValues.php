@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 use Rekalogika\Rekapager\Doctrine\ORM\NativeQueryAdapter;
 use Rekalogika\Rekapager\Doctrine\ORM\Parameter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
@@ -84,7 +85,7 @@ class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGe
                 new Parameter('setName', $setName),
             ],
             indexBy: 'id',
-            useRowValues: true,
+            seekMethod: SeekMethod::RowValues,
         );
 
         $pageable = new KeysetPageable(
