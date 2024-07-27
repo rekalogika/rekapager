@@ -6,6 +6,7 @@
 * chore: cleanup
 * feat: native query adapter now supports row values method
 * feat: query builder adapter now supports row values method
+* fix(`QueryBuilderAdapter`): auto seek method
 
 # 0.15.1
 

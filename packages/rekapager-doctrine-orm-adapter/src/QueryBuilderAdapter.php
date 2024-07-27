@@ -180,9 +180,27 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         return match ($this->seekMethod) {
             SeekMethod::Approximated => $this->generateApproximatedWhereExpression($fields),
             SeekMethod::RowValues => $this->generateRowValuesWhereExpression($fields),
-            // SeekMethod::Auto => $this->generateAutoWhereExpression($fields),
-            default => throw new LogicException('Unsupported seek method'),
+            SeekMethod::Auto => $this->generateAutoWhereExpression($fields),
         };
+    }
+
+    /**
+     * @param non-empty-list<Field> $fields
+     * @return array{Andx|string|null,array<string,QueryParameter>}
+     */
+    private function generateAutoWhereExpression(array $fields): array
+    {
+        $order = null;
+
+        foreach ($fields as $field) {
+            if ($order === null) {
+                $order = $field->getOrder();
+            } elseif ($order !== $field->getOrder()) {
+                return $this->generateApproximatedWhereExpression($fields);
+            }
+        }
+
+        return $this->generateRowValuesWhereExpression($fields);
     }
 
     /**
