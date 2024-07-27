@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\ORM;
 
-use Doctrine\Common\Collections\Expr\Expression;
 use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -23,6 +22,7 @@ use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
+use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingPlaceholderInSQLException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\NoCountResultFoundException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
@@ -57,6 +57,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         private ?string $countAllSql = null,
         private array $parameters = [],
         private string|null $indexBy = null,
+        private SeekMethod $seekMethod = SeekMethod::Approximated,
     ) {
         // clone the ResultSetMapping to avoid modifying the original
         $resultSetMapping = clone $resultSetMapping;
@@ -106,33 +107,106 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
     }
 
     /**
-     * @param null|array<string,mixed> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
+     * @param array<string,QueryParameter> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
      * @param non-empty-array<string,Order> $orderings
+     * @return array{string,array<string,QueryParameter>}
      */
     private function generateWhereExpression(
-        null|array $boundaryValues,
+        array $boundaryValues,
         array $orderings,
-    ): ?Expression {
-        // wrap boundary values using QueryParameter
-
-        $newBoundaryValues = [];
-
-        /** @var mixed $value */
-        foreach ($boundaryValues ?? [] as $property => $value) {
-            $newBoundaryValues[$property] = new QueryParameter($value, null);
-        }
-
-        $boundaryValues = $newBoundaryValues;
-
-        // construct the metadata for the next step
-
+    ): array {
         $fields = $this->createCalculatorFields($boundaryValues, $orderings);
 
         if ($fields === []) {
-            return null;
+            return ['', []];
         }
 
-        return KeysetExpressionCalculator::calculate($fields);
+        return match ($this->seekMethod) {
+            SeekMethod::Approximated => $this->generateApproximatedWhereExpression($fields),
+            SeekMethod::RowValues => $this->generateRowValuesWhereExpression($fields),
+            SeekMethod::Auto => $this->generateAutoWhereExpression($fields),
+        };
+    }
+
+    /**
+     * @param non-empty-list<Field> $fields
+     * @return array{string,array<string,QueryParameter>}
+     */
+    private function generateAutoWhereExpression(array $fields): array
+    {
+        $order = null;
+
+        foreach ($fields as $field) {
+            if ($order === null) {
+                $order = $field->getOrder();
+            } elseif ($order !== $field->getOrder()) {
+                return $this->generateApproximatedWhereExpression($fields);
+            }
+        }
+
+        return $this->generateRowValuesWhereExpression($fields);
+    }
+
+    /**
+     * @param non-empty-list<Field> $fields
+     * @return array{string,array<string,QueryParameter>}
+     */
+    private function generateApproximatedWhereExpression(array $fields): array
+    {
+        $expression = KeysetExpressionCalculator::calculate($fields);
+
+        $visitor = new KeysetExpressionSQLVisitor();
+        $result = $visitor->dispatch($expression);
+        \assert(\is_string($result));
+
+        $where = 'AND ' . $result;
+
+        /** @var array<string,QueryParameter> */
+        $parameters = $visitor->getParameters();
+
+        return [$where, $parameters];
+    }
+
+    /**
+     * @param non-empty-list<Field> $fields
+     * @return array{string,array<string,QueryParameter>}
+     */
+    private function generateRowValuesWhereExpression(array $fields): array
+    {
+        $order = null;
+        $whereFields = [];
+        $whereValues = [];
+        $queryParameters = [];
+        $i = 1;
+
+        foreach ($fields as $field) {
+            if ($order === null) {
+                $order = $field->getOrder();
+            } elseif ($order !== $field->getOrder()) {
+                throw new LogicException('Row values require all fields to have the same order.');
+            }
+
+            $template = 'rekapager_where_' . $i;
+
+            $whereFields[] = $field->getName();
+            $whereValues[] = ':' . $template;
+
+            $value = $field->getValue();
+            \assert($value instanceof QueryParameter);
+
+            $queryParameters[$template] = $value;
+
+            $i++;
+        }
+
+        $where = sprintf(
+            'AND (%s) %s (%s)',
+            implode(', ', $whereFields),
+            $order === Order::Ascending ? '>' : '<',
+            implode(', ', $whereValues)
+        );
+
+        return [$where, $queryParameters];
     }
 
     /**
@@ -206,28 +280,29 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         BoundaryType $boundaryType,
         bool $count = false,
     ): SQLStatement {
+        // wrap boundary values using QueryParameter
+
+        $newBoundaryValues = [];
+
+        /** @var mixed $value */
+        foreach ($boundaryValues ?? [] as $property => $value) {
+            $newBoundaryValues[$property] = new QueryParameter($value, null);
+        }
+
+        $boundaryValues = $newBoundaryValues;
+
+        // orderings
+
         $orderings = $this->getSortOrder($boundaryType === BoundaryType::Upper);
 
         if ($orderings === []) {
             throw new LogicException('No ordering is set.');
         }
 
-        $expression = $this->generateWhereExpression(
+        [$where, $parameters] = $this->generateWhereExpression(
             boundaryValues: $boundaryValues,
             orderings: $orderings
         );
-
-        if ($expression !== null) {
-            $visitor = new KeysetExpressionSQLVisitor();
-            $result = $visitor->dispatch($expression);
-            \assert(\is_string($result));
-            $where = 'AND ' . $result;
-
-            $parameters = $visitor->getParameters();
-        } else {
-            $where = '';
-            $parameters = [];
-        }
 
         $orderBy = $this->generateOrderBy($orderings);
 

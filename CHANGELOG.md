@@ -4,6 +4,7 @@
 
 * refactor: simplify `KeysetExpressionCalculator`
 * chore: cleanup
+* feat: native query adapter now supports row values method
 
 # 0.15.1
 
