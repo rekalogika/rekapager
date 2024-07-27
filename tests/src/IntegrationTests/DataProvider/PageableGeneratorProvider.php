@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeySetPageableNativeQueryAdapterNativeQuery;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeySetPageableNativeQueryAdapterNativeQueryRowValues;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableQueryBuilderAdapterQueryBuilder;
+use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableQueryBuilderAdapterQueryBuilderRowValues;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableSelectableAdapterCollection;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableSelectableAdapterEntityRepository;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\OffsetPageableCollectionAdapterCollection;
@@ -31,6 +32,7 @@ final class PageableGeneratorProvider
     public static function all(): iterable
     {
         yield [KeysetPageableQueryBuilderAdapterQueryBuilder::class];
+        yield [KeysetPageableQueryBuilderAdapterQueryBuilderRowValues::class];
         yield [KeysetPageableSelectableAdapterCollection::class];
         yield [KeysetPageableSelectableAdapterEntityRepository::class];
         yield [KeySetPageableNativeQueryAdapterNativeQuery::class];
@@ -47,6 +49,7 @@ final class PageableGeneratorProvider
     public static function keyset(): iterable
     {
         yield [KeysetPageableQueryBuilderAdapterQueryBuilder::class];
+        yield [KeysetPageableQueryBuilderAdapterQueryBuilderRowValues::class];
         yield [KeysetPageableSelectableAdapterCollection::class];
         yield [KeysetPageableSelectableAdapterEntityRepository::class];
         yield [KeySetPageableNativeQueryAdapterNativeQuery::class];

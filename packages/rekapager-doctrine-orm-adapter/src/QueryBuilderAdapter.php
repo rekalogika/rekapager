@@ -21,6 +21,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\Query\Expr\From;
 use Doctrine\ORM\Query\Expr\OrderBy;
+use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
@@ -29,6 +30,7 @@ use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
+use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingRowValuesDQLFunctionException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\KeysetQueryBuilderVisitor;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
@@ -163,7 +165,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     /**
      * @param array<string,QueryParameter> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
      * @param non-empty-array<string,'ASC'|'DESC'> $orderings
-     * @return array{?Andx,array<string,QueryParameter>}
+     * @return array{null|Andx|string,array<string,QueryParameter>}
      */
     private function generateWhereExpression(
         array $boundaryValues,
@@ -177,15 +179,15 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
         return match ($this->seekMethod) {
             SeekMethod::Approximated => $this->generateApproximatedWhereExpression($fields),
-                // SeekMethod::RowValues => $this->generateRowValuesWhereExpression($fields),
-                // SeekMethod::Auto => $this->generateAutoWhereExpression($fields),
+            SeekMethod::RowValues => $this->generateRowValuesWhereExpression($fields),
+            // SeekMethod::Auto => $this->generateAutoWhereExpression($fields),
             default => throw new LogicException('Unsupported seek method'),
         };
     }
 
     /**
      * @param non-empty-list<Field> $fields
-     * @return array{?Andx,array<string,QueryParameter>}
+     * @return array{Andx,array<string,QueryParameter>}
      */
     private function generateApproximatedWhereExpression(array $fields): array
     {
@@ -193,11 +195,53 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
         $visitor = new KeysetQueryBuilderVisitor();
         $where = $visitor->dispatch($expression);
-        assert($where instanceof Andx);
+        \assert($where instanceof Andx);
 
         $parameters = $visitor->getParameters();
 
         return [$where, $parameters];
+    }
+
+    /**
+     * @param non-empty-list<Field> $fields
+     * @return array{string,array<string,QueryParameter>}
+     */
+    private function generateRowValuesWhereExpression(array $fields): array
+    {
+        $order = null;
+        $whereFields = [];
+        $whereValues = [];
+        $queryParameters = [];
+        $i = 1;
+
+        foreach ($fields as $field) {
+            if ($order === null) {
+                $order = $field->getOrder();
+            } elseif ($order !== $field->getOrder()) {
+                throw new LogicException('Row values require all fields to have the same order.');
+            }
+
+            $template = 'rekapager_where_' . $i;
+
+            $whereFields[] = $field->getName();
+            $whereValues[] = ':' . $template;
+
+            $value = $field->getValue();
+            \assert($value instanceof QueryParameter);
+
+            $queryParameters[$template] = $value;
+
+            $i++;
+        }
+
+        $where = sprintf(
+            'REKAPAGER_ROW_VALUES(%s) %s REKAPAGER_ROW_VALUES(%s)',
+            implode(', ', $whereFields),
+            $order === Order::Ascending ? '>' : '<',
+            implode(', ', $whereValues)
+        );
+
+        return [$where, $queryParameters];
     }
 
     /**
@@ -243,43 +287,47 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
         $queryBuilder = $this->getQueryBuilder($offset, $limit, $boundaryValues, $boundaryType);
 
-        /** @var array<int,array<int,mixed>> */
-        $result = $queryBuilder->getQuery()->getResult();
+        try {
+            /** @var array<int,array<int,mixed>> */
+            $result = $queryBuilder->getQuery()->getResult();
 
-        if ($boundaryType === BoundaryType::Upper) {
-            $result = array_reverse($result);
+            if ($boundaryType === BoundaryType::Upper) {
+                $result = array_reverse($result);
+            }
+
+            $boundaryFieldNames = $this->getBoundaryFieldNames();
+            $results = [];
+
+            foreach ($result as $key => $row) {
+                /** @var array<string,mixed> */
+                $boundaryValues = [];
+                foreach (array_reverse($boundaryFieldNames) as $field) {
+                    /** @var mixed */
+                    $value = array_pop($row);
+                    /** @psalm-suppress MixedAssignment */
+                    $boundaryValues[$field] = $value;
+                }
+
+                if (\count($row) === 1) {
+                    /** @var mixed */
+                    $row = array_pop($row);
+                }
+
+                if ($this->indexBy !== null) {
+                    $key = IndexResolver::resolveIndex($row, $this->indexBy);
+                }
+
+                $results[] = new QueryBuilderKeysetItem($key, $row, $boundaryValues);
+            }
+
+            /**
+             * @psalm-suppress InvalidReturnStatement
+             * @phpstan-ignore-next-line
+             */
+            return $results;
+        } catch (\Throwable $e) {
+            $this->checkException($e);
         }
-
-        $boundaryFieldNames = $this->getBoundaryFieldNames();
-        $results = [];
-
-        foreach ($result as $key => $row) {
-            /** @var array<string,mixed> */
-            $boundaryValues = [];
-            foreach (array_reverse($boundaryFieldNames) as $field) {
-                /** @var mixed */
-                $value = array_pop($row);
-                /** @psalm-suppress MixedAssignment */
-                $boundaryValues[$field] = $value;
-            }
-
-            if (\count($row) === 1) {
-                /** @var mixed */
-                $row = array_pop($row);
-            }
-
-            if ($this->indexBy !== null) {
-                $key = IndexResolver::resolveIndex($row, $this->indexBy);
-            }
-
-            $results[] = new QueryBuilderKeysetItem($key, $row, $boundaryValues);
-        }
-
-        /**
-         * @psalm-suppress InvalidReturnStatement
-         * @phpstan-ignore-next-line
-         */
-        return $results;
     }
 
     #[\Override]
@@ -296,13 +344,17 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         $queryBuilder = $this->getQueryBuilder($offset, $limit, $boundaryValues, $boundaryType);
         $paginator = new QueryCounter($queryBuilder->getQuery(), $this->useOutputWalkers);
 
-        $result = $paginator->count();
+        try {
+            $result = $paginator->count();
 
-        if ($result < 0) {
-            throw new UnexpectedValueException('Count must be greater than or equal to 0.');
+            if ($result < 0) {
+                throw new UnexpectedValueException('Count must be greater than or equal to 0.');
+            }
+
+            return $result;
+        } catch (\Throwable $e) {
+            $this->checkException($e);
         }
-
-        return $result;
     }
 
     /**
@@ -491,5 +543,17 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         }
 
         return $result;
+    }
+
+    private function checkException(\Throwable $exception): never
+    {
+        $isMissingDqlFunction = $exception instanceof QueryException
+            && str_contains($exception->getMessage(), "Expected known function, got 'REKAPAGER_ROW_VALUES'");
+
+        if ($isMissingDqlFunction) {
+            throw new MissingRowValuesDQLFunctionException($exception);
+        }
+
+        throw $exception;
     }
 }

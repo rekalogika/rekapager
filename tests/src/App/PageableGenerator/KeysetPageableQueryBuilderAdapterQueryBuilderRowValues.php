@@ -15,6 +15,7 @@ namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 
 use Doctrine\DBAL\Types\Types;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
@@ -24,7 +25,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGeneratorInterface
+class KeysetPageableQueryBuilderAdapterQueryBuilderRowValues implements PageableGeneratorInterface
 {
     public function __construct(private readonly PostRepository $postRepository)
     {
@@ -33,13 +34,13 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
     #[\Override]
     public static function getKey(): string
     {
-        return 'keysetpageable-querybuilderadapter-querybuilder';
+        return 'keysetpageable-querybuilderadapter-querybuilder-rowvalues';
     }
 
     #[\Override]
     public function getTitle(): string
     {
-        return 'KeysetPageable - ORM QueryBuilderAdapter (approximated) - ORM QueryBuilder';
+        return 'KeysetPageable - ORM QueryBuilderAdapter (row values) - ORM QueryBuilder';
     }
 
     #[\Override]
@@ -54,7 +55,7 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             ->createQueryBuilder('p')
             ->where('p.setName = :setName')
             ->setParameter('setName', $setName)
-            ->addOrderBy('p.date', 'DESC')
+            ->addOrderBy('p.date', 'ASC')
             ->addOrderBy('p.title', 'ASC')
             ->addOrderBy('p.id', 'ASC');
 
@@ -63,7 +64,8 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             typeMapping: [
                 'p.date' => Types::DATE_MUTABLE
             ],
-            indexBy: 'id'
+            indexBy: 'id',
+            seekMethod: SeekMethod::RowValues,
         );
 
         $pageable = new KeysetPageable(

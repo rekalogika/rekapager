@@ -37,7 +37,7 @@ class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGe
     #[\Override]
     public static function getKey(): string
     {
-        return 'keysetpageable-nativequeryadapter-nativequery-row-values';
+        return 'keysetpageable-nativequeryadapter-nativequery-rowvalues';
     }
 
     #[\Override]
