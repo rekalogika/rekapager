@@ -172,7 +172,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             $whereValues[] = ':' . $template;
 
             $value = $field->getValue();
-            assert($value instanceof QueryParameter);
+            \assert($value instanceof QueryParameter);
 
             $queryParameters[$template] = $value;
 
