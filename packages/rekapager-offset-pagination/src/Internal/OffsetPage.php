@@ -221,10 +221,6 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
             limit: $this->itemsPerPage * $numberOfPages + 1,
         );
 
-        if ($count === null) {
-            return [];
-        }
-
         $numOfNextPages = (int) ceil($count / $this->itemsPerPage);
 
         $pages = [];

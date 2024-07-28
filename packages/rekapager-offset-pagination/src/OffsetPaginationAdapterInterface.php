@@ -30,10 +30,10 @@ interface OffsetPaginationAdapterInterface
 
     /**
      * @param int<0,max> $offset
-     * @param null|int<1,max> $limit
-     * @return null|int<0,max>
+     * @param int<1,max> $limit
+     * @return int<0,max>
      */
-    public function countOffsetItems(int $offset = 0, int $limit = null): ?int;
+    public function countOffsetItems(int $offset, int $limit): int;
 
     /**
      * @return int<0,max>|null
