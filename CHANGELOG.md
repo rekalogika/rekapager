@@ -4,6 +4,7 @@
 
 * fix: fix `QueryBuilderAdapter` error when WHERE statement is empty
 * chore: update demo
+* deps: Doctrine ORM adapter should depend on offset pagination
 
 # 0.16.0
 
