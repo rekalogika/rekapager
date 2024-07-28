@@ -55,12 +55,8 @@ final readonly class PagerfantaAdapterAdapter implements OffsetPaginationAdapter
     }
 
     #[\Override]
-    public function countOffsetItems(int $offset = 0, ?int $limit = null): ?int
+    public function countOffsetItems(int $offset, int $limit): int
     {
-        if ($limit === null) {
-            return null;
-        }
-
         $slice = $this->adapter->getSlice($offset, $limit);
         $count = 0;
 

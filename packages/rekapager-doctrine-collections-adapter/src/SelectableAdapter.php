@@ -124,14 +124,7 @@ final readonly class SelectableAdapter implements
             $criteria->setMaxResults($limit);
         }
 
-        $result = $this->collection->matching($criteria);
-
-        $count = 0;
-        foreach ($result as $item) {
-            $count++;
-        }
-
-        return $count;
+        return count($this->collection->matching($criteria)->toArray());
     }
 
     //
@@ -139,36 +132,6 @@ final readonly class SelectableAdapter implements
     //
 
     /**
-     * Goal:
-     *
-     * ```php
-     * SELECT
-     *     id,
-     *     date,
-     *     title
-     * FROM
-     *     post t0
-     * WHERE
-     *     (
-     *         t0.date <= '2024-03-26'
-     *         AND NOT (
-     *             t0.date = '2024-03-26'
-     *             AND t0.title <= 'Saepe eos animi qui.'
-     *         )
-     *         AND NOT (
-     *             t0.date = '2024-03-26'
-     *             AND t0.title = 'Saepe eos animi qui.'
-     *             AND t0.id <= 115
-     *         )
-     *     )
-     * ORDER BY
-     *     t0.date DESC,
-     *     t0.title ASC,
-     *     t0.id ASC
-     * LIMIT
-     *     6;
-     * ```
-     *
      * @param int<0,max> $offset
      * @param int<1,max> $limit
      * @param null|array<string,mixed> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
@@ -302,14 +265,7 @@ final readonly class SelectableAdapter implements
         //
         // return $this->collection->matching($criteria)->count();
 
-        $result =  $this->collection->matching($criteria);
-        $count = 0;
-
-        foreach ($result as $item) {
-            $count++;
-        }
-
-        return $count;
+        return count($this->collection->matching($criteria)->toArray());
     }
 
     /**

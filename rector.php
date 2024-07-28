@@ -10,7 +10,9 @@ use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
+use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
+use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
 use Rector\ValueObject\PhpVersion;
@@ -78,4 +80,14 @@ return RectorConfig::configure()
 
         // makes code unreadable
         DisallowedShortTernaryRuleFixerRector::class,
+
+        RemoveAlwaysTrueIfConditionRector::class => [
+            // dealing with legacy code
+            __DIR__ . '/packages/rekapager-doctrine-dbal-adapter/src/QueryBuilderAdapter.php',
+        ],
+
+        NullToStrictStringFuncCallArgRector::class => [
+            // false positive
+            __DIR__ . '/packages/rekapager-doctrine-dbal-adapter/src/QueryBuilderAdapter.php',
+        ],
     ]);
