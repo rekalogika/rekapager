@@ -79,6 +79,9 @@
         <TooManyArguments>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-api-platform/src/Implementation/PagerNormalizer.php" />
+                <file name="tests/src/App/PageableGenerator/KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilder.php" />
+                <file name="tests/src/App/PageableGenerator/OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder.php" />
+                <file name="tests/src/App/PageableGenerator/KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues.php" />
             </errorLevel>
         </TooManyArguments>
         <PluginIssue name="QueryBuilderSetParameter">

@@ -1,0 +1,37 @@
+{
+    "name": "rekalogika/rekapager-doctrine-dbal-adapter",
+    "description": "Doctrine DBAL adapter for Rekapager pagination library",
+    "homepage": "https://rekalogika.dev/rekapager",
+    "keywords": [
+        "pagination",
+        "rekapager",
+        "pager",
+        "keyset-pagination",
+        "offset-pagination",
+        "doctrine",
+        "dbal",
+        "querybuilder",
+        "query"
+    ],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Priyadi Iman Nurcahyo",
+            "email": "priyadi@rekalogika.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Rekapager\\Doctrine\\DBAL\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "doctrine/dbal": "^3.8",
+        "doctrine/collections": "^2.2",
+        "rekalogika/rekapager-adapter-common": "^0.16.1",
+        "rekalogika/rekapager-keyset-pagination": "^0.16.1",
+        "rekalogika/rekapager-offset-pagination": "^0.16.1"
+    }
+}

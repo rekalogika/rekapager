@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.17.0
+
+* feat: DBAL adapter
+
 # 0.16.1
 
 * fix: fix `QueryBuilderAdapter` error when WHERE statement is empty
