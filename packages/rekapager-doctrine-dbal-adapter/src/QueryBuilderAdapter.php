@@ -353,9 +353,22 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         $queryBuilder = $this->getQueryBuilder($offset, $limit, $boundaryValues, $boundaryType);
 
-        $result = $queryBuilder->executeQuery()->fetchAllAssociative();
+        $queryBuilder->select('COUNT(*)');
 
-        return \count($result);
+        /** @psalm-suppress MixedAssignment */
+        $result = $queryBuilder->executeQuery()->fetchOne();
+
+        if (!is_numeric($result)) {
+            throw new UnexpectedValueException('Count must be a number.');
+        }
+
+        $count = (int) $result;
+
+        if ($count < 0) {
+            throw new UnexpectedValueException('Count must be greater than or equal to 0.');
+        }
+
+        return $count;
     }
 
     /**
@@ -406,12 +419,21 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         $queryBuilder = $this->getQueryBuilder($offset, $limit, null, BoundaryType::Lower);
 
-        $result = $queryBuilder->executeQuery()->rowCount();
+        $queryBuilder->select('COUNT(*)');
 
-        if ($result < 0) {
+        /** @psalm-suppress MixedAssignment */
+        $result = $queryBuilder->executeQuery()->fetchOne();
+
+        if (!is_numeric($result)) {
+            throw new UnexpectedValueException('Count must be a number.');
+        }
+
+        $count = (int) $result;
+
+        if ($count < 0) {
             throw new UnexpectedValueException('Count must be greater than or equal to 0.');
         }
 
-        return $result;
+        return $count;
     }
 }

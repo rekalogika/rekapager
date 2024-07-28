@@ -4,6 +4,7 @@
 
 * feat: DBAL adapter
 * fix: ORM `QueryBuilderAdapter` logic
+* perf: improve DBAL `QueryBuilderAdapter` count performance
 
 # 0.16.1
 
