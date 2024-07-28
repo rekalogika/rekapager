@@ -35,16 +35,16 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
  * @implements KeysetPaginationAdapterInterface<TKey,T>
  * @implements OffsetPaginationAdapterInterface<TKey,T>
  */
-final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, OffsetPaginationAdapterInterface
+final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, OffsetPaginationAdapterInterface
 {
     /**
      * @param non-empty-array<string,Order> $orderBy
      */
     public function __construct(
-        private readonly QueryBuilder $queryBuilder,
-        private readonly array $orderBy,
-        private readonly string|null $indexBy = null,
-        private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
+        private QueryBuilder $queryBuilder,
+        private array $orderBy,
+        private string|null $indexBy = null,
+        private SeekMethod $seekMethod = SeekMethod::Approximated,
     ) {
         if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
             throw new UnsupportedQueryBuilderException();
@@ -389,13 +389,12 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     public function getOffsetItems(int $offset, int $limit): array
     {
         $queryBuilder = $this->getQueryBuilder($offset, $limit, null, BoundaryType::Lower);
-        $result = $queryBuilder->executeQuery()->fetchAllAssociative();
 
         /**
          * @psalm-suppress InvalidReturnStatement
          * @phpstan-ignore-next-line
          */
-        return $result;
+        return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
 
     #[\Override]

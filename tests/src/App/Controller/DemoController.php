@@ -102,6 +102,7 @@ class DemoController extends AbstractController
         $dumper = new HtmlDumper();
 
         $dumper->setTheme('light');
+
         $output = fopen('php://memory', 'r+b') ?: throw new \RuntimeException('Failed to open memory stream');
         $dumper->dump($cloner->cloneVar($pageIdentifier), $output);
         $output = stream_get_contents($output, -1, 0);

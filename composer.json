@@ -93,7 +93,8 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "symfony/flex": false
         }
     },
     "replace": {
