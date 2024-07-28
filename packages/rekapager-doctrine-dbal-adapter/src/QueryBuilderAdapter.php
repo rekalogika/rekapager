@@ -22,6 +22,7 @@ use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
+use Rekalogika\Rekapager\Doctrine\DBAL\Exception\CountUnsupportedException;
 use Rekalogika\Rekapager\Doctrine\DBAL\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\DBAL\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\DBAL\Internal\QueryParameter;
@@ -60,7 +61,6 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         return $this->doCount(
             queryBuilder: $this->queryBuilder,
             expensive: true,
-            required: false
         );
     }
 
@@ -336,8 +336,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         return $this->doCount(
             queryBuilder: $queryBuilder,
             expensive: false,
-            required: true
-        ) ?? throw new LogicException('Count must be set when counting keyset items');
+        ) ?? throw new CountUnsupportedException($queryBuilder->getSQL());
     }
 
     /**
@@ -391,8 +390,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         return $this->doCount(
             queryBuilder: $queryBuilder,
             expensive: false,
-            required: true
-        ) ?? throw new LogicException('Count must be set when counting offset items');
+        ) ?? throw new CountUnsupportedException($queryBuilder->getSQL());
     }
 
     /**
@@ -401,16 +399,16 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
     private function doCount(
         QueryBuilder $queryBuilder,
         bool $expensive,
-        bool $required,
     ): ?int {
-        return $this->doCountWithSubquery($queryBuilder);
+        // using subquery is preferred because it should work in all cases. but
+        // QueryBuilder does not provide a `resetFrom` method that we need. so
+        // we need to use the deprecated `resetQueryPart` method.
 
-        // using subquery is preferred because it is more reliable. but
-        // QueryBuilder does not provide a `resetFrom` method. so we need to
-        // use the deprecated `resetQueryPart` method.
-
-        /** @psalm-suppress RedundantCondition */
-        if (is_callable([$queryBuilder, 'resetQueryPart'])) {
+        /**
+         * @psalm-suppress RedundantCondition
+         * @phpstan-ignore-next-line
+         */
+        if (\is_callable([$queryBuilder, 'resetQueryPart'])) {
             return $this->doCountWithSubquery($queryBuilder);
         }
 
@@ -421,9 +419,19 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         $sql = $queryBuilder->getSQL();
 
         if (!str_contains(strtoupper($sql), 'GROUP BY')) {
+            return $this->doCountWithReplacingSelect($queryBuilder);
         }
 
-        return $this->doCountWithSubquery($queryBuilder);
+        // it the query is not expensive, i.e. it does not return a lot of rows,
+        // we can count the rows in PHP.
+
+        if (!$expensive) {
+            return $this->doCountWithRecordCounting($queryBuilder);
+        }
+
+        // else, we give up
+
+        return null;
     }
 
     /**
@@ -431,10 +439,13 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
      */
     private function doCountWithSubquery(QueryBuilder $queryBuilder): int
     {
-        $queryBuilder = (clone $this->queryBuilder);
+        $queryBuilder = (clone $queryBuilder);
         $sql = $queryBuilder->getSQL();
 
-        /** @psalm-suppress DeprecatedMethod */
+        /**
+         * @psalm-suppress DeprecatedMethod
+         * @phpstan-ignore-next-line
+         */
         $queryBuilder
             ->resetQueryPart('from')
             ->resetGroupBy()
@@ -444,9 +455,6 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
             ->select('COUNT(*)')
             ->from('(' . $sql . ')', 'rekapager_count');
 
-        dump($queryBuilder);
-        dump($queryBuilder->getSQL());
-
         return $this->returnCount($queryBuilder);
     }
 
@@ -455,12 +463,23 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
      */
     private function doCountWithReplacingSelect(QueryBuilder $queryBuilder): int
     {
-        $queryBuilder = (clone $this->queryBuilder);
+        $queryBuilder = (clone $queryBuilder);
 
-        $queryBuilder
-            ->select('COUNT(*)');
+        $queryBuilder->select('COUNT(*)');
 
         return $this->returnCount($queryBuilder);
+    }
+
+    /**
+     * @return int<0,max>
+     */
+    private function doCountWithRecordCounting(QueryBuilder $queryBuilder): int
+    {
+        $queryBuilder = (clone $queryBuilder);
+
+        $result = $queryBuilder->executeQuery()->fetchAllAssociative();
+
+        return \count($result);
     }
 
     /**
