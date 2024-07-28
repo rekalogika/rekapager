@@ -22,6 +22,7 @@ use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
+use Rekalogika\Rekapager\Doctrine\DBAL\Exception\CountUnsupportedException;
 use Rekalogika\Rekapager\Doctrine\DBAL\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\DBAL\Internal\QueryBuilderKeysetItem;
 use Rekalogika\Rekapager\Doctrine\DBAL\Internal\QueryParameter;
@@ -57,28 +58,10 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
     #[\Override]
     public function countItems(): ?int
     {
-        $countQueryBuilder = (clone $this->queryBuilder)
-            ->select('COUNT(*)')
-            ->resetOrderBy();
-
-        /** @psalm-suppress MixedAssignment */
-        $result = $countQueryBuilder->executeQuery()->fetchOne();
-
-        if ($result === null) {
-            return null;
-        }
-
-        if (!is_numeric($result)) {
-            throw new UnexpectedValueException('Count must be a number.');
-        }
-
-        $count = (int) $result;
-
-        if ($count < 0) {
-            throw new UnexpectedValueException('Count must be greater than or equal to 0.');
-        }
-
-        return $count;
+        return $this->doCount(
+            queryBuilder: $this->queryBuilder,
+            expensive: true,
+        );
     }
 
     /**
@@ -337,9 +320,6 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         return $results;
     }
 
-    /**
-     * @todo
-     */
     #[\Override]
     public function countKeysetItems(
         int $offset,
@@ -353,22 +333,10 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         $queryBuilder = $this->getQueryBuilder($offset, $limit, $boundaryValues, $boundaryType);
 
-        $queryBuilder->select('COUNT(*)');
-
-        /** @psalm-suppress MixedAssignment */
-        $result = $queryBuilder->executeQuery()->fetchOne();
-
-        if (!is_numeric($result)) {
-            throw new UnexpectedValueException('Count must be a number.');
-        }
-
-        $count = (int) $result;
-
-        if ($count < 0) {
-            throw new UnexpectedValueException('Count must be greater than or equal to 0.');
-        }
-
-        return $count;
+        return $this->doCount(
+            queryBuilder: $queryBuilder,
+            expensive: false,
+        ) ?? throw new CountUnsupportedException($queryBuilder->getSQL());
     }
 
     /**
@@ -419,8 +387,106 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         $queryBuilder = $this->getQueryBuilder($offset, $limit, null, BoundaryType::Lower);
 
+        return $this->doCount(
+            queryBuilder: $queryBuilder,
+            expensive: false,
+        ) ?? throw new CountUnsupportedException($queryBuilder->getSQL());
+    }
+
+    /**
+     * @return int<0,max>|null
+     */
+    private function doCount(
+        QueryBuilder $queryBuilder,
+        bool $expensive,
+    ): ?int {
+        // using subquery is preferred because it should work in all cases. but
+        // QueryBuilder does not provide a `resetFrom` method that we need. so
+        // we need to use the deprecated `resetQueryPart` method.
+
+        /**
+         * @psalm-suppress RedundantCondition
+         * @phpstan-ignore-next-line
+         */
+        if (\is_callable([$queryBuilder, 'resetQueryPart'])) {
+            return $this->doCountWithSubquery($queryBuilder);
+        }
+
+        // the second preferred method is to replace the select statement with
+        // a COUNT(*) statement. but it won't work if the query has a GROUP BY
+        // statement.
+
+        $sql = $queryBuilder->getSQL();
+
+        if (!str_contains(strtoupper($sql), 'GROUP BY')) {
+            return $this->doCountWithReplacingSelect($queryBuilder);
+        }
+
+        // it the query is not expensive, i.e. it does not return a lot of rows,
+        // we can count the rows in PHP.
+
+        if (!$expensive) {
+            return $this->doCountWithRecordCounting($queryBuilder);
+        }
+
+        // else, we give up
+
+        return null;
+    }
+
+    /**
+     * @return int<0,max>
+     */
+    private function doCountWithSubquery(QueryBuilder $queryBuilder): int
+    {
+        $queryBuilder = (clone $queryBuilder);
+        $sql = $queryBuilder->getSQL();
+
+        /**
+         * @psalm-suppress DeprecatedMethod
+         * @phpstan-ignore-next-line
+         */
+        $queryBuilder
+            ->resetQueryPart('from')
+            ->resetGroupBy()
+            ->resetHaving()
+            ->resetOrderBy()
+            ->resetWhere()
+            ->select('COUNT(*)')
+            ->from('(' . $sql . ')', 'rekapager_count');
+
+        return $this->returnCount($queryBuilder);
+    }
+
+    /**
+     * @return int<0,max>
+     */
+    private function doCountWithReplacingSelect(QueryBuilder $queryBuilder): int
+    {
+        $queryBuilder = (clone $queryBuilder);
+
         $queryBuilder->select('COUNT(*)');
 
+        return $this->returnCount($queryBuilder);
+    }
+
+    /**
+     * @return int<0,max>
+     */
+    private function doCountWithRecordCounting(QueryBuilder $queryBuilder): int
+    {
+        $queryBuilder = (clone $queryBuilder);
+
+        $result = $queryBuilder->executeQuery()->fetchAllAssociative();
+
+        return \count($result);
+    }
+
+    /**
+     * @return int<0,max>
+     */
+    private function returnCount(QueryBuilder $queryBuilder): int
+    {
         /** @psalm-suppress MixedAssignment */
         $result = $queryBuilder->executeQuery()->fetchOne();
 
