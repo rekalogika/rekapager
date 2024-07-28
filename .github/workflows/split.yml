@@ -25,6 +25,7 @@ jobs:
                     - rekapager-contracts
                     - rekapager-core
                     - rekapager-doctrine-collections-adapter
+                    - rekapager-doctrine-dbal-adapter
                     - rekapager-doctrine-orm-adapter
                     - rekapager-pagerfanta-adapter
                     - rekapager-keyset-pagination
