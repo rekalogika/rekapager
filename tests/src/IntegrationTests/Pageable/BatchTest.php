@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pageable;
 
 use PHPUnit\Framework\Attributes\DataProviderExternal;
+use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
@@ -37,7 +38,7 @@ class BatchTest extends PageableTestCase
         foreach ($pageable->withItemsPerPage(50)->getPages() as $page) {
             /** @var Post $post */
             foreach ($page as $post) {
-                $ids[$post->getId()] = true;
+                $ids[IndexResolver::resolveIndex($post, 'id')] = true;
                 $itemsCount++;
             }
 
@@ -69,7 +70,7 @@ class BatchTest extends PageableTestCase
 
             /** @var Post $post */
             foreach ($page as $post) {
-                $ids[$post->getId()] = true;
+                $ids[IndexResolver::resolveIndex($post, 'id')] = true;
                 $itemsCount++;
             }
 
@@ -81,7 +82,7 @@ class BatchTest extends PageableTestCase
 
             /** @var Post $post */
             foreach ($page as $post) {
-                $ids[$post->getId()] = true;
+                $ids[IndexResolver::resolveIndex($post, 'id')] = true;
                 $itemsCount++;
             }
 

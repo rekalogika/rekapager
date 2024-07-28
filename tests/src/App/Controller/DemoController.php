@@ -15,6 +15,7 @@ namespace Rekalogika\Rekapager\Tests\App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
+use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Bundle\PagerOptions;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
@@ -44,7 +45,7 @@ class DemoController extends AbstractController
      */
     public function __construct(
         #[AutowireIterator('rekalogika.rekapager.pageable_generator', defaultIndexMethod: 'getKey')]
-        iterable $pageableGenerators
+        iterable $pageableGenerators,
     ) {
         /**
          * @psalm-suppress InvalidArgument
@@ -147,9 +148,16 @@ class DemoController extends AbstractController
             foreach ($page as $item) {
                 $output .= sprintf(
                     '<li>Processing item id %s, date %s, title %s</li>',
-                    $item->getId(),
-                    $item->getDate()?->format('Y-m-d') ?? 'null',
-                    $item->getTitle() ?? 'null'
+                    IndexResolver::resolveIndex($item, 'id'),
+                    IndexResolver::resolveIndex($item, 'date'),
+                    IndexResolver::resolveIndex($item, 'title'),
+
+                    // the following code is clearer, but can't work with DBAL's
+                    // array result set:
+
+                    // $item->getId(),
+                    // $item->getDate()?->format('Y-m-d') ?? 'null',
+                    // $item->getTitle() ?? 'null'
                 );
             }
 
