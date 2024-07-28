@@ -149,9 +149,13 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             orderings: $orderings
         );
 
-        if ($where !== null) {
-            $queryBuilder->andWhere($where);
+        if ($where === null) {
+            return $queryBuilder;
         }
+
+        // adds the where clause
+
+        $queryBuilder->andWhere($where);
 
         foreach ($parameters as $template => $parameter) {
             $queryBuilder->setParameter(

@@ -3,6 +3,7 @@
 # 0.17.0
 
 * feat: DBAL adapter
+* fix: ORM `QueryBuilderAdapter` logic
 
 # 0.16.1
 
