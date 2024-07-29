@@ -148,10 +148,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
+use Rekalogika\Rekapager\Offset\OffsetPageable;
 
 // The underlying data in this example is a Doctrine ORM QueryBuilder
 
 /** @var EntityRepository $postRepository */
+
 $queryBuilder = $postRepository
     ->createQueryBuilder('p')
     ->where('p.group = :group')
@@ -175,6 +177,15 @@ $adapter = new QueryBuilderAdapter(
 // pagination.
 
 $pageable = new KeysetPageable(
+    adapter: $adapter,
+    itemsPerPage: $itemsPerPage,
+    count: $count,
+);
+
+// There is also an OffsetPageable for offset pagination. An adapter can
+// support either or both types of pagination.
+
+$pageable = new OffsetPageable(
     adapter: $adapter,
     itemsPerPage: $itemsPerPage,
     count: $count,
