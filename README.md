@@ -130,10 +130,11 @@ traverse thousands of paginated contents with a sub-second delay, causing a
 denial of service to the server. If your application is public and uses
 pagination, this library can help to prevent this problem.
 
-## Supported Underlying Data Types
+## Supported Data Types
 
-* Doctrine ORM `QueryBuilder` and `NativeQuery`
 * Doctrine Collections `Selectable` and `Collection`
+* Doctrine ORM `QueryBuilder` and `NativeQuery`
+* Doctrine DBAL `QueryBuilder`
 * Pagerfanta adapters
 
 ## Usage
@@ -147,10 +148,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
+use Rekalogika\Rekapager\Offset\OffsetPageable;
 
 // The underlying data in this example is a Doctrine ORM QueryBuilder
 
 /** @var EntityRepository $postRepository */
+
 $queryBuilder = $postRepository
     ->createQueryBuilder('p')
     ->where('p.group = :group')
@@ -174,6 +177,15 @@ $adapter = new QueryBuilderAdapter(
 // pagination.
 
 $pageable = new KeysetPageable(
+    adapter: $adapter,
+    itemsPerPage: $itemsPerPage,
+    count: $count,
+);
+
+// There is also an OffsetPageable for offset pagination. An adapter can
+// support either or both types of pagination.
+
+$pageable = new OffsetPageable(
     adapter: $adapter,
     itemsPerPage: $itemsPerPage,
     count: $count,
