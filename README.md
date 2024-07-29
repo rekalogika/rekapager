@@ -130,10 +130,11 @@ traverse thousands of paginated contents with a sub-second delay, causing a
 denial of service to the server. If your application is public and uses
 pagination, this library can help to prevent this problem.
 
-## Supported Underlying Data Types
+## Supported Data Types
 
-* Doctrine ORM `QueryBuilder` and `NativeQuery`
 * Doctrine Collections `Selectable` and `Collection`
+* Doctrine ORM `QueryBuilder` and `NativeQuery`
+* Doctrine DBAL `QueryBuilder`
 * Pagerfanta adapters
 
 ## Usage
