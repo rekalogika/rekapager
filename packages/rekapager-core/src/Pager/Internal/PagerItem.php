@@ -31,7 +31,7 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
  */
 final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
 {
-    private int|null|NullPageNumber $pageNumber;
+    private int|NullPageNumber $pageNumber;
 
     /**
      * @param PageInterface<TKey,T> $wrapped

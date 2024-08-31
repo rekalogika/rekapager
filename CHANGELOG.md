@@ -6,6 +6,7 @@
 * fix: ORM `QueryBuilderAdapter` logic
 * perf: improve DBAL `QueryBuilderAdapter` count performance
 * chore: cleanup
+* chore: satisfy static analysis
 
 # 0.16.1
 
