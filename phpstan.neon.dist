@@ -12,10 +12,12 @@ parameters:
         - tests
     excludePaths:
         - tests/var
+        - tests/src/App/Factory
     ignoreErrors:
         - '#Rekalogika\\Rekapager\\Tests\\App\\Entity\\Post> given.#'
         - '#Symfony\\Component\\Config\\Definition\\Builder\\#'
         - '#Attribute class Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator is deprecated:#'
+        - '#Property .* is never assigned int so it can be removed from the property type.#'
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
