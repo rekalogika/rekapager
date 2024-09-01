@@ -19,13 +19,13 @@ use Rekalogika\Rekapager\Adapter\Common\Exception\IncompatibleIndexTypeException
 use Rekalogika\Rekapager\Adapter\Common\Exception\RowNotCompatibleWithIndexByException;
 
 /**
+ * Used to get the index of a row based on the indexBy property.
+ * 
  * @internal
  */
 final class IndexResolver
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function resolveIndex(mixed $row, string $indexBy): int|string
     {
@@ -40,14 +40,26 @@ final class IndexResolver
             throw new CannotResolveIndexException($row, $indexBy, $e);
         }
 
-        if (!\is_string($key) && !\is_int($key) && !$key instanceof \Stringable) {
-            throw new IncompatibleIndexTypeException($row, $indexBy, $key);
+        if (\is_int($key) || \is_string($key)) {
+            return $key;
+        }
+
+        if ($key instanceof \DateTimeInterface) {
+            return $key->format('Y-m-d H:i:s');
         }
 
         if ($key instanceof \Stringable) {
-            $key = (string) $key;
+            return (string) $key;
         }
 
-        return $key;
+        if ($key instanceof \BackedEnum) {
+            return $key->value;
+        }
+
+        if ($key instanceof \UnitEnum) {
+            return $key->name;
+        }
+
+        throw new IncompatibleIndexTypeException($row, $indexBy, $key);
     }
 }

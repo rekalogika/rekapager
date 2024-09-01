@@ -7,6 +7,7 @@
 * perf: improve DBAL `QueryBuilderAdapter` count performance
 * chore: cleanup
 * chore: satisfy static analysis
+* feat: `indexBy` now supports `DateTimeInterface` and `UnitEnum` properties
 
 # 0.16.1
 
