@@ -79,7 +79,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         /** @var mixed $value */
         foreach ($boundaryValues ?? [] as $property => $value) {
-            $newBoundaryValues[$property] = new QueryParameter($value, null);
+            $newBoundaryValues[$property] = new QueryParameter($value);
         }
 
         $boundaryValues = $newBoundaryValues;
@@ -408,7 +408,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
          * @psalm-suppress RedundantCondition
          * @phpstan-ignore-next-line
          */
-        if (\is_callable($queryBuilder->resetQueryPart(...))) {
+        if (\is_callable([$queryBuilder, 'resetQueryPart'])) {
             return $this->doCountWithSubquery($queryBuilder);
         }
 
@@ -442,12 +442,15 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         $queryBuilder = (clone $queryBuilder);
         $sql = $queryBuilder->getSQL();
 
+        if (\is_callable([$queryBuilder, 'resetQueryPart'])) {
+            $queryBuilder->resetQueryPart('from');
+        }
+
         /**
          * @psalm-suppress DeprecatedMethod
          * @phpstan-ignore-next-line
          */
         $queryBuilder
-            ->resetQueryPart('from')
             ->resetGroupBy()
             ->resetHaving()
             ->resetOrderBy()
