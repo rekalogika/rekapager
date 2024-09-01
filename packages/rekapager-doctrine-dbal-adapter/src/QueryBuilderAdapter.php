@@ -128,7 +128,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         foreach ($parameters as $template => $parameter) {
             /**
-             * @psalm-suppress PossiblyInvalidArgument 
+             * @psalm-suppress PossiblyInvalidArgument
              */
             $queryBuilder->setParameter(
                 $template,

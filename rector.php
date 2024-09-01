@@ -13,6 +13,7 @@ use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
+use Rector\Php81\Rector\Array_\FirstClassCallableRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
@@ -94,5 +95,10 @@ return RectorConfig::configure()
 
         ShortenElseIfRector::class => [
             __DIR__ . '/packages/rekapager-adapter-common/src/KeysetExpressionCalculator.php',
+        ],
+
+        FirstClassCallableRector::class => [
+            __DIR__ . '/packages/rekapager-doctrine-dbal-adapter/src/QueryBuilderAdapter.php',
+            __DIR__ . '/packages/rekapager-doctrine-orm-adapter/src/QueryBuilderAdapter.php',
         ],
     ]);
