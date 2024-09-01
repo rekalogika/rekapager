@@ -70,18 +70,18 @@
         "zenstruck/foundry": "1.37.*"
     },
     "replace": {
-        "rekalogika/rekapager-adapter-common": "0.16.1",
-        "rekalogika/rekapager-api-platform": "0.16.1",
-        "rekalogika/rekapager-bundle": "0.16.1",
-        "rekalogika/rekapager-contracts": "0.16.1",
-        "rekalogika/rekapager-core": "0.16.1",
-        "rekalogika/rekapager-doctrine-collections-adapter": "0.16.1",
-        "rekalogika/rekapager-doctrine-dbal-adapter": "self.version",
-        "rekalogika/rekapager-doctrine-orm-adapter": "0.16.1",
-        "rekalogika/rekapager-keyset-pagination": "0.16.1",
-        "rekalogika/rekapager-offset-pagination": "0.16.1",
-        "rekalogika/rekapager-pagerfanta-adapter": "0.16.1",
-        "rekalogika/rekapager-symfony-bridge": "0.16.1"
+        "rekalogika/rekapager-adapter-common": "0.17.0",
+        "rekalogika/rekapager-api-platform": "0.17.0",
+        "rekalogika/rekapager-bundle": "0.17.0",
+        "rekalogika/rekapager-contracts": "0.17.0",
+        "rekalogika/rekapager-core": "0.17.0",
+        "rekalogika/rekapager-doctrine-collections-adapter": "0.17.0",
+        "rekalogika/rekapager-doctrine-dbal-adapter": "0.17.0",
+        "rekalogika/rekapager-doctrine-orm-adapter": "0.17.0",
+        "rekalogika/rekapager-keyset-pagination": "0.17.0",
+        "rekalogika/rekapager-offset-pagination": "0.17.0",
+        "rekalogika/rekapager-pagerfanta-adapter": "0.17.0",
+        "rekalogika/rekapager-symfony-bridge": "0.17.0"
     },
     "autoload": {
         "psr-4": {
