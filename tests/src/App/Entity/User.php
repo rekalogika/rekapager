@@ -33,7 +33,7 @@ class User
     private ?string $username = null;
 
     /**
-     * @var Collection<array-key,Post>
+     * @var Collection<int, Post>
      */
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'user', fetch: 'EXTRA_LAZY', indexBy: 'id')]
     private Collection $posts;

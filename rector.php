@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\CodeQuality\Rector\If_\ShortenElseIfRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\Config\RectorConfig;
@@ -89,5 +90,9 @@ return RectorConfig::configure()
         NullToStrictStringFuncCallArgRector::class => [
             // false positive
             __DIR__ . '/packages/rekapager-doctrine-dbal-adapter/src/QueryBuilderAdapter.php',
+        ],
+
+        ShortenElseIfRector::class => [
+            __DIR__ . '/packages/rekapager-adapter-common/src/KeysetExpressionCalculator.php',
         ],
     ]);
