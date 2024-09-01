@@ -127,9 +127,13 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         $queryBuilder->andWhere($where);
 
         foreach ($parameters as $template => $parameter) {
+            /**
+             * @psalm-suppress PossiblyInvalidArgument 
+             */
             $queryBuilder->setParameter(
                 $template,
                 $parameter->getValue(),
+                // @phpstan-ignore argument.type
                 $parameter->getType()
             );
         }
@@ -442,7 +446,9 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         $queryBuilder = (clone $queryBuilder);
         $sql = $queryBuilder->getSQL();
 
+        // @phpstan-ignore function.alreadyNarrowedType
         if (\is_callable([$queryBuilder, 'resetQueryPart'])) {
+            // @phpstan-ignore-next-line
             $queryBuilder->resetQueryPart('from');
         }
 
