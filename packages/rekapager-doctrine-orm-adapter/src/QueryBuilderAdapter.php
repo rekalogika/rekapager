@@ -166,7 +166,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             }
 
             /**
-             * @psalm-suppress PossiblyInvalidArgument 
+             * @psalm-suppress PossiblyInvalidArgument
              */
             $queryBuilder->setParameter(
                 $template,
