@@ -78,15 +78,29 @@ final class KeysetExpressionCalculator
             }
 
             if ($field->isAscending()) {
-                $subExpressions[] = Criteria::expr()->lte(
-                    $field->getName(),
-                    $field->getValue()
-                );
+                if ($i === \count($fields) - 1) {
+                    $subExpressions[] = Criteria::expr()->lte(
+                        $field->getName(),
+                        $field->getValue()
+                    );
+                } else {
+                    $subExpressions[] = Criteria::expr()->lt(
+                        $field->getName(),
+                        $field->getValue()
+                    );
+                }
             } else {
-                $subExpressions[] = Criteria::expr()->gte(
-                    $field->getName(),
-                    $field->getValue()
-                );
+                if ($i === \count($fields) - 1) {
+                    $subExpressions[] = Criteria::expr()->gte(
+                        $field->getName(),
+                        $field->getValue()
+                    );
+                } else {
+                    $subExpressions[] = Criteria::expr()->gt(
+                        $field->getName(),
+                        $field->getValue()
+                    );
+                }
             }
 
             $subExpression = Criteria::expr()->not(

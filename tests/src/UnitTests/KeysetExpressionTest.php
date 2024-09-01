@@ -60,6 +60,6 @@ class KeysetExpressionTest extends TestCase
 
         $sql = $expression->visit($visitor);
 
-        self::assertSame('date <= :rekapager_where_1 AND NOT (date = :rekapager_where_1 AND name <= :rekapager_where_2) AND NOT (date = :rekapager_where_1 AND name = :rekapager_where_2 AND id <= :rekapager_where_3)', $sql);
+        self::assertSame('date <= :rekapager_where_1 AND NOT (date = :rekapager_where_1 AND name < :rekapager_where_2) AND NOT (date = :rekapager_where_1 AND name = :rekapager_where_2 AND id <= :rekapager_where_3)', $sql);
     }
 }
