@@ -1,6 +1,8 @@
 api_platform:
     title: Hello Rekapager
     version: 1.0.0
+    description: |
+        Back to [main menu](/)
     enable_docs: true
     formats:
         jsonld: ['application/ld+json']

@@ -23,7 +23,7 @@
     <h2 class="h3 mt-4">SQL Queries</h2>
 
     {% for query in sql.logs %}
-        {% set runnable_sql = (query.sql ~ ';')|doctrine_replace_query_parameters(query.params) %}
+        {% set runnable_sql = controller.unindent((query.sql)|doctrine_replace_query_parameters(query.params))  ~ ';' %}
         <pre><code class="language-sql">{{- runnable_sql -}}</code></pre>
     {% endfor %}
 
