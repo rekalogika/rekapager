@@ -8,6 +8,7 @@
 * chore: cleanup
 * chore: satisfy static analysis
 * feat: `indexBy` now supports `DateTimeInterface` and `UnitEnum` properties
+* style: clean up demo
 
 # 0.16.1
 

@@ -118,6 +118,7 @@ class DemoController extends AbstractController
             'template' => $pagerParameters->template,
             'locale' => $pagerParameters->locale,
             'proximity' => $pagerParameters->viewProximity,
+            'controller' => $this,
         ]);
     }
 
@@ -129,7 +130,6 @@ class DemoController extends AbstractController
     ): Response {
         $pageableGenerator = $this->pageableGenerators[$key] ?? throw $this->createNotFoundException();
 
-        /** @var PageableInterface<array-key,Post> */
         $pageable = $pageableGenerator->generatePageable(
             itemsPerPage: 5,
             count: false,
@@ -146,20 +146,32 @@ class DemoController extends AbstractController
 
             $output .= '<ul>';
 
+            /** @var mixed $item */
             foreach ($page as $item) {
-                $output .= sprintf(
-                    '<li>Processing item id %s, date %s, title %s</li>',
-                    IndexResolver::resolveIndex($item, 'id'),
-                    IndexResolver::resolveIndex($item, 'date'),
-                    IndexResolver::resolveIndex($item, 'title'),
+                if (is_array($item)) {
+                    // used by DBAL adapter
+                    $id = IndexResolver::resolveIndex($item, 'id');
+                    $date = IndexResolver::resolveIndex($item, 'date');
+                    $title = IndexResolver::resolveIndex($item, 'title');
 
-                    // the following code is clearer, but can't work with DBAL's
-                    // array result set:
-
-                    // $item->getId(),
-                    // $item->getDate()?->format('Y-m-d') ?? 'null',
-                    // $item->getTitle() ?? 'null'
-                );
+                    $output .= sprintf(
+                        '<li>Processing item id %s, date %s, title %s</li>',
+                        $id,
+                        $date,
+                        $title
+                    );
+                } else {
+                    // used by other adapters
+                    assert($item instanceof Post);
+                    $output .= sprintf(
+                        '<li>Processing item id %s, date %s, title %s</li>',
+    
+                        $item->getId(),
+                        $item->getDate()?->format('Y-m-d') ?? 'null',
+                        $item->getTitle() ?? 'null'
+                    );
+    
+                }
             }
 
             $output .= '</ul>';
@@ -178,8 +190,9 @@ class DemoController extends AbstractController
             'sql' => $logger,
             'pageable_generators' => $this->pageableGenerators,
             'source_code' => $this->getSourceCode($pageableGenerator::class) . "\n" .
-                $this->getSourceCode(self::class),
+                $this->unindent($this->getSourceCode(self::class)),
             'output' => $output,
+            'controller' => $this,
         ]);
     }
 
@@ -216,7 +229,7 @@ class DemoController extends AbstractController
         return $this->unindent($contents);
     }
 
-    private function unindent(string $text): string
+    public function unindent(string $text): string
     {
         if (preg_match('{\A[\r\n]*(\h+)[^\r\n]*+(?:[\r\n]++(?>\1[^\r\n]*+(?:[\r\n]+|\z)|[\r\n]+)+)?\z}', rtrim($text), $match)) {
             $text = preg_replace('{^' . $match[1] . '}m', '', $text);
