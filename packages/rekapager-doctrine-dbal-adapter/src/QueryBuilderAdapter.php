@@ -452,6 +452,8 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
             ->resetHaving()
             ->resetOrderBy()
             ->resetWhere()
+            ->setMaxResults(null)
+            ->setFirstResult(0)
             ->select('COUNT(*)')
             ->from('(' . $sql . ')', 'rekapager_count');
 

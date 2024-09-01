@@ -11,6 +11,7 @@
 * style: clean up demo
 * fix(`KeysetExpressionCalculator`): fix bug if more than two fields are used
 * feat: support `BackedEnum` as order field
+* fix: fix DBAL count query
 
 # 0.16.1
 
