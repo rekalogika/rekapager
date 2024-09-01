@@ -52,6 +52,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
         \DateTimeInterface::class,
         AbstractUid::class,
         UuidInterface::class,
+        \BackedEnum::class,
     ];
 
     /**

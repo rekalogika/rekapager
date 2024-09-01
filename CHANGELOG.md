@@ -10,6 +10,7 @@
 * feat: `indexBy` now supports `DateTimeInterface` and `UnitEnum` properties
 * style: clean up demo
 * fix(`KeysetExpressionCalculator`): fix bug if more than two fields are used
+* feat: support `BackedEnum` as order field
 
 # 0.16.1
 
