@@ -354,6 +354,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             $query->setParameter(
                 key: $parameter->getKey(),
                 value: $parameter->getValue(),
+                // @phpstan-ignore argument.type
                 type: $parameter->getType()
             );
         }
@@ -428,6 +429,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             $query->setParameter(
                 key: $parameter->getKey(),
                 value: $parameter->getValue(),
+                // @phpstan-ignore argument.type
                 type: $parameter->getType()
             );
         }
@@ -470,6 +472,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             $query->setParameter(
                 key: $parameter->getKey(),
                 value: $parameter->getValue(),
+                // @phpstan-ignore argument.type
                 type: $parameter->getType()
             );
         }

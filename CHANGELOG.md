@@ -15,6 +15,7 @@
 * test: update fixtures to include enum in sort field
 * chore: various demo polishing
 * chore: rector clean up
+* deps: DBAL 4.0 compatibility
 
 # 0.16.1
 

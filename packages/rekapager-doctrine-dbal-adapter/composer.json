@@ -28,7 +28,7 @@
     },
     "require": {
         "php": "^8.2",
-        "doctrine/dbal": "^3.8",
+        "doctrine/dbal": "^3.8 || ^4.0",
         "doctrine/collections": "^2.2",
         "rekalogika/rekapager-adapter-common": "^0.16.1",
         "rekalogika/rekapager-keyset-pagination": "^0.16.1",

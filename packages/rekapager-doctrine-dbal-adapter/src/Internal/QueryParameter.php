@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\DBAL\Internal;
 
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Type;
 
 /**
@@ -22,7 +24,7 @@ final readonly class QueryParameter
 {
     public function __construct(
         private mixed $value,
-        private int|string|Type|null $type = null
+        private string|ParameterType|Type|ArrayParameterType|int $type = ParameterType::STRING
     ) {
     }
 
@@ -31,7 +33,7 @@ final readonly class QueryParameter
         return $this->value;
     }
 
-    public function getType(): int|string|Type|null
+    public function getType(): string|ParameterType|Type|ArrayParameterType|int
     {
         return $this->type;
     }

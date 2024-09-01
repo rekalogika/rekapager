@@ -165,9 +165,13 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
                 $value = $value->value;
             }
 
+            /**
+             * @psalm-suppress PossiblyInvalidArgument 
+             */
             $queryBuilder->setParameter(
                 $template,
                 $value,
+                // @phpstan-ignore argument.type
                 $parameter->getType()
             );
         }
@@ -537,6 +541,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             }
 
             if ($fromItem->getAlias() === $alias) {
+                /** @var class-string */
                 return $fromItem->getFrom();
             }
         }

@@ -1,41 +1,20 @@
 {
     "name": "rekalogika/rekapager",
-    "homepage": "https://rekalogika.dev/rekapager",
+    "description": "Pagination library for PHP, supporting both offset-based and keyset-based pagination.",
     "license": "MIT",
     "type": "library",
-    "description": "Pagination library for PHP, supporting both offset-based and keyset-based pagination.",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
             "email": "priyadi@rekalogika.com"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Rekalogika\\Contracts\\Rekapager\\": "packages/rekapager-contracts/src/",
-            "Rekalogika\\Rekapager\\": "packages/rekapager-core/src/",
-            "Rekalogika\\Rekapager\\Adapter\\Common\\": "packages/rekapager-adapter-common/src/",
-            "Rekalogika\\Rekapager\\ApiPlatform\\": "packages/rekapager-api-platform/src/",
-            "Rekalogika\\Rekapager\\Bundle\\": "packages/rekapager-bundle/src/",
-            "Rekalogika\\Rekapager\\Doctrine\\Collections\\": "packages/rekapager-doctrine-collections-adapter/src/",
-            "Rekalogika\\Rekapager\\Doctrine\\DBAL\\": "packages/rekapager-doctrine-dbal-adapter/src/",
-            "Rekalogika\\Rekapager\\Doctrine\\ORM\\": "packages/rekapager-doctrine-orm-adapter/src/",
-            "Rekalogika\\Rekapager\\Keyset\\": "packages/rekapager-keyset-pagination/src/",
-            "Rekalogika\\Rekapager\\Offset\\": "packages/rekapager-offset-pagination/src/",
-            "Rekalogika\\Rekapager\\Pagerfanta\\": "packages/rekapager-pagerfanta-adapter/src/",
-            "Rekalogika\\Rekapager\\Symfony\\": "packages/rekapager-symfony-bridge/src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Rekalogika\\Rekapager\\Tests\\": "tests/src/"
-        }
-    },
+    "homepage": "https://rekalogika.dev/rekapager",
     "require": {
         "php": "^8.2",
         "api-platform/core": "^3.2",
         "doctrine/collections": "^2.2",
-        "doctrine/dbal": "^3.8",
+        "doctrine/dbal": "^3.8 || ^4.0",
         "doctrine/orm": "^2.19 || ^3.0",
         "pagerfanta/core": "^4.0",
         "pagerfanta/doctrine-collections-adapter": "^4.0",
@@ -90,13 +69,6 @@
         "vimeo/psalm": "^5.15",
         "zenstruck/foundry": "1.37.*"
     },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "symfony/runtime": true,
-            "symfony/flex": false
-        }
-    },
     "replace": {
         "rekalogika/rekapager-adapter-common": "0.16.1",
         "rekalogika/rekapager-api-platform": "0.16.1",
@@ -110,5 +82,33 @@
         "rekalogika/rekapager-offset-pagination": "0.16.1",
         "rekalogika/rekapager-pagerfanta-adapter": "0.16.1",
         "rekalogika/rekapager-symfony-bridge": "0.16.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rekalogika\\Contracts\\Rekapager\\": "packages/rekapager-contracts/src/",
+            "Rekalogika\\Rekapager\\": "packages/rekapager-core/src/",
+            "Rekalogika\\Rekapager\\Adapter\\Common\\": "packages/rekapager-adapter-common/src/",
+            "Rekalogika\\Rekapager\\ApiPlatform\\": "packages/rekapager-api-platform/src/",
+            "Rekalogika\\Rekapager\\Bundle\\": "packages/rekapager-bundle/src/",
+            "Rekalogika\\Rekapager\\Doctrine\\Collections\\": "packages/rekapager-doctrine-collections-adapter/src/",
+            "Rekalogika\\Rekapager\\Doctrine\\DBAL\\": "packages/rekapager-doctrine-dbal-adapter/src/",
+            "Rekalogika\\Rekapager\\Doctrine\\ORM\\": "packages/rekapager-doctrine-orm-adapter/src/",
+            "Rekalogika\\Rekapager\\Keyset\\": "packages/rekapager-keyset-pagination/src/",
+            "Rekalogika\\Rekapager\\Offset\\": "packages/rekapager-offset-pagination/src/",
+            "Rekalogika\\Rekapager\\Pagerfanta\\": "packages/rekapager-pagerfanta-adapter/src/",
+            "Rekalogika\\Rekapager\\Symfony\\": "packages/rekapager-symfony-bridge/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rekalogika\\Rekapager\\Tests\\": "tests/src/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/runtime": true,
+            "symfony/flex": false
+        }
     }
 }
