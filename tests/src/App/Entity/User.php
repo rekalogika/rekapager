@@ -33,7 +33,7 @@ class User
     private ?string $username = null;
 
     /**
-     * @var Collection<int, Post>
+     * @var Collection<int,Post>
      */
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'user', fetch: 'EXTRA_LAZY', indexBy: 'id')]
     private Collection $posts;
@@ -61,7 +61,7 @@ class User
     }
 
     /**
-     * @return Collection<array-key, Post>
+     * @return Collection<int,Post>
      */
     public function getPosts(): Collection
     {
