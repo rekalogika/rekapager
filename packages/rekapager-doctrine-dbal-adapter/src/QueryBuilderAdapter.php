@@ -411,6 +411,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         /**
          * @psalm-suppress RedundantCondition
          * @phpstan-ignore-next-line
+         * @psalm-suppress UndefinedMethod
          */
         if (\is_callable($queryBuilder->resetQueryPart(...))) {
             return $this->doCountWithSubquery($queryBuilder);
@@ -446,9 +447,15 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         $queryBuilder = (clone $queryBuilder);
         $sql = $queryBuilder->getSQL();
 
-        // @phpstan-ignore function.alreadyNarrowedType
+        /**
+         * @psalm-suppress UndefinedMethod
+         * @phpstan-ignore function.alreadyNarrowedType
+         */
         if (\is_callable($queryBuilder->resetQueryPart(...))) {
-            // @phpstan-ignore-next-line
+            /**
+             * @psalm-suppress DeprecatedMethod
+             * @phpstan-ignore-next-line
+             */
             $queryBuilder->resetQueryPart('from');
         }
 
