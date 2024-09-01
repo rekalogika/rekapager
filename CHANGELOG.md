@@ -12,6 +12,9 @@
 * fix(`KeysetExpressionCalculator`): fix bug if more than two fields are used
 * feat: support `BackedEnum` as order field
 * fix: fix DBAL count query
+* test: update fixtures to include enum in sort field
+* chore: various demo polishing
+* chore: rector clean up
 
 # 0.16.1
 

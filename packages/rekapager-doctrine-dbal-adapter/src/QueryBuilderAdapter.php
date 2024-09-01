@@ -408,7 +408,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
          * @psalm-suppress RedundantCondition
          * @phpstan-ignore-next-line
          */
-        if (\is_callable([$queryBuilder, 'resetQueryPart'])) {
+        if (\is_callable($queryBuilder->resetQueryPart(...))) {
             return $this->doCountWithSubquery($queryBuilder);
         }
 

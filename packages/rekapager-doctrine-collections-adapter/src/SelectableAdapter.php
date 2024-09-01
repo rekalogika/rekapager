@@ -124,7 +124,7 @@ final readonly class SelectableAdapter implements
             $criteria->setMaxResults($limit);
         }
 
-        return count($this->collection->matching($criteria)->toArray());
+        return \count($this->collection->matching($criteria)->toArray());
     }
 
     //
@@ -265,7 +265,7 @@ final readonly class SelectableAdapter implements
         //
         // return $this->collection->matching($criteria)->count();
 
-        return count($this->collection->matching($criteria)->toArray());
+        return \count($this->collection->matching($criteria)->toArray());
     }
 
     /**
