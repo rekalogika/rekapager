@@ -9,6 +9,7 @@
 * chore: satisfy static analysis
 * feat: `indexBy` now supports `DateTimeInterface` and `UnitEnum` properties
 * style: clean up demo
+* fix(`KeysetExpressionCalculator`): fix bug if more than two fields are used
 
 # 0.16.1
 
