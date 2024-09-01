@@ -44,6 +44,7 @@ class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncode
         \DateTimeInterface::class,
         AbstractUid::class,
         UuidInterface::class,
+        \BackedEnum::class,
     ];
 
     /**

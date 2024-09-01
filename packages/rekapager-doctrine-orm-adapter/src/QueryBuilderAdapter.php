@@ -158,9 +158,16 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         $queryBuilder->andWhere($where);
 
         foreach ($parameters as $template => $parameter) {
+            /** @var mixed */
+            $value = $parameter->getValue();
+
+            if ($value instanceof \BackedEnum) {
+                $value = $value->value;
+            }
+
             $queryBuilder->setParameter(
                 $template,
-                $parameter->getValue(),
+                $value,
                 $parameter->getType()
             );
         }
