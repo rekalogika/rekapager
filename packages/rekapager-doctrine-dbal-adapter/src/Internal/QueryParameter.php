@@ -24,7 +24,7 @@ final readonly class QueryParameter
 {
     public function __construct(
         private mixed $value,
-        private string|ParameterType|Type|ArrayParameterType $type = ParameterType::STRING
+        private string|ParameterType|Type|ArrayParameterType|int $type = ParameterType::STRING
     ) {
     }
 
@@ -33,7 +33,7 @@ final readonly class QueryParameter
         return $this->value;
     }
 
-    public function getType(): string|ParameterType|Type|ArrayParameterType
+    public function getType(): string|ParameterType|Type|ArrayParameterType|int
     {
         return $this->type;
     }
