@@ -77,7 +77,7 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
             countAllSql: $countAllSql, // optional, if null, total will not be available
             orderBy: [
                 'p.date' => Order::Descending,
-                'p.title' => Order::Ascending,
+                'p.category' => Order::Ascending,
                 'p.id' => Order::Ascending,
             ],
             parameters: [

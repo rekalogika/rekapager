@@ -55,7 +55,7 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             ->where('p.setName = :setName')
             ->setParameter('setName', $setName)
             ->addOrderBy('p.date', 'DESC')
-            ->addOrderBy('p.title', 'ASC')
+            ->addOrderBy('p.category', 'ASC')
             ->addOrderBy('p.id', 'ASC');
 
         $adapter = new QueryBuilderAdapter(
