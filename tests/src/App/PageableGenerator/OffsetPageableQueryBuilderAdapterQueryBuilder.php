@@ -64,7 +64,7 @@ class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             ->setParameter('setName', $setName)
             ->setParameter('user', $user)
             ->addOrderBy('p.date', 'DESC')
-            ->addOrderBy('p.title', 'ASC')
+            ->addOrderBy('p.category', 'ASC')
             ->addOrderBy('p.id', 'ASC');
 
         $adapter = new QueryBuilderAdapter(

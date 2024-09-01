@@ -23,7 +23,7 @@
     <h2 class="h3 mt-4">SQL Queries</h2>
 
     {% for query in sql.logs %}
-        {% set runnable_sql = controller.unindent((query.sql)|doctrine_replace_query_parameters(query.params))  ~ ';' %}
+        {% set runnable_sql = controller.unindent((query.sql)|doctrine_replace_query_parameters(query.params)) %}
         <pre><code class="language-sql">{{- runnable_sql -}}</code></pre>
     {% endfor %}
 
@@ -47,6 +47,7 @@
                 <th>Result Key</th>
                 <th>ID</th>
                 <th>Title</th>
+                <th>Category</th>
                 <th>Date</th>
                 <th>Content</th>
             </tr>
@@ -58,6 +59,7 @@
                     <td>{{ key }}</td>
                     <td>{{ post.id }}</td>
                     <td>{{ post.title }}</td>
+                    <td>{{ post.category.value is defined ? post.category.value : post.category }}</td>
                     <td>{{ post.date|date("Y-m-d") }}</td>
                     <td>{{ post.content }}</td>
                 </tr>

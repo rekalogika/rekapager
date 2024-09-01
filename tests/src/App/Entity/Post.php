@@ -51,6 +51,9 @@ class Post
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[ORM\Column(type: Types::STRING, enumType: Category::class)]
+    private ?Category $category = null;
+
     /**
      * @var Collection<int,Comment>
      */
@@ -159,6 +162,20 @@ class Post
     public function setSetName(string $setName): static
     {
         $this->setName = $setName;
+
+        return $this;
+    }
+
+    public function getCategory(): Category
+    {
+        \assert($this->category instanceof Category);
+
+        return $this->category;
+    }
+
+    public function setCategory(Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

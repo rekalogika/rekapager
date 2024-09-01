@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Factory;
 
+use Rekalogika\Rekapager\Tests\App\Entity\Category;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 use Zenstruck\Foundry\ModelFactory;
@@ -78,6 +79,12 @@ final class PostFactory extends ModelFactory
             'title' => self::faker()->text(20),
             'content' => self::faker()->text(200),
             'date' => self::faker()->dateTimeBetween('-1 month', 'now'),
+            'category' => self::faker()->randomElement([
+                Category::Animalia,
+                Category::Plantae,
+                Category::Fungi,
+                Category::Bacteria,
+            ]),
         ];
     }
 

@@ -53,7 +53,7 @@ class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues implements 
         // @highlight-start
         $queryBuilder = $this->connection
             ->createQueryBuilder()
-            ->select('p.id', 'p.date', 'p.title', 'p.content')
+            ->select('p.id', 'p.date', 'p.title', 'p.content', 'p.category')
             ->from('post', 'p')
             ->where('p.set_name = :setName')
             ->setParameter('setName', $setName);
@@ -62,7 +62,7 @@ class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues implements 
             queryBuilder: $queryBuilder,
             orderBy: [
                 'p.date' => Order::Ascending,
-                'p.title' => Order::Ascending,
+                'p.category' => Order::Ascending,
                 'p.id' => Order::Ascending,
             ],
             indexBy: 'id',

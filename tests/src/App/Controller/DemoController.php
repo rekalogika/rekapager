@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Bundle\PagerOptions;
@@ -148,29 +147,31 @@ class DemoController extends AbstractController
 
             /** @var mixed $item */
             foreach ($page as $item) {
-                if (is_array($item)) {
+                if (\is_array($item)) {
                     // used by DBAL adapter
                     $id = IndexResolver::resolveIndex($item, 'id');
                     $date = IndexResolver::resolveIndex($item, 'date');
                     $title = IndexResolver::resolveIndex($item, 'title');
+                    $category = IndexResolver::resolveIndex($item, 'category');
 
                     $output .= sprintf(
-                        '<li>Processing item id %s, date %s, title %s</li>',
+                        '<li>Processing item id %s, date %s, title %s, category %s</li>',
                         $id,
                         $date,
-                        $title
+                        $title,
+                        $category,
                     );
                 } else {
                     // used by other adapters
-                    assert($item instanceof Post);
+                    \assert($item instanceof Post);
                     $output .= sprintf(
-                        '<li>Processing item id %s, date %s, title %s</li>',
-    
+                        '<li>Processing item id %s, date %s, title %s, category %s</li>',
                         $item->getId(),
                         $item->getDate()?->format('Y-m-d') ?? 'null',
-                        $item->getTitle() ?? 'null'
+                        $item->getTitle() ?? 'null',
+                        $item->getCategory()->value
                     );
-    
+
                 }
             }
 

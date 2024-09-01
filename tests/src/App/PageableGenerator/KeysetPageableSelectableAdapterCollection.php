@@ -62,7 +62,7 @@ class KeysetPageableSelectableAdapterCollection implements PageableGeneratorInte
             ->where(Criteria::expr()->eq('setName', $setName))
             ->orderBy([
                 'date' => Order::Descending,
-                'title' => Order::Ascending,
+                'category' => Order::Ascending,
                 'id' => Order::Ascending
             ]);
 

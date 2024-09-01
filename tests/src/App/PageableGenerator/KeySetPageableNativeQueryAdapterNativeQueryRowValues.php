@@ -78,7 +78,7 @@ class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGe
             countAllSql: $countAllSql, // optional, if null, total will not be available
             orderBy: [
                 'p.date' => Order::Ascending,
-                'p.title' => Order::Ascending,
+                'p.category' => Order::Ascending,
                 'p.id' => Order::Ascending,
             ],
             parameters: [

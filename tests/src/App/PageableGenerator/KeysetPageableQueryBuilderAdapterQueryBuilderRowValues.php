@@ -56,7 +56,7 @@ class KeysetPageableQueryBuilderAdapterQueryBuilderRowValues implements Pageable
             ->where('p.setName = :setName')
             ->setParameter('setName', $setName)
             ->addOrderBy('p.date', 'ASC')
-            ->addOrderBy('p.title', 'ASC')
+            ->addOrderBy('p.category', 'ASC')
             ->addOrderBy('p.id', 'ASC');
 
         $adapter = new QueryBuilderAdapter(

@@ -86,6 +86,10 @@ clean:
 sqlite:
 	sqlite3 tests/var/data.db
 
+.PHONY: sqlite-dump
+sqlite-dump:
+	sqlite3 tests/var/data.db .dump > tests/data.sql
+
 .PHONY: dump
 dump:
 	$(PHP) tests/bin/console server:dump
