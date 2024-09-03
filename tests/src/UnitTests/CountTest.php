@@ -33,7 +33,7 @@ class CountTest extends TestCase
      * @psalm-suppress MixedReturnTypeCoercion
      * @return iterable<array-key,array{Collection<array-key,Entity>,PageableInterface<array-key,Entity>,mixed}>
      */
-    public static function provider(): iterable
+    public static function provideNoCountCases(): iterable
     {
         /** @var Collection<array-key,Entity>&Selectable<array-key,Entity> */
         $collection = new ArrayCollection([
@@ -74,7 +74,7 @@ class CountTest extends TestCase
                 adapter: new SelectableAdapter(
                     collection: $collection
                 ),
-                count: fn () => $collection->count(),
+                count: static fn () => $collection->count(),
             ),
             5,
         ];
@@ -109,7 +109,7 @@ class CountTest extends TestCase
                 adapter: new SelectableAdapter(
                     collection: $collection
                 ),
-                count: fn () => $collection->count(),
+                count: static fn () => $collection->count(),
             ),
             5,
         ];
@@ -143,7 +143,7 @@ class CountTest extends TestCase
                 adapter: new PagerfantaAdapterAdapter(
                     adapter: new PagerfantaSelectableAdapter($collection, Criteria::create())
                 ),
-                count: fn () => $collection->count(),
+                count: static fn () => $collection->count(),
             ),
             5,
         ];
@@ -152,13 +152,13 @@ class CountTest extends TestCase
     /**
      * @param Collection<array-key,Entity> $collection
      * @param PageableInterface<array-key,Entity> $pageable
-     * @dataProvider provider
+     * @dataProvider provideNoCountCases
      */
     public function testNoCount(
         Collection $collection,
         PageableInterface $pageable,
         mixed $expected,
     ): void {
-        $this->assertSame($expected, $pageable->getTotalItems());
+        self::assertSame($expected, $pageable->getTotalItems());
     }
 }

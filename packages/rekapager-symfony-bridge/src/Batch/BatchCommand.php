@@ -179,13 +179,13 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
     #[\Override]
     public function getSubscribedSignals(): array
     {
-        return [\SIGINT, \SIGTERM];
+        return [SIGINT, SIGTERM];
     }
 
     #[\Override]
     public function handleSignal(int $signal, int|false $previousExitCode = 0): int|false
     {
-        if (\SIGINT !== $signal && \SIGTERM !== $signal) {
+        if (SIGINT !== $signal && SIGTERM !== $signal) {
             return false;
         }
 

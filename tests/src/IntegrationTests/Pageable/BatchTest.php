@@ -45,9 +45,9 @@ class BatchTest extends PageableTestCase
             $pagesCount++;
         }
 
-        static::assertSame(1003, $itemsCount);
-        static::assertSame(21, $pagesCount);
-        static::assertCount(1003, $ids);
+        self::assertSame(1003, $itemsCount);
+        self::assertSame(21, $pagesCount);
+        self::assertCount(1003, $ids);
     }
 
     #[DataProviderExternal(PageableGeneratorProvider::class, 'all')]
@@ -89,8 +89,8 @@ class BatchTest extends PageableTestCase
             $pagesCount++;
         }
 
-        static::assertSame(1003, $itemsCount);
-        static::assertSame(21, $pagesCount);
-        static::assertCount(1003, $ids);
+        self::assertSame(1003, $itemsCount);
+        self::assertSame(21, $pagesCount);
+        self::assertCount(1003, $ids);
     }
 }

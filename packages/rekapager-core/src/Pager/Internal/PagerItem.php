@@ -158,13 +158,13 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
      * @param PageInterface<TKey2,T2> $page
      * @return PagerItem<TKey2,T2>
      */
-    private function decorate(PageInterface $page): PagerItem
+    private function decorate(PageInterface $page): self
     {
-        if ($page instanceof PagerItem) {
+        if ($page instanceof self) {
             return $page;
         }
 
-        return new PagerItem(
+        return new self(
             wrapped: $page,
             pagerUrlGenerator: $this->pagerUrlGenerator,
         );

@@ -51,8 +51,8 @@ class PagerfantaAdapterIndexByTest extends KernelTestCase
 
         /** @var Post $post */
         foreach ($pageable->getFirstPage() as $key => $post) {
-            static::assertInstanceOf(Post::class, $post);
-            static::assertEquals($key, $post->getId());
+            self::assertInstanceOf(Post::class, $post);
+            self::assertEquals($key, $post->getId());
         }
     }
 

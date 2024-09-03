@@ -33,12 +33,12 @@ interface PagerItemInterface extends PageInterface
     /**
      * @return null|PagerItemInterface<TKey,T>
      */
-    public function getNextPage(): ?PagerItemInterface;
+    public function getNextPage(): ?self;
 
     /**
      * @return null|PagerItemInterface<TKey,T>
      */
-    public function getPreviousPage(): ?PagerItemInterface;
+    public function getPreviousPage(): ?self;
 
     /**
      * Gets n next pages
