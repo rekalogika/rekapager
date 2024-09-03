@@ -107,39 +107,39 @@ abstract class PagerTestCase extends PageableTestCase
         array $nextPageNumbers,
         int $currentCount,
     ): void {
-        static::assertEquals($proximity, $pager->getProximity());
-        static::assertEquals($hasPrevious, $pager->getPreviousPage() !== null);
-        static::assertEquals($hasNext, $pager->getNextPage() !== null);
-        static::assertEquals($hasFirst, $pager->getFirstPage() !== null);
-        static::assertEquals($hasLast, $pager->getLastPage() !== null);
-        static::assertEquals($hasGapToFirstPage, $pager->hasGapToFirstPage());
-        static::assertEquals($hasGapToLastPage, $pager->hasGapToLastPage());
-        static::assertCount($numOfPreviousNeighboringPages, $pager->getPreviousNeighboringPages());
-        static::assertCount($numOfNextNeighboringPages, $pager->getNextNeighboringPages());
-        static::assertEquals($firstPageNumber, $pager->getFirstPage()?->getPageNumber());
-        static::assertEquals($lastPageNumber, $pager->getLastPage()?->getPageNumber());
+        self::assertEquals($proximity, $pager->getProximity());
+        self::assertEquals($hasPrevious, $pager->getPreviousPage() !== null);
+        self::assertEquals($hasNext, $pager->getNextPage() !== null);
+        self::assertEquals($hasFirst, $pager->getFirstPage() !== null);
+        self::assertEquals($hasLast, $pager->getLastPage() !== null);
+        self::assertEquals($hasGapToFirstPage, $pager->hasGapToFirstPage());
+        self::assertEquals($hasGapToLastPage, $pager->hasGapToLastPage());
+        self::assertCount($numOfPreviousNeighboringPages, $pager->getPreviousNeighboringPages());
+        self::assertCount($numOfNextNeighboringPages, $pager->getNextNeighboringPages());
+        self::assertEquals($firstPageNumber, $pager->getFirstPage()?->getPageNumber());
+        self::assertEquals($lastPageNumber, $pager->getLastPage()?->getPageNumber());
 
         /** @psalm-suppress InvalidArgument */
         $numbers = array_map(
-            fn (PageInterface $page): ?int => $page->getPageNumber(),
+            static fn (PageInterface $page): ?int => $page->getPageNumber(),
             iterator_to_array($pager->getPreviousNeighboringPages())
         );
 
-        static::assertEquals($previousPageNumbers, $numbers);
+        self::assertEquals($previousPageNumbers, $numbers);
 
         if ($currentPageNumber !== null) {
-            static::assertEquals($currentPageNumber, $pager->getCurrentPage()->getPageNumber());
+            self::assertEquals($currentPageNumber, $pager->getCurrentPage()->getPageNumber());
         }
 
         /** @psalm-suppress InvalidArgument */
         $numbers = array_map(
-            fn (PageInterface $page): ?int => $page->getPageNumber(),
+            static fn (PageInterface $page): ?int => $page->getPageNumber(),
             iterator_to_array($pager->getNextNeighboringPages())
         );
 
-        static::assertEquals($nextPageNumbers, $numbers);
+        self::assertEquals($nextPageNumbers, $numbers);
 
-        static::assertEquals($currentCount, $pager->getCurrentPage()->count());
+        self::assertEquals($currentCount, $pager->getCurrentPage()->count());
     }
 
     /**
@@ -156,7 +156,7 @@ abstract class PagerTestCase extends PageableTestCase
 
         while ($n > 1) {
             $page = $page->getNextPage();
-            static::assertNotNull($page);
+            self::assertNotNull($page);
             $n--;
         }
 
@@ -177,11 +177,11 @@ abstract class PagerTestCase extends PageableTestCase
 
         while ($n > 1) {
             $page = $page?->getPreviousPage();
-            static::assertNotNull($page);
+            self::assertNotNull($page);
             $n--;
         }
 
-        static::assertNotNull($page);
+        self::assertNotNull($page);
 
         return $page;
     }
@@ -224,7 +224,7 @@ abstract class PagerTestCase extends PageableTestCase
 
         while ($n > 1) {
             $page = $page->getPreviousPage();
-            static::assertNotNull($page);
+            self::assertNotNull($page);
             $n--;
         }
 

@@ -55,7 +55,7 @@ class KeysetPageableSelectableAdapterCollection implements PageableGeneratorInte
             throw new \RuntimeException('No user found');
         }
 
-        // @highlight-start
+        // highlight-start
         $selectable = $user->getPosts();
 
         $criteria = Criteria::create()
@@ -77,7 +77,7 @@ class KeysetPageableSelectableAdapterCollection implements PageableGeneratorInte
             itemsPerPage: $itemsPerPage,
             count: $count,
         );
-        // @highlight-end
+        // highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;

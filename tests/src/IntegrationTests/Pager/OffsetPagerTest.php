@@ -343,7 +343,7 @@ class OffsetPagerTest extends PagerTestCase
         $firstPage = $pageable->getFirstPage();
         $nextPages = $firstPage->getNextPages(2);
         $pageByJump = $nextPages[1] ?? null;
-        static::assertNotNull($pageByJump);
+        self::assertNotNull($pageByJump);
 
         $pagerByJump = $this->createPagerFromPage($pageByJump);
 

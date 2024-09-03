@@ -50,7 +50,7 @@ class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues implements 
         string $setName,
         ?int $pageLimit = null,
     ): PageableInterface {
-        // @highlight-start
+        // highlight-start
         $queryBuilder = $this->connection
             ->createQueryBuilder()
             ->select('p.id', 'p.date', 'p.title', 'p.content', 'p.category')
@@ -74,7 +74,7 @@ class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues implements 
             itemsPerPage: $itemsPerPage,
             count: $count,
         );
-        // @highlight-end
+        // highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;

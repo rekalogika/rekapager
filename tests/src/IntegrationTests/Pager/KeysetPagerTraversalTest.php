@@ -33,12 +33,12 @@ class KeysetPagerTraversalTest extends PagerTestCase
         $nextPageIdentifier = $nextPage?->getPageIdentifier();
         $lastPageIdentifier = $lastPage?->getPageIdentifier();
 
-        static::assertEquals($lastPageIdentifier, $nextPageIdentifier);
+        self::assertEquals($lastPageIdentifier, $nextPageIdentifier);
 
-        static::assertNotNull($nextPage);
-        static::assertInstanceOf(KeysetPageIdentifier::class, $nextPageIdentifier);
-        static::assertEquals(BoundaryType::Lower, $nextPageIdentifier->getBoundaryType());
-        static::assertCount(3, $nextPage);
+        self::assertNotNull($nextPage);
+        self::assertInstanceOf(KeysetPageIdentifier::class, $nextPageIdentifier);
+        self::assertEquals(BoundaryType::Lower, $nextPageIdentifier->getBoundaryType());
+        self::assertCount(3, $nextPage);
     }
 
     #[DataProviderExternal(PageableGeneratorProvider::class, 'keyset')]

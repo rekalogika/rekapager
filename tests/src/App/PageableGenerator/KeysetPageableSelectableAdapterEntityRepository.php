@@ -50,7 +50,7 @@ class KeysetPageableSelectableAdapterEntityRepository implements PageableGenerat
         string $setName,
         ?int $pageLimit = null,
     ): PageableInterface {
-        // @highlight-start
+        // highlight-start
         $selectable = $this->postRepository;
 
         $criteria = Criteria::create()
@@ -72,7 +72,7 @@ class KeysetPageableSelectableAdapterEntityRepository implements PageableGenerat
             itemsPerPage: $itemsPerPage,
             count: $count,
         );
-        // @highlight-end
+        // highlight-end
 
         return $pageable;
     }
