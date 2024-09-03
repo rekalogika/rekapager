@@ -50,7 +50,7 @@ class OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableG
         string $setName,
         ?int $pageLimit = null,
     ): PageableInterface {
-        // @highlight-start
+        // highlight-start
         $queryBuilder = $this->connection
             ->createQueryBuilder()
             ->select('p.id', 'p.date', 'p.title', 'p.content', 'p.category')
@@ -74,7 +74,7 @@ class OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableG
             count: $count,
             pageLimit: $pageLimit,
         );
-        // @highlight-end
+        // highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;

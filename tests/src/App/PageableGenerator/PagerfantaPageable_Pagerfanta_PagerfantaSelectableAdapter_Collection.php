@@ -55,7 +55,7 @@ class PagerfantaPageable_Pagerfanta_PagerfantaSelectableAdapter_Collection imple
             throw new \RuntimeException('No user found');
         }
 
-        // @highlight-start
+        // highlight-start
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('setName', $setName));
 
@@ -69,7 +69,7 @@ class PagerfantaPageable_Pagerfanta_PagerfantaSelectableAdapter_Collection imple
             pageLimit: $pageLimit,
             indexBy: 'id',
         );
-        // @highlight-end
+        // highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;
