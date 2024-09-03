@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.17.1
+
+* chore: change coding style to @PhpCsFixer:risky
+
 # 0.17.0
 
 * feat: DBAL adapter
