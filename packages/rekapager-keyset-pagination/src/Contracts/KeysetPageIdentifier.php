@@ -40,7 +40,7 @@ final class KeysetPageIdentifier
         ];
     }
 
-    /** @phpstan-ignore-next-line */
+    // @phpstan-ignore-next-line
     public function __unserialize(array $data): void
     {
         $this->pageOffsetFromBoundary = $data['o'];

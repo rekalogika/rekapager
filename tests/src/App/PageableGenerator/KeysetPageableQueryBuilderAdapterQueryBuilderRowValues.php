@@ -50,7 +50,7 @@ class KeysetPageableQueryBuilderAdapterQueryBuilderRowValues implements Pageable
         string $setName,
         ?int $pageLimit = null,
     ): PageableInterface {
-        // highlight-start
+        // @highlight-start
         $queryBuilder = $this->postRepository
             ->createQueryBuilder('p')
             ->where('p.setName = :setName')
@@ -73,7 +73,7 @@ class KeysetPageableQueryBuilderAdapterQueryBuilderRowValues implements Pageable
             itemsPerPage: $itemsPerPage,
             count: $count,
         );
-        // highlight-end
+        // @highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;

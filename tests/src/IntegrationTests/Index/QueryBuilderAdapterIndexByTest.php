@@ -58,8 +58,8 @@ class QueryBuilderAdapterIndexByTest extends KernelTestCase
 
         /** @var Post $post */
         foreach ($pageable->getFirstPage() as $key => $post) {
-            self::assertInstanceOf(Post::class, $post);
-            self::assertEquals($key, $post->getId());
+            static::assertInstanceOf(Post::class, $post);
+            static::assertEquals($key, $post->getId());
         }
     }
 

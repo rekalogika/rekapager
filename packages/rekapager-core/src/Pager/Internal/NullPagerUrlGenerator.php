@@ -18,7 +18,7 @@ use Rekalogika\Contracts\Rekapager\PageInterface;
 /**
  * @internal
  */
-final class NullPagerUrlGenerator implements PagerUrlGeneratorInterface
+class NullPagerUrlGenerator implements PagerUrlGeneratorInterface
 {
     #[\Override]
     public function generateUrl(PageInterface $page): ?string

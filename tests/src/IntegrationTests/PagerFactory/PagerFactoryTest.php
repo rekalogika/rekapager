@@ -25,7 +25,7 @@ class PagerFactoryTest extends PageableTestCase
     {
         $pagerFactory = static::getContainer()->get(PagerFactoryInterface::class);
         $pageable = $this->createPageableFromGenerator(OffsetPageableCollectionAdapterCollection::class);
-        self::assertInstanceOf(PagerFactoryInterface::class, $pagerFactory);
+        static::assertInstanceOf(PagerFactoryInterface::class, $pagerFactory);
 
         // without page parameter
 
@@ -37,14 +37,14 @@ class PagerFactoryTest extends PageableTestCase
         $pager = $pagerFactory->createPager($pageable, $request);
         $currentPage = $pager->getCurrentPage();
 
-        self::assertEquals(1, $currentPage->getPageNumber());
+        static::assertEquals(1, $currentPage->getPageNumber());
     }
 
     public function testOutOfBound(): void
     {
         $pagerFactory = static::getContainer()->get(PagerFactoryInterface::class);
         $pageable = $this->createPageableFromGenerator(OffsetPageableCollectionAdapterCollection::class);
-        self::assertInstanceOf(PagerFactoryInterface::class, $pagerFactory);
+        static::assertInstanceOf(PagerFactoryInterface::class, $pagerFactory);
 
         $request = new Request(
             query: [

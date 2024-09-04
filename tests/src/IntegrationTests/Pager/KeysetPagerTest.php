@@ -410,7 +410,7 @@ class KeysetPagerTest extends PagerTestCase
         $firstPage = $pageable->getFirstPage();
         $nextPages = $firstPage->getNextPages(2);
         $pageByJump = $nextPages[1] ?? null;
-        self::assertNotNull($pageByJump);
+        static::assertNotNull($pageByJump);
 
         $pagerByJump = $this->createPagerFromPage($pageByJump);
 

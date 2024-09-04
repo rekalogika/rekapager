@@ -53,7 +53,7 @@ class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGe
         string $setName,
         ?int $pageLimit = null,
     ): PageableInterface {
-        // highlight-start
+        // @highlight-start
         $resultSetMapping = new ResultSetMappingBuilder($this->entityManager);
         $resultSetMapping->addRootEntityFromClassMetadata(Post::class, 'p');
 
@@ -93,7 +93,7 @@ class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGe
             itemsPerPage: $itemsPerPage,
             count: $count,
         );
-        // highlight-end
+        // @highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;

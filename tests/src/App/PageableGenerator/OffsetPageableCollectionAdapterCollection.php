@@ -55,7 +55,7 @@ class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInte
             throw new \RuntimeException('No user found');
         }
 
-        // highlight-start
+        // @highlight-start
         // LazyMatchingCollection is part of rekalogika/doctrine-collections-decorator package
         $lazyPosts = new LazyMatchingCollection($user->getPosts());
         $filteredPosts = $lazyPosts->matching(
@@ -70,7 +70,7 @@ class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInte
             count: $count,
             pageLimit: $pageLimit,
         );
-        // highlight-end
+        // @highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;

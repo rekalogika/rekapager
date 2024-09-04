@@ -55,7 +55,7 @@ class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterfa
             throw new \RuntimeException('No user found');
         }
 
-        // highlight-start
+        // @highlight-start
         $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('setName', $setName));
 
@@ -71,7 +71,7 @@ class OffsetPageablePagerfantaAdapterAdapter implements PageableGeneratorInterfa
             count: $count,
             pageLimit: $pageLimit,
         );
-        // highlight-end
+        // @highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;

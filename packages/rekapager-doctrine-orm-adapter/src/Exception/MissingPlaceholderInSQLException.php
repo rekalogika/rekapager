@@ -29,7 +29,7 @@ class MissingPlaceholderInSQLException extends UnexpectedValueException
             'Missing placeholder "{{%s}}" in SQL variable "$%s". Required placeholders: %s',
             $template,
             $sqlVariable,
-            implode(', ', array_map(static fn (string $template): string => sprintf('"{{%s}}"', $template), $templates))
+            implode(', ', array_map(fn (string $template): string => sprintf('"{{%s}}"', $template), $templates))
         ));
     }
 }

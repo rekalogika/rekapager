@@ -56,7 +56,7 @@ abstract class PageableTestCase extends KernelTestCase
         $pageableGenerator = self::getContainer()
             ->get($pageableGeneratorClass);
 
-        self::assertInstanceOf(PageableGeneratorInterface::class, $pageableGenerator);
+        static::assertInstanceOf(PageableGeneratorInterface::class, $pageableGenerator);
 
         return $pageableGenerator->generatePageable(
             itemsPerPage: $this->getItemsPerPage(),

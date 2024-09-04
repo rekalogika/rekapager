@@ -18,7 +18,7 @@ use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 /**
  * @internal
  */
-final class BatchTimer
+class BatchTimer
 {
     public const TIMER_PROCESS = 'process';
 
