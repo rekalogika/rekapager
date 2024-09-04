@@ -33,7 +33,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @extends BatchProcessorDecorator<TKey,T>
  * @internal
  */
-final class CommandBatchProcessorDecorator extends BatchProcessorDecorator
+class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private readonly BatchTimer $timer;
 

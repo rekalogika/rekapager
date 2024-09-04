@@ -30,8 +30,8 @@ class CountAwarePageableTest extends PageableTestCase
         $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
         $page = $pageable->getFirstPage();
         $lastPage = $pageable->getLastPage();
-        self::assertNotNull($lastPage);
-        self::assertCount(3, $lastPage);
+        static::assertNotNull($lastPage);
+        static::assertCount(3, $lastPage);
         $firstPage = $page;
 
         while (true) {
@@ -44,8 +44,8 @@ class CountAwarePageableTest extends PageableTestCase
             $page = $nextPage;
         }
 
-        self::assertCount(3, $page);
-        self::assertEquals(iterator_to_array($lastPage), iterator_to_array($page));
+        static::assertCount(3, $page);
+        static::assertEquals(iterator_to_array($lastPage), iterator_to_array($page));
 
         while (true) {
             $previousPage = $page->getPreviousPage();
@@ -57,6 +57,6 @@ class CountAwarePageableTest extends PageableTestCase
             $page = $previousPage;
         }
 
-        self::assertEquals(iterator_to_array($firstPage), iterator_to_array($page));
+        static::assertEquals(iterator_to_array($firstPage), iterator_to_array($page));
     }
 }

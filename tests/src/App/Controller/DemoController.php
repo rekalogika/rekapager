@@ -102,7 +102,7 @@ class DemoController extends AbstractController
 
         $dumper->setTheme('light');
 
-        $output = fopen('php://memory', 'r+') ?: throw new \RuntimeException('Failed to open memory stream');
+        $output = fopen('php://memory', 'r+b') ?: throw new \RuntimeException('Failed to open memory stream');
         $dumper->dump($cloner->cloneVar($pageIdentifier), $output);
         $output = stream_get_contents($output, -1, 0);
 
@@ -135,7 +135,7 @@ class DemoController extends AbstractController
             setName: 'medium',
         );
 
-        // highlight-start
+        // @highlight-start
 
         $output = '<ul>';
 
@@ -182,7 +182,7 @@ class DemoController extends AbstractController
         }
 
         $output .= '</ul>';
-        // highlight-end
+        // @highlight-end
 
         $title = $pageableGenerator->getTitle();
 
@@ -216,13 +216,13 @@ class DemoController extends AbstractController
         }
 
         $contents = preg_replace(
-            '|^.*//\s+highlight-start\n|s',
+            '|^.*//\s+@highlight-start\n|s',
             '',
             $contents,
         ) ?? throw new \RuntimeException('Regex fail');
 
         $contents = preg_replace(
-            '|\n\s+//\s+highlight-end.*\n$|s',
+            '|\n\s+//\s+@highlight-end.*\n$|s',
             '',
             $contents,
         ) ?? throw new \RuntimeException('Regex fail');

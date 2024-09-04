@@ -24,11 +24,11 @@ class DefaultPageableTest extends PageableTestCase
         $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
         $firstPage = $pageable->getFirstPage();
         $itemsPerPage = $pageable->getItemsPerPage();
-        self::assertEquals($itemsPerPage, $firstPage->count());
+        static::assertEquals($itemsPerPage, $firstPage->count());
 
         $pageIdentifier = $firstPage->getPageIdentifier();
         $firstPage2 = $pageable->getPageByIdentifier($pageIdentifier);
-        self::assertEquals(iterator_to_array($firstPage), iterator_to_array($firstPage2));
+        static::assertEquals(iterator_to_array($firstPage), iterator_to_array($firstPage2));
     }
 
     #[DataProviderExternal(PageableGeneratorProvider::class, 'all')]
@@ -37,22 +37,22 @@ class DefaultPageableTest extends PageableTestCase
         $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
         $firstPage = $pageable->getFirstPage();
         $secondPage = $firstPage->getNextPage();
-        self::assertNotNull($secondPage);
+        static::assertNotNull($secondPage);
         $secondPageIdentifier = $secondPage->getPageIdentifier();
         $secondPage2 = $pageable->getPageByIdentifier($secondPageIdentifier);
-        self::assertEquals(iterator_to_array($secondPage), iterator_to_array($secondPage2));
+        static::assertEquals(iterator_to_array($secondPage), iterator_to_array($secondPage2));
 
         $thirdPage = $secondPage->getNextPage();
-        self::assertNotNull($thirdPage);
+        static::assertNotNull($thirdPage);
 
         $secondPage2 = $thirdPage->getPreviousPage();
-        self::assertNotNull($secondPage2);
+        static::assertNotNull($secondPage2);
 
         $firstPage2 = $secondPage2->getPreviousPage();
-        self::assertNotNull($firstPage2);
+        static::assertNotNull($firstPage2);
 
-        self::assertEquals(iterator_to_array($secondPage), iterator_to_array($secondPage2));
-        self::assertEquals(iterator_to_array($firstPage), iterator_to_array($firstPage2));
+        static::assertEquals(iterator_to_array($secondPage), iterator_to_array($secondPage2));
+        static::assertEquals(iterator_to_array($firstPage), iterator_to_array($firstPage2));
     }
 
     #[DataProviderExternal(PageableGeneratorProvider::class, 'all')]
@@ -72,7 +72,7 @@ class DefaultPageableTest extends PageableTestCase
             $page = $nextPage;
         }
 
-        self::assertCount(3, $page);
+        static::assertCount(3, $page);
 
         while (true) {
             $previousPage = $page->getPreviousPage();
@@ -84,6 +84,6 @@ class DefaultPageableTest extends PageableTestCase
             $page = $previousPage;
         }
 
-        self::assertEquals(iterator_to_array($firstPage), iterator_to_array($page));
+        static::assertEquals(iterator_to_array($firstPage), iterator_to_array($page));
     }
 }

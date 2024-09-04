@@ -29,7 +29,7 @@ class EmptyPageableTest extends PageableTestCase
     {
         $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
         $page = $pageable->getFirstPage();
-        self::assertCount(0, $page);
+        static::assertCount(0, $page);
     }
 
     #[DataProviderExternal(PageableGeneratorProvider::class, 'all')]
@@ -38,6 +38,6 @@ class EmptyPageableTest extends PageableTestCase
         $pageable = $this->createPageableFromGenerator($pageableGeneratorClass);
         $page = $pageable->getFirstPage();
         $nextPage = $page->getNextPage();
-        self::assertNull($nextPage);
+        static::assertNull($nextPage);
     }
 }

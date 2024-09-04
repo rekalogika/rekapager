@@ -66,14 +66,14 @@ interface PageInterface extends \Traversable, \Countable
      *
      * @return null|PageInterface<TKey,T>
      */
-    public function getNextPage(): ?self;
+    public function getNextPage(): ?PageInterface;
 
     /**
      * Gets the previous page if it exists.
      *
      * @return null|PageInterface<TKey,T>
      */
-    public function getPreviousPage(): ?self;
+    public function getPreviousPage(): ?PageInterface;
 
     /**
      * Gets n next pages

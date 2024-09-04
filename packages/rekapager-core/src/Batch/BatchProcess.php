@@ -42,7 +42,7 @@ final class BatchProcess
     ) {
     }
 
-    public function stop(): bool
+    final public function stop(): bool
     {
         if ($this->stopFlag === false) {
             $this->stopFlag = true;
@@ -56,7 +56,7 @@ final class BatchProcess
     /**
      * @param int<1,max>|null $pageSize
      */
-    public function run(
+    final public function run(
         ?string $resume = null,
         ?int $pageSize = null,
         ?int $timeLimit = null,

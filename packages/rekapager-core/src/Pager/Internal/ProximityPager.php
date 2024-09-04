@@ -267,8 +267,8 @@ final class ProximityPager implements PagerInterface
         if (
             $lastPageFromNextNeighboringPages !== false
             && $this->hasHiddenPagesAfter
-            && null !== ($lastPageNumber = $this->lastPage?->getPageNumber())
-            && null !== ($lastPageFromNextNeighboringPagesNumber = $lastPageFromNextNeighboringPages->getPageNumber())
+            && !\is_null($lastPageNumber = $this->lastPage?->getPageNumber())
+            && !\is_null($lastPageFromNextNeighboringPagesNumber = $lastPageFromNextNeighboringPages->getPageNumber())
             && $lastPageFromNextNeighboringPagesNumber - $lastPageNumber === -2
             && $secondLastPage = array_shift($nextPages)
         ) {

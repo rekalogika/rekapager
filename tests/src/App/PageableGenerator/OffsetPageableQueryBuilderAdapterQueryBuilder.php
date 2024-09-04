@@ -56,7 +56,7 @@ class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             throw new \RuntimeException('No user found');
         }
 
-        // highlight-start
+        // @highlight-start
         $queryBuilder = $this->postRepository
             ->createQueryBuilder('p')
             ->where('p.setName = :setName')
@@ -78,7 +78,7 @@ class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
             count: $count,
             pageLimit: $pageLimit,
         );
-        // highlight-end
+        // @highlight-end
 
         // @phpstan-ignore-next-line
         return $pageable;
