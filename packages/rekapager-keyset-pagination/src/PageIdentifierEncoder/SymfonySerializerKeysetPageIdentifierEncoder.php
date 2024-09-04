@@ -36,8 +36,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
         private readonly DenormalizerInterface $denormalizer,
         private readonly EncoderInterface $encoder,
         private readonly DecoderInterface $decoder,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public static function getIdentifierClass(): string
@@ -77,7 +76,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
     public function encode(object $identifier): string
     {
         if (!$identifier instanceof KeysetPageIdentifier) {
-            throw new PageIdentifierEncodingFailureException(sprintf('Unsupported identifier type "%s"', get_debug_type($identifier)));
+            throw new PageIdentifierEncodingFailureException(\sprintf('Unsupported identifier type "%s"', get_debug_type($identifier)));
         }
 
         $boundaryValues = $identifier->getBoundaryValues();
@@ -91,7 +90,7 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
                 }
 
                 if (!\is_object($value) || !$this->isWhitelistedBoundaryValueType($value)) {
-                    throw new PageIdentifierEncodingFailureException(sprintf('Unsupported boundary value type for key "%s", value "%s"', $key, get_debug_type($value)));
+                    throw new PageIdentifierEncodingFailureException(\sprintf('Unsupported boundary value type for key "%s", value "%s"', $key, get_debug_type($value)));
                 }
 
                 $normalized = $this->normalizer->normalize($value);
@@ -197,11 +196,11 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
                     !\is_string($type)
                     || (!class_exists($type) && !interface_exists($type))
                 ) {
-                    throw new PageIdentifierDecodingFailureException(sprintf('Invalid boundary value type for key "%s"', $key));
+                    throw new PageIdentifierDecodingFailureException(\sprintf('Invalid boundary value type for key "%s"', $key));
                 }
 
                 if (!$this->isWhitelistedBoundaryValueType($type)) {
-                    throw new PageIdentifierDecodingFailureException(sprintf('Unsupported boundary value type for key "%s", value "%s"', $key, $type));
+                    throw new PageIdentifierDecodingFailureException(\sprintf('Unsupported boundary value type for key "%s", value "%s"', $key, $type));
                 }
 
                 /** @var mixed */

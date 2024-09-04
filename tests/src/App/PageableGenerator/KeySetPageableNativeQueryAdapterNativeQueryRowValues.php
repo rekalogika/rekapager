@@ -31,8 +31,7 @@ class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGe
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public static function getKey(): string

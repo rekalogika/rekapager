@@ -27,9 +27,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
  */
 class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInterface
 {
-    public function __construct(private readonly UserRepository $userRepository)
-    {
-    }
+    public function __construct(private readonly UserRepository $userRepository) {}
 
     #[\Override]
     public static function getKey(): string
@@ -60,7 +58,7 @@ class OffsetPageableCollectionAdapterCollection implements PageableGeneratorInte
         $lazyPosts = new LazyMatchingCollection($user->getPosts());
         $filteredPosts = $lazyPosts->matching(
             Criteria::create()
-                ->where(Criteria::expr()->eq('setName', $setName))
+                ->where(Criteria::expr()->eq('setName', $setName)),
         );
 
         $adapter = new CollectionAdapter($filteredPosts);

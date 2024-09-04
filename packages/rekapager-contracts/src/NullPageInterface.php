@@ -23,6 +23,4 @@ namespace Rekalogika\Contracts\Rekapager;
  * @template-covariant T
  * @extends PageInterface<TKey,T>
  */
-interface NullPageInterface extends PageInterface
-{
-}
+interface NullPageInterface extends PageInterface {}

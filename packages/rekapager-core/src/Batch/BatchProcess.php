@@ -39,8 +39,7 @@ final class BatchProcess
         private readonly PageableInterface $pageable,
         private readonly BatchProcessorInterface $batchProcessor,
         private readonly PageIdentifierEncoderResolverInterface $pageableIdentifierResolver,
-    ) {
-    }
+    ) {}
 
     final public function stop(): bool
     {

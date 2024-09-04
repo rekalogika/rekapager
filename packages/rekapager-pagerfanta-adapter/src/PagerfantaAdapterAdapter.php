@@ -29,8 +29,7 @@ final readonly class PagerfantaAdapterAdapter implements OffsetPaginationAdapter
     public function __construct(
         private AdapterInterface $adapter,
         private string|null $indexBy = null,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getOffsetItems(int $offset, int $limit): array

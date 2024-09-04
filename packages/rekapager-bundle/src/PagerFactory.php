@@ -39,14 +39,13 @@ class PagerFactory implements PagerFactoryInterface
         private readonly string $defaultPageParameterName,
         private readonly int $defaultProximity,
         private readonly int $defaultUrlReferenceType,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function createPager(
         PageableInterface $pageable,
         Request $request,
-        object $options = null
+        object $options = null,
     ): PagerInterface {
         //
         // processing all the pager options in order
@@ -105,7 +104,7 @@ class PagerFactory implements PagerFactoryInterface
             pageParameterName: $pageParameterName,
             referenceType: $urlReferenceType,
             routeName: $routeName,
-            routeParams: $routeParams
+            routeParams: $routeParams,
         );
 
         $pageIdentifierEncoder = $this->pageIdentifierEncoderResolver

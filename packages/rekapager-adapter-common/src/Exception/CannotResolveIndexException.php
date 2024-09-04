@@ -19,7 +19,7 @@ class CannotResolveIndexException extends LogicException
 {
     public function __construct(mixed $row, string $indexBy, \Throwable $previous)
     {
-        parent::__construct(sprintf(
+        parent::__construct(\sprintf(
             'Unable to resolve the index "%s" from the result row of type "%s".',
             $indexBy,
             get_debug_type($row),

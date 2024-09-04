@@ -21,8 +21,7 @@ class TwigPagerRenderer
     public function __construct(
         private readonly Environment $twig,
         private readonly string $template,
-    ) {
-    }
+    ) {}
 
     /**
      * @param PagerInterface<array-key,mixed> $pager

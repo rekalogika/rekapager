@@ -24,8 +24,7 @@ final readonly class Field
         private string $name,
         private mixed $value,
         private Order $order,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

@@ -27,8 +27,7 @@ final readonly class BeforeProcessEvent
     public function __construct(
         private PageableInterface $pageable,
         private ?string $startPageIdentifier,
-    ) {
-    }
+    ) {}
 
     public function getStartPageIdentifier(): ?string
     {

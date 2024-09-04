@@ -30,8 +30,7 @@ class PostProvider implements ProviderInterface
     public function __construct(
         private readonly PostRepository $postRepository,
         private readonly PagerFactoryInterface $pagerFactory,
-    ) {
-    }
+    ) {}
 
     /**
      * @psalm-suppress MismatchingDocblockReturnType
@@ -43,7 +42,7 @@ class PostProvider implements ProviderInterface
     public function provide(
         Operation $operation,
         array $uriVariables = [],
-        array $context = []
+        array $context = [],
     ): object|array|null {
         $adapter = new SelectableAdapter($this->postRepository);
         $pageable = new KeysetPageable($adapter);

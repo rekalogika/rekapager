@@ -49,12 +49,12 @@ final class Pager implements PagerInterface
         private readonly int $proximity = 2,
         private readonly ?int $pageLimit = null,
         private readonly ?PageUrlGeneratorInterface $pageUrlGenerator = null,
-        private readonly ?PageIdentifierEncoderInterface $pageIdentifierEncoder = null
+        private readonly ?PageIdentifierEncoderInterface $pageIdentifierEncoder = null,
     ) {
         if ($pageUrlGenerator !== null && $pageIdentifierEncoder !== null) {
             $this->pagerUrlGenerator = new PagerUrlGenerator(
                 $pageUrlGenerator,
-                $pageIdentifierEncoder
+                $pageIdentifierEncoder,
             );
         } else {
             $this->pagerUrlGenerator = new NullPagerUrlGenerator();
@@ -75,7 +75,7 @@ final class Pager implements PagerInterface
             proximity: $proximity,
             pageLimit: $this->pageLimit,
             pageUrlGenerator: $this->pageUrlGenerator,
-            pageIdentifierEncoder: $this->pageIdentifierEncoder
+            pageIdentifierEncoder: $this->pageIdentifierEncoder,
         );
     }
 
@@ -93,14 +93,14 @@ final class Pager implements PagerInterface
                 page: $this->page,
                 proximity: $this->proximity,
                 pageLimit: $this->pageLimit,
-                pagerUrlGenerator: $this->pagerUrlGenerator
+                pagerUrlGenerator: $this->pagerUrlGenerator,
             );
         }
 
         return $this->pager = new ZeroProximityPager(
             page: $this->page,
             pageLimit: $this->pageLimit,
-            pagerUrlGenerator: $this->pagerUrlGenerator
+            pagerUrlGenerator: $this->pagerUrlGenerator,
         );
     }
 
@@ -109,7 +109,7 @@ final class Pager implements PagerInterface
     {
         return new PagerItem(
             $this->getPager()->getCurrentPage(),
-            $this->pagerUrlGenerator
+            $this->pagerUrlGenerator,
         );
     }
 

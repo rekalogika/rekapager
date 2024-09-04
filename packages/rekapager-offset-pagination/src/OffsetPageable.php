@@ -49,8 +49,7 @@ final class OffsetPageable implements PageableInterface
         private readonly int $itemsPerPage = 50,
         private readonly int|bool|\Closure $count = false,
         private readonly ?int $pageLimit = 100,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function withItemsPerPage(int $itemsPerPage): static

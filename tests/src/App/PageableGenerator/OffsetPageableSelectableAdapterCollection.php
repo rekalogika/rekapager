@@ -27,9 +27,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
  */
 class OffsetPageableSelectableAdapterCollection implements PageableGeneratorInterface
 {
-    public function __construct(private readonly UserRepository $userRepository)
-    {
-    }
+    public function __construct(private readonly UserRepository $userRepository) {}
 
     #[\Override]
     public static function getKey(): string
@@ -63,7 +61,7 @@ class OffsetPageableSelectableAdapterCollection implements PageableGeneratorInte
             ->orderBy([
                 'date' => Order::Descending,
                 'category' => Order::Ascending,
-                'id' => Order::Ascending
+                'id' => Order::Ascending,
             ]);
 
         $adapter = new SelectableAdapter(

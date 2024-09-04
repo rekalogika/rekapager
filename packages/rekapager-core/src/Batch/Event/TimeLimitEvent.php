@@ -27,8 +27,7 @@ final readonly class TimeLimitEvent
     public function __construct(
         private PageableInterface $pageable,
         private ?string $nextPageIdentifier,
-    ) {
-    }
+    ) {}
 
     /**
      * @return PageableInterface<TKey,T>

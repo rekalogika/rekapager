@@ -30,7 +30,7 @@ interface PagerFactoryInterface
     public function getPage(
         PageableInterface $pageable,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): PageInterface;
 
     /**

@@ -29,8 +29,7 @@ class PagerUrlGenerator implements PagerUrlGeneratorInterface
     public function __construct(
         private readonly PageUrlGeneratorInterface $pageUrlGenerator,
         private readonly PageIdentifierEncoderInterface $pageIdentifierEncoder,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function generateUrl(PageInterface $page): ?string
@@ -46,7 +45,7 @@ class PagerUrlGenerator implements PagerUrlGeneratorInterface
         $pageIdentifier = $page->getPageIdentifier();
 
         return $this->pageUrlGenerator->generateUrl(
-            $this->pageIdentifierEncoder->encode($pageIdentifier)
+            $this->pageIdentifierEncoder->encode($pageIdentifier),
         );
     }
 }

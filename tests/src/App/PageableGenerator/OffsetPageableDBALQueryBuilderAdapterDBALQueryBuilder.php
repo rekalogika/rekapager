@@ -28,8 +28,7 @@ class OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableG
 {
     public function __construct(
         private readonly Connection $connection,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public static function getKey(): string
@@ -65,7 +64,7 @@ class OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableG
                 'p.category' => Order::Ascending,
                 'p.id' => Order::Ascending,
             ],
-            indexBy: 'id'
+            indexBy: 'id',
         );
 
         $pageable = new OffsetPageable(

@@ -25,6 +25,6 @@ interface PageIdentifierEncoderLocatorInterface
      * @throws MissingPageIdentifierEncoderException
      */
     public function getPageIdentifierEncoder(
-        string $pageIdentifierClass
+        string $pageIdentifierClass,
     ): PageIdentifierEncoderInterface;
 }

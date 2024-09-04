@@ -16,6 +16,4 @@ namespace Rekalogika\Contracts\Rekapager\Exception;
 /**
  * Base exception interface for all exceptions
  */
-interface ExceptionInterface extends \Throwable
-{
-}
+interface ExceptionInterface extends \Throwable {}

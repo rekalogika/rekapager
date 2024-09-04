@@ -25,9 +25,7 @@ use Rekalogika\Rekapager\Adapter\Common\Exception\RowNotCompatibleWithIndexByExc
  */
 final class IndexResolver
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function resolveIndex(mixed $row, string $indexBy): int|string
     {

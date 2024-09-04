@@ -38,7 +38,7 @@ final readonly class QueryBuilderKeysetItem implements KeysetItemInterface
         /** @var mixed $v */
         foreach ($boundaryValues as $k => $v) {
             if ($v === null) {
-                throw new NullBoundaryValueException(sprintf('The property "%s" of the value "%s" is a boundary value of this pagination, but it is found to be null. Null value in a boundary value is not supported.', $k, get_debug_type($value)));
+                throw new NullBoundaryValueException(\sprintf('The property "%s" of the value "%s" is a boundary value of this pagination, but it is found to be null. Null value in a boundary value is not supported.', $k, get_debug_type($value)));
             }
         }
     }

@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Rekapager\Exception;
 
-class PageIdentifierEncodingFailureException extends RuntimeException
-{
-}
+class PageIdentifierEncodingFailureException extends RuntimeException {}

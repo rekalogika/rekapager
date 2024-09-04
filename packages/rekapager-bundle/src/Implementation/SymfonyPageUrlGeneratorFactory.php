@@ -21,22 +21,21 @@ class SymfonyPageUrlGeneratorFactory implements PageUrlGeneratorFactoryInterface
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function createPageUrlGenerator(
         string $pageParameterName,
         int $referenceType,
         string $routeName,
-        array $routeParams
+        array $routeParams,
     ): PageUrlGeneratorInterface {
         return new SymfonyPageUrlGenerator(
             urlGenerator: $this->urlGenerator,
             pageParameterName: $pageParameterName,
             referenceType: $referenceType,
             routeName: $routeName,
-            routeParams: $routeParams
+            routeParams: $routeParams,
         );
     }
 }

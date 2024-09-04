@@ -39,7 +39,7 @@ class BatchTimer
     public function start(string $timer): void
     {
         if (isset($this->timers[$timer])) {
-            throw new LogicException(sprintf('Timer "%s" is already started.', $timer));
+            throw new LogicException(\sprintf('Timer "%s" is already started.', $timer));
         }
 
         $this->timers[$timer] = hrtime(true);
@@ -53,7 +53,7 @@ class BatchTimer
         $result = $this->getDuration($timer);
 
         if ($result === null) {
-            throw new LogicException(sprintf('Timer "%s" has not been started yet.', $timer));
+            throw new LogicException(\sprintf('Timer "%s" has not been started yet.', $timer));
         }
 
         $this->reset($timer);

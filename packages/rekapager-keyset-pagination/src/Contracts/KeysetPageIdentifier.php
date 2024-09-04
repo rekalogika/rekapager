@@ -26,8 +26,7 @@ final class KeysetPageIdentifier
         private ?array $boundaryValues,
         private ?int $pageNumber,
         private ?int $limit,
-    ) {
-    }
+    ) {}
 
     public function __serialize(): array
     {

@@ -37,8 +37,7 @@ final readonly class NullOffsetPage implements NullPageInterface, \IteratorAggre
         private PageableInterface $pageable,
         private int $pageNumber,
         private int $itemsPerPage,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function withPageNumber(?int $pageNumber): static

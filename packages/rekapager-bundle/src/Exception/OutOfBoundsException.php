@@ -29,7 +29,7 @@ class OutOfBoundsException extends ContractsOutOfBoundsException
         parent::__construct(
             $exception->getMessage(),
             $exception->getCode(),
-            $exception
+            $exception,
         );
     }
 

@@ -36,14 +36,13 @@ class PagerFactory implements PagerFactoryInterface
         private readonly Pagination $pagination,
         private readonly string $pageParameterName = 'page',
         private readonly int $urlGenerationStrategy = UrlGeneratorInterface::ABS_PATH,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getPage(
         PageableInterface $pageable,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): PageInterface {
         $itemsPerPage = $this->pagination->getLimit($operation, $context);
 
@@ -86,7 +85,7 @@ class PagerFactory implements PagerFactoryInterface
         $pageUrlGenerator = new ApiPageUrlGenerator(
             iri: $this->getIriFromContext($context),
             pageParameterName: $this->pageParameterName,
-            urlGenerationStrategy: $urlGenerationStrategy
+            urlGenerationStrategy: $urlGenerationStrategy,
         );
 
         $pageIdentifierEncoder = $this->pageIdentifierEncoderResolver
@@ -96,7 +95,7 @@ class PagerFactory implements PagerFactoryInterface
             page: $page,
             proximity: 0,
             pageIdentifierEncoder: $pageIdentifierEncoder,
-            pageUrlGenerator: $pageUrlGenerator
+            pageUrlGenerator: $pageUrlGenerator,
         ));
     }
 
@@ -105,7 +104,7 @@ class PagerFactory implements PagerFactoryInterface
         $query = parse_url($iri, PHP_URL_QUERY);
 
         if (false === $query) {
-            throw new InvalidArgumentException(sprintf('The request URI "%s" is malformed.', $iri));
+            throw new InvalidArgumentException(\sprintf('The request URI "%s" is malformed.', $iri));
         }
 
         if (null === $query) {
@@ -116,7 +115,7 @@ class PagerFactory implements PagerFactoryInterface
         $result = $parameters[$this->pageParameterName] ?? null;
 
         if ($result !== null && !\is_string($result)) {
-            throw new InvalidArgumentException(sprintf('The request URI "%s" is malformed.', $iri));
+            throw new InvalidArgumentException(\sprintf('The request URI "%s" is malformed.', $iri));
         }
 
         return $result;
@@ -130,20 +129,20 @@ class PagerFactory implements PagerFactoryInterface
         $operation = $context['operation'] ?? null;
 
         if (!$operation instanceof Operation && $operation !== null) {
-            throw new UnexpectedValueException(sprintf('The operation must be an instance of "%s" or null, "%s" given.', Operation::class, get_debug_type($operation)));
+            throw new UnexpectedValueException(\sprintf('The operation must be an instance of "%s" or null, "%s" given.', Operation::class, get_debug_type($operation)));
         }
 
         if ($operation === null && $this->resourceMetadataFactory !== null && isset($context['resource_class'])) {
             $resourceClass = $context['resource_class'];
 
             if (!\is_string($resourceClass)) {
-                throw new UnexpectedValueException(sprintf('The resource class must be a string, "%s" given.', get_debug_type($resourceClass)));
+                throw new UnexpectedValueException(\sprintf('The resource class must be a string, "%s" given.', get_debug_type($resourceClass)));
             }
 
             $operationName = $context['operation_name'] ?? null;
 
             if (!\is_string($operationName)) {
-                throw new UnexpectedValueException(sprintf('The operation name must be a string, "%s" given.', get_debug_type($operationName)));
+                throw new UnexpectedValueException(\sprintf('The operation name must be a string, "%s" given.', get_debug_type($operationName)));
             }
 
             $operation = $this->resourceMetadataFactory
@@ -162,7 +161,7 @@ class PagerFactory implements PagerFactoryInterface
         $iri = $context['uri'] ?? $context['request_uri'] ?? '/';
 
         if (!\is_string($iri)) {
-            throw new UnexpectedValueException(sprintf('The request URI must be a string, "%s" given.', get_debug_type($iri)));
+            throw new UnexpectedValueException(\sprintf('The request URI must be a string, "%s" given.', get_debug_type($iri)));
         }
 
         return $iri;

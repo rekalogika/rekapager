@@ -27,9 +27,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
  */
 class KeysetPageableSelectableAdapterEntityRepository implements PageableGeneratorInterface
 {
-    public function __construct(private PostRepository $postRepository)
-    {
-    }
+    public function __construct(private PostRepository $postRepository) {}
 
     #[\Override]
     public static function getKey(): string
@@ -58,7 +56,7 @@ class KeysetPageableSelectableAdapterEntityRepository implements PageableGenerat
             ->orderBy([
                 'date' => Order::Descending,
                 'category' => Order::Ascending,
-                'id' => Order::Ascending
+                'id' => Order::Ascending,
             ]);
 
         $adapter = new SelectableAdapter(

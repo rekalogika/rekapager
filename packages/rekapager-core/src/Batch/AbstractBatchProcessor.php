@@ -38,32 +38,20 @@ abstract class AbstractBatchProcessor implements BatchProcessorInterface
     }
 
     #[\Override]
-    public function beforeProcess(BeforeProcessEvent $event): void
-    {
-    }
+    public function beforeProcess(BeforeProcessEvent $event): void {}
 
     #[\Override]
-    public function afterProcess(AfterProcessEvent $event): void
-    {
-    }
+    public function afterProcess(AfterProcessEvent $event): void {}
 
     #[\Override]
-    public function beforePage(BeforePageEvent $event): void
-    {
-    }
+    public function beforePage(BeforePageEvent $event): void {}
 
     #[\Override]
-    public function afterPage(AfterPageEvent $event): void
-    {
-    }
+    public function afterPage(AfterPageEvent $event): void {}
 
     #[\Override]
-    public function onInterrupt(InterruptEvent $event): void
-    {
-    }
+    public function onInterrupt(InterruptEvent $event): void {}
 
     #[\Override]
-    public function onTimeLimit(TimeLimitEvent $event): void
-    {
-    }
+    public function onTimeLimit(TimeLimitEvent $event): void {}
 }

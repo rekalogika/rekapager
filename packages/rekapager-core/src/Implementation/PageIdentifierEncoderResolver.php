@@ -21,9 +21,8 @@ use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 class PageIdentifierEncoderResolver implements PageIdentifierEncoderResolverInterface
 {
     public function __construct(
-        private readonly PageIdentifierEncoderLocatorInterface $locator
-    ) {
-    }
+        private readonly PageIdentifierEncoderLocatorInterface $locator,
+    ) {}
 
     /**
      * @param class-string $pageIdentifierClass
@@ -31,14 +30,14 @@ class PageIdentifierEncoderResolver implements PageIdentifierEncoderResolverInte
      */
     #[\Override]
     public function getEncoderFromClass(
-        string $pageIdentifierClass
+        string $pageIdentifierClass,
     ): PageIdentifierEncoderInterface {
         return $this->locator->getPageIdentifierEncoder($pageIdentifierClass);
     }
 
     #[\Override]
     public function getEncoderFromPageable(
-        PageableInterface $pageable
+        PageableInterface $pageable,
     ): PageIdentifierEncoderInterface {
         return $this->getEncoderFromClass($pageable->getPageIdentifierClass());
     }

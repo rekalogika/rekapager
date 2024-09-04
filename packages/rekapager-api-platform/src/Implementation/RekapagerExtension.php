@@ -41,8 +41,7 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
     public function __construct(
         private PagerFactory $pagerFactory,
         private Pagination $pagination,
-    ) {
-    }
+    ) {}
 
     /**
      * @param array<array-key,mixed> $context
@@ -53,9 +52,8 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
-    ): void {
-    }
+        array $context = [],
+    ): void {}
 
     /**
      * @param array<array-key,mixed> $context
@@ -64,7 +62,7 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
     public function supportsResult(
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): bool {
         /** @psalm-suppress InternalMethod */
         $extraProperties = $operation?->getExtraProperties() ?? [];
@@ -91,7 +89,7 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
         QueryBuilder $queryBuilder,
         ?string $resourceClass = null,
         ?Operation $operation = null,
-        array $context = []
+        array $context = [],
     ): iterable {
         $pageable = new KeysetPageable(new QueryBuilderAdapter($queryBuilder));
 

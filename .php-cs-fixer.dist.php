@@ -6,6 +6,7 @@ $finder = PhpCsFixer\Finder::create()
 
 $config = new PhpCsFixer\Config();
 return $config->setRules([
+    '@PER-CS2.0' => true,
     '@PER-CS2.0:risky' => true,
     'fully_qualified_strict_types' => true,
     'global_namespace_import' => [

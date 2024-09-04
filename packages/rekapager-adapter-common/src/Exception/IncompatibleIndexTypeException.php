@@ -19,7 +19,7 @@ class IncompatibleIndexTypeException extends UnexpectedValueException
 {
     public function __construct(mixed $row, string $indexBy, mixed $key)
     {
-        parent::__construct(sprintf(
+        parent::__construct(\sprintf(
             'Trying to get the index "%s" from the result row of type "%s", but the resulting index has the type of "%s". The resulting index must be an integer, string, or a "Stringable" object.',
             $indexBy,
             get_debug_type($row),

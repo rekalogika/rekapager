@@ -69,8 +69,8 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
         $i = 1;
         foreach ($boundaryFieldNames as $field) {
-            $alias = sprintf('rekapager_boundary_%s', $i);
-            $selectFields[] = sprintf('%s AS %s', $field, $alias);
+            $alias = \sprintf('rekapager_boundary_%s', $i);
+            $selectFields[] = \sprintf('%s AS %s', $field, $alias);
 
             $resultSetMapping->addScalarResult($alias, $alias);
 
@@ -80,7 +80,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $this->select = implode(', ', $selectFields);
 
         // generate the COUNT SQL
-        $this->countSql = $countSql ?? sprintf('SELECT COUNT(*) AS count FROM (%s)', $sql);
+        $this->countSql = $countSql ?? \sprintf('SELECT COUNT(*) AS count FROM (%s)', $sql);
 
         // verify SQL
         $this->verifySQL('sql', $sql, ['SELECT', 'WHERE', 'ORDER', 'LIMIT', 'OFFSET']);
@@ -93,14 +93,14 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
     private function verifySQL(
         string $sqlVariable,
         string $sql,
-        array $templates
+        array $templates,
     ): void {
         foreach ($templates as $template) {
-            if (str_contains($sql, '{{' .  $template . '}}') === false) {
+            if (str_contains($sql, '{{' . $template . '}}') === false) {
                 throw new MissingPlaceholderInSQLException(
                     sqlVariable: $sqlVariable,
                     template: $template,
-                    templates: $templates
+                    templates: $templates,
                 );
             }
         }
@@ -199,11 +199,11 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             $i++;
         }
 
-        $where = sprintf(
+        $where = \sprintf(
             'AND (%s) %s (%s)',
             implode(', ', $whereFields),
             $order === Order::Ascending ? '>' : '<',
-            implode(', ', $whereValues)
+            implode(', ', $whereValues),
         );
 
         return [$where, $queryParameters];
@@ -216,7 +216,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
      */
     private function createCalculatorFields(
         array $boundaryValues,
-        array $orderings
+        array $orderings,
     ): array {
         $fields = [];
 
@@ -249,8 +249,8 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         }
 
         return array_map(
-            static fn (Order $order): Order => $order === Order::Ascending ? Order::Descending : Order::Ascending,
-            $this->orderBy
+            static fn(Order $order): Order => $order === Order::Ascending ? Order::Descending : Order::Ascending,
+            $this->orderBy,
         );
     }
 
@@ -262,7 +262,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $orderBy = [];
 
         foreach ($orderings as $field => $order) {
-            $orderBy[] = sprintf('%s %s', $field, $order === Order::Ascending ? 'ASC' : 'DESC');
+            $orderBy[] = \sprintf('%s %s', $field, $order === Order::Ascending ? 'ASC' : 'DESC');
         }
 
         return implode(', ', $orderBy);
@@ -301,7 +301,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
         [$where, $parameters] = $this->generateWhereExpression(
             boundaryValues: $boundaryValues,
-            orderings: $orderings
+            orderings: $orderings,
         );
 
         $orderBy = $this->generateOrderBy($orderings);
@@ -309,7 +309,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $sql = str_replace(
             ['{{SELECT}}', '{{WHERE}}', '{{ORDER}}', '{{LIMIT}}', '{{OFFSET}}'],
             [$this->select, $where, $orderBy, $limit, $offset],
-            $count ? $this->countSql : $this->sql
+            $count ? $this->countSql : $this->sql,
         );
 
         $sqlParameters = [];
@@ -320,7 +320,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
                 $sqlParameters[] = new Parameter(
                     key: $template,
                     value: $parameter->getValue(),
-                    type: $parameter->getType()
+                    type: $parameter->getType(),
                 );
             } elseif ($parameter instanceof Parameter) {
                 $sqlParameters[] = $parameter;
@@ -336,18 +336,18 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         int $offset,
         int $limit,
         ?array $boundaryValues,
-        BoundaryType $boundaryType
+        BoundaryType $boundaryType,
     ): array {
         $sqlStatement = $this->getSQL(
             offset: $offset,
             limit: $limit,
             boundaryValues: $boundaryValues,
-            boundaryType: $boundaryType
+            boundaryType: $boundaryType,
         );
 
         $query = $this->entityManager->createNativeQuery(
             sql: $sqlStatement->getSQL(),
-            rsm: $this->resultSetMapping
+            rsm: $this->resultSetMapping,
         );
 
         foreach ($sqlStatement->getParameters() as $parameter) {
@@ -355,7 +355,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
                 key: $parameter->getKey(),
                 value: $parameter->getValue(),
                 // @phpstan-ignore argument.type
-                type: $parameter->getType()
+                type: $parameter->getType(),
             );
         }
 
@@ -391,7 +391,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             $results[] = new QueryBuilderKeysetItem(
                 key: $key,
                 value: $row,
-                boundaryValues: $boundaryValues
+                boundaryValues: $boundaryValues,
             );
         }
 
@@ -407,14 +407,14 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         int $offset,
         int $limit,
         ?array $boundaryValues,
-        BoundaryType $boundaryType
+        BoundaryType $boundaryType,
     ): int {
         $sqlStatement = $this->getSQL(
             offset: $offset,
             limit: $limit,
             boundaryValues: $boundaryValues,
             boundaryType: $boundaryType,
-            count: true
+            count: true,
         );
 
         $resultSetMapping = new ResultSetMapping();
@@ -422,7 +422,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
         $query = $this->entityManager->createNativeQuery(
             sql: $sqlStatement->getSQL(),
-            rsm: $resultSetMapping
+            rsm: $resultSetMapping,
         );
 
         foreach ($sqlStatement->getParameters() as $parameter) {
@@ -430,7 +430,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
                 key: $parameter->getKey(),
                 value: $parameter->getValue(),
                 // @phpstan-ignore argument.type
-                type: $parameter->getType()
+                type: $parameter->getType(),
             );
         }
 
@@ -444,7 +444,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         }
 
         if ($count < 0) {
-            throw new UnexpectedValueException(sprintf('Count result is negative: %d', $count));
+            throw new UnexpectedValueException(\sprintf('Count result is negative: %d', $count));
         }
 
         return $count;
@@ -465,7 +465,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
         $query = $this->entityManager->createNativeQuery(
             sql: $this->countAllSql,
-            rsm: $resultSetMapping
+            rsm: $resultSetMapping,
         );
 
         foreach ($this->parameters as $parameter) {
@@ -473,7 +473,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
                 key: $parameter->getKey(),
                 value: $parameter->getValue(),
                 // @phpstan-ignore argument.type
-                type: $parameter->getType()
+                type: $parameter->getType(),
             );
         }
 
@@ -487,7 +487,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         }
 
         if ($count < 0) {
-            throw new UnexpectedValueException(sprintf('Count result is negative: %d', $count));
+            throw new UnexpectedValueException(\sprintf('Count result is negative: %d', $count));
         }
 
         return $count;

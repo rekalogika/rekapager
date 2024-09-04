@@ -374,7 +374,7 @@ class OffsetPagerWithCountTest extends PagerTestCase
 
         self::assertEquals(
             iterator_to_array($pagerByIteration->getCurrentPage()),
-            iterator_to_array($pagerByJump->getCurrentPage())
+            iterator_to_array($pagerByJump->getCurrentPage()),
         );
     }
 }

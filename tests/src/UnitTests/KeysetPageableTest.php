@@ -49,7 +49,7 @@ class KeysetPageableTest extends TestCase
         self::assertInstanceOf(KeysetPageIdentifier::class, $pageIdentifier);
         self::assertEquals($boundaryType, $pageIdentifier->getBoundaryType());
         self::assertEquals($boundaryValues, $pageIdentifier->getBoundaryValues());
-        self::assertEquals($values, array_map(fn (Entity $entity): int => $entity->getId(), array_values(iterator_to_array($page))));
+        self::assertEquals($values, array_map(fn(Entity $entity): int => $entity->getId(), array_values(iterator_to_array($page))));
         self::assertEquals($hasPreviousPage, null !== $page->getPreviousPage());
         self::assertEquals($hasNextPage, null !== $page->getNextPage());
 
@@ -60,7 +60,7 @@ class KeysetPageableTest extends TestCase
         self::assertInstanceOf(KeysetPageIdentifier::class, $pageIdentifier);
         self::assertEquals($boundaryType, $pageIdentifier->getBoundaryType());
         self::assertEquals($boundaryValues, $pageIdentifier->getBoundaryValues());
-        self::assertEquals($values, array_map(fn (Entity $entity): int => $entity->getId(), array_values(iterator_to_array($fromCollection))));
+        self::assertEquals($values, array_map(fn(Entity $entity): int => $entity->getId(), array_values(iterator_to_array($fromCollection))));
         self::assertEquals($hasPreviousPage, null !== $fromCollection->getPreviousPage());
         self::assertEquals($hasNextPage, null !== $fromCollection->getNextPage());
     }
@@ -193,7 +193,7 @@ class KeysetPageableTest extends TestCase
         $collection = new ArrayCollection($entities);
         $adapter = new SelectableAdapter(
             $collection,
-            Criteria::create()->orderBy(['id' => Order::Descending])
+            Criteria::create()->orderBy(['id' => Order::Descending]),
         );
         $pageable = new KeysetPageable($adapter, 5);
 

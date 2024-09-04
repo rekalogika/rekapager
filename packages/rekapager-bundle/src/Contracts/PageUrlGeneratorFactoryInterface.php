@@ -26,6 +26,6 @@ interface PageUrlGeneratorFactoryInterface
         string $pageParameterName,
         int $referenceType,
         string $routeName,
-        array $routeParams
+        array $routeParams,
     ): PageUrlGeneratorInterface;
 }

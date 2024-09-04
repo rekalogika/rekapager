@@ -20,8 +20,7 @@ class RekapagerRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
         private readonly TwigPagerRenderer $pagerRenderer,
-    ) {
-    }
+    ) {}
 
     /**
      * @param PagerInterface<array-key,mixed> $pager

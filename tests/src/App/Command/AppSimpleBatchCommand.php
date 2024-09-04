@@ -30,7 +30,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 #[AsCommand(
     name: 'app:simplebatch',
-    description: 'Simple batch command'
+    description: 'Simple batch command',
 )]
 class AppSimpleBatchCommand extends SimpleBatchCommand
 {

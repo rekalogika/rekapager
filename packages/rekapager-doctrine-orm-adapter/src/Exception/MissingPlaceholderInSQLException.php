@@ -23,13 +23,13 @@ class MissingPlaceholderInSQLException extends UnexpectedValueException
     public function __construct(
         string $sqlVariable,
         string $template,
-        array $templates
+        array $templates,
     ) {
-        parent::__construct(sprintf(
+        parent::__construct(\sprintf(
             'Missing placeholder "{{%s}}" in SQL variable "$%s". Required placeholders: %s',
             $template,
             $sqlVariable,
-            implode(', ', array_map(fn (string $template): string => sprintf('"{{%s}}"', $template), $templates))
+            implode(', ', array_map(fn(string $template): string => \sprintf('"{{%s}}"', $template), $templates)),
         ));
     }
 }

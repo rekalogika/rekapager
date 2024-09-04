@@ -39,8 +39,7 @@ final class QueryCounter implements \Countable
     public function __construct(
         private readonly Query $query,
         private readonly null|bool $useOutputWalkers = null,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function count(): int

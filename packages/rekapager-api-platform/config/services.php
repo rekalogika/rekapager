@@ -40,7 +40,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$pageIdentifierEncoderResolver' => service(PageIdentifierEncoderResolverInterface::class),
             '$pagination' => service('api_platform.pagination'),
             '$pageParameterName' => '%api_platform.collection.pagination.page_parameter_name%',
-            '$urlGenerationStrategy' => '%api_platform.url_generation_strategy%'
+            '$urlGenerationStrategy' => '%api_platform.url_generation_strategy%',
         ]);
 
     $services

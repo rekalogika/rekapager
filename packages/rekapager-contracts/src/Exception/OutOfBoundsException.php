@@ -16,6 +16,4 @@ namespace Rekalogika\Contracts\Rekapager\Exception;
 use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
 
 #[WithHttpStatus(404)]
-class OutOfBoundsException extends \OutOfBoundsException implements ExceptionInterface
-{
-}
+class OutOfBoundsException extends \OutOfBoundsException implements ExceptionInterface {}

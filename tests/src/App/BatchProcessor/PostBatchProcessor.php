@@ -24,9 +24,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
  */
 class PostBatchProcessor extends AbstractBatchProcessor
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $entityManager) {}
 
     #[\Override]
     public function processItem(ItemEvent $itemEvent): void

@@ -26,8 +26,7 @@ final readonly class ItemEvent
     public function __construct(
         private int|string $key,
         private mixed $item,
-    ) {
-    }
+    ) {}
 
     /**
      * @return TKey

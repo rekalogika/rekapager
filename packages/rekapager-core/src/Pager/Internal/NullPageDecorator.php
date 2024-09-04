@@ -32,8 +32,7 @@ final readonly class NullPageDecorator implements NullPageInterface, \IteratorAg
      */
     public function __construct(
         private PageInterface $page,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getPageIdentifier(): object

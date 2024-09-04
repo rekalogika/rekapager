@@ -26,6 +26,6 @@ interface BatchProcessFactoryInterface
      */
     public function createBatchProcess(
         PageableInterface $pageable,
-        BatchProcessorInterface $batchProcessor
+        BatchProcessorInterface $batchProcessor,
     ): BatchProcess;
 }

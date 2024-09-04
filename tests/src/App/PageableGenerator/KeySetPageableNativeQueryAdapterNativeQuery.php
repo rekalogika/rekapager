@@ -30,8 +30,7 @@ class KeySetPageableNativeQueryAdapterNativeQuery implements PageableGeneratorIn
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public static function getKey(): string

@@ -29,8 +29,7 @@ class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
     public function __construct(
         private readonly PostRepository $postRepository,
         private readonly UserRepository $userRepository,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public static function getKey(): string
@@ -69,7 +68,7 @@ class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,
-            indexBy: 'id'
+            indexBy: 'id',
         );
 
         $pageable = new OffsetPageable(

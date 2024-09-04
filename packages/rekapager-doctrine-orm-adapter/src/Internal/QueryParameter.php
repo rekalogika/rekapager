@@ -23,9 +23,8 @@ final readonly class QueryParameter
 {
     public function __construct(
         private mixed $value,
-        private ParameterType|ArrayParameterType|string|int|null $type = null
-    ) {
-    }
+        private ParameterType|ArrayParameterType|string|int|null $type = null,
+    ) {}
 
     public function getValue(): mixed
     {

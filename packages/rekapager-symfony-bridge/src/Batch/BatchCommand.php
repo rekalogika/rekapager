@@ -143,7 +143,7 @@ abstract class BatchCommand extends Command implements SignalableCommandInterfac
             $resume = file_get_contents($progressFile);
 
             if (!\is_string($resume)) {
-                throw new UnexpectedValueException(sprintf('Invalid resume data in progress file "%s"', $progressFile));
+                throw new UnexpectedValueException(\sprintf('Invalid resume data in progress file "%s"', $progressFile));
             }
         }
 

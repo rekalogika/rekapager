@@ -91,7 +91,7 @@ class DemoController extends AbstractController
             options: new PagerOptions(
                 proximity: $pagerParameters->proximity,
                 pageLimit: $pagerParameters->pagerPageLimit,
-            )
+            ),
         );
 
         $title = $pageableGenerator->getTitle();
@@ -141,7 +141,7 @@ class DemoController extends AbstractController
 
         foreach ($pageable->withItemsPerPage(5)->getPages() as $page) {
             $output .= '<li>';
-            $output .= sprintf('Processing page %d', $page->getPageNumber() ?? 'null');
+            $output .= \sprintf('Processing page %d', $page->getPageNumber() ?? 'null');
 
             $output .= '<ul>';
 
@@ -154,7 +154,7 @@ class DemoController extends AbstractController
                     $title = IndexResolver::resolveIndex($item, 'title');
                     $category = IndexResolver::resolveIndex($item, 'category');
 
-                    $output .= sprintf(
+                    $output .= \sprintf(
                         '<li>Processing item id %s, date %s, title %s, category %s</li>',
                         $id,
                         $date,
@@ -164,12 +164,12 @@ class DemoController extends AbstractController
                 } else {
                     // used by other adapters
                     \assert($item instanceof Post);
-                    $output .= sprintf(
+                    $output .= \sprintf(
                         '<li>Processing item id %s, date %s, title %s, category %s</li>',
                         $item->getId(),
                         $item->getDate()?->format('Y-m-d') ?? 'null',
                         $item->getTitle() ?? 'null',
-                        $item->getCategory()->value
+                        $item->getCategory()->value,
                     );
 
                 }

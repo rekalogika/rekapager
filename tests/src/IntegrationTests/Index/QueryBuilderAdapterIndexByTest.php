@@ -46,9 +46,9 @@ class QueryBuilderAdapterIndexByTest extends KernelTestCase
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,
             typeMapping: [
-                'p.date' => Types::DATE_MUTABLE
+                'p.date' => Types::DATE_MUTABLE,
             ],
-            indexBy: 'id'
+            indexBy: 'id',
         );
 
         $pageable = new KeysetPageable(
@@ -70,9 +70,9 @@ class QueryBuilderAdapterIndexByTest extends KernelTestCase
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,
             typeMapping: [
-                'p.date' => Types::DATE_MUTABLE
+                'p.date' => Types::DATE_MUTABLE,
             ],
-            indexBy: 'foo'
+            indexBy: 'foo',
         );
 
         $pageable = new KeysetPageable(
@@ -102,9 +102,9 @@ class QueryBuilderAdapterIndexByTest extends KernelTestCase
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,
             typeMapping: [
-                'p.date' => Types::DATE_MUTABLE
+                'p.date' => Types::DATE_MUTABLE,
             ],
-            indexBy: 'foo'
+            indexBy: 'foo',
         );
 
         $pageable = new KeysetPageable(

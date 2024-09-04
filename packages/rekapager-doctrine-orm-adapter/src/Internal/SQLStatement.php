@@ -26,8 +26,7 @@ final readonly class SQLStatement
     public function __construct(
         private string $sql,
         private array $parameters,
-    ) {
-    }
+    ) {}
 
     public function getSQL(): string
     {

@@ -26,9 +26,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
  */
 class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGeneratorInterface
 {
-    public function __construct(private readonly PostRepository $postRepository)
-    {
-    }
+    public function __construct(private readonly PostRepository $postRepository) {}
 
     #[\Override]
     public static function getKey(): string
@@ -61,9 +59,9 @@ class KeysetPageableQueryBuilderAdapterQueryBuilder implements PageableGenerator
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,
             typeMapping: [
-                'p.date' => Types::DATE_MUTABLE
+                'p.date' => Types::DATE_MUTABLE,
             ],
-            indexBy: 'id'
+            indexBy: 'id',
         );
 
         $pageable = new KeysetPageable(
