@@ -129,14 +129,14 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     private function getProgressString(BeforePageEvent|AfterPageEvent $event): string
     {
         if ($this->totalPages === null) {
-            return sprintf(
+            return \sprintf(
                 'Page <info>%s</info>, identifier <info>%s</info>',
                 $event->getPage()->getPageNumber() ?? '?',
                 $event->getEncodedPageIdentifier(),
             );
         }
 
-        return sprintf(
+        return \sprintf(
             'Page <info>%s</info>/<info>%s</info>, identifier <info>%s</info>',
             $event->getPage()->getPageNumber() ?? '?',
             $this->totalPages,
@@ -326,10 +326,10 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             if ($eta === null) {
                 $stats[] = ['Time elapsed' => Helper::formatTime($processDuration)];
             } else {
-                $stats[] = ['Time elapsed - remaining' => sprintf(
+                $stats[] = ['Time elapsed - remaining' => \sprintf(
                     '%s - %s',
                     Helper::formatTime($processDuration),
-                    Helper::formatTime($eta)
+                    Helper::formatTime($eta),
                 )];
             }
         }
@@ -344,35 +344,35 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
             $pagesInfo = $this->sessionPageNumber;
             $itemsInfo = $this->sessionItemNumber;
         } else {
-            $pagesInfo = sprintf(
+            $pagesInfo = \sprintf(
                 '%s/%s',
                 $this->sessionPageNumber + $this->pagesFinishedInPreviousSessions,
-                $this->totalPages
+                $this->totalPages,
             );
 
-            $itemsInfo = sprintf(
+            $itemsInfo = \sprintf(
                 '%s/%s',
                 $this->sessionItemNumber + $this->pagesFinishedInPreviousSessions * $this->itemsPerPage,
-                $this->totalItems ?? '?'
+                $this->totalItems ?? '?',
             );
         }
 
         if ($pagesPerSecond > 0) {
-            $pagesInfo .= sprintf(' (%s/minute)', round($pagesPerSecond * 60, 2));
+            $pagesInfo .= \sprintf(' (%s/minute)', round($pagesPerSecond * 60, 2));
         }
 
         if ($itemsPerSecond > 0) {
-            $itemsInfo .= sprintf(' (%s/minute)', round($itemsPerSecond * 60, 2));
+            $itemsInfo .= \sprintf(' (%s/minute)', round($itemsPerSecond * 60, 2));
         }
 
         $stats[] = ['Pages' => $pagesInfo];
         $stats[] = ['Items' => $itemsInfo];
 
 
-        $stats[] = ['Memory (current/peak)' => sprintf(
+        $stats[] = ['Memory (current/peak)' => \sprintf(
             '%s / %s',
             Helper::formatMemory(memory_get_usage(true)),
-            Helper::formatMemory(memory_get_peak_usage(true))
+            Helper::formatMemory(memory_get_peak_usage(true)),
         )];
 
         $this->io->definitionList(...$stats);

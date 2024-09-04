@@ -27,9 +27,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
  */
 class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues implements PageableGeneratorInterface
 {
-    public function __construct(private readonly Connection $connection)
-    {
-    }
+    public function __construct(private readonly Connection $connection) {}
 
     #[\Override]
     public static function getKey(): string
@@ -66,7 +64,7 @@ class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues implements 
                 'p.id' => Order::Ascending,
             ],
             indexBy: 'id',
-            seekMethod: SeekMethod::RowValues
+            seekMethod: SeekMethod::RowValues,
         );
 
         $pageable = new KeysetPageable(

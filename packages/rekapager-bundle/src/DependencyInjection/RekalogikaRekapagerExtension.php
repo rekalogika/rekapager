@@ -36,7 +36,7 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
 
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../../config')
+            new FileLocator(__DIR__ . '/../../config'),
         );
         $loader->load('services.php');
 
@@ -76,17 +76,17 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
 
         $container->setParameter(
             'rekalogika.rekapager.config.default_template',
-            $defaultTwigTemplate
+            $defaultTwigTemplate,
         );
 
         $container->setParameter(
             'rekalogika.rekapager.config.default_page_parameter_name',
-            $defaultPageParameterName
+            $defaultPageParameterName,
         );
 
         $container->setParameter(
             'rekalogika.rekapager.config.default_proximity',
-            $defaultProximity
+            $defaultProximity,
         );
     }
 
@@ -103,9 +103,9 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
             'twig',
             [
                 'paths' => [
-                    $templates => 'RekalogikaRekapager'
-                ]
-            ]
+                    $templates => 'RekalogikaRekapager',
+                ],
+            ],
         );
 
         if (!$this->isAssetMapperAvailable($container)) {

@@ -28,6 +28,6 @@ interface ObjectPaginatorInterface
     public function paginate(
         object $object,
         Request $request,
-        ?object $options = null
+        ?object $options = null,
     ): PagerInterface;
 }

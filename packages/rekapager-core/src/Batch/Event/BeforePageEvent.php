@@ -28,8 +28,7 @@ final readonly class BeforePageEvent
     public function __construct(
         private PageInterface $page,
         private string $encodedPageIdentifier,
-    ) {
-    }
+    ) {}
 
     /**
      * @return PageInterface<TKey,T>

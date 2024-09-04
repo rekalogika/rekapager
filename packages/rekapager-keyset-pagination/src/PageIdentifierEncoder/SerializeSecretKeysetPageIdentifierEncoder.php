@@ -27,9 +27,8 @@ use Symfony\Component\Uid\AbstractUid;
 class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncoderInterface
 {
     public function __construct(
-        private readonly string $secret
-    ) {
-    }
+        private readonly string $secret,
+    ) {}
 
     #[\Override]
     public static function getIdentifierClass(): string
@@ -69,14 +68,14 @@ class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncode
     public function encode(object $identifier): string
     {
         if (!$identifier instanceof KeysetPageIdentifier) {
-            throw new PageIdentifierEncodingFailureException(sprintf('Unsupported identifier type "%s"', get_debug_type($identifier)));
+            throw new PageIdentifierEncodingFailureException(\sprintf('Unsupported identifier type "%s"', get_debug_type($identifier)));
         }
 
         if (\is_array($identifier->getBoundaryValues())) {
             /** @var mixed $value */
             foreach ($identifier->getBoundaryValues() as $key => $value) {
                 if (\is_object($value) && !$this->isWhitelistedBoundaryValueType($value)) {
-                    throw new PageIdentifierEncodingFailureException(sprintf('Unsupported boundary value type for key "%s", value "%s"', $key, get_debug_type($value)));
+                    throw new PageIdentifierEncodingFailureException(\sprintf('Unsupported boundary value type for key "%s", value "%s"', $key, get_debug_type($value)));
                 }
             }
         }

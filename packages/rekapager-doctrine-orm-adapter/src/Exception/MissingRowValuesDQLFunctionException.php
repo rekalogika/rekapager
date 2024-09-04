@@ -22,7 +22,7 @@ class MissingRowValuesDQLFunctionException extends LogicException
         parent::__construct(
             'Using row values in "QueryBuilderAdapter" requires the use of the REKAPAGER_ROW_VALUES() DQL function. Make sure you have registered the function in your Doctrine ORM configuration.',
             0,
-            $previous
+            $previous,
         );
     }
 }

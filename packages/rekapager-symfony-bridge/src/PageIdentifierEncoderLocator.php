@@ -22,9 +22,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class PageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterface
 {
-    public function __construct(private readonly ContainerInterface $container)
-    {
-    }
+    public function __construct(private readonly ContainerInterface $container) {}
 
     /**
      * @template T of object
@@ -33,21 +31,21 @@ class PageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterf
      */
     #[\Override]
     public function getPageIdentifierEncoder(
-        string $pageIdentifierClass
+        string $pageIdentifierClass,
     ): PageIdentifierEncoderInterface {
         try {
             $result = $this->container->get($pageIdentifierClass);
         } catch (ServiceNotFoundException $e) {
             throw new MissingPageIdentifierEncoderException(
-                sprintf('No page identifier encoder found for class "%s"', $pageIdentifierClass),
+                \sprintf('No page identifier encoder found for class "%s"', $pageIdentifierClass),
                 0,
-                $e
+                $e,
             );
         }
 
         if (!$result instanceof PageIdentifierEncoderInterface) {
             throw new LogicException(
-                sprintf('The service "%s" must implement "%s"', $pageIdentifierClass, PageIdentifierEncoderInterface::class)
+                \sprintf('The service "%s" must implement "%s"', $pageIdentifierClass, PageIdentifierEncoderInterface::class),
             );
         }
 

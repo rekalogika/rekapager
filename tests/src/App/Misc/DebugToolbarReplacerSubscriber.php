@@ -21,8 +21,7 @@ class DebugToolbarReplacerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly KernelInterface $kernel,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public static function getSubscribedEvents()

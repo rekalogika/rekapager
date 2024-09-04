@@ -19,6 +19,6 @@ class CountUnsupportedException extends UnexpectedValueException
 {
     public function __construct(string $sql)
     {
-        parent::__construct(sprintf('Unable to do a count query on the provided SQL query "%s". You may wish to file a bug report.', $sql));
+        parent::__construct(\sprintf('Unable to do a count query on the provided SQL query "%s". You may wish to file a bug report.', $sql));
     }
 }

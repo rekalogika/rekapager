@@ -19,6 +19,6 @@ class UnsupportedCollectionItemException extends UnexpectedValueException
 {
     public function __construct(string $type, \Throwable $previous)
     {
-        parent::__construct(sprintf('Unsupported collection type. The items in the collection must be objects or arrays, an %s was given.', $type), 0, $previous);
+        parent::__construct(\sprintf('Unsupported collection type. The items in the collection must be objects or arrays, an %s was given.', $type), 0, $previous);
     }
 }

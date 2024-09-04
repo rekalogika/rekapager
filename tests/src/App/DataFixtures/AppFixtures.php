@@ -27,22 +27,22 @@ class AppFixtures extends Fixture
 
         PostFactory::createMany(3, [
             'user' => $user,
-            'setName' => 'tiny'
+            'setName' => 'tiny',
         ]);
 
         PostFactory::createMany(10, [
             'user' => $user,
-            'setName' => 'small'
+            'setName' => 'small',
         ]);
 
         PostFactory::createMany(103, [
             'user' => $user,
-            'setName' => 'medium'
+            'setName' => 'medium',
         ]);
 
         PostFactory::createMany(1003, [
             'user' => $user,
-            'setName' => 'large'
+            'setName' => 'large',
         ]);
 
         // PostFactory::createMany(10003, [

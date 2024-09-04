@@ -47,8 +47,7 @@ final class KeysetPageable implements PageableInterface
         private readonly KeysetPaginationAdapterInterface $adapter,
         private readonly int $itemsPerPage = 50,
         private readonly int|bool|\Closure $count = false,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function withItemsPerPage(int $itemsPerPage): static
@@ -89,7 +88,7 @@ final class KeysetPageable implements PageableInterface
             pageable: $this,
             adapter: $this->adapter,
             pageIdentifier: $pageIdentifier,
-            itemsPerPage: $this->itemsPerPage
+            itemsPerPage: $this->itemsPerPage,
         );
     }
 
@@ -124,7 +123,7 @@ final class KeysetPageable implements PageableInterface
             pageable: $this,
             adapter: $this->adapter,
             pageIdentifier: $pageIdentifier,
-            itemsPerPage: $this->itemsPerPage
+            itemsPerPage: $this->itemsPerPage,
         );
     }
 
@@ -139,7 +138,7 @@ final class KeysetPageable implements PageableInterface
             pageable: $this,
             adapter: $this->adapter,
             pageIdentifier: $pageIdentifier,
-            itemsPerPage: $this->itemsPerPage
+            itemsPerPage: $this->itemsPerPage,
         );
     }
 

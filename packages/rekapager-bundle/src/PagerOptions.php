@@ -32,8 +32,7 @@ class PagerOptions
         private readonly ?int $urlReferenceType = null,
         private readonly ?int $itemsPerPage = null,
         private readonly ?int $pageLimit = null,
-    ) {
-    }
+    ) {}
 
     public function getPageParameterName(): ?string
     {

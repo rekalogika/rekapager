@@ -26,8 +26,7 @@ final readonly class AfterProcessEvent
      */
     public function __construct(
         private PageableInterface $pageable,
-    ) {
-    }
+    ) {}
 
     /**
      * @return PageableInterface<TKey,T>

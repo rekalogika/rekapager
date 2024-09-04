@@ -34,6 +34,6 @@ interface PagerFactoryInterface
     public function createPager(
         PageableInterface $pageable,
         Request $request,
-        ?object $options = null
+        ?object $options = null,
     ): PagerInterface;
 }

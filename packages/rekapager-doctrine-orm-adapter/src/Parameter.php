@@ -22,8 +22,7 @@ final readonly class Parameter
         private string|int $key,
         private mixed $value,
         private ParameterType|ArrayParameterType|string|int|null $type = null,
-    ) {
-    }
+    ) {}
 
     public function getKey(): string|int
     {

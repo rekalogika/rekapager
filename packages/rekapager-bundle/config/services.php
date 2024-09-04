@@ -29,22 +29,22 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $params->set(
         'rekalogika.rekapager.config.default_template',
-        '@RekalogikaRekapager/default.html.twig'
+        '@RekalogikaRekapager/default.html.twig',
     );
 
     $params->set(
         'rekalogika.rekapager.config.default_page_parameter_name',
-        'page'
+        'page',
     );
 
     $params->set(
         'rekalogika.rekapager.config.default_proximity',
-        2
+        2,
     );
 
     $params->set(
         'rekalogika.rekapager.config.default_url_reference_type',
-        UrlGeneratorInterface::ABSOLUTE_PATH
+        UrlGeneratorInterface::ABSOLUTE_PATH,
     );
 
     $services = $containerConfigurator->services();
@@ -52,7 +52,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             PageUrlGeneratorFactoryInterface::class,
-            SymfonyPageUrlGeneratorFactory::class
+            SymfonyPageUrlGeneratorFactory::class,
         )
         ->args([
             service(UrlGeneratorInterface::class),
@@ -61,7 +61,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services
         ->set(
             PagerFactoryInterface::class,
-            PagerFactory::class
+            PagerFactory::class,
         )
         ->args([
             '$pageIdentifierEncoderResolver' => service(PageIdentifierEncoderResolverInterface::class),

@@ -31,9 +31,8 @@ final readonly class TraversablePager implements TraversablePagerInterface, \Ite
      * @param PagerInterface<TKey,T> $decorated
      */
     public function __construct(
-        private PagerInterface $decorated
-    ) {
-    }
+        private PagerInterface $decorated,
+    ) {}
 
     #[\Override]
     public function getProximity(): int

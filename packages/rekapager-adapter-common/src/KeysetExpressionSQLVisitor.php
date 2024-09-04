@@ -43,12 +43,12 @@ final class KeysetExpressionSQLVisitor extends ExpressionVisitor
         $value = $this->dispatch($comparison->getValue());
 
         return match ($comparison->getOperator()) {
-            Comparison::EQ => sprintf('%s = %s', $comparison->getField(), $value),
-            Comparison::LT => sprintf('%s < %s', $comparison->getField(), $value),
-            Comparison::LTE => sprintf('%s <= %s', $comparison->getField(), $value),
-            Comparison::GT => sprintf('%s > %s', $comparison->getField(), $value),
-            Comparison::GTE => sprintf('%s >= %s', $comparison->getField(), $value),
-            default => throw new LogicException(sprintf('Unsupported comparison operator "%s", it should never occur in keyset pagination expression.', $comparison->getOperator())),
+            Comparison::EQ => \sprintf('%s = %s', $comparison->getField(), $value),
+            Comparison::LT => \sprintf('%s < %s', $comparison->getField(), $value),
+            Comparison::LTE => \sprintf('%s <= %s', $comparison->getField(), $value),
+            Comparison::GT => \sprintf('%s > %s', $comparison->getField(), $value),
+            Comparison::GTE => \sprintf('%s >= %s', $comparison->getField(), $value),
+            default => throw new LogicException(\sprintf('Unsupported comparison operator "%s", it should never occur in keyset pagination expression.', $comparison->getOperator())),
         };
     }
 
@@ -98,8 +98,8 @@ final class KeysetExpressionSQLVisitor extends ExpressionVisitor
 
         return match ($expr->getType()) {
             CompositeExpression::TYPE_AND => implode(' AND ', $expressionList),
-            CompositeExpression::TYPE_NOT => sprintf('NOT (%s)', $expressionList[0]),
-            default => throw new LogicException(sprintf('Unsupported composite expression "%s", it should never occur in keyset pagination expression.', $expr->getType())),
+            CompositeExpression::TYPE_NOT => \sprintf('NOT (%s)', $expressionList[0]),
+            default => throw new LogicException(\sprintf('Unsupported composite expression "%s", it should never occur in keyset pagination expression.', $expr->getType())),
         };
     }
 

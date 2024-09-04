@@ -53,8 +53,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
         private readonly KeysetPaginationAdapterInterface $adapter,
         private readonly KeysetPageIdentifier $pageIdentifier,
         private readonly int $itemsPerPage,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function withPageNumber(?int $pageNumber): static
@@ -133,7 +132,7 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
 
         $limit = min(
             $this->itemsPerPage,
-            $this->pageIdentifier->getLimit() ?? $this->itemsPerPage
+            $this->pageIdentifier->getLimit() ?? $this->itemsPerPage,
         );
 
         $result = $this->adapter->getKeysetItems(

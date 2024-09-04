@@ -53,8 +53,7 @@ final class OffsetPage implements PageInterface, \IteratorAggregate
         private readonly ?int $totalItems,
         private readonly ?int $totalPages,
         private readonly ?int $limitPages,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function withPageNumber(?int $pageNumber): static

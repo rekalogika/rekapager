@@ -23,9 +23,7 @@ use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
  */
 final class IriHelper
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * Parses and standardizes the request IRI.
@@ -37,7 +35,7 @@ final class IriHelper
     {
         $parts = parse_url($iri);
         if (false === $parts) {
-            throw new InvalidArgumentException(sprintf('The request URI "%s" is malformed.', $iri));
+            throw new InvalidArgumentException(\sprintf('The request URI "%s" is malformed.', $iri));
         }
 
         $parameters = [];
@@ -82,7 +80,7 @@ final class IriHelper
                 $url .= $parts['user'];
 
                 if (isset($parts['pass'])) {
-                    $url .= ':'.$parts['pass'];
+                    $url .= ':' . $parts['pass'];
                 }
 
                 $url .= '@';
@@ -91,18 +89,18 @@ final class IriHelper
             $url .= $parts['host'];
 
             if (isset($parts['port'])) {
-                $url .= ':'.$parts['port'];
+                $url .= ':' . $parts['port'];
             }
         }
 
         $url .= $parts['path'];
 
         if ('' !== $parts['query']) {
-            $url .= '?'.$parts['query'];
+            $url .= '?' . $parts['query'];
         }
 
         if (isset($parts['fragment'])) {
-            $url .= '#'.$parts['fragment'];
+            $url .= '#' . $parts['fragment'];
         }
 
         return $url;
@@ -119,8 +117,8 @@ final class IriHelper
 
         $source = preg_replace_callback(
             '/(^|(?<=&))[^=[&]+/',
-            static fn ($key): string => bin2hex(urldecode($key[0])),
-            $source
+            static fn($key): string => bin2hex(urldecode($key[0])),
+            $source,
         );
 
         if ($source === null) {

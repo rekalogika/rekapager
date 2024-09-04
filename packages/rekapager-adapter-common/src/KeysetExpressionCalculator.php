@@ -21,9 +21,7 @@ use Doctrine\Common\Collections\Expr\Expression;
  */
 final class KeysetExpressionCalculator
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * @param non-empty-list<Field> $fields
@@ -39,12 +37,12 @@ final class KeysetExpressionCalculator
                     if ($field->isAscending()) {
                         $expressions[] = Criteria::expr()->gt(
                             $field->getName(),
-                            $field->getValue()
+                            $field->getValue(),
                         );
                     } else {
                         $expressions[] = Criteria::expr()->lt(
                             $field->getName(),
-                            $field->getValue()
+                            $field->getValue(),
                         );
                     }
 
@@ -55,12 +53,12 @@ final class KeysetExpressionCalculator
                 if ($field->isAscending()) {
                     $expressions[] = Criteria::expr()->gte(
                         $field->getName(),
-                        $field->getValue()
+                        $field->getValue(),
                     );
                 } else {
                     $expressions[] = Criteria::expr()->lte(
                         $field->getName(),
-                        $field->getValue()
+                        $field->getValue(),
                     );
                 }
 
@@ -73,7 +71,7 @@ final class KeysetExpressionCalculator
             foreach (\array_slice($fields, 0, $i) as $equalField) {
                 $subExpressions[] = Criteria::expr()->eq(
                     $equalField->getName(),
-                    $equalField->getValue()
+                    $equalField->getValue(),
                 );
             }
 
@@ -81,30 +79,30 @@ final class KeysetExpressionCalculator
                 if ($i === \count($fields) - 1) {
                     $subExpressions[] = Criteria::expr()->lte(
                         $field->getName(),
-                        $field->getValue()
+                        $field->getValue(),
                     );
                 } else {
                     $subExpressions[] = Criteria::expr()->lt(
                         $field->getName(),
-                        $field->getValue()
+                        $field->getValue(),
                     );
                 }
             } else {
                 if ($i === \count($fields) - 1) {
                     $subExpressions[] = Criteria::expr()->gte(
                         $field->getName(),
-                        $field->getValue()
+                        $field->getValue(),
                     );
                 } else {
                     $subExpressions[] = Criteria::expr()->gt(
                         $field->getName(),
-                        $field->getValue()
+                        $field->getValue(),
                     );
                 }
             }
 
             $subExpression = Criteria::expr()->not(
-                Criteria::expr()->andX(...$subExpressions)
+                Criteria::expr()->andX(...$subExpressions),
             );
 
             $expressions[] = $subExpression;

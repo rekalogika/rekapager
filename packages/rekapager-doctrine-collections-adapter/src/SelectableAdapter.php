@@ -177,7 +177,7 @@ final readonly class SelectableAdapter implements
      */
     private function createCalculatorFields(
         array $boundaryValues,
-        array $orderings
+        array $orderings,
     ): array {
         $fields = [];
 

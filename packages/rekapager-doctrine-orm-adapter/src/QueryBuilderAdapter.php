@@ -138,7 +138,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
         $i = 1;
         foreach ($this->getBoundaryFieldNames() as $field) {
-            $queryBuilder->addSelect(sprintf('%s AS rekapager_boundary_%s', $field, $i));
+            $queryBuilder->addSelect(\sprintf('%s AS rekapager_boundary_%s', $field, $i));
             $i++;
         }
 
@@ -146,7 +146,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
         [$where, $parameters] = $this->generateWhereExpression(
             boundaryValues: $boundaryValues,
-            orderings: $orderings
+            orderings: $orderings,
         );
 
         if ($where === null) {
@@ -172,7 +172,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
                 $template,
                 $value,
                 // @phpstan-ignore argument.type
-                $parameter->getType()
+                $parameter->getType(),
             );
         }
 
@@ -269,11 +269,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             $i++;
         }
 
-        $where = sprintf(
+        $where = \sprintf(
             'REKAPAGER_ROW_VALUES(%s) %s REKAPAGER_ROW_VALUES(%s)',
             implode(', ', $whereFields),
             $order === Order::Ascending ? '>' : '<',
-            implode(', ', $whereValues)
+            implode(', ', $whereValues),
         );
 
         return [$where, $queryParameters];
@@ -286,7 +286,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
      */
     private function createCalculatorFields(
         array $boundaryValues,
-        array $orderings
+        array $orderings,
     ): array {
         $fields = [];
 
@@ -428,7 +428,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
                 }
 
                 if (isset($result[$field])) {
-                    throw new LogicException(sprintf('The field "%s" appears multiple times in the ORDER BY clause.', $field));
+                    throw new LogicException(\sprintf('The field "%s" appears multiple times in the ORDER BY clause.', $field));
                 }
 
                 $result[$field] = $direction;
@@ -466,7 +466,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
     private function getType(
         string $fieldName,
-        mixed $value
+        mixed $value,
     ): ParameterType|ArrayParameterType|string|int|null {
         $type = $this->typeMapping[$fieldName] ?? null;
 
@@ -508,7 +508,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     }
 
     private function detectTypeFromMetadata(
-        string $fieldName
+        string $fieldName,
     ): string|null {
         [$alias, $property] = explode('.', $fieldName);
         $class = $this->getClassFromAlias($alias);

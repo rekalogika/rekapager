@@ -41,7 +41,7 @@ class CountTest extends TestCase
             new Entity(2),
             new Entity(3),
             new Entity(4),
-            new Entity(5)
+            new Entity(5),
         ]);
 
         // offset pageable
@@ -50,8 +50,8 @@ class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new SelectableAdapter(
-                    collection: $collection
-                )
+                    collection: $collection,
+                ),
             ),
             null,
         ];
@@ -60,7 +60,7 @@ class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new SelectableAdapter(
-                    collection: $collection
+                    collection: $collection,
                 ),
                 count: true,
             ),
@@ -72,9 +72,9 @@ class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new SelectableAdapter(
-                    collection: $collection
+                    collection: $collection,
                 ),
-                count: fn () => $collection->count(),
+                count: fn() => $collection->count(),
             ),
             5,
         ];
@@ -85,17 +85,17 @@ class CountTest extends TestCase
             $collection,
             new KeysetPageable(
                 adapter: new SelectableAdapter(
-                    collection: $collection
+                    collection: $collection,
                 ),
             ),
-            null
+            null,
         ];
 
         yield [
             $collection,
             new KeysetPageable(
                 adapter: new SelectableAdapter(
-                    collection: $collection
+                    collection: $collection,
                 ),
                 count: true,
             ),
@@ -107,9 +107,9 @@ class CountTest extends TestCase
             $collection,
             new KeysetPageable(
                 adapter: new SelectableAdapter(
-                    collection: $collection
+                    collection: $collection,
                 ),
-                count: fn () => $collection->count(),
+                count: fn() => $collection->count(),
             ),
             5,
         ];
@@ -119,17 +119,17 @@ class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new PagerfantaAdapterAdapter(
-                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create())
-                )
+                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create()),
+                ),
             ),
-            null
+            null,
         ];
 
         yield [
             $collection,
             new OffsetPageable(
                 adapter: new PagerfantaAdapterAdapter(
-                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create())
+                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create()),
                 ),
                 count: true,
             ),
@@ -141,9 +141,9 @@ class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new PagerfantaAdapterAdapter(
-                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create())
+                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create()),
                 ),
-                count: fn () => $collection->count(),
+                count: fn() => $collection->count(),
             ),
             5,
         ];

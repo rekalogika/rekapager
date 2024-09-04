@@ -27,8 +27,7 @@ final readonly class AfterPageEvent
      */
     public function __construct(
         private BeforePageEvent $beforePageEvent,
-    ) {
-    }
+    ) {}
 
     /**
      * @return PageableInterface<TKey,T>

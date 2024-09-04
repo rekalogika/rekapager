@@ -19,15 +19,13 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class RekapagerSymfonyBridge
 {
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function loadServices(ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../config')
+            new FileLocator(__DIR__ . '/../config'),
         );
 
         $loader->load('encoders.php');

@@ -23,13 +23,12 @@ final readonly class DefaultBatchProcessFactory implements BatchProcessFactoryIn
 {
     public function __construct(
         private PageIdentifierEncoderResolverInterface $pageableIdentifierResolver,
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function createBatchProcess(
         PageableInterface $pageable,
-        BatchProcessorInterface $batchProcessor
+        BatchProcessorInterface $batchProcessor,
     ): BatchProcess {
         return new BatchProcess(
             pageable: $pageable,

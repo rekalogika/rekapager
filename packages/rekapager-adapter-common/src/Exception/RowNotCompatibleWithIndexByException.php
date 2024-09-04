@@ -19,6 +19,6 @@ class RowNotCompatibleWithIndexByException extends UnexpectedValueException
 {
     public function __construct(mixed $row, string $indexBy)
     {
-        parent::__construct(sprintf('Your query returns rows of type "%s", but it is not compatible with the index by "%s". The row must be an array or an object with a property named "%s".', get_debug_type($row), $indexBy, $indexBy));
+        parent::__construct(\sprintf('Your query returns rows of type "%s", but it is not compatible with the index by "%s". The row must be an array or an object with a property named "%s".', get_debug_type($row), $indexBy, $indexBy));
     }
 }

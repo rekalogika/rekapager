@@ -28,14 +28,14 @@ class RekapagerExtension extends AbstractExtension
                 [RekapagerRuntime::class, 'renderPager'],
                 [
                     'is_safe' => ['html'],
-                ]
+                ],
             ),
             new TwigFunction(
                 'rekapager_infinite_scrolling_content',
                 $this->renderInfiniteScrolling(...),
                 [
                     'is_safe' => ['html'],
-                ]
+                ],
             ),
         ];
     }

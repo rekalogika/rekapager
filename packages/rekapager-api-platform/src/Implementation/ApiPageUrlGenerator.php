@@ -39,7 +39,7 @@ class ApiPageUrlGenerator implements PageUrlGeneratorInterface
             $this->parsed['parameters'],
             $this->pageParameterName,
             $pageIdentifier,
-            $this->urlGenerationStrategy
+            $this->urlGenerationStrategy,
         );
     }
 }

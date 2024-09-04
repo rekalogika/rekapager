@@ -36,13 +36,13 @@ class SelectableAdapterIndexByTest extends KernelTestCase
             ->orderBy([
                 'date' => Order::Descending,
                 'title' => Order::Ascending,
-                'id' => Order::Ascending
+                'id' => Order::Ascending,
             ]);
 
         $adapter = new SelectableAdapter(
             collection: $this->getSelectable(),
             criteria: $criteria,
-            indexBy: 'id'
+            indexBy: 'id',
         );
 
         $pageable = new KeysetPageable(
@@ -64,13 +64,13 @@ class SelectableAdapterIndexByTest extends KernelTestCase
             ->orderBy([
                 'date' => Order::Descending,
                 'title' => Order::Ascending,
-                'id' => Order::Ascending
+                'id' => Order::Ascending,
             ]);
 
         $adapter = new SelectableAdapter(
             collection: $this->getSelectable(),
             criteria: $criteria,
-            indexBy: 'foo'
+            indexBy: 'foo',
         );
 
         $pageable = new KeysetPageable(

@@ -37,7 +37,7 @@ class PagerfantaAdapterIndexByTest extends KernelTestCase
             ->orderBy([
                 'date' => Order::Descending,
                 'title' => Order::Ascending,
-                'id' => Order::Ascending
+                'id' => Order::Ascending,
             ]);
 
         $pagerfantaAdapter = new SelectableAdapter($this->getSelectable(), $criteria);
@@ -63,7 +63,7 @@ class PagerfantaAdapterIndexByTest extends KernelTestCase
             ->orderBy([
                 'date' => Order::Descending,
                 'title' => Order::Ascending,
-                'id' => Order::Ascending
+                'id' => Order::Ascending,
             ]);
 
         $pagerfantaAdapter = new SelectableAdapter($this->getSelectable(), $criteria);

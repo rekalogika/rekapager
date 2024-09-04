@@ -28,8 +28,7 @@ final readonly class CollectionAdapter implements OffsetPaginationAdapterInterfa
      */
     public function __construct(
         private ReadableCollection $collection,
-    ) {
-    }
+    ) {}
 
     /**
      * @return int<0,max>

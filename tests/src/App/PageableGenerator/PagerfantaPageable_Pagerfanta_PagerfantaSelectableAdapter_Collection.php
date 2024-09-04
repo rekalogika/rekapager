@@ -27,9 +27,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
  */
 class PagerfantaPageable_Pagerfanta_PagerfantaSelectableAdapter_Collection implements PageableGeneratorInterface
 {
-    public function __construct(private readonly UserRepository $userRepository)
-    {
-    }
+    public function __construct(private readonly UserRepository $userRepository) {}
 
     #[\Override]
     public static function getKey(): string

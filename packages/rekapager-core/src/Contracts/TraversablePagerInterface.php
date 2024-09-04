@@ -23,6 +23,4 @@ namespace Rekalogika\Rekapager\Contracts;
  * @extends PagerInterface<TKey,T>
  * @extends \Traversable<TKey,T>
  */
-interface TraversablePagerInterface extends PagerInterface, \Traversable
-{
-}
+interface TraversablePagerInterface extends PagerInterface, \Traversable {}

@@ -25,8 +25,7 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     public function __construct(
         private readonly NormalizerInterface $collectionNormalizer,
-    ) {
-    }
+    ) {}
 
     // @phpstan-ignore missingType.iterableValue
     public function getSupportedTypes(?string $format): array
@@ -42,7 +41,7 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
     public function normalize(
         mixed $object,
         ?string $format = null,
-        array $context = []
+        array $context = [],
     ): array|string|int|float|bool|\ArrayObject|null {
         $data = $this->collectionNormalizer->normalize($object, $format, $context);
 
@@ -92,7 +91,7 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
     public function supportsNormalization(
         mixed $data,
         ?string $format = null,
-        array $context = []
+        array $context = [],
     ): bool {
         // @phpstan-ignore-next-line
         return $this->collectionNormalizer->supportsNormalization($data, $format, $context);

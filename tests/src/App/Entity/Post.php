@@ -32,8 +32,8 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
         new GetCollection(
             uriTemplate: '/custom/posts',
             provider: PostProvider::class,
-        )
-    ]
+        ),
+    ],
 )]
 class Post
 {

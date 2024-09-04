@@ -23,7 +23,7 @@ interface PageIdentifierEncoderResolverInterface
      * @return PageIdentifierEncoderInterface<object>
      */
     public function getEncoderFromClass(
-        string $pageIdentifierClass
+        string $pageIdentifierClass,
     ): PageIdentifierEncoderInterface;
 
     /**
@@ -31,7 +31,7 @@ interface PageIdentifierEncoderResolverInterface
      * @return PageIdentifierEncoderInterface<object>
      */
     public function getEncoderFromPageable(
-        PageableInterface $pageable
+        PageableInterface $pageable,
     ): PageIdentifierEncoderInterface;
 
     public function encode(object $identifier): string;

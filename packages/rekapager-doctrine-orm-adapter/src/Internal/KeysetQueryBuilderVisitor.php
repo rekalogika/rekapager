@@ -52,7 +52,7 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
             Comparison::LTE => $this->expr->lte($comparison->getField(), $value),
             Comparison::GT => $this->expr->gt($comparison->getField(), $value),
             Comparison::GTE => $this->expr->gte($comparison->getField(), $value),
-            default => throw new LogicException(sprintf('Unsupported comparison operator "%s", it should never occur in keyset pagination expression.', $comparison->getOperator())),
+            default => throw new LogicException(\sprintf('Unsupported comparison operator "%s", it should never occur in keyset pagination expression.', $comparison->getOperator())),
         };
     }
 
@@ -87,7 +87,7 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
         return match ($expr->getType()) {
             CompositeExpression::TYPE_AND => new Andx($expressionList),
             CompositeExpression::TYPE_NOT => $this->expr->not($expressionList[0]),
-            default => throw new LogicException(sprintf('Unsupported composite expression "%s", it should never occur in keyset pagination expression.', $expr->getType())),
+            default => throw new LogicException(\sprintf('Unsupported composite expression "%s", it should never occur in keyset pagination expression.', $expr->getType())),
         };
     }
 

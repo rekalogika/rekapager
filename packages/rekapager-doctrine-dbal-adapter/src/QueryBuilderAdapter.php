@@ -101,7 +101,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         foreach ($orderings as $field => $direction) {
             $queryBuilder->addOrderBy(
                 $field,
-                $direction === Order::Ascending ? 'ASC' : 'DESC'
+                $direction === Order::Ascending ? 'ASC' : 'DESC',
             );
         }
 
@@ -109,7 +109,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         $i = 1;
         foreach ($this->getBoundaryFieldNames() as $field) {
-            $queryBuilder->addSelect(sprintf('%s AS rekapager_boundary_%s', $field, $i));
+            $queryBuilder->addSelect(\sprintf('%s AS rekapager_boundary_%s', $field, $i));
             $i++;
         }
 
@@ -117,7 +117,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         [$where, $parameters] = $this->generateWhereExpression(
             boundaryValues: $boundaryValues,
-            orderings: $orderings
+            orderings: $orderings,
         );
 
         if ($where === null) {
@@ -134,7 +134,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
                 $template,
                 $parameter->getValue(),
                 // @phpstan-ignore argument.type
-                $parameter->getType()
+                $parameter->getType(),
             );
         }
 
@@ -232,11 +232,11 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
             $i++;
         }
 
-        $where = sprintf(
+        $where = \sprintf(
             '(%s) %s (%s)',
             implode(', ', $whereFields),
             $order === Order::Ascending ? '>' : '<',
-            implode(', ', $whereValues)
+            implode(', ', $whereValues),
         );
 
         return [$where, $queryParameters];
@@ -249,7 +249,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
      */
     private function createCalculatorFields(
         array $boundaryValues,
-        array $orderings
+        array $orderings,
     ): array {
         $fields = [];
 

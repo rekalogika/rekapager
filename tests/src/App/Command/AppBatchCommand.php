@@ -28,13 +28,13 @@ use Symfony\Component\Console\Attribute\AsCommand;
  */
 #[AsCommand(
     name: 'app:batch',
-    description: 'Batch command'
+    description: 'Batch command',
 )]
 class AppBatchCommand extends BatchCommand
 {
     public function __construct(
         private readonly PostRepository $postRepository,
-        private readonly PostBatchProcessor $postBatchProcessor
+        private readonly PostBatchProcessor $postBatchProcessor,
     ) {
         parent::__construct();
     }

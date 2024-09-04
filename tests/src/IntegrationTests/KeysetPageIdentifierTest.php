@@ -29,7 +29,7 @@ class KeysetPageIdentifierTest extends KernelTestCase
             limit: 10,
             pageNumber: 2,
             boundaryType: BoundaryType::Lower,
-            boundaryValues: ['id' => 1]
+            boundaryValues: ['id' => 1],
         );
 
         $encoderLocator = static::getContainer()->get(PageIdentifierEncoderLocatorInterface::class);
@@ -42,7 +42,7 @@ class KeysetPageIdentifierTest extends KernelTestCase
 
         self::assertEquals(
             'q1YqU7KqVspMUbIyrNVRKlCyMtJRygFyDHSU8oGUjlKJkhVQoBYA',
-            $encoded
+            $encoded,
         );
 
         $decoded = $encoder->decode($encoded);

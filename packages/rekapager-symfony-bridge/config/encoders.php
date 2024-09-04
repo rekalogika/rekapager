@@ -42,19 +42,19 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->set(PageIdentifierEncoderResolverInterface::class)
         ->class(PageIdentifierEncoderResolver::class)
         ->args([
-            '$locator' => service(PageIdentifierEncoderLocatorInterface::class)
+            '$locator' => service(PageIdentifierEncoderLocatorInterface::class),
         ]);
 
     $services
         ->set(
             PageIdentifierEncoderLocatorInterface::class,
-            PageIdentifierEncoderLocator::class
+            PageIdentifierEncoderLocator::class,
         )
         ->args([
             tagged_locator(
                 'rekalogika.rekapager.page_identifier_encoder',
-                defaultIndexMethod: 'getIdentifierClass'
-            )
+                defaultIndexMethod: 'getIdentifierClass',
+            ),
         ]);
 
     if (class_exists(SymfonySerializerKeysetPageIdentifierEncoder::class)) {

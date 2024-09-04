@@ -40,7 +40,7 @@ class OffsetPageIdentifierEncoder implements PageIdentifierEncoderInterface
         $number = (int) $encoded;
 
         if ($number < 1) {
-            throw new PageIdentifierDecodingFailureException(sprintf('Invalid page number: "%s"', $encoded));
+            throw new PageIdentifierDecodingFailureException(\sprintf('Invalid page number: "%s"', $encoded));
         }
 
         return new PageNumber($number);

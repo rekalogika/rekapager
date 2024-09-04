@@ -26,9 +26,8 @@ class SymfonyPageUrlGenerator implements PageUrlGeneratorInterface
         private readonly string $pageParameterName,
         private readonly int $referenceType,
         private readonly string $routeName,
-        private readonly array $routeParams
-    ) {
-    }
+        private readonly array $routeParams,
+    ) {}
 
     #[\Override]
     public function generateUrl(?string $pageIdentifier): ?string
@@ -46,7 +45,7 @@ class SymfonyPageUrlGenerator implements PageUrlGeneratorInterface
             array_merge($routeParams, [
                 $this->pageParameterName => $pageIdentifier,
             ]),
-            $this->referenceType
+            $this->referenceType,
         );
     }
 }

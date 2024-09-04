@@ -27,8 +27,7 @@ final readonly class InterruptEvent
     public function __construct(
         private PageableInterface $pageable,
         private ?string $nextPageIdentifier,
-    ) {
-    }
+    ) {}
 
     /**
      * @return PageableInterface<TKey,T>

@@ -121,8 +121,8 @@ abstract class PagerTestCase extends PageableTestCase
 
         /** @psalm-suppress InvalidArgument */
         $numbers = array_map(
-            fn (PageInterface $page): ?int => $page->getPageNumber(),
-            iterator_to_array($pager->getPreviousNeighboringPages())
+            fn(PageInterface $page): ?int => $page->getPageNumber(),
+            iterator_to_array($pager->getPreviousNeighboringPages()),
         );
 
         static::assertEquals($previousPageNumbers, $numbers);
@@ -133,8 +133,8 @@ abstract class PagerTestCase extends PageableTestCase
 
         /** @psalm-suppress InvalidArgument */
         $numbers = array_map(
-            fn (PageInterface $page): ?int => $page->getPageNumber(),
-            iterator_to_array($pager->getNextNeighboringPages())
+            fn(PageInterface $page): ?int => $page->getPageNumber(),
+            iterator_to_array($pager->getNextNeighboringPages()),
         );
 
         static::assertEquals($nextPageNumbers, $numbers);
@@ -150,7 +150,7 @@ abstract class PagerTestCase extends PageableTestCase
      */
     protected function getNthPageFromBeginning(
         PageableInterface $pageable,
-        int $n
+        int $n,
     ): PageInterface {
         $page = $pageable->getFirstPage();
 
@@ -171,7 +171,7 @@ abstract class PagerTestCase extends PageableTestCase
      */
     protected function getNthPageFromEnd(
         PageableInterface $pageable,
-        int $n
+        int $n,
     ): PageInterface {
         $page = $pageable->getLastPage();
 
@@ -218,7 +218,7 @@ abstract class PagerTestCase extends PageableTestCase
      */
     protected function getNthPageFromEndByIteration(
         PageableInterface $pageable,
-        int $n
+        int $n,
     ): PageInterface {
         $page = $this->getLastPageByIteration($pageable);
 
