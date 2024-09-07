@@ -73,7 +73,7 @@ jobs:
 
     - name: Validate php-cs-fixer
       run: |
-        tools/php-cs-fixer check --allow-risky=yes -q
+        PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer check --allow-risky=yes -q
 
     - name: Load fixtures
       run: make fixtures
