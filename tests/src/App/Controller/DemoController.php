@@ -33,32 +33,15 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 /** @psalm-suppress PropertyNotSetInConstructor */
 class DemoController extends AbstractController
 {
-    /**
-     * @var array<array-key,PageableGeneratorInterface<array-key,mixed>>
-     */
-    private readonly array $pageableGenerators;
-
-    /**
-     * @param iterable<PageableGeneratorInterface<array-key,mixed>> $pageableGenerators
-     * @psalm-suppress DeprecatedClass
-     */
     public function __construct(
-        #[AutowireIterator('rekalogika.rekapager.pageable_generator', defaultIndexMethod: 'getKey')]
-        iterable $pageableGenerators,
+        private PageableGenerators $pageableGenerators,
     ) {
-        /**
-         * @psalm-suppress InvalidArgument
-         * @psalm-suppress MixedPropertyTypeCoercion
-         */
-        $this->pageableGenerators = iterator_to_array($pageableGenerators);
     }
 
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('app/index.html.twig', [
-            'pageable_generators' => $this->pageableGenerators,
-        ]);
+        return $this->render('app/index.html.twig');
     }
 
     /**
@@ -76,7 +59,7 @@ class DemoController extends AbstractController
         /** @var PagerParameters */
         $pagerParameters = $form->getData();
 
-        $pageableGenerator = $this->pageableGenerators[$key] ?? throw $this->createNotFoundException();
+        $pageableGenerator = $this->pageableGenerators->getPageableGenerators()[$key] ?? throw $this->createNotFoundException();
 
         $pageable = $pageableGenerator->generatePageable(
             itemsPerPage: $pagerParameters->itemsPerPage,
@@ -111,7 +94,6 @@ class DemoController extends AbstractController
             'pager' => $pager,
             'sql' => $logger,
             'page_identifier' => $output,
-            'pageable_generators' => $this->pageableGenerators,
             'source_code' => $this->getSourceCode($pageableGenerator::class),
             'form' => $form->createView(),
             'template' => $pagerParameters->template,
@@ -127,7 +109,7 @@ class DemoController extends AbstractController
         EntityManagerInterface $entityManager,
         ?string $key,
     ): Response {
-        $pageableGenerator = $this->pageableGenerators[$key] ?? throw $this->createNotFoundException();
+        $pageableGenerator = $this->pageableGenerators->getPageableGenerators()[$key] ?? throw $this->createNotFoundException();
 
         $pageable = $pageableGenerator->generatePageable(
             itemsPerPage: 5,
@@ -188,7 +170,6 @@ class DemoController extends AbstractController
         return $this->render('app/batch.html.twig', [
             'title' => $title,
             'sql' => $logger,
-            'pageable_generators' => $this->pageableGenerators,
             'source_code' => $this->getSourceCode($pageableGenerator::class) . "\n" .
                 $this->unindent($this->getSourceCode(self::class)),
             'output' => $output,
@@ -199,9 +180,7 @@ class DemoController extends AbstractController
     #[Route('/console', name: 'console')]
     public function console(): Response
     {
-        return $this->render('app/console.html.twig', [
-            'pageable_generators' => $this->pageableGenerators,
-        ]);
+        return $this->render('app/console.html.twig');
     }
 
     /**

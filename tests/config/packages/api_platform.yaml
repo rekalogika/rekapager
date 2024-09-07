@@ -1,8 +1,7 @@
 api_platform:
-    title: Hello Rekapager
+    title: API Platform Demo
     version: 1.0.0
-    description: |
-        Back to [main menu](/)
+    show_webby: false
     enable_docs: true
     formats:
         jsonld: ['application/ld+json']
