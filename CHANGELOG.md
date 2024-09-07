@@ -4,6 +4,7 @@
 
 * fix(`SymfonySerializerKeysetPageIdentifierEncoder`): handle more errors
 * feat: link headers
+* ci: add php-cs-fixer check
 
 # 0.17.1
 
