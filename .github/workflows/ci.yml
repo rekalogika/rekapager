@@ -29,7 +29,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: intl
-        tools: flex
+        tools: flex, phive
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -42,6 +42,9 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
+    
+    - name: phive
+      run: phive install --trust-gpg-keys E82B2FB314E9906E
 
     - name: Install dependencies
       uses: ramsey/composer-install@v3
@@ -67,6 +70,10 @@ jobs:
 
     # - name: Rector
     #   run: vendor/bin/rector process --no-progress-bar --no-diffs --dry-run --no-ansi
+
+    - name: Validate php-cs-fixer
+      run: |
+        tools/php-cs-fixer check --allow-risky=yes -q
 
     - name: Load fixtures
       run: make fixtures
