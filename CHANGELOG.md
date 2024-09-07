@@ -4,6 +4,7 @@
 
 * fix: LIMIT & OFFSET are not supported with replacing select count(*)
 * feat: improve demo
+* fix: malformed identifier now gives 400 bad request error
 
 # 0.17.0
 
