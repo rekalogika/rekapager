@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.17.2
+
+* fix(`SymfonySerializerKeysetPageIdentifierEncoder`): handle more errors
+
 # 0.17.1
 
 * fix: LIMIT & OFFSET are not supported with replacing select count(*)
