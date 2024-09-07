@@ -13,22 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
-use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
-use Rekalogika\Rekapager\Bundle\PagerOptions;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
-use Rekalogika\Rekapager\Tests\App\Doctrine\SqlLogger;
-use Rekalogika\Rekapager\Tests\App\Entity\Post;
-use Rekalogika\Rekapager\Tests\App\Form\PagerParameters;
-use Rekalogika\Rekapager\Tests\App\Form\PagerParametersType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
 class PageableGenerators
