@@ -22,6 +22,7 @@ use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Uid\AbstractUid;
@@ -128,7 +129,11 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
             throw new PageIdentifierDecodingFailureException('Empty encoded identifier');
         }
 
-        $decoded = Base64Url::decode($encoded);
+        try {
+            $decoded = Base64Url::decode($encoded);
+        } catch (\InvalidArgumentException $e) {
+            throw new PageIdentifierDecodingFailureException('Failed to decode encoded identifier', previous: $e);
+        }
 
         try {
             $decoded = gzinflate($decoded);
@@ -140,7 +145,12 @@ class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEnco
             throw new PageIdentifierDecodingFailureException('Failed to decompress encoded identifier');
         }
 
-        $array = $this->decoder->decode($decoded, 'json');
+        try {
+            $array = $this->decoder->decode($decoded, 'json');
+
+        } catch (UnexpectedValueException $e) {
+            throw new PageIdentifierDecodingFailureException('Failed to decode serialized identifier', previous: $e);
+        }
 
         if (!\is_array($array)) {
             throw new PageIdentifierDecodingFailureException('Invalid decoded identifier');
