@@ -1,2 +1,4 @@
 twig:
     form_themes: ['bootstrap_5_horizontal_layout.html.twig']
+    globals:
+        pageable_generators: '@Rekalogika\Rekapager\Tests\App\Controller\PageableGenerators'
