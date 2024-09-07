@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\IntegrationTests\ApiPlatform;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use Graviton\LinkHeaderParser\LinkHeader;
 
 class ApiTest extends ApiTestCase
 {
@@ -75,6 +76,16 @@ class ApiTest extends ApiTestCase
         $lastPage = $response->toArray()['hydra:view']['hydra:last'] ?? null;
         self::assertIsString($lastPage);
 
+        $headers = $response->getHeaders();
+        $link = $headers['link'][0] ?? null;
+        self::assertNotNull($link);
+        $linkHeader = LinkHeader::fromString($link);
+
+        self::assertEquals($firstPage, $linkHeader->getRel('first')?->getUri());
+        self::assertEquals($previousPage, $linkHeader->getRel('prev')?->getUri());
+        self::assertEquals($nextPage, $linkHeader->getRel('next')?->getUri());
+        self::assertEquals($lastPage, $linkHeader->getRel('last')?->getUri());
+
         // test last page
 
         $response = $client->request('GET', $lastPage);
@@ -104,5 +115,15 @@ class ApiTest extends ApiTestCase
         /** @var ?string */
         $lastPage = $response->toArray()['hydra:view']['hydra:last'] ?? null;
         self::assertNull($lastPage);
+
+        $headers = $response->getHeaders();
+        $link = $headers['link'][0] ?? null;
+        self::assertNotNull($link);
+        $linkHeader = LinkHeader::fromString($link);
+
+        self::assertEquals($firstPage, $linkHeader->getRel('first')?->getUri());
+        self::assertEquals($previousPage, $linkHeader->getRel('prev')?->getUri());
+        self::assertEquals($nextPage, $linkHeader->getRel('next')?->getUri());
+        self::assertEquals($lastPage, $linkHeader->getRel('last')?->getUri());
     }
 }
