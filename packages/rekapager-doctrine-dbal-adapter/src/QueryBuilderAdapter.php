@@ -422,7 +422,11 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
         $sql = $queryBuilder->getSQL();
 
-        if (!str_contains(strtoupper($sql), 'GROUP BY')) {
+        if (
+            !str_contains(strtoupper($sql), ' GROUP BY ') &&
+            !str_contains(strtoupper($sql), ' LIMIT ') &&
+            !str_contains(strtoupper($sql), ' OFFSET ')
+        ) {
             return $this->doCountWithReplacingSelect($queryBuilder);
         }
 
