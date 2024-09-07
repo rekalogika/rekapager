@@ -3,6 +3,7 @@
 # 0.17.2
 
 * fix(`SymfonySerializerKeysetPageIdentifierEncoder`): handle more errors
+* feat: link headers
 
 # 0.17.1
 
