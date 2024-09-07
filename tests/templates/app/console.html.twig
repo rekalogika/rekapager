@@ -1,0 +1,15 @@
+{% extends "app/base.html.twig" %}
+
+{% block title %}
+    Console
+{% endblock title %}
+
+{% block content %}
+    <p>
+        To run batch command line interface demo, use the following command: <code>php tests/bin/console app:simplebatch</code>. Add <code>--help</code> to see the available options.
+    </p>
+
+    <div class="ratio ratio-16x9">
+        <iframe src="/shell/" frameborder="0"></iframe>
+    </div>
+{% endblock content %}
