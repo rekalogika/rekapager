@@ -44,7 +44,7 @@ jobs:
           ${{ runner.os }}-php-
     
     - name: phive
-      run: phive install
+      run: phive install --trust-gpg-keys E82B2FB314E9906E
 
     - name: Install dependencies
       uses: ramsey/composer-install@v3
