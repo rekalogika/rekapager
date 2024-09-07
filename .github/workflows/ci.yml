@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php: [ '8.2', '8.3' ]
+        php: [ '8.2', '8.3', '8.4' ]
         symfony: [ '6.*', '7.*' ]
         dep: [highest,lowest]
 
@@ -50,7 +50,7 @@ jobs:
       uses: ramsey/composer-install@v3
       with:
         dependency-versions: ${{ matrix.dep }}
-        composer-options: --prefer-dist --no-progress --no-scripts
+        composer-options: --prefer-dist --no-progress --no-scripts --ignore-platform-reqs
       env:
         SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
@@ -73,7 +73,7 @@ jobs:
 
     - name: Validate php-cs-fixer
       run: |
-        tools/php-cs-fixer check --allow-risky=yes -q
+        PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer check --allow-risky=yes -q
 
     - name: Load fixtures
       run: make fixtures
