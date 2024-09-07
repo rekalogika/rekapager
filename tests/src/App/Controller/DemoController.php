@@ -171,7 +171,6 @@ class DemoController extends AbstractController
                         $item->getTitle() ?? 'null',
                         $item->getCategory()->value,
                     );
-
                 }
             }
 
@@ -194,6 +193,14 @@ class DemoController extends AbstractController
                 $this->unindent($this->getSourceCode(self::class)),
             'output' => $output,
             'controller' => $this,
+        ]);
+    }
+
+    #[Route('/console', name: 'console')]
+    public function console(): Response
+    {
+        return $this->render('app/console.html.twig', [
+            'pageable_generators' => $this->pageableGenerators,
         ]);
     }
 
