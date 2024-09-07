@@ -29,8 +29,8 @@ class RekapagerRuntime implements RuntimeExtensionInterface
     public function renderPager(
         PagerInterface $pager,
         ?int $proximity = null,
-        string $template = null,
-        string $locale = null,
+        ?string $template = null,
+        ?string $locale = null,
     ): string {
         $pagerRenderer = $this->pagerRenderer;
 

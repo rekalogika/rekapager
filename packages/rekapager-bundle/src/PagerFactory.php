@@ -45,7 +45,7 @@ class PagerFactory implements PagerFactoryInterface
     public function createPager(
         PageableInterface $pageable,
         Request $request,
-        object $options = null,
+        ?object $options = null,
     ): PagerInterface {
         //
         // processing all the pager options in order
