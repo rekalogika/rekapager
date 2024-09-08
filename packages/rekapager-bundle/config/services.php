@@ -15,7 +15,6 @@ use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
 use Rekalogika\Rekapager\Bundle\Implementation\SymfonyPageUrlGeneratorFactory;
 use Rekalogika\Rekapager\Bundle\PagerFactory;
-use Rekalogika\Rekapager\Bundle\RekapagerLinkProcessor;
 use Rekalogika\Rekapager\Bundle\Twig\RekapagerExtension;
 use Rekalogika\Rekapager\Bundle\Twig\RekapagerRuntime;
 use Rekalogika\Rekapager\Bundle\Twig\TwigPagerRenderer;
@@ -70,13 +69,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$defaultPageParameterName' => '%rekalogika.rekapager.config.default_page_parameter_name%',
             '$defaultProximity' => '%rekalogika.rekapager.config.default_proximity%',
             '$defaultUrlReferenceType' => '%rekalogika.rekapager.config.default_url_reference_type%',
-        ]);
-
-    $services
-        ->set(RekapagerLinkProcessor::class)
-        ->decorate('api_platform.state_processor.respond', priority: 410)
-        ->args([
-            service('.inner'),
         ]);
 
     $services
