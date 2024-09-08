@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.17.5
+
+* fix: `RekapagerLinkProcessor` was added to the wrong package
+
 # 0.17.2
 
 * fix(`SymfonySerializerKeysetPageIdentifierEncoder`): handle more errors

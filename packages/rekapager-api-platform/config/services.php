@@ -16,6 +16,7 @@ use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerNormalizer;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerExtension;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerOpenApiFactoryDecorator;
 use Rekalogika\Rekapager\ApiPlatform\PagerFactoryInterface;
+use Rekalogika\Rekapager\ApiPlatform\RekapagerLinkProcessor;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -41,6 +42,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$pagination' => service('api_platform.pagination'),
             '$pageParameterName' => '%api_platform.collection.pagination.page_parameter_name%',
             '$urlGenerationStrategy' => '%api_platform.url_generation_strategy%',
+        ]);
+
+    $services
+        ->set(RekapagerLinkProcessor::class)
+        ->decorate('api_platform.state_processor.respond', priority: 410)
+        ->args([
+            service('.inner'),
         ]);
 
     $services
