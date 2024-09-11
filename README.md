@@ -1,3 +1,5 @@
+# Rekapager
+
 Rekapager is a pagination library for PHP, supporting both offset-based and
 keyset-based pagination (also called cursor-based pagination).
 
@@ -136,6 +138,11 @@ pagination, this library can help to prevent this problem.
 * Doctrine ORM `QueryBuilder` and `NativeQuery`
 * Doctrine DBAL `QueryBuilder`
 * Pagerfanta adapters
+
+## Framework Integrations
+
+* Symfony
+* API Platform
 
 ## Usage
 
@@ -289,21 +296,13 @@ command up to the specified duration, signal handling, and more.
 
 ## Demo
 
-You can try the web application demo by running the following command:
+You can try the demo by running the following command:
 
 ```bash
 docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:latest
 ```
 
 Then access the demo at [http://localhost:8187](http://localhost:8187).
-
-To run the demo of the batch console command, run the following command:
-
-```bash
-docker run --rm -it ghcr.io/rekalogika/rekapager:latest tests/bin/console app:simplebatch
-```
-
-Try adding the `--help` option to see all the available options.
 
 ## Acknowledgements
 
