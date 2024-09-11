@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Symfony\Batch\Internal;
 
+use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 use Rekalogika\Rekapager\Batch\BatchProcessorDecorator;
 use Rekalogika\Rekapager\Batch\BatchProcessorInterface;
@@ -85,7 +86,7 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
     private function getStartTime(): \DateTimeInterface
     {
         if ($this->startTime === null) {
-            throw new \LogicException('Start time is not set');
+            throw new LogicException('Start time is not set');
         }
 
         return $this->startTime;

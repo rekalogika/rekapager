@@ -498,9 +498,9 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             return Types::DATETIME_MUTABLE;
         } elseif ($value instanceof \DateTimeImmutable) {
             return Types::DATETIME_IMMUTABLE;
-        } elseif ($value instanceof Uuid) {
+        } elseif ($value instanceof Uuid && class_exists(UuidType::class)) {
             return UuidType::NAME;
-        } elseif ($value instanceof Ulid) {
+        } elseif ($value instanceof Ulid && class_exists(UlidType::class)) {
             return UlidType::NAME;
         }
 

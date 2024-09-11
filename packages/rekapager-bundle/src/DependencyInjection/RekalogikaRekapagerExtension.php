@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Bundle\DependencyInjection;
 
+use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\PageIdentifierEncoderInterface;
 use Rekalogika\Rekapager\Symfony\RekapagerSymfonyBridge;
 use Symfony\Component\AssetMapper\AssetMapperInterface;
@@ -61,17 +62,17 @@ class RekalogikaRekapagerExtension extends Extension implements PrependExtension
 
         $defaultTwigTemplate = $config['default_template'] ?? null;
         if (null === $defaultTwigTemplate || !\is_string($defaultTwigTemplate)) {
-            throw new \InvalidArgumentException('The "default_template" config is required.');
+            throw new InvalidArgumentException('The "default_template" config is required.');
         }
 
         $defaultPageParameterName = $config['default_page_parameter_name'] ?? null;
         if (null === $defaultPageParameterName || !\is_string($defaultPageParameterName)) {
-            throw new \InvalidArgumentException('The "default_page_parameter_name" config is required.');
+            throw new InvalidArgumentException('The "default_page_parameter_name" config is required.');
         }
 
         $defaultProximity = $config['default_proximity'] ?? null;
         if (null === $defaultProximity || !\is_int($defaultProximity)) {
-            throw new \InvalidArgumentException('The "default_proximity" config is required.');
+            throw new InvalidArgumentException('The "default_proximity" config is required.');
         }
 
         $container->setParameter(

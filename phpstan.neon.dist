@@ -25,4 +25,11 @@ includes:
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/bnf/phpstan-psr-container/extension.neon
     - vendor/ekino/phpstan-banned-code/extension.neon
+    - vendor/phpat/phpat/extension.neon
     - phar://phpstan.phar/conf/bleedingEdge.neon
+
+services:
+    -
+        class: Rekalogika\Rekapager\Tests\ArchitectureTests\ArchitectureTest
+        tags:
+            - phpat.test

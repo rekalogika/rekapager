@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Bundle;
 
+use Rekalogika\Contracts\Rekapager\Exception\InvalidArgumentException;
 use Rekalogika\Contracts\Rekapager\Exception\OutOfBoundsException as ContractsOutOfBoundsException;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
@@ -61,13 +62,13 @@ class PagerFactory implements PagerFactoryInterface
         // routeName
         $routeName = $options?->getRouteName() ?? $request->attributes->get('_route');
         if (!\is_string($routeName)) {
-            throw new \InvalidArgumentException('Cannot determine route name from request.');
+            throw new InvalidArgumentException('Cannot determine route name from request.');
         }
 
         // routeParams
         $routeParams = $options?->getRouteParams() ?? $request->attributes->get('_route_params', []);
         if (!\is_array($routeParams)) {
-            throw new \InvalidArgumentException('Cannot determine route parameters from request.');
+            throw new InvalidArgumentException('Cannot determine route parameters from request.');
         }
 
         // urlReferenceType

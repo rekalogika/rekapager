@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Doctrine\Collections\Internal;
 
 use Doctrine\Common\Collections\Expr\ClosureExpressionVisitor;
+use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Contracts\Rekapager\Exception\NullBoundaryValueException;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetItemInterface;
 
@@ -42,7 +43,7 @@ final readonly class SelectableKeysetItem implements KeysetItemInterface
         private array $boundaryProperties,
     ) {
         if (!\is_object($value) && !\is_array($value)) {
-            throw new \LogicException('The value must be an object or an array');
+            throw new LogicException('The value must be an object or an array');
         }
 
         $this->objectOrArrayValue = $value;
