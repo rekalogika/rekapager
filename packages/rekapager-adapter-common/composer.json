@@ -17,6 +17,7 @@
     },
     "require": {
         "php": "^8.2",
-        "doctrine/collections": "^2.2"
+        "doctrine/collections": "^2.2",
+        "rekalogika/rekapager-contracts": "^0.17.5"
     }
 }

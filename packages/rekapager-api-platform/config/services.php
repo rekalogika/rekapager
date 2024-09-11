@@ -11,6 +11,7 @@ declare(strict_types=1);
  * that was distributed with this source code.
  */
 
+use Doctrine\ORM\QueryBuilder;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerFactory;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\PagerNormalizer;
 use Rekalogika\Rekapager\ApiPlatform\Implementation\RekapagerExtension;
@@ -59,14 +60,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             '$collectionNormalizer' => service('.inner'),
         ]);
 
-    $services
-        ->set('rekalogika.rekapager.api_platform.orm.extension')
-        ->class(RekapagerExtension::class)
-        ->args([
-            '$pagerFactory' => service(PagerFactoryInterface::class),
-            '$pagination' => service('api_platform.pagination'),
-        ])
-        ->tag('api_platform.doctrine.orm.query_extension.collection', [
-            'priority' => -48,
-        ]);
+    if (class_exists(QueryBuilder::class)) {
+        $services
+            ->set('rekalogika.rekapager.api_platform.orm.extension')
+            ->class(RekapagerExtension::class)
+            ->args([
+                '$pagerFactory' => service(PagerFactoryInterface::class),
+                '$pagination' => service('api_platform.pagination'),
+            ])
+            ->tag('api_platform.doctrine.orm.query_extension.collection', [
+                'priority' => -48,
+            ]);
+    }
 };

@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.18.0
+
+* test: add phpat architecture tests
+
 # 0.17.5
 
 * fix: `RekapagerLinkProcessor` was added to the wrong package
