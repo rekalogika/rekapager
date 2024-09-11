@@ -30,7 +30,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
-
                 Selector::inNamespace('Doctrine\Common\Collections'),
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager\Exception'),
                 Selector::classname(\Throwable::class),
@@ -45,7 +44,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\ApiPlatform'),
-
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Contracts'),
                 Selector::inNamespace('Rekalogika\Rekapager\Doctrine\ORM'),
@@ -74,7 +72,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Bundle'),
-
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Contracts'),
                 Selector::inNamespace('Rekalogika\Rekapager\Pager'),
@@ -96,7 +93,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
-
                 Selector::classname(\Traversable::class),
                 Selector::classname(\Countable::class),
                 Selector::classname(\UnexpectedValueException::class),
@@ -126,7 +122,6 @@ final class ArchitectureTest
                 Selector::inNamespace('Rekalogika\Rekapager\Exception'),
                 Selector::inNamespace('Rekalogika\Rekapager\Implementation'),
                 Selector::inNamespace('Rekalogika\Rekapager\Pager'),
-
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::classname(\Traversable::class),
                 Selector::classname(\IteratorAggregate::class),
@@ -142,7 +137,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Doctrine\Collections'),
-
                 Selector::inNamespace('Rekalogika\Rekapager\Keyset'),
                 Selector::inNamespace('Rekalogika\Rekapager\Offset'),
                 Selector::inNamespace('Doctrine\Common\Collections'),
@@ -162,7 +156,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Doctrine\DBAL'),
-
                 Selector::inNamespace('Rekalogika\Rekapager\Keyset'),
                 Selector::inNamespace('Rekalogika\Rekapager\Offset'),
                 Selector::inNamespace('Doctrine\Common\Collections'),
@@ -181,7 +174,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Doctrine\ORM'),
-
                 Selector::inNamespace('Rekalogika\Rekapager\Keyset'),
                 Selector::inNamespace('Rekalogika\Rekapager\Offset'),
                 Selector::inNamespace('Doctrine\Common\Collections'),
@@ -205,7 +197,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Keyset'),
-
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::classname(Base64Url::class),
                 Selector::classname(\Closure::class),
@@ -231,7 +222,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Offset'),
-
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::classname(\Closure::class),
                 Selector::classname(\IteratorAggregate::class),
@@ -248,7 +238,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Pagerfanta'),
-
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Offset'),
                 Selector::inNamespace('Pagerfanta'), // optional
@@ -267,7 +256,6 @@ final class ArchitectureTest
             ->canOnlyDependOn()
             ->classes(
                 Selector::inNamespace('Rekalogika\Rekapager\Symfony'),
-
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Batch'),
                 Selector::inNamespace('Rekalogika\Rekapager\Contracts'),
