@@ -1,15 +1,15 @@
 {
     "name": "rekalogika/rekapager",
     "description": "Pagination library for PHP, supporting both offset-based and keyset-based pagination.",
+    "homepage": "https://rekalogika.dev/rekapager",
     "license": "MIT",
-    "type": "library",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
             "email": "priyadi@rekalogika.com"
         }
     ],
-    "homepage": "https://rekalogika.dev/rekapager",
+    "type": "library",
     "require": {
         "php": "^8.2",
         "api-platform/core": "^3.2",
@@ -72,20 +72,6 @@
         "vimeo/psalm": "^5.15",
         "zenstruck/foundry": "1.37.*"
     },
-    "replace": {
-        "rekalogika/rekapager-adapter-common": "0.17.5",
-        "rekalogika/rekapager-api-platform": "0.17.5",
-        "rekalogika/rekapager-bundle": "0.17.5",
-        "rekalogika/rekapager-contracts": "0.17.5",
-        "rekalogika/rekapager-core": "0.17.5",
-        "rekalogika/rekapager-doctrine-collections-adapter": "0.17.5",
-        "rekalogika/rekapager-doctrine-dbal-adapter": "0.17.5",
-        "rekalogika/rekapager-doctrine-orm-adapter": "0.17.5",
-        "rekalogika/rekapager-keyset-pagination": "0.17.5",
-        "rekalogika/rekapager-offset-pagination": "0.17.5",
-        "rekalogika/rekapager-pagerfanta-adapter": "0.17.5",
-        "rekalogika/rekapager-symfony-bridge": "0.17.5"
-    },
     "autoload": {
         "psr-4": {
             "Rekalogika\\Contracts\\Rekapager\\": "packages/rekapager-contracts/src/",
@@ -113,6 +99,20 @@
             "symfony/runtime": true,
             "symfony/flex": false
         }
+    },
+    "replace": {
+        "rekalogika/rekapager-adapter-common": "0.18.0",
+        "rekalogika/rekapager-api-platform": "0.18.0",
+        "rekalogika/rekapager-bundle": "0.18.0",
+        "rekalogika/rekapager-contracts": "0.18.0",
+        "rekalogika/rekapager-core": "0.18.0",
+        "rekalogika/rekapager-doctrine-collections-adapter": "0.18.0",
+        "rekalogika/rekapager-doctrine-dbal-adapter": "0.18.0",
+        "rekalogika/rekapager-doctrine-orm-adapter": "0.18.0",
+        "rekalogika/rekapager-keyset-pagination": "0.18.0",
+        "rekalogika/rekapager-offset-pagination": "0.18.0",
+        "rekalogika/rekapager-pagerfanta-adapter": "0.18.0",
+        "rekalogika/rekapager-symfony-bridge": "0.18.0"
     },
     "provide": {
         "symfony/flex": "*"
