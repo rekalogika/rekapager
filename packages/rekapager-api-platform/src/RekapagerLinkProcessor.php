@@ -42,7 +42,7 @@ class RekapagerLinkProcessor implements ProcessorInterface
         mixed $data,
         Operation $operation,
         array $uriVariables = [],
-        array $context = []
+        array $context = [],
     ): mixed {
         if (
             !($request = $context['request'] ?? null)
