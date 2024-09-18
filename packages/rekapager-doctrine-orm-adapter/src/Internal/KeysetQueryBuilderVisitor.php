@@ -41,7 +41,7 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
     }
 
     #[\Override]
-    public function walkComparison(Comparison $comparison)
+    public function walkComparison(Comparison $comparison): mixed
     {
         /** @var mixed */
         $value = $this->dispatch($comparison->getValue());
@@ -75,7 +75,7 @@ final class KeysetQueryBuilderVisitor extends ExpressionVisitor
     }
 
     #[\Override]
-    public function walkCompositeExpression(CompositeExpression $expr)
+    public function walkCompositeExpression(CompositeExpression $expr): mixed
     {
         $expressionList = [];
 

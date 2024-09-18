@@ -32,7 +32,7 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 class DemoController extends AbstractController
 {
     public function __construct(
-        private PageableGenerators $pageableGenerators,
+        private readonly PageableGenerators $pageableGenerators,
     ) {}
 
     #[Route('/', name: 'index')]

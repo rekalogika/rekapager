@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.18.1
+
+* chore: add missing types
+
 # 0.18.0
 
 * test: add phpat architecture tests
