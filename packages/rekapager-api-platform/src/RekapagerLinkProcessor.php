@@ -37,8 +37,13 @@ class RekapagerLinkProcessor implements ProcessorInterface
         private readonly ProcessorInterface $decorated,
     ) {}
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
-    {
+    #[\Override]
+    public function process(
+        mixed $data,
+        Operation $operation,
+        array $uriVariables = [],
+        array $context = [],
+    ): mixed {
         if (
             !($request = $context['request'] ?? null)
             || !$request instanceof Request

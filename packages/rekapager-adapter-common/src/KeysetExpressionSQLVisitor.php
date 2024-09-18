@@ -37,7 +37,7 @@ final class KeysetExpressionSQLVisitor extends ExpressionVisitor
     private array $valueHashToTemplate = [];
 
     #[\Override]
-    public function walkComparison(Comparison $comparison)
+    public function walkComparison(Comparison $comparison): mixed
     {
         /** @var string */
         $value = $this->dispatch($comparison->getValue());
@@ -85,7 +85,7 @@ final class KeysetExpressionSQLVisitor extends ExpressionVisitor
     }
 
     #[\Override]
-    public function walkCompositeExpression(CompositeExpression $expr)
+    public function walkCompositeExpression(CompositeExpression $expr): mixed
     {
         $expressionList = [];
 
