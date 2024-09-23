@@ -12,7 +12,7 @@
     "type": "library",
     "require": {
         "php": "^8.2",
-        "api-platform/core": "^3.2",
+        "api-platform/core": "^3.2 || ^4.0",
         "doctrine/collections": "^2.2",
         "doctrine/dbal": "^3.8 || ^4.0",
         "doctrine/orm": "^2.19 || ^3.0",
