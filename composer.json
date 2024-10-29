@@ -15,7 +15,7 @@
         "api-platform/core": "^3.2",
         "doctrine/collections": "^2.2",
         "doctrine/dbal": "^3.8 || ^4.0",
-        "doctrine/orm": "^2.19 || ^3.0",
+        "doctrine/orm": "^2.19 || ^3.0 <3.3",
         "pagerfanta/core": "^4.0",
         "pagerfanta/doctrine-collections-adapter": "^4.0",
         "psr/container": "^2.0",
