@@ -3,6 +3,7 @@
 # 0.18.1
 
 * chore: add missing types
+* deps: prevent `doctrine/orm` 3.3.0 for now
 
 # 0.18.0
 
