@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\App;
 
 use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
+use Composer\InstalledVersions;
+use Composer\Semver\VersionParser;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Rekalogika\Rekapager\ApiPlatform\RekalogikaRekapagerApiPlatformBundle;
@@ -86,5 +88,20 @@ class Kernel extends BaseKernel
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $this->baseRegisterContainerConfiguration($loader);
+
+        $loader->load(function (ContainerBuilder $container): void {
+            if (InstalledVersions::satisfies(new VersionParser(), 'api-platform/core', '3.*')) {
+                $container->loadFromExtension('api_platform', [
+                    'event_listeners_backward_compatibility_layer' => false,
+                    'keep_legacy_inflector' => false,
+                ]);
+            } elseif (InstalledVersions::satisfies(new VersionParser(), 'api-platform/core', '4.*')) {
+                $container->loadFromExtension('api_platform', [
+                    'serializer'  => [
+                        'hydra_prefix' => true,
+                    ],
+                ]);
+            }
+        });
     }
 }

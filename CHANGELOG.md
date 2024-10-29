@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.19.0
+
+* feat: API Platform 4 compatibility
+
 # 0.18.1
 
 * chore: add missing types
