@@ -22,8 +22,6 @@ api_platform:
             rekapager_orm_enabled: true
         normalization_context:
             skip_null_values: false
-    event_listeners_backward_compatibility_layer: false
-    keep_legacy_inflector: false
     mapping:
         paths:
             - '%kernel.project_dir%/src/App/Entity'
