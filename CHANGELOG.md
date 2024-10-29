@@ -3,6 +3,7 @@
 # 0.19.0
 
 * feat: API Platform 4 compatibility
+* feat: Doctrine ORM 3.3 compatibility
 
 # 0.18.1
 
