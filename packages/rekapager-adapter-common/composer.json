@@ -18,6 +18,6 @@
     "require": {
         "php": "^8.2",
         "doctrine/collections": "^2.2",
-        "rekalogika/rekapager-contracts": "^0.18"
+        "rekalogika/rekapager-contracts": "^0.18.1"
     }
 }
