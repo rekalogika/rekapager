@@ -4,6 +4,7 @@
 
 * chore: add missing types
 * deps: prevent `doctrine/orm` 3.3.0 for now
+* build: remove unneeded service alias
 
 # 0.18.0
 
