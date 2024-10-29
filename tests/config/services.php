@@ -32,13 +32,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->load('Rekalogika\\Rekapager\\Tests\\App\\', '../src/App/')
         ->exclude('../src/App/{Entity,Exception}');
 
-    $services
-        ->alias(
-            'test_' . PageIdentifierEncoderLocatorInterface::class,
-            PageIdentifierEncoderLocatorInterface::class,
-        )
-        ->public();
-
     $services->set(DebugToolbarReplacerSubscriber::class)
         ->args([service('kernel')])
         ->tag('kernel.event_subscriber');
