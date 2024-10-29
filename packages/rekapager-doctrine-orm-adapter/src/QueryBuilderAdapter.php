@@ -569,16 +569,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             throw new LogicException('Limit must be set when counting offset items');
         }
 
-        $queryBuilder = $this->getQueryBuilder($offset, $limit, null, BoundaryType::Lower);
-        $paginator = new QueryCounter($queryBuilder->getQuery(), $this->useOutputWalkers);
-
-        $result = $paginator->count();
-
-        if ($result < 0) {
-            throw new UnexpectedValueException('Count must be greater than or equal to 0.');
-        }
-
-        return $result;
+        return \count($this->getOffsetItems($offset, $limit));
     }
 
     private function checkException(\Throwable $exception): never
