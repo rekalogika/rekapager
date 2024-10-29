@@ -12,7 +12,7 @@
   <php>
     <ini
         name="display_errors"
-        value="1" />
+        value="0" />
     <ini
         name="error_reporting"
         value="-1" />
