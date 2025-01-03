@@ -64,7 +64,7 @@ final readonly class PagerfantaPageable implements PageableInterface
     }
 
     #[\Override]
-    public function getPages(?object $start = null): \Traversable
+    public function getPages(?object $start = null): \Iterator
     {
         return $this->pageable->getPages($start);
     }

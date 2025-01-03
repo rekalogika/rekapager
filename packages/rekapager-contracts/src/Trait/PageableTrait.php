@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Rekapager\Trait;
 
+use Rekalogika\Contracts\Rekapager\Internal\PageableIterator;
 use Rekalogika\Contracts\Rekapager\PageInterface;
 
 /**
@@ -56,9 +57,9 @@ trait PageableTrait
     }
 
     /**
-     * @return \Traversable<PageInterface<TKey,T>>
+     * @return \Iterator<PageInterface<TKey,T>>
      */
-    public function getPages(?object $start = null): \Traversable
+    public function getPages(?object $start = null): \Iterator
     {
         if ($start === null) {
             $page = $this->getFirstPage();
@@ -66,10 +67,6 @@ trait PageableTrait
             $page = $this->getPageByIdentifier($start);
         }
 
-        while ($page !== null) {
-            yield $page;
-
-            $page = $page->getNextPage();
-        }
+        return new PageableIterator($page);
     }
 }
