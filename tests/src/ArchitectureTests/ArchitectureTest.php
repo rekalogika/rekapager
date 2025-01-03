@@ -94,6 +94,7 @@ final class ArchitectureTest
             ->classes(
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::classname(\Traversable::class),
+                Selector::classname(\Iterator::class),
                 Selector::classname(\Countable::class),
                 Selector::classname(\UnexpectedValueException::class),
                 Selector::classname(\RuntimeException::class),
@@ -201,6 +202,7 @@ final class ArchitectureTest
                 Selector::classname(Base64Url::class),
                 Selector::classname(\Closure::class),
                 Selector::classname(\Traversable::class),
+                Selector::classname(\Iterator::class),
                 Selector::classname(\ArrayIterator::class),
                 Selector::classname(\BackedEnum::class),
                 Selector::classname(UuidInterface::class),
@@ -226,6 +228,7 @@ final class ArchitectureTest
                 Selector::classname(\Closure::class),
                 Selector::classname(\IteratorAggregate::class),
                 Selector::classname(\Traversable::class),
+                Selector::classname(\Iterator::class),
             );
     }
 
@@ -244,6 +247,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
                 Selector::classname(\Closure::class),
                 Selector::classname(\Traversable::class),
+                Selector::classname(\Iterator::class),
             );
     }
 

@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.20.0
+
+* refactor: `PageableInterface::getPages()` now returns `Iterator` instead of
+  `Traversable` (non-backward compatible for implementors)
+
 # 0.19.1
 
 * chore: static analysis
