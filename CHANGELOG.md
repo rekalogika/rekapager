@@ -3,6 +3,7 @@
 # 0.19.1
 
 * chore: static analysis
+* feat: add lock mode to `QueryBuilderAdapter`
 
 # 0.19.0
 
