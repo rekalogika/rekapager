@@ -15,6 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\ORM;
 
 use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\LockMode;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
@@ -66,6 +67,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         private readonly bool|null $useOutputWalkers = null,
         private readonly string|null $indexBy = null,
         private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
+        private readonly LockMode|null $lockMode = null,
     ) {
         if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
             throw new UnsupportedQueryBuilderException();
@@ -323,8 +325,14 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         $queryBuilder = $this->getQueryBuilder($offset, $limit, $boundaryValues, $boundaryType);
 
         try {
+            $query = $queryBuilder->getQuery();
+
+            if ($this->lockMode !== null) {
+                $query->setLockMode($this->lockMode);
+            }
+
             /** @var array<int,array<int,mixed>> */
-            $result = $queryBuilder->getQuery()->getResult();
+            $result = $query->getResult();
 
             if ($boundaryType === BoundaryType::Upper) {
                 $result = array_reverse($result);
@@ -552,9 +560,14 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     #[\Override]
     public function getOffsetItems(int $offset, int $limit): array
     {
+        $query = $this->paginator->getQuery();
+
+        if ($this->lockMode !== null) {
+            $query->setLockMode($this->lockMode);
+        }
+
         /** @var \Traversable<TKey,T> */
-        $iterator = $this->paginator
-            ->getQuery()
+        $iterator = $query
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getResult();
