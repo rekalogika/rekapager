@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.19.1
+
+* chore: static analysis
+
 # 0.19.0
 
 * feat: API Platform 4 compatibility

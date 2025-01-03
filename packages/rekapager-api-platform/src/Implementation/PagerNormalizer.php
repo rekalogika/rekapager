@@ -39,21 +39,21 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
      */
     #[\Override]
     public function normalize(
-        mixed $object,
+        mixed $data,
         ?string $format = null,
         array $context = [],
     ): array|string|int|float|bool|\ArrayObject|null {
-        $data = $this->collectionNormalizer->normalize($object, $format, $context);
+        $data2 = $this->collectionNormalizer->normalize($data, $format, $context);
 
-        if (!$object instanceof PagerInterface) {
-            return $data;
+        if (!$data instanceof PagerInterface) {
+            return $data2;
         }
 
         if (isset($context['api_sub_level'])) {
-            return $data;
+            return $data2;
         }
 
-        if (!\is_array($data)) {
+        if (!\is_array($data2)) {
             throw new UnexpectedValueException('Expected data to be an array');
         }
 
@@ -61,27 +61,27 @@ class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
             '@type' => 'hydra:PartialCollectionView',
         ];
 
-        $hydraView['@id'] = $object->getCurrentPage()->getUrl();
+        $hydraView['@id'] = $data->getCurrentPage()->getUrl();
 
-        if (($firstPageUrl = $object->getFirstPage()?->getUrl()) !== null) {
+        if (($firstPageUrl = $data->getFirstPage()?->getUrl()) !== null) {
             $hydraView['hydra:first'] = $firstPageUrl;
         }
 
-        if (($lastPageUrl = $object->getLastPage()?->getUrl()) !== null) {
+        if (($lastPageUrl = $data->getLastPage()?->getUrl()) !== null) {
             $hydraView['hydra:last'] = $lastPageUrl;
         }
 
-        if (($nextPageUrl = $object->getNextPage()?->getUrl()) !== null) {
+        if (($nextPageUrl = $data->getNextPage()?->getUrl()) !== null) {
             $hydraView['hydra:next'] = $nextPageUrl;
         }
 
-        if (($previousPageUrl = $object->getPreviousPage()?->getUrl()) !== null) {
+        if (($previousPageUrl = $data->getPreviousPage()?->getUrl()) !== null) {
             $hydraView['hydra:previous'] = $previousPageUrl;
         }
 
-        $data['hydra:view'] = $hydraView;
+        $data2['hydra:view'] = $hydraView;
 
-        return $data;
+        return $data2;
     }
 
     /**
