@@ -3,6 +3,7 @@
 # 0.20.1
 
 * fix(`QueryBuilderAdapter`): ORM 2 compatibility
+* fix: remove remnants
 
 # 0.20.0
 
