@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.20.1
+
+* fix(`QueryBuilderAdapter`): ORM 2 compatibility
+
 # 0.20.0
 
 * refactor: `PageableInterface::getPages()` now returns `Iterator` instead of

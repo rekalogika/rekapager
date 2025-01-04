@@ -60,6 +60,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
     /**
      * @param array<string,ParameterType|ArrayParameterType|string|int> $typeMapping
+     * @param null|LockMode|LockMode::* $lockMode
      */
     public function __construct(
         private readonly QueryBuilder $queryBuilder,
@@ -67,7 +68,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         private readonly bool|null $useOutputWalkers = null,
         private readonly string|null $indexBy = null,
         private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
-        private readonly LockMode|null $lockMode = null,
+        private readonly LockMode|int|null $lockMode = null,
     ) {
         if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
             throw new UnsupportedQueryBuilderException();
