@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.21.0
+
+* feat: option to override boundary fields to use
+
 # 0.20.1
 
 * fix(`QueryBuilderAdapter`): ORM 2 compatibility

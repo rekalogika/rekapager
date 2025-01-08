@@ -61,6 +61,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     /**
      * @param array<string,ParameterType|ArrayParameterType|string|int> $typeMapping
      * @param null|LockMode|LockMode::* $lockMode
+     * @param list<string> $boundaryFields Use these fields for the boundary values. If null, it will be autodetected from the order by clause of the query.
      */
     public function __construct(
         private readonly QueryBuilder $queryBuilder,
@@ -69,6 +70,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         private readonly string|null $indexBy = null,
         private readonly SeekMethod $seekMethod = SeekMethod::Approximated,
         private readonly LockMode|int|null $lockMode = null,
+        private readonly null|array $boundaryFields = null,
     ) {
         if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
             throw new UnsupportedQueryBuilderException();
@@ -452,10 +454,14 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     }
 
     /**
-     * @return array<int,string>
+     * @return list<string>
      */
     private function getBoundaryFieldNames(): array
     {
+        if ($this->boundaryFields !== null) {
+            return $this->boundaryFields;
+        }
+
         return array_keys($this->getSortOrder());
     }
 
