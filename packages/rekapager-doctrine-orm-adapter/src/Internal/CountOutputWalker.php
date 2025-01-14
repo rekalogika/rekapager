@@ -77,7 +77,7 @@ class CountOutputWalker extends SqlOutputWalker
             throw new \RuntimeException('Cannot count query which selects two FROM components, cannot make distinction');
         }
 
-        $fromRoot       = \reset($from);
+        $fromRoot       = reset($from);
         $rootAlias      = $fromRoot->rangeVariableDeclaration->aliasIdentificationVariable;
         $rootClass      = $this->getMetadataForDqlAlias($rootAlias);
         $rootIdentifier = $rootClass->identifier;
@@ -86,7 +86,7 @@ class CountOutputWalker extends SqlOutputWalker
         $sqlIdentifier = [];
         foreach ($rootIdentifier as $property) {
             if (isset($rootClass->fieldMappings[$property])) {
-                foreach (\array_keys($this->rsm->fieldMappings, $property, true) as $alias) {
+                foreach (array_keys($this->rsm->fieldMappings, $property, true) as $alias) {
                     if ($this->rsm->columnOwnerMap[$alias] === $rootAlias) {
                         $sqlIdentifier[$property] = $alias;
                     }
@@ -98,7 +98,7 @@ class CountOutputWalker extends SqlOutputWalker
                 \assert($association->isToOneOwningSide());
                 $joinColumn = $association->joinColumns[0]->name;
 
-                foreach (\array_keys($this->rsm->metaMappings, $joinColumn, true) as $alias) {
+                foreach (array_keys($this->rsm->metaMappings, $joinColumn, true) as $alias) {
                     if ($this->rsm->columnOwnerMap[$alias] === $rootAlias) {
                         $sqlIdentifier[$property] = $alias;
                     }
@@ -109,14 +109,14 @@ class CountOutputWalker extends SqlOutputWalker
         if (\count($rootIdentifier) !== \count($sqlIdentifier)) {
             throw new \RuntimeException(\sprintf(
                 'Not all identifier properties can be found in the ResultSetMapping: %s',
-                \implode(', ', \array_diff($rootIdentifier, \array_keys($sqlIdentifier))),
+                implode(', ', array_diff($rootIdentifier, array_keys($sqlIdentifier))),
             ));
         }
 
         // Build the counter query
         return \sprintf(
             'SELECT COUNT(*) AS dctrn_count FROM (SELECT DISTINCT %s FROM (%s) dctrn_result) dctrn_table',
-            \implode(', ', $sqlIdentifier),
+            implode(', ', $sqlIdentifier),
             $sql,
         );
     }
