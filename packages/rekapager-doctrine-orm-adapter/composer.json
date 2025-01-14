@@ -31,9 +31,9 @@
         "doctrine/dbal": "^3.8 || ^4.0",
         "doctrine/orm": "^2.19 || ^3.0",
         "doctrine/collections": "^2.2",
-        "rekalogika/rekapager-adapter-common": "^0.21.1",
-        "rekalogika/rekapager-contracts": "^0.21.1",
-        "rekalogika/rekapager-keyset-pagination": "^0.21.1",
-        "rekalogika/rekapager-offset-pagination": "^0.21.1"
+        "rekalogika/rekapager-adapter-common": "^0.22",
+        "rekalogika/rekapager-contracts": "^0.22",
+        "rekalogika/rekapager-keyset-pagination": "^0.22",
+        "rekalogika/rekapager-offset-pagination": "^0.22"
     }
 }
