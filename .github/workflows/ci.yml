@@ -73,7 +73,7 @@ jobs:
 
     - name: Validate php-cs-fixer
       run: |
-        PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer check --allow-risky=yes -q
+        PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer check --allow-risky=yes
       if: matrix.php != '8.4'
 
     - name: Load fixtures
