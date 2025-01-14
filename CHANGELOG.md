@@ -1,10 +1,14 @@
 # Changelog
 
+# 0.21.2
+
+* fix: COUNT query must not have LIMIT outside subselect; ORM 2.20 & 3.3
+  compatibility.
+
 # 0.21.1
 
 * perf: do not query next/previous pages if it is already known that they do
   not exist
-
 
 # 0.21.0
 
