@@ -20,7 +20,6 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\Tools\Pagination\CountOutputWalker;
 use Doctrine\ORM\Tools\Pagination\CountWalker;
 
 /**
@@ -80,14 +79,15 @@ final class QueryCounter implements \Countable
             $rsm->addScalarResult($this->getSQLResultCasing($platform, 'dctrn_count'), 'count');
 
             $countQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, CountOutputWalker::class);
+            $countQuery->setHint('maxResults', $this->query->getMaxResults());
+            $countQuery->setHint('firstResult', $this->query->getFirstResult());
             $countQuery->setResultSetMapping($rsm);
         } else {
             $this->appendTreeWalker($countQuery, CountWalker::class);
             $this->unbindUnusedQueryParams($countQuery);
         }
 
-        // all we need is this line removed from the original code
-        // $countQuery->setFirstResult(0)->setMaxResults(null);
+        $countQuery->setFirstResult(0)->setMaxResults(null);
 
         return $countQuery;
     }

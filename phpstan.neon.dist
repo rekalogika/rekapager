@@ -13,6 +13,7 @@ parameters:
     excludePaths:
         - tests/var
         - tests/src/App/Factory
+        - packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker.php
     ignoreErrors:
         - '#Rekalogika\\Rekapager\\Tests\\App\\Entity\\Post> given.#'
         - '#Symfony\\Component\\Config\\Definition\\Builder\\#'
