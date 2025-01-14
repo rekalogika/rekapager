@@ -14,6 +14,7 @@ parameters:
         - tests/var
         - tests/src/App/Factory
         - packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker.php
+        - packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker2.php
     ignoreErrors:
         - '#Rekalogika\\Rekapager\\Tests\\App\\Entity\\Post> given.#'
         - '#Symfony\\Component\\Config\\Definition\\Builder\\#'
