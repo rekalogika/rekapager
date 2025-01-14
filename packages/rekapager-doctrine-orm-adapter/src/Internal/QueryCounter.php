@@ -20,8 +20,8 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\Tools\Pagination\CountWalker;
 use Doctrine\ORM\Query\SqlOutputWalker;
+use Doctrine\ORM\Tools\Pagination\CountWalker;
 
 /**
  * @see Paginator

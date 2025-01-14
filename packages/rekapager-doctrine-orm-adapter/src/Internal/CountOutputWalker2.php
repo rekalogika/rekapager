@@ -17,10 +17,8 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\AST\SelectStatement;
-use Doctrine\ORM\Query\ParserResult;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Query\SqlWalker;
-use Doctrine\ORM\Query\TreeWalkerAdapter;
 
 /**
  * Borrowed from the class of the same name in Doctrine ORM.
@@ -60,9 +58,9 @@ class CountOutputWalker2 extends SqlWalker
         // modification end
 
         if ($AST->groupByClause) {
-            return sprintf(
+            return \sprintf(
                 'SELECT COUNT(*) AS dctrn_count FROM (%s) dctrn_table',
-                $sql
+                $sql,
             );
         }
 
@@ -73,7 +71,7 @@ class CountOutputWalker2 extends SqlWalker
 
         // Get the root entity and alias from the AST fromClause
         $from = $AST->fromClause->identificationVariableDeclarations;
-        if (count($from) > 1) {
+        if (\count($from) > 1) {
             throw new RuntimeException('Cannot count query which selects two FROM components, cannot make distinction');
         }
 
@@ -104,18 +102,18 @@ class CountOutputWalker2 extends SqlWalker
             }
         }
 
-        if (count($rootIdentifier) !== count($sqlIdentifier)) {
-            throw new RuntimeException(sprintf(
+        if (\count($rootIdentifier) !== \count($sqlIdentifier)) {
+            throw new RuntimeException(\sprintf(
                 'Not all identifier properties can be found in the ResultSetMapping: %s',
-                implode(', ', array_diff($rootIdentifier, array_keys($sqlIdentifier)))
+                implode(', ', array_diff($rootIdentifier, array_keys($sqlIdentifier))),
             ));
         }
 
         // Build the counter query
-        return sprintf(
+        return \sprintf(
             'SELECT COUNT(*) AS dctrn_count FROM (SELECT DISTINCT %s FROM (%s) dctrn_result) dctrn_table',
             implode(', ', $sqlIdentifier),
-            $sql
+            $sql,
         );
     }
 }
