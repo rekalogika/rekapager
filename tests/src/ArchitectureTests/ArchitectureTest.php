@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\ArchitectureTests;
 
 use Base64Url\Base64Url;
+use Composer\InstalledVersions;
 use PHPat\Selector\Selector;
 use PHPat\Test\Builder\Rule;
 use PHPat\Test\PHPat;
@@ -186,6 +187,7 @@ final class ArchitectureTest
                 Selector::classname(\Throwable::class),
                 Selector::classname(\Traversable::class),
                 Selector::classname(\Countable::class),
+                Selector::classname(InstalledVersions::class),
             );
     }
 

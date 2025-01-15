@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.22.1
+
+* fix: fix compatibility problem with ORM 2.20
+
 # 0.22.0
 
 * fix: COUNT query must not have LIMIT outside subselect; ORM 2.20 & 3.3 compatibility# 0.21.2
