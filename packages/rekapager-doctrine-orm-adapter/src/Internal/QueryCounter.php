@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\ORM\Internal;
 
+use Composer\InstalledVersions;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Internal\SQLResultCasing;
 use Doctrine\ORM\NoResultException;
@@ -20,8 +21,8 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\ResultSetMapping;
-use Doctrine\ORM\Query\SqlOutputWalker;
 use Doctrine\ORM\Tools\Pagination\CountWalker;
+use Rekalogika\Contracts\Rekapager\Exception\RuntimeException;
 
 /**
  * @see Paginator
@@ -79,7 +80,13 @@ final class QueryCounter implements \Countable
             $rsm = new ResultSetMapping();
             $rsm->addScalarResult($this->getSQLResultCasing($platform, 'dctrn_count'), 'count');
 
-            if (class_exists(SqlOutputWalker::class)) {
+            $version = InstalledVersions::getVersion('doctrine/orm');
+
+            if ($version === null) {
+                throw new RuntimeException('Could not determine the installed version of doctrine/orm');
+            }
+
+            if (version_compare($version, '3.0.0', '>=')) {
                 $outputWalker = CountOutputWalker::class;
             } else {
                 $outputWalker = CountOutputWalker2::class;

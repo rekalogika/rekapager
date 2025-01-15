@@ -12,6 +12,7 @@
     "type": "library",
     "require": {
         "php": "^8.2",
+        "composer-runtime-api": "^2.0",
         "api-platform/core": "^3.2 || ^4.0",
         "doctrine/collections": "^2.2",
         "doctrine/dbal": "^3.8 || ^4.0",
@@ -31,7 +32,6 @@
         "twig/twig": "^3.8"
     },
     "require-dev": {
-        "composer-runtime-api": "^2.2",
         "bnf/phpstan-psr-container": "^1.0",
         "composer/semver": "^3.4",
         "doctrine/doctrine-bundle": "^2.11.3",
