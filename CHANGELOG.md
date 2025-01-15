@@ -1,6 +1,6 @@
 # Changelog
 
-# 0.22.1
+# 0.22.2
 
 * fix: fix compatibility problem with ORM 2.20
 
