@@ -32,8 +32,8 @@ jobs:
         extensions: intl
         tools: flex, phive
 
-    - name: Validate monorepo
-      run: vendor/bin/monorepo-builder validate
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
 
     - name: Change ORM version
       run: jq '.require["doctrine/orm"] = "${{ matrix.orm }}"' composer.json > composer.json.tmp && mv composer.json.tmp composer.json
@@ -69,10 +69,10 @@ jobs:
     # - name: Lint container
     #   run: tests/bin/console lint:container
       
-    - name: Validate composer.json and composer.lock
-      run: git reset --hard ; composer validate --strict
+    - name: Validate monorepo
+      run: git reset --hard ; vendor/bin/monorepo-builder validate
 
-    # - name: Rector
+      # - name: Rector
     #   run: vendor/bin/rector process --no-progress-bar --no-diffs --dry-run --no-ansi
 
     - name: Validate php-cs-fixer
