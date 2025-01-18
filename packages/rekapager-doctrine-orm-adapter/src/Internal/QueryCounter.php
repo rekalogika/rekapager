@@ -86,7 +86,7 @@ final class QueryCounter implements \Countable
                 throw new RuntimeException('Could not determine the installed version of doctrine/orm');
             }
 
-            if (version_compare($version, '3.3.0', '>=')) {
+            if (version_compare($version, '3.2.0', '>=')) {
                 $outputWalker = CountOutputWalker::class;
             } else {
                 $outputWalker = CountOutputWalker2::class;
