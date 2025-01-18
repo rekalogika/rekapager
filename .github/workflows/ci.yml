@@ -36,7 +36,7 @@ jobs:
       run: composer validate --strict
 
     - name: Change ORM version
-      run: jq '.require["doctrine/orm"] = "asdf"' composer.json > composer.json.tmp && mv composer.json.tmp composer.json
+      run: jq '.require["doctrine/orm"] = "${{ matrix.orm }}"' composer.json > composer.json.tmp && mv composer.json.tmp composer.json
 
     - name: Cache Composer packages
       id: composer-cache
