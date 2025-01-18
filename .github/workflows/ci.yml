@@ -32,9 +32,6 @@ jobs:
         extensions: intl
         tools: flex, phive
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-
     - name: Validate monorepo
       run: vendor/bin/monorepo-builder validate
 
@@ -72,6 +69,9 @@ jobs:
     # - name: Lint container
     #   run: tests/bin/console lint:container
       
+    - name: Validate composer.json and composer.lock
+      run: git reset --hard ; composer validate --strict
+
     # - name: Rector
     #   run: vendor/bin/rector process --no-progress-bar --no-diffs --dry-run --no-ansi
 
