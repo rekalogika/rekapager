@@ -20,7 +20,7 @@ jobs:
         orm: ['^2.19', '^3.0']
         dep: [highest,lowest]
 
-    name: Symfony ${{ matrix.symfony }}, ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
+    name: SF ${{ matrix.symfony }}, ${{ matrix.dep }} deps, ORM ${{ matrix.orm }}, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 
     steps:
     - uses: actions/checkout@v4
