@@ -16,7 +16,8 @@
         <ignoreFiles>
             <directory name="vendor" />
             <directory name="tests/src/App/Factory" />
-            <file name="packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker.php" />
+            <file name="packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker30.php" />
+            <file name="packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker33.php" />
             <file name="packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker2.php" />
         </ignoreFiles>
     </projectFiles>
