@@ -17,6 +17,7 @@ jobs:
         operating-system: [ubuntu-latest]
         php: [ '8.2', '8.3', '8.4' ]
         symfony: [ '6.*', '7.*' ]
+        orm: ['^2.19', '^3.0']
         dep: [highest,lowest]
 
     name: Symfony ${{ matrix.symfony }}, ${{ matrix.dep }} deps, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
@@ -33,6 +34,9 @@ jobs:
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
+
+    - name: Change ORM version
+      run: jq '.require["doctrine/orm"] = "asdf"' composer.json > composer.json.tmp && mv composer.json.tmp composer.json
 
     - name: Cache Composer packages
       id: composer-cache

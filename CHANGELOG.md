@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.22.3
+
+* test: test ORM 2.x and 3.x
+
 # 0.22.2
 
 * fix: fix compatibility problem with ORM 2.20
