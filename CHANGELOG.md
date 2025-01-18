@@ -3,6 +3,7 @@
 # 0.22.3
 
 * test: test ORM 2.x and 3.x
+* fix: compatibility with ORM 3.0, 3.1 and 3.2
 
 # 0.22.2
 
