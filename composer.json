@@ -67,6 +67,7 @@
         "symfony/translation": "^6.4 || ^7.0",
         "symfony/twig-bundle": "^6.4 || ^7.0",
         "symfony/uid": "^6.4 || ^7.0",
+        "symfony/validator": "^6.3 || ^7.0",
         "symfony/var-dumper": "^6.3 || ^7.0",
         "symfony/web-profiler-bundle": "^6.4 || ^7.0",
         "symfony/yaml": "^6.4 || ^7.0",

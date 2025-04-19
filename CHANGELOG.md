@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.22.4
+
+* build: fix static analysis errors
+
 # 0.22.3
 
 * test: test ORM 2.x and 3.x
