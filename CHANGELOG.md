@@ -3,6 +3,7 @@
 # 0.22.4
 
 * build: fix static analysis errors
+* deps: bump JS deps
 
 # 0.22.3
 
