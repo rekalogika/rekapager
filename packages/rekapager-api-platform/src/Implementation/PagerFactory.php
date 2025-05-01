@@ -28,14 +28,14 @@ use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
 use Rekalogika\Rekapager\Pager\TraversablePager;
 
-final class PagerFactory implements PagerFactoryInterface
+final readonly class PagerFactory implements PagerFactoryInterface
 {
     public function __construct(
-        private readonly ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
-        private readonly PageIdentifierEncoderResolverInterface $pageIdentifierEncoderResolver,
-        private readonly Pagination $pagination,
-        private readonly string $pageParameterName = 'page',
-        private readonly int $urlGenerationStrategy = UrlGeneratorInterface::ABS_PATH,
+        private ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
+        private PageIdentifierEncoderResolverInterface $pageIdentifierEncoderResolver,
+        private Pagination $pagination,
+        private string $pageParameterName = 'page',
+        private int $urlGenerationStrategy = UrlGeneratorInterface::ABS_PATH,
     ) {}
 
     #[\Override]

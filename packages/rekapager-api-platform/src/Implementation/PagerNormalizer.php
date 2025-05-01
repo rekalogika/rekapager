@@ -21,10 +21,10 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * @see PartialCollectionViewNormalizer
  */
-final class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
+final readonly class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     public function __construct(
-        private readonly NormalizerInterface $collectionNormalizer,
+        private NormalizerInterface $collectionNormalizer,
     ) {}
 
     /**

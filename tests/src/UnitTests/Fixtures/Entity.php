@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\UnitTests\Fixtures;
 
-final class Entity
+final readonly class Entity
 {
     public function __construct(
-        private readonly int $id,
+        private int $id,
     ) {}
 
     public function getId(): int

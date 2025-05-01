@@ -17,10 +17,10 @@ use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final class SymfonyPageUrlGeneratorFactory implements PageUrlGeneratorFactoryInterface
+final readonly class SymfonyPageUrlGeneratorFactory implements PageUrlGeneratorFactoryInterface
 {
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator,
+        private UrlGeneratorInterface $urlGenerator,
     ) {}
 
     #[\Override]

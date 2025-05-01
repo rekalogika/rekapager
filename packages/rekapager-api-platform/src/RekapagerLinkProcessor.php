@@ -28,13 +28,13 @@ use Symfony\Component\WebLink\Link;
  *
  * @implements ProcessorInterface<T1,T2>
  */
-final class RekapagerLinkProcessor implements ProcessorInterface
+final readonly class RekapagerLinkProcessor implements ProcessorInterface
 {
     /**
      * @param ProcessorInterface<T1,T2> $decorated
      */
     public function __construct(
-        private readonly ProcessorInterface $decorated,
+        private ProcessorInterface $decorated,
     ) {}
 
     #[\Override]

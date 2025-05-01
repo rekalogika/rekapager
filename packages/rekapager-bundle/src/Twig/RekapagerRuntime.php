@@ -16,10 +16,10 @@ namespace Rekalogika\Rekapager\Bundle\Twig;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
-final class RekapagerRuntime implements RuntimeExtensionInterface
+final readonly class RekapagerRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
-        private readonly TwigPagerRenderer $pagerRenderer,
+        private TwigPagerRenderer $pagerRenderer,
     ) {}
 
     /**

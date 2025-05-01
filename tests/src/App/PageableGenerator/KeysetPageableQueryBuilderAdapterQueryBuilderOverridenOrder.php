@@ -23,9 +23,9 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-final class KeysetPageableQueryBuilderAdapterQueryBuilderOverridenOrder implements PageableGeneratorInterface
+final readonly class KeysetPageableQueryBuilderAdapterQueryBuilderOverridenOrder implements PageableGeneratorInterface
 {
-    public function __construct(private readonly PostRepository $postRepository) {}
+    public function __construct(private PostRepository $postRepository) {}
 
     #[\Override]
     public static function getKey(): string

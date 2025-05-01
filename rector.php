@@ -11,16 +11,17 @@ use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
+use Rector\DeadCode\Rector\Concat\RemoveConcatAutocastRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 use Rector\Php81\Rector\Array_\FirstClassCallableRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\Php82\Rector\Class_\ReadOnlyClassRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector;
 use Rector\ValueObject\PhpVersion;
 
 return RectorConfig::configure()
-    ->withPhpVersion(PhpVersion::PHP_83)
     ->withPaths([
         __DIR__ . '/packages',
         __DIR__ . '/tests/bin',
@@ -28,6 +29,13 @@ return RectorConfig::configure()
         __DIR__ . '/tests/public',
         __DIR__ . '/tests/src',
     ])
+    // brittle version specific classes
+    ->withSkip([
+        __DIR__ . '/packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker2.php',
+        __DIR__ . '/packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker30.php',
+        __DIR__ . '/packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker33.php',
+    ])
+    ->withPhpVersion(PhpVersion::PHP_83)
     ->withImportNames(importShortClasses: false)
     ->withPreparedSets(
         deadCode: true,
@@ -82,6 +90,9 @@ return RectorConfig::configure()
 
         // makes code unreadable
         DisallowedShortTernaryRuleFixerRector::class,
+
+        // interferes with static analysis
+        RemoveConcatAutocastRector::class,
 
         RemoveAlwaysTrueIfConditionRector::class => [
             // dealing with legacy code

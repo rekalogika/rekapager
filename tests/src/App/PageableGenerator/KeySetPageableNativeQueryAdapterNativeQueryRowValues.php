@@ -27,10 +27,10 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-final class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGeneratorInterface
+final readonly class KeySetPageableNativeQueryAdapterNativeQueryRowValues implements PageableGeneratorInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private EntityManagerInterface $entityManager,
     ) {}
 
     #[\Override]

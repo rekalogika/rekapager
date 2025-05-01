@@ -24,11 +24,11 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-final class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGeneratorInterface
+final readonly class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGeneratorInterface
 {
     public function __construct(
-        private readonly PostRepository $postRepository,
-        private readonly UserRepository $userRepository,
+        private PostRepository $postRepository,
+        private UserRepository $userRepository,
     ) {}
 
     #[\Override]

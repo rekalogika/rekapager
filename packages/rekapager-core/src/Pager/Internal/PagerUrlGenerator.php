@@ -21,14 +21,14 @@ use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 /**
  * @internal
  */
-final class PagerUrlGenerator implements PagerUrlGeneratorInterface
+final readonly class PagerUrlGenerator implements PagerUrlGeneratorInterface
 {
     /**
      * @param PageIdentifierEncoderInterface<object> $pageIdentifierEncoder
      */
     public function __construct(
-        private readonly PageUrlGeneratorInterface $pageUrlGenerator,
-        private readonly PageIdentifierEncoderInterface $pageIdentifierEncoder,
+        private PageUrlGeneratorInterface $pageUrlGenerator,
+        private PageIdentifierEncoderInterface $pageIdentifierEncoder,
     ) {}
 
     #[\Override]

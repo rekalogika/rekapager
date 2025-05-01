@@ -28,18 +28,18 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * @implements PagerFactoryInterface<PagerOptions>
  */
-final class PagerFactory implements PagerFactoryInterface
+final readonly class PagerFactory implements PagerFactoryInterface
 {
     /**
      * @param int<0,max> $defaultProximity
      * @param UrlGeneratorInterface::* $defaultUrlReferenceType
      */
     public function __construct(
-        private readonly PageIdentifierEncoderResolverInterface $pageIdentifierEncoderResolver,
-        private readonly PageUrlGeneratorFactoryInterface $pageUrlGeneratorFactory,
-        private readonly string $defaultPageParameterName,
-        private readonly int $defaultProximity,
-        private readonly int $defaultUrlReferenceType,
+        private PageIdentifierEncoderResolverInterface $pageIdentifierEncoderResolver,
+        private PageUrlGeneratorFactoryInterface $pageUrlGeneratorFactory,
+        private string $defaultPageParameterName,
+        private int $defaultProximity,
+        private int $defaultUrlReferenceType,
     ) {}
 
     #[\Override]

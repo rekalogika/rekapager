@@ -110,7 +110,7 @@ final class QueryBuilderTransactionTest extends KernelTestCase
             ->get(EntityManagerInterface::class);
 
         foreach ($pageable->getPages() as $page) {
-            $entityManager->wrapInTransaction(function () use ($page) {
+            $entityManager->wrapInTransaction(function () use ($page): void {
                 foreach ($page as $post) {
                     self::assertInstanceOf(Post::class, $post);
                     $post->setTitle((string) $post->getTitle() . ' (updated)');
