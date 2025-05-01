@@ -25,7 +25,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class PagerfantaAdapterIndexByTest extends KernelTestCase
 {
-    protected function getSelectable(): PostRepository
+    private function getSelectable(): PostRepository
     {
         return self::getContainer()->get(PostRepository::class);
     }

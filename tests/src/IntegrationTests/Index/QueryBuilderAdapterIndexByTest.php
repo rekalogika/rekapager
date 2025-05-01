@@ -26,7 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class QueryBuilderAdapterIndexByTest extends KernelTestCase
 {
-    protected function getQueryBuilder(): QueryBuilder
+    private function getQueryBuilder(): QueryBuilder
     {
         $postRepository = self::getContainer()->get(PostRepository::class);
 
