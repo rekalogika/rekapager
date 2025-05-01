@@ -26,7 +26,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
  * @method Post[]    findAll()
  * @method Post[]    findBy(array<string,mixed> $criteria, ?array<string,'ASC'|'DESC'> $orderBy = null, $limit = null, $offset = null)
  */
-class PostRepository extends ServiceEntityRepository
+final class PostRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

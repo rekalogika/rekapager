@@ -17,7 +17,7 @@ use Rekalogika\Rekapager\Bundle\Contracts\PageUrlGeneratorFactoryInterface;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class SymfonyPageUrlGeneratorFactory implements PageUrlGeneratorFactoryInterface
+final class SymfonyPageUrlGeneratorFactory implements PageUrlGeneratorFactoryInterface
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,

@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Adapter\Common\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class IncompatibleIndexTypeException extends UnexpectedValueException
+final class IncompatibleIndexTypeException extends UnexpectedValueException
 {
     public function __construct(mixed $row, string $indexBy, mixed $key)
     {

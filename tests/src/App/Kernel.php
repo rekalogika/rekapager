@@ -34,7 +34,7 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\UX\StimulusBundle\StimulusBundle;
 use Zenstruck\Foundry\ZenstruckFoundryBundle;
 
-class Kernel extends BaseKernel
+final class Kernel extends BaseKernel
 {
     use MicroKernelTrait {
         registerContainerConfiguration as private baseRegisterContainerConfiguration;

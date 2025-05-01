@@ -13,4 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Rekapager\Exception;
 
-class NullBoundaryValueException extends UnexpectedValueException {}
+final class NullBoundaryValueException extends UnexpectedValueException {}

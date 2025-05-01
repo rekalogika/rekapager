@@ -32,7 +32,7 @@ use Symfony\Component\Console\Input\InputOption;
     name: 'app:simplebatch',
     description: 'Simple batch command',
 )]
-class AppSimpleBatchCommand extends SimpleBatchCommand
+final class AppSimpleBatchCommand extends SimpleBatchCommand
 {
     public function __construct(
         private readonly PostRepository $postRepository,

@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\ORM\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 
-class MissingRowValuesDQLFunctionException extends LogicException
+final class MissingRowValuesDQLFunctionException extends LogicException
 {
     public function __construct(\Throwable $previous)
     {

@@ -24,7 +24,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGeneratorInterface
+final class OffsetPageableQueryBuilderAdapterQueryBuilder implements PageableGeneratorInterface
 {
     public function __construct(
         private readonly PostRepository $postRepository,

@@ -16,4 +16,4 @@ namespace Rekalogika\Contracts\Rekapager\Exception;
 use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
 
 #[WithHttpStatus(400)]
-class PageIdentifierDecodingFailureException extends RuntimeException {}
+final class PageIdentifierDecodingFailureException extends RuntimeException {}

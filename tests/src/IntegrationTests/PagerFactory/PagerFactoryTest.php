@@ -19,7 +19,7 @@ use Rekalogika\Rekapager\Tests\App\PageableGenerator\OffsetPageableCollectionAda
 use Rekalogika\Rekapager\Tests\IntegrationTests\Pageable\PageableTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class PagerFactoryTest extends PageableTestCase
+final class PagerFactoryTest extends PageableTestCase
 {
     public function testPagerFactory(): void
     {

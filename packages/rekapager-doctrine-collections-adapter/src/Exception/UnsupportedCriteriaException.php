@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\Collections\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class UnsupportedCriteriaException extends UnexpectedValueException
+final class UnsupportedCriteriaException extends UnexpectedValueException
 {
     public function __construct()
     {

@@ -18,7 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 use Rekalogika\Rekapager\Tests\App\Factory\PostFactory;
 use Rekalogika\Rekapager\Tests\App\Factory\UserFactory;
 
-class AppFixtures extends Fixture
+final class AppFixtures extends Fixture
 {
     #[\Override]
     public function load(ObjectManager $manager): void

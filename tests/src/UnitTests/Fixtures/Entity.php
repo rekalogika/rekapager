@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\UnitTests\Fixtures;
 
-class Entity
+final class Entity
 {
     public function __construct(
         private readonly int $id,

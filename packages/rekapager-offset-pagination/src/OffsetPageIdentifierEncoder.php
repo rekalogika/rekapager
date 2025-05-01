@@ -20,7 +20,7 @@ use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 /**
  * @implements PageIdentifierEncoderInterface<PageNumber>
  */
-class OffsetPageIdentifierEncoder implements PageIdentifierEncoderInterface
+final class OffsetPageIdentifierEncoder implements PageIdentifierEncoderInterface
 {
     #[\Override]
     public static function getIdentifierClass(): string

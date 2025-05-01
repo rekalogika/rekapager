@@ -28,7 +28,7 @@ use Rekalogika\Rekapager\Contracts\TraversablePagerInterface;
 use Rekalogika\Rekapager\Pager\Pager;
 use Rekalogika\Rekapager\Pager\TraversablePager;
 
-class PagerFactory implements PagerFactoryInterface
+final class PagerFactory implements PagerFactoryInterface
 {
     public function __construct(
         private readonly ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
@@ -78,7 +78,10 @@ class PagerFactory implements PagerFactoryInterface
         $page = $this->getPage($pageable, $operation, $context);
         $operation ??= $this->getOperation($context);
 
-        /** @psalm-suppress InternalMethod */
+        /**
+         * @psalm-suppress InternalMethod
+         * @phpstan-ignore method.internalClass
+         */
         $urlGenerationStrategy = $operation?->getUrlGenerationStrategy()
             ?? $this->urlGenerationStrategy;
 

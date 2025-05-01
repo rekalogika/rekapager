@@ -17,10 +17,29 @@ parameters:
         - packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker30.php
         - packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker2.php
     ignoreErrors:
+        - '#Call to method __construct\(\) of internal class Doctrine\\Bundle\\DoctrineBundle\\Repository\\LazyServiceEntityRepository\<T#'
         - '#Rekalogika\\Rekapager\\Tests\\App\\Entity\\Post> given.#'
         - '#Symfony\\Component\\Config\\Definition\\Builder\\#'
         - '#Attribute class Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator is deprecated:#'
         - '#Property .* is never assigned int so it can be removed from the property type.#'
+        -
+            identifier: method.nonObject
+            path: packages/rekapager-bundle/src/DependencyInjection/Configuration.php
+        -
+            identifier: offsetAccess.nonOffsetAccessible
+            path: tests/src/IntegrationTests/ApiPlatform/ApiTest.php
+        -
+            identifier: return.unusedType
+            path: packages/rekapager-api-platform/src/Implementation/ApiPageUrlGenerator.php
+        -
+            identifier: return.unusedType
+            path: packages/rekapager-bundle/src/Implementation/SymfonyPageUrlGenerator.php
+        -
+            identifier: return.unusedType
+            path: tests/src/App/ApiState/*
+        -
+            identifier: return.unusedType
+            path: tests/src/IntegrationTests/Pageable/PageLimitedPageableTest.php
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon

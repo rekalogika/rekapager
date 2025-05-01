@@ -26,7 +26,7 @@ use Rekalogika\Rekapager\Offset\OffsetPageable;
 use Rekalogika\Rekapager\Pagerfanta\PagerfantaAdapterAdapter;
 use Rekalogika\Rekapager\Tests\UnitTests\Fixtures\Entity;
 
-class CountTest extends TestCase
+final class CountTest extends TestCase
 {
     /**
      * @psalm-suppress InvalidReturnType

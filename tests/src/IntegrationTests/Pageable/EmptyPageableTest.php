@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pageable;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class EmptyPageableTest extends PageableTestCase
+final class EmptyPageableTest extends PageableTestCase
 {
     #[\Override]
     protected function getSetName(): string

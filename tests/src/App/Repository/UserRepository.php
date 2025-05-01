@@ -25,7 +25,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\User;
  * @method User[]    findAll()
  * @method User[]    findBy(array<string,mixed> $criteria, ?array<string,'ASC'|'DESC'> $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+final class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

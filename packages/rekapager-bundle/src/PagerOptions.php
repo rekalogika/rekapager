@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Bundle;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class PagerOptions
+final class PagerOptions
 {
     /**
      * @param int<0,max>|null $proximity

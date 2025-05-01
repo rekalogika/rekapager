@@ -20,7 +20,7 @@ use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 
-class UnsupportedCollectionTest extends TestCase
+final class UnsupportedCollectionTest extends TestCase
 {
     public function testCollectionOfScalarWithKeysetPagination(): void
     {

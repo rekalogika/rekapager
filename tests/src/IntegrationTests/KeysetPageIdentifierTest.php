@@ -20,7 +20,7 @@ use Rekalogika\Rekapager\Keyset\PageIdentifierEncoder\SymfonySerializerKeysetPag
 use Rekalogika\Rekapager\Symfony\PageIdentifierEncoderLocator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class KeysetPageIdentifierTest extends KernelTestCase
+final class KeysetPageIdentifierTest extends KernelTestCase
 {
     public function testSerialize(): void
     {

@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pager;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class KeysetPagerSmallDatasetTest extends PagerTestCase
+final class KeysetPagerSmallDatasetTest extends PagerTestCase
 {
     #[\Override]
     protected function getItemsPerPage(): int

@@ -24,7 +24,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class QueryBuilderAdapterIndexByTest extends KernelTestCase
+final class QueryBuilderAdapterIndexByTest extends KernelTestCase
 {
     protected function getQueryBuilder(): QueryBuilder
     {

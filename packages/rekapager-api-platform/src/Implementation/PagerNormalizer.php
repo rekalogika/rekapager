@@ -21,13 +21,15 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * @see PartialCollectionViewNormalizer
  */
-class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
+final class PagerNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     public function __construct(
         private readonly NormalizerInterface $collectionNormalizer,
     ) {}
 
-    // @phpstan-ignore missingType.iterableValue
+    /**
+     * @phpstan-ignore missingType.iterableValue
+     */
     public function getSupportedTypes(?string $format): array
     {
         return $this->collectionNormalizer->getSupportedTypes($format);

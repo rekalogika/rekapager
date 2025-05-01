@@ -34,7 +34,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @extends BatchProcessorDecorator<TKey,T>
  * @internal
  */
-class CommandBatchProcessorDecorator extends BatchProcessorDecorator
+final class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 {
     private readonly BatchTimer $timer;
 
@@ -279,9 +279,9 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
 
         $processDuration = $this->timer->getDuration(BatchTimer::TIMER_PROCESS);
 
-        if ($processDuration !== null) {
-            $pagesPerSecond = $this->sessionPageNumber / $processDuration;
-            $itemsPerSecond = $this->sessionItemNumber / $processDuration;
+        if ($processDuration !== null && $processDuration > 0) {
+            $pagesPerSecond = (float) $this->sessionPageNumber / $processDuration;
+            $itemsPerSecond = (float) $this->sessionItemNumber / $processDuration;
         } else {
             $pagesPerSecond = 0;
             $itemsPerSecond = 0;
@@ -311,9 +311,17 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
                     $remainingItems = 0;
                 }
 
-                $eta = $remainingItems / $itemsPerSecond;
-                $estimatedEnd = time() + $eta;
-                $stats[] = ['Estimated end time' => $this->formatTime((new \DateTimeImmutable('@' . $estimatedEnd))->setTimezone(new \DateTimeZone(date_default_timezone_get())))];
+                if ($itemsPerSecond === 0) {
+                    $eta = null;
+                    $estimatedEnd = null;
+                    $formatTime = '(unknown)';
+                } else {
+                    $eta = (float) $remainingItems / $itemsPerSecond;
+                    $estimatedEnd = (int) ((float) time() + $eta);
+                    $formatTime = $this->formatTime((new \DateTimeImmutable('@' . $estimatedEnd))->setTimezone(new \DateTimeZone(date_default_timezone_get())));
+                }
+
+                $stats[] = ['Estimated end time' => $formatTime];
             }
         } elseif (
             $event instanceof AfterProcessEvent
@@ -359,11 +367,11 @@ class CommandBatchProcessorDecorator extends BatchProcessorDecorator
         }
 
         if ($pagesPerSecond > 0) {
-            $pagesInfo .= \sprintf(' (%s/minute)', round($pagesPerSecond * 60, 2));
+            $pagesInfo .= \sprintf(' (%s/minute)', round($pagesPerSecond * (float) 60, 2));
         }
 
         if ($itemsPerSecond > 0) {
-            $itemsInfo .= \sprintf(' (%s/minute)', round($itemsPerSecond * 60, 2));
+            $itemsInfo .= \sprintf(' (%s/minute)', round($itemsPerSecond * (float) 60, 2));
         }
 
         $stats[] = ['Pages' => $pagesInfo];

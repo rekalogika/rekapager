@@ -30,6 +30,7 @@ use Rekalogika\Contracts\Rekapager\Exception\RuntimeException;
  */
 final class QueryCounter implements \Countable
 {
+    // @phpstan-ignore traitUse.internalTrait
     use SQLResultCasing;
 
     /**

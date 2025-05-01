@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @see https://github.com/symfony/symfony/issues/46158
  */
-class DoctrineSqlLoggingPass implements CompilerPassInterface
+final class DoctrineSqlLoggingPass implements CompilerPassInterface
 {
     #[\Override]
     public function process(ContainerBuilder $container): void

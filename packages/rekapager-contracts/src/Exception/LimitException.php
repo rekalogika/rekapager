@@ -19,4 +19,4 @@ use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
  * Thrown when a page beyond the limit is requested.
  */
 #[WithHttpStatus(403)]
-class LimitException extends RuntimeException implements ExceptionInterface {}
+final class LimitException extends RuntimeException implements ExceptionInterface {}

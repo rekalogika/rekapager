@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Bundle\Exception;
 use Rekalogika\Contracts\Rekapager\Exception\OutOfBoundsException as ContractsOutOfBoundsException;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 
-class OutOfBoundsException extends ContractsOutOfBoundsException
+final class OutOfBoundsException extends ContractsOutOfBoundsException
 {
     /**
      * @param PagerInterface<array-key,mixed> $pager

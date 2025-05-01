@@ -95,8 +95,8 @@ final class IriHelper
 
         $url .= $parts['path'];
 
-        if ('' !== $parts['query']) {
-            $url .= '?' . $parts['query'];
+        if ('' !== ((string) $parts['query'])) {
+            $url .= '?' . ((string) $parts['query']);
         }
 
         if (isset($parts['fragment'])) {

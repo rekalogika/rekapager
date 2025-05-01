@@ -15,4 +15,4 @@ namespace Rekalogika\Rekapager\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 
-class MissingPageIdentifierEncoderException extends LogicException {}
+final class MissingPageIdentifierEncoderException extends LogicException {}

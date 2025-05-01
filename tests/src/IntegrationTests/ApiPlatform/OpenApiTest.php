@@ -18,7 +18,7 @@ use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\PathItem;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class OpenApiTest extends KernelTestCase
+final class OpenApiTest extends KernelTestCase
 {
     public function testOpenApi(): void
     {

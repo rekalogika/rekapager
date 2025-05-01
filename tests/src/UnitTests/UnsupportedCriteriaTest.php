@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCriteriaException;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 
-class UnsupportedCriteriaTest extends TestCase
+final class UnsupportedCriteriaTest extends TestCase
 {
     public function testMaxResults(): void
     {

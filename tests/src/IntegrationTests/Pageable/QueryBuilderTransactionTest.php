@@ -23,7 +23,7 @@ use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class QueryBuilderTransactionTest extends KernelTestCase
+final class QueryBuilderTransactionTest extends KernelTestCase
 {
     /**
      * @return PageableInterface<int,Post>

@@ -31,7 +31,8 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
  */
 final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
 {
-    private int|NullPageNumber $pageNumber;
+    // @todo probably remnant
+    // private int|NullPageNumber $pageNumber;
 
     /**
      * @param PageInterface<TKey,T> $wrapped
@@ -40,7 +41,8 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
         private PageInterface $wrapped,
         private PagerUrlGeneratorInterface $pagerUrlGenerator,
     ) {
-        $this->pageNumber = new NullPageNumber();
+        // @todo probably remnant
+        // $this->pageNumber = new NullPageNumber();
     }
 
     #[\Override]
@@ -73,9 +75,10 @@ final readonly class PagerItem implements PagerItemInterface, \IteratorAggregate
     #[\Override]
     public function getPageNumber(): ?int
     {
-        if (!$this->pageNumber instanceof NullPageNumber) {
-            return $this->pageNumber;
-        }
+        // @todo probably remnant
+        // if (!$this->pageNumber instanceof NullPageNumber) {
+        //     return $this->pageNumber;
+        // }
 
         return $this->wrapped->getPageNumber();
     }

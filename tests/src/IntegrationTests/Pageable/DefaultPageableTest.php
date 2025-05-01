@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pageable;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class DefaultPageableTest extends PageableTestCase
+final class DefaultPageableTest extends PageableTestCase
 {
     #[DataProviderExternal(PageableGeneratorProvider::class, 'all')]
     public function testFirstPage(string $pageableGeneratorClass): void

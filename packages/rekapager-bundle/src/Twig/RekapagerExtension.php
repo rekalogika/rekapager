@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Bundle\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class RekapagerExtension extends AbstractExtension
+final class RekapagerExtension extends AbstractExtension
 {
     #[\Override]
     public function getFunctions(): array

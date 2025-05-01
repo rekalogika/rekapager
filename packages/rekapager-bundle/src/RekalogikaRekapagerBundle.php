@@ -17,7 +17,7 @@ use Rekalogika\Rekapager\Bundle\DependencyInjection\RemoveMissingDepsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RekalogikaRekapagerBundle extends Bundle
+final class RekalogikaRekapagerBundle extends Bundle
 {
     #[\Override]
     public function getPath(): string

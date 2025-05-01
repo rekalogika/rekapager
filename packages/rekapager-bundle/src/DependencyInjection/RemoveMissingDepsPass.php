@@ -17,7 +17,7 @@ use Rekalogika\Rekapager\Bundle\Twig\TwigPagerRenderer;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class RemoveMissingDepsPass implements CompilerPassInterface
+final class RemoveMissingDepsPass implements CompilerPassInterface
 {
     #[\Override]
     public function process(ContainerBuilder $container): void

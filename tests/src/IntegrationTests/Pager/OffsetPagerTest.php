@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pager;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class OffsetPagerTest extends PagerTestCase
+final class OffsetPagerTest extends PagerTestCase
 {
     #[DataProviderExternal(PageableGeneratorProvider::class, 'offset')]
     public function testFirstPage(string $pageableGeneratorClass): void

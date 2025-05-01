@@ -21,6 +21,7 @@ use PHPat\Test\PHPat;
 use Psr\Container\ContainerInterface;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Uid\AbstractUid;
+use Symfony\Contracts\Service\Attribute\Required;
 
 final class ArchitectureTest
 {
@@ -35,6 +36,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager\Exception'),
                 Selector::classname(\Throwable::class),
                 Selector::classname(\UnitEnum::class),
+                Selector::classname(\Override::class),
             );
     }
 
@@ -63,6 +65,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Symfony\Component\Serializer'),
                 Selector::inNamespace('Symfony\Component\WebLink'),
                 Selector::classname(\ArrayObject::class),
+                Selector::classname(\Override::class),
             );
     }
 
@@ -84,6 +87,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Symfony\Component\HttpKernel'),
                 Selector::inNamespace('Symfony\Component\Routing'),
                 Selector::inNamespace('Twig'), // optional
+                Selector::classname(\Override::class),
             );
     }
 
@@ -104,6 +108,7 @@ final class ArchitectureTest
                 Selector::classname(\OutOfBoundsException::class),
                 Selector::classname(\Throwable::class),
                 Selector::inNamespace('Symfony\Component\HttpKernel'), // optional
+                Selector::classname(\Override::class),
             );
     }
 
@@ -127,6 +132,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::classname(\Traversable::class),
                 Selector::classname(\IteratorAggregate::class),
+                Selector::classname(\Override::class),
             );
     }
 
@@ -146,6 +152,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
                 Selector::classname(\TypeError::class),
                 Selector::classname(\Throwable::class),
+                Selector::classname(\Override::class),
             );
     }
 
@@ -164,6 +171,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Doctrine\DBAL'),
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
+                Selector::classname(\Override::class),
             );
     }
 
@@ -187,6 +195,7 @@ final class ArchitectureTest
                 Selector::classname(\Throwable::class),
                 Selector::classname(\Traversable::class),
                 Selector::classname(\Countable::class),
+                Selector::classname(\Override::class),
                 Selector::classname(InstalledVersions::class),
             );
     }
@@ -213,6 +222,7 @@ final class ArchitectureTest
                 Selector::classname(\ErrorException::class),
                 Selector::classname(\DateTimeInterface::class),
                 Selector::classname(\IteratorAggregate::class),
+                Selector::classname(\Override::class),
                 Selector::inNamespace('Symfony\Component\Serializer'), // optional
             );
     }
@@ -231,6 +241,7 @@ final class ArchitectureTest
                 Selector::classname(\IteratorAggregate::class),
                 Selector::classname(\Traversable::class),
                 Selector::classname(\Iterator::class),
+                Selector::classname(\Override::class),
             );
     }
 
@@ -250,6 +261,7 @@ final class ArchitectureTest
                 Selector::classname(\Closure::class),
                 Selector::classname(\Traversable::class),
                 Selector::classname(\Iterator::class),
+                Selector::classname(\Override::class),
             );
     }
 
@@ -272,7 +284,9 @@ final class ArchitectureTest
                 Selector::classname(\DateTimeInterface::class),
                 Selector::classname(\DateTimeImmutable::class),
                 Selector::classname(\DateTimeZone::class),
+                Selector::classname(\Override::class),
                 Selector::inNamespace('Symfony\Component\Console'), // optional
+                Selector::classname(Required::class),
             );
     }
 }

@@ -18,7 +18,7 @@ use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class BatchTest extends PageableTestCase
+final class BatchTest extends PageableTestCase
 {
     #[\Override]
     protected function getSetName(): string
