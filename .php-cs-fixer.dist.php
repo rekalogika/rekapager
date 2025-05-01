@@ -1,6 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
+    ->path(__DIR__ . '/rector.php')
     ->in(__DIR__ . '/packages')
     ->in(__DIR__ . '/tests/src');
 
