@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\IntegrationTests\Doctrine;
 
-use Rekalogika\Rekapager\Bundle\Contracts\PagerFactoryInterface;
 use Rekalogika\Rekapager\Tests\App\Doctrine\SqlLogger;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableQueryBuilderAdapterQueryBuilder;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpFoundation\Request;
 
 final class CountTest extends KernelTestCase
 {
@@ -29,10 +27,10 @@ final class CountTest extends KernelTestCase
             ->get(KeysetPageableQueryBuilderAdapterQueryBuilder::class)
             ->generatePageable(10, true, 'medium');
 
-        $pager = static::getContainer()->get(PagerFactoryInterface::class)
-            ->createPager($pageable, new Request(attributes: ['_route' => 'page']), null);
+        $itemsCount = $pageable->getTotalItems();
+        $this->assertSame(103, $itemsCount);
 
-        $pager->getNextNeighboringPages();
+        $countQueries = 0;
 
         foreach ($sqlLogger->getLogs() as $log) {
             $this->assertIsArray($log);
@@ -44,7 +42,11 @@ final class CountTest extends KernelTestCase
                 continue;
             }
 
+            $countQueries++;
+
             $this->assertDoesNotMatchRegularExpression('/LIMIT\s+\d+$/', $sql, 'COUNT query with subselect must not have LIMIT outside the subselect.');
         }
+
+        $this->assertSame(1, $countQueries, 'There should be only one COUNT query.');
     }
 }
