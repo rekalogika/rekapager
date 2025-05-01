@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Adapter\Common\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 
-class CannotResolveIndexException extends LogicException
+final class CannotResolveIndexException extends LogicException
 {
     public function __construct(mixed $row, string $indexBy, \Throwable $previous)
     {

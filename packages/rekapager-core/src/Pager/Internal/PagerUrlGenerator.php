@@ -21,7 +21,7 @@ use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 /**
  * @internal
  */
-class PagerUrlGenerator implements PagerUrlGeneratorInterface
+final class PagerUrlGenerator implements PagerUrlGeneratorInterface
 {
     /**
      * @param PageIdentifierEncoderInterface<object> $pageIdentifierEncoder

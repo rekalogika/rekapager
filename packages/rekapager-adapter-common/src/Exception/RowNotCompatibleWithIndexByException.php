@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Adapter\Common\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class RowNotCompatibleWithIndexByException extends UnexpectedValueException
+final class RowNotCompatibleWithIndexByException extends UnexpectedValueException
 {
     public function __construct(mixed $row, string $indexBy)
     {

@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * @implements PagerFactoryInterface<PagerOptions>
  */
-class PagerFactory implements PagerFactoryInterface
+final class PagerFactory implements PagerFactoryInterface
 {
     /**
      * @param int<0,max> $defaultProximity

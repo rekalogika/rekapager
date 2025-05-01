@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\DBAL\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class CountUnsupportedException extends UnexpectedValueException
+final class CountUnsupportedException extends UnexpectedValueException
 {
     public function __construct(string $sql)
     {

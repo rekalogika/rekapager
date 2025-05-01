@@ -28,7 +28,7 @@ use Symfony\Component\WebLink\Link;
  *
  * @implements ProcessorInterface<T1,T2>
  */
-class RekapagerLinkProcessor implements ProcessorInterface
+final class RekapagerLinkProcessor implements ProcessorInterface
 {
     /**
      * @param ProcessorInterface<T1,T2> $decorated

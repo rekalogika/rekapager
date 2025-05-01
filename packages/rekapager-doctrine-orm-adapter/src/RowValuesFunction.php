@@ -19,7 +19,7 @@ use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 use Doctrine\ORM\Query\TokenType;
 
-class RowValuesFunction extends FunctionNode
+final class RowValuesFunction extends FunctionNode
 {
     /** @var list<Node|string> */
     public array $values = [];

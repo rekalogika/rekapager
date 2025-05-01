@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\Collections\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class UnsupportedCollectionItemException extends UnexpectedValueException
+final class UnsupportedCollectionItemException extends UnexpectedValueException
 {
     public function __construct(string $type, \Throwable $previous)
     {

@@ -24,7 +24,7 @@ use Symfony\Component\Uid\AbstractUid;
 /**
  * @implements PageIdentifierEncoderInterface<KeysetPageIdentifier>
  */
-class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncoderInterface
+final class SerializeSecretKeysetPageIdentifierEncoder implements PageIdentifierEncoderInterface
 {
     public function __construct(
         private readonly string $secret,

@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\ORM\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class NoCountResultFoundException extends UnexpectedValueException
+final class NoCountResultFoundException extends UnexpectedValueException
 {
     public function __construct()
     {

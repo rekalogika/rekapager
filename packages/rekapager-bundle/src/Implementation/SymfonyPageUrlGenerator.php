@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Bundle\Implementation;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class SymfonyPageUrlGenerator implements PageUrlGeneratorInterface
+final class SymfonyPageUrlGenerator implements PageUrlGeneratorInterface
 {
     /**
      * @param array<string,int|string> $routeParams

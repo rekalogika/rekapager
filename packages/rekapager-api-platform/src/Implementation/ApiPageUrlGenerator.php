@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\ApiPlatform\Implementation;
 use Rekalogika\Rekapager\ApiPlatform\Util\IriHelper;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 
-class ApiPageUrlGenerator implements PageUrlGeneratorInterface
+final class ApiPageUrlGenerator implements PageUrlGeneratorInterface
 {
     /**
      * @var array{parameters: array<array-key, mixed>, parts: array{fragment?: string, host?: string, pass?: string, path?: string, port?: int, query?: string, scheme?: string, user?: string}}

@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\ORM\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class MissingPlaceholderInSQLException extends UnexpectedValueException
+final class MissingPlaceholderInSQLException extends UnexpectedValueException
 {
     /**
      * @param list<string> $templates

@@ -25,7 +25,7 @@ use Rekalogika\Rekapager\Contracts\PagerItemInterface;
  * @implements PagerInterface<TKey,T>
  * @internal
  */
-class ZeroProximityPager implements PagerInterface
+final class ZeroProximityPager implements PagerInterface
 {
     //
     // pager components

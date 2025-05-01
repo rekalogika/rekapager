@@ -30,7 +30,7 @@ use Symfony\Component\Uid\AbstractUid;
 /**
  * @implements PageIdentifierEncoderInterface<KeysetPageIdentifier>
  */
-class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEncoderInterface
+final class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifierEncoderInterface
 {
     public function __construct(
         private readonly NormalizerInterface $normalizer,

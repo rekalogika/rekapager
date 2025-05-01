@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\ApiPlatform;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RekalogikaRekapagerApiPlatformBundle extends Bundle
+final class RekalogikaRekapagerApiPlatformBundle extends Bundle
 {
     #[\Override]
     public function getPath(): string

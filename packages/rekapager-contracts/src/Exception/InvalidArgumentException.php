@@ -13,4 +13,4 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Rekapager\Exception;
 
-class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface {}
+final class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface {}

@@ -27,7 +27,7 @@ use Doctrine\ORM\Query\SqlOutputWalker;
  *
  * @phpstan-import-type QueryComponent from Parser
  */
-class CountOutputWalker33 extends SqlOutputWalker
+final class CountOutputWalker33 extends SqlOutputWalker
 {
     private readonly AbstractPlatform $platform;
     private readonly ResultSetMapping $rsm;

@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Doctrine\ORM\Exception;
 
 use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 
-class UnsupportedQueryBuilderException extends UnexpectedValueException
+final class UnsupportedQueryBuilderException extends UnexpectedValueException
 {
     public function __construct()
     {
