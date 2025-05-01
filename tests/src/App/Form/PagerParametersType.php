@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @extends AbstractType<PagerParameters>
  */
-class PagerParametersType extends AbstractType // @phpstan-ignore-line
+final class PagerParametersType extends AbstractType // @phpstan-ignore-line
 {
     #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void

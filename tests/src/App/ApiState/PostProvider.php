@@ -25,7 +25,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 /**
  * @implements ProviderInterface<Post>
  */
-class PostProvider implements ProviderInterface
+final class PostProvider implements ProviderInterface
 {
     public function __construct(
         private readonly PostRepository $postRepository,

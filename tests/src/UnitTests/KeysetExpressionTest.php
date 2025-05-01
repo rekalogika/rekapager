@@ -19,7 +19,7 @@ use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
 
-class KeysetExpressionTest extends TestCase
+final class KeysetExpressionTest extends TestCase
 {
     public function testOneField(): void
     {

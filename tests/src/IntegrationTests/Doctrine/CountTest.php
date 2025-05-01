@@ -19,7 +19,7 @@ use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableQueryBuilderA
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class CountTest extends KernelTestCase
+final class CountTest extends KernelTestCase
 {
     public function testCountSql(): void
     {

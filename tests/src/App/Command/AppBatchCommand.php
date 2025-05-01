@@ -30,7 +30,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
     name: 'app:batch',
     description: 'Batch command',
 )]
-class AppBatchCommand extends BatchCommand
+final class AppBatchCommand extends BatchCommand
 {
     public function __construct(
         private readonly PostRepository $postRepository,

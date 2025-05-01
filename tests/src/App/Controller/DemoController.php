@@ -29,7 +29,7 @@ use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-class DemoController extends AbstractController
+final class DemoController extends AbstractController
 {
     public function __construct(
         private readonly PageableGenerators $pageableGenerators,

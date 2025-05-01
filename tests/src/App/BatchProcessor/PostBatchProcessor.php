@@ -22,7 +22,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 /**
  * @extends AbstractBatchProcessor<int,Post>
  */
-class PostBatchProcessor extends AbstractBatchProcessor
+final class PostBatchProcessor extends AbstractBatchProcessor
 {
     public function __construct(private readonly EntityManagerInterface $entityManager) {}
 

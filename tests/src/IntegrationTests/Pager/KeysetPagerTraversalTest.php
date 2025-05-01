@@ -18,7 +18,7 @@ use Rekalogika\Rekapager\Keyset\Contracts\BoundaryType;
 use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class KeysetPagerTraversalTest extends PagerTestCase
+final class KeysetPagerTraversalTest extends PagerTestCase
 {
     #[DataProviderExternal(PageableGeneratorProvider::class, 'keyset')]
     public function testLastPageFromSecondFromLastPage(string $pageableGeneratorClass): void

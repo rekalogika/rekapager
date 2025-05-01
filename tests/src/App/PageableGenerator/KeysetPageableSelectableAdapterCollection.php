@@ -25,7 +25,7 @@ use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-class KeysetPageableSelectableAdapterCollection implements PageableGeneratorInterface
+final class KeysetPageableSelectableAdapterCollection implements PageableGeneratorInterface
 {
     public function __construct(private readonly UserRepository $userRepository) {}
 

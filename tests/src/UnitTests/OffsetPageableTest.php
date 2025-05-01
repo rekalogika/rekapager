@@ -22,7 +22,7 @@ use Rekalogika\Rekapager\Offset\Contracts\PageNumber;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
 use Rekalogika\Rekapager\Tests\UnitTests\Fixtures\Entity;
 
-class OffsetPageableTest extends TestCase
+final class OffsetPageableTest extends TestCase
 {
     /**
      * @param PageableInterface<array-key,Entity> $pageable

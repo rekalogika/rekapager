@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pager;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class CountAwareKeysetPagerTest extends PagerTestCase
+final class CountAwareKeysetPagerTest extends PagerTestCase
 {
     #[\Override]
     protected function getPagerCount(): bool|int

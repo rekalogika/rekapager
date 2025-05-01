@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\Form;
 
-class PagerParameters
+final class PagerParameters
 {
     public string $set = 'medium';
 

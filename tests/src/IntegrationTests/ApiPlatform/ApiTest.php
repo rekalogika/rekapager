@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\ApiPlatform;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use Graviton\LinkHeaderParser\LinkHeader;
 
-class ApiTest extends ApiTestCase
+final class ApiTest extends ApiTestCase
 {
     public function testApiWithCustomProvider(): void
     {

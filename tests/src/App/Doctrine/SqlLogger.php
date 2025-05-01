@@ -18,7 +18,7 @@ use Psr\Log\AbstractLogger;
 /**
  * @see https://github.com/symfony/symfony/issues/46158
  */
-class SqlLogger extends AbstractLogger
+final class SqlLogger extends AbstractLogger
 {
     /**
      * @var array<array-key,mixed>

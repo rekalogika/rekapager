@@ -25,7 +25,7 @@ use Rekalogika\Rekapager\Keyset\Contracts\KeysetPageIdentifier;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\UnitTests\Fixtures\Entity;
 
-class KeysetPageableTest extends TestCase
+final class KeysetPageableTest extends TestCase
 {
     /**
      * @param PageableInterface<array-key,Entity> $pageable

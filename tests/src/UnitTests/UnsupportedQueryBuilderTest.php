@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 
-class UnsupportedQueryBuilderTest extends TestCase
+final class UnsupportedQueryBuilderTest extends TestCase
 {
     public function testMaxResults(): void
     {

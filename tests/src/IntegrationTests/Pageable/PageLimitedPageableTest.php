@@ -17,7 +17,7 @@ use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Contracts\Rekapager\Exception\LimitException;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class PageLimitedPageableTest extends PageableTestCase
+final class PageLimitedPageableTest extends PageableTestCase
 {
     #[\Override]
     protected function getPageLimit(): ?int

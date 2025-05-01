@@ -16,7 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pager;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Rekalogika\Rekapager\Tests\IntegrationTests\DataProvider\PageableGeneratorProvider;
 
-class OffsetZeroProximityPagerTest extends PagerTestCase
+final class OffsetZeroProximityPagerTest extends PagerTestCase
 {
     #[\Override]
     protected function getProximity(): int

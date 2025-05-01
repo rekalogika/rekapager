@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class DebugToolbarReplacerSubscriber implements EventSubscriberInterface
+final class DebugToolbarReplacerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly KernelInterface $kernel,

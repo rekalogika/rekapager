@@ -23,7 +23,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class PagerfantaAdapterIndexByTest extends KernelTestCase
+final class PagerfantaAdapterIndexByTest extends KernelTestCase
 {
     protected function getSelectable(): PostRepository
     {
