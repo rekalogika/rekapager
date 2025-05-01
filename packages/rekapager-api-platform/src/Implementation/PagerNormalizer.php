@@ -27,8 +27,10 @@ final class PagerNormalizer implements NormalizerInterface, NormalizerAwareInter
         private readonly NormalizerInterface $collectionNormalizer,
     ) {}
 
-    // @phpstan-ignore missingType.iterableValue
-    #[\Override]
+    /**
+     * @psalm-suppress MissingOverrideAttribute
+     * @phpstan-ignore missingType.iterableValue
+    */
     public function getSupportedTypes(?string $format): array
     {
         return $this->collectionNormalizer->getSupportedTypes($format);
