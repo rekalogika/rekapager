@@ -87,6 +87,6 @@ final class BatchTimer
             return null;
         }
 
-        return (hrtime(true) - $this->timers[$timer]) / 1e9;
+        return (((float) hrtime(true)) - ((float) $this->timers[$timer])) / 1e9;
     }
 }

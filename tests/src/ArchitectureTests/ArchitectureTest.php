@@ -108,6 +108,7 @@ final class ArchitectureTest
                 Selector::classname(\OutOfBoundsException::class),
                 Selector::classname(\Throwable::class),
                 Selector::inNamespace('Symfony\Component\HttpKernel'), // optional
+                Selector::classname(\Override::class),
             );
     }
 

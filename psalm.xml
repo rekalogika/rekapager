@@ -28,11 +28,6 @@
                 <file name="tests/src/UnitTests/OffsetPageableTest.php" />
             </errorLevel>
         </PropertyNotSetInConstructor>
-        <MixedArgumentTypeCoercion>
-            <errorLevel type="suppress">
-                <file name="tests/src/UnitTests/OffsetPageableTest.php" />
-            </errorLevel>
-        </MixedArgumentTypeCoercion>
         <InvalidArgument>
             <errorLevel type="suppress">
                 <file name="tests/src/App/PageableGenerator/*" />
@@ -49,11 +44,6 @@
                 <directory name="tests/src/IntegrationTests/" />
             </errorLevel>
         </MissingConstructor>
-        <PossiblyInvalidArgument>
-            <errorLevel type="suppress">
-                <file name="packages/rekapager-doctrine-orm-adapter/src/QueryBuilderAdapter.php" />
-            </errorLevel>
-        </PossiblyInvalidArgument>
         <UndefinedInterfaceMethod>
             <errorLevel type="suppress">
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
@@ -64,34 +54,16 @@
                 <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
             </errorLevel>
         </MixedMethodCall>
-        <PossiblyNullReference>
-            <errorLevel type="suppress">
-                <file name="packages/rekapager-bundle/src/DependencyInjection/Configuration.php" />
-            </errorLevel>
-        </PossiblyNullReference>
-        <InternalClass>
-            <errorLevel type="suppress">
-                <file name="packages/rekapager-api-platform/src/Implementation/PagerNormalizer.php" />
-            </errorLevel>
-        </InternalClass>
-        <InternalMethod>
-            <errorLevel type="suppress">
-                <file name="packages/rekapager-api-platform/src/Implementation/PagerNormalizer.php" />
-            </errorLevel>
-        </InternalMethod>
-        <TooManyArguments>
-            <errorLevel type="suppress">
-                <file name="packages/rekapager-api-platform/src/Implementation/PagerNormalizer.php" />
-                <file name="tests/src/App/PageableGenerator/KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilder.php" />
-                <file name="tests/src/App/PageableGenerator/OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder.php" />
-                <file name="tests/src/App/PageableGenerator/KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowValues.php" />
-            </errorLevel>
-        </TooManyArguments>
         <PluginIssue name="QueryBuilderSetParameter">
             <errorLevel type="suppress">
                 <file name="tests/src/App/PageableGenerator/OffsetPageableQueryBuilderAdapterQueryBuilder.php" />
             </errorLevel>
         </PluginIssue>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="tests/src/App/Entity" />
+            </errorLevel>
+        </ClassMustBeFinal>
     </issueHandlers>
 
     <plugins>

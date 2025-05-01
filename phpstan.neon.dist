@@ -28,6 +28,18 @@ parameters:
         -
             identifier: offsetAccess.nonOffsetAccessible
             path: tests/src/IntegrationTests/ApiPlatform/ApiTest.php
+        -
+            identifier: return.unusedType
+            path: packages/rekapager-api-platform/src/Implementation/ApiPageUrlGenerator.php
+        -
+            identifier: return.unusedType
+            path: packages/rekapager-bundle/src/Implementation/SymfonyPageUrlGenerator.php
+        -
+            identifier: return.unusedType
+            path: tests/src/App/ApiState/*
+        -
+            identifier: return.unusedType
+            path: tests/src/IntegrationTests/Pageable/PageLimitedPageableTest.php
 
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon

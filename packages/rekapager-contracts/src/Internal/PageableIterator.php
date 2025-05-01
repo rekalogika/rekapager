@@ -39,6 +39,7 @@ final class PageableIterator implements \Iterator
         $this->currentPage = $this->startPage;
     }
 
+    #[\Override]
     public function current(): mixed
     {
         if ($this->currentPage === null) {
@@ -48,6 +49,7 @@ final class PageableIterator implements \Iterator
         return $this->currentPage;
     }
 
+    #[\Override]
     public function next(): void
     {
         if ($this->currentPage === null) {
@@ -58,16 +60,19 @@ final class PageableIterator implements \Iterator
         $this->position++;
     }
 
+    #[\Override]
     public function key(): mixed
     {
         return $this->position;
     }
 
+    #[\Override]
     public function valid(): bool
     {
         return $this->currentPage !== null;
     }
 
+    #[\Override]
     public function rewind(): void
     {
         $this->currentPage = $this->startPage;

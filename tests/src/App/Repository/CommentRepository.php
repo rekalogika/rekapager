@@ -25,7 +25,7 @@ use Rekalogika\Rekapager\Tests\App\Entity\Comment;
  * @method Comment[]    findAll()
  * @method Comment[]    findBy(array<string,mixed> $criteria, ?array<string,'ASC'|'DESC'> $orderBy = null, $limit = null, $offset = null)
  */
-class CommentRepository extends ServiceEntityRepository
+final class CommentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

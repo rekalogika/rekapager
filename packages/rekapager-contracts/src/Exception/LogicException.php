@@ -13,4 +13,7 @@ declare(strict_types=1);
 
 namespace Rekalogika\Contracts\Rekapager\Exception;
 
+/**
+ * @api
+ */
 class LogicException extends \LogicException implements ExceptionInterface {}

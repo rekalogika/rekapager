@@ -33,11 +33,13 @@ interface PagerItemInterface extends PageInterface
     /**
      * @return null|PagerItemInterface<TKey,T>
      */
+    #[\Override]
     public function getNextPage(): ?PagerItemInterface;
 
     /**
      * @return null|PagerItemInterface<TKey,T>
      */
+    #[\Override]
     public function getPreviousPage(): ?PagerItemInterface;
 
     /**
@@ -46,6 +48,7 @@ interface PagerItemInterface extends PageInterface
      * @param int<1,max> $numberOfPages
      * @return array<int,PagerItemInterface<TKey,T>>
      */
+    #[\Override]
     public function getNextPages(int $numberOfPages): array;
 
     /**
@@ -54,5 +57,6 @@ interface PagerItemInterface extends PageInterface
      * @param int<1,max> $numberOfPages
      * @return array<int,PagerItemInterface<TKey,T>>
      */
+    #[\Override]
     public function getPreviousPages(int $numberOfPages): array;
 }
