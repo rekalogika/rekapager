@@ -64,6 +64,11 @@
                 <directory name="tests/src/App/Entity" />
             </errorLevel>
         </ClassMustBeFinal>
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <file name="packages/rekapager-api-platform/src/Implementation/PagerNormalizer.php" />
+            </errorLevel>
+        </MissingOverrideAttribute>
     </issueHandlers>
 
     <plugins>
