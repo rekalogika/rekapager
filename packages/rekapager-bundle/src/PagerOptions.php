@@ -15,7 +15,7 @@ namespace Rekalogika\Rekapager\Bundle;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final class PagerOptions
+final readonly class PagerOptions
 {
     /**
      * @param int<0,max>|null $proximity
@@ -25,13 +25,13 @@ final class PagerOptions
      * @param int<1,max>|null $pageLimit
      */
     public function __construct(
-        private readonly ?string $pageParameterName = null,
-        private readonly ?int $proximity = null,
-        private readonly ?string $routeName = null,
-        private readonly ?array $routeParams = null,
-        private readonly ?int $urlReferenceType = null,
-        private readonly ?int $itemsPerPage = null,
-        private readonly ?int $pageLimit = null,
+        private ?string $pageParameterName = null,
+        private ?int $proximity = null,
+        private ?string $routeName = null,
+        private ?array $routeParams = null,
+        private ?int $urlReferenceType = null,
+        private ?int $itemsPerPage = null,
+        private ?int $pageLimit = null,
     ) {}
 
     public function getPageParameterName(): ?string

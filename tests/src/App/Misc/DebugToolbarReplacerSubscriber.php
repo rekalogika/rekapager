@@ -17,10 +17,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-final class DebugToolbarReplacerSubscriber implements EventSubscriberInterface
+final readonly class DebugToolbarReplacerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly KernelInterface $kernel,
+        private KernelInterface $kernel,
     ) {}
 
     #[\Override]

@@ -16,11 +16,11 @@ namespace Rekalogika\Rekapager\Bundle\Twig;
 use Rekalogika\Rekapager\Contracts\PagerInterface;
 use Twig\Environment;
 
-final class TwigPagerRenderer
+final readonly class TwigPagerRenderer
 {
     public function __construct(
-        private readonly Environment $twig,
-        private readonly string $template,
+        private Environment $twig,
+        private string $template,
     ) {}
 
     /**

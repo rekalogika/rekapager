@@ -18,10 +18,10 @@ use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\PathItem;
 use ApiPlatform\OpenApi\OpenApi;
 
-final class RekapagerOpenApiFactoryDecorator implements OpenApiFactoryInterface
+final readonly class RekapagerOpenApiFactoryDecorator implements OpenApiFactoryInterface
 {
     public function __construct(
-        private readonly OpenApiFactoryInterface $decorated,
+        private OpenApiFactoryInterface $decorated,
     ) {}
 
     /**

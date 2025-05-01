@@ -24,10 +24,10 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-final class OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableGeneratorInterface
+final readonly class OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableGeneratorInterface
 {
     public function __construct(
-        private readonly Connection $connection,
+        private Connection $connection,
     ) {}
 
     #[\Override]

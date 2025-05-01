@@ -20,9 +20,9 @@ use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Exception\MissingPageIdentifierEncoderException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-final class PageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterface
+final readonly class PageIdentifierEncoderLocator implements PageIdentifierEncoderLocatorInterface
 {
-    public function __construct(private readonly ContainerInterface $container) {}
+    public function __construct(private ContainerInterface $container) {}
 
     /**
      * @template T of object

@@ -16,17 +16,17 @@ namespace Rekalogika\Rekapager\Bundle\Implementation;
 use Rekalogika\Rekapager\Contracts\PageUrlGeneratorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final class SymfonyPageUrlGenerator implements PageUrlGeneratorInterface
+final readonly class SymfonyPageUrlGenerator implements PageUrlGeneratorInterface
 {
     /**
      * @param array<string,int|string> $routeParams
      */
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly string $pageParameterName,
-        private readonly int $referenceType,
-        private readonly string $routeName,
-        private readonly array $routeParams,
+        private UrlGeneratorInterface $urlGenerator,
+        private string $pageParameterName,
+        private int $referenceType,
+        private string $routeName,
+        private array $routeParams,
     ) {}
 
     #[\Override]

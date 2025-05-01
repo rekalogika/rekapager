@@ -24,9 +24,9 @@ use Rekalogika\Rekapager\Tests\App\Entity\Post;
 /**
  * @implements PageableGeneratorInterface<int,Post>
  */
-final class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableGeneratorInterface
+final readonly class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilder implements PageableGeneratorInterface
 {
-    public function __construct(private readonly Connection $connection) {}
+    public function __construct(private Connection $connection) {}
 
     #[\Override]
     public static function getKey(): string

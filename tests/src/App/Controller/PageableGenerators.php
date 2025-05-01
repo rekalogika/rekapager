@@ -17,12 +17,12 @@ use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
-final class PageableGenerators
+final readonly class PageableGenerators
 {
     /**
      * @var array<array-key,PageableGeneratorInterface<array-key,mixed>>
      */
-    private readonly array $pageableGenerators;
+    private array $pageableGenerators;
 
     /**
      * @param iterable<PageableGeneratorInterface<array-key,mixed>> $pageableGenerators

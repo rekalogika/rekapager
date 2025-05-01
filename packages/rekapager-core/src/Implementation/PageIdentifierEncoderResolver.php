@@ -18,10 +18,10 @@ use Rekalogika\Contracts\Rekapager\PageIdentifierEncoderInterface;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderLocatorInterface;
 use Rekalogika\Rekapager\Contracts\PageIdentifierEncoderResolverInterface;
 
-final class PageIdentifierEncoderResolver implements PageIdentifierEncoderResolverInterface
+final readonly class PageIdentifierEncoderResolver implements PageIdentifierEncoderResolverInterface
 {
     public function __construct(
-        private readonly PageIdentifierEncoderLocatorInterface $locator,
+        private PageIdentifierEncoderLocatorInterface $locator,
     ) {}
 
     /**

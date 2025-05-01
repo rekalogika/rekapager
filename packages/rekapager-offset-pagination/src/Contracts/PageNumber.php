@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Offset\Contracts;
 
-final class PageNumber
+final readonly class PageNumber
 {
     /**
      * @param int<1,max> $number
      */
     public function __construct(
-        private readonly int $number,
+        private int $number,
     ) {}
 
     /**
