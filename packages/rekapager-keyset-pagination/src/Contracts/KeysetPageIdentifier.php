@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Keyset\Contracts;
 
+use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
+
 final class KeysetPageIdentifier
 {
     /**
@@ -39,14 +41,44 @@ final class KeysetPageIdentifier
         ];
     }
 
-    // @phpstan-ignore-next-line
+    /**
+     * @param array<string,mixed> $data
+     */
     public function __unserialize(array $data): void
     {
-        $this->pageOffsetFromBoundary = $data['o'];
-        $this->boundaryType = $data['t'];
-        $this->boundaryValues = $data['v'];
-        $this->pageNumber = $data['p'];
-        $this->limit = $data['l'];
+        $pageOffsetFromBoundary = $data['o'] ?? null;
+        $boundaryType = $data['t'] ?? null;
+        $boundaryValues = $data['v'] ?? null;
+        $pageNumber = $data['p'] ?? null;
+        $limit = $data['l'] ?? null;
+
+        if (!\is_int($pageOffsetFromBoundary) || $pageOffsetFromBoundary < 0) {
+            throw new UnexpectedValueException('Invalid page offset from boundary');
+        }
+
+        if (!\is_int($pageNumber)) {
+            throw new UnexpectedValueException('Invalid page number');
+        }
+
+        if (!(\is_int($limit) && $limit >= 1)) {
+            throw new UnexpectedValueException('Invalid limit');
+        }
+
+        if (!$boundaryType instanceof BoundaryType) {
+            throw new UnexpectedValueException('Invalid boundary type');
+        }
+
+        if ($boundaryValues !== null && !\is_array($boundaryValues)) {
+            throw new UnexpectedValueException('Invalid boundary values');
+        }
+
+        /** @var array<string,mixed>|null $boundaryValues */
+
+        $this->pageOffsetFromBoundary = $pageOffsetFromBoundary;
+        $this->boundaryType = $boundaryType;
+        $this->boundaryValues = $boundaryValues;
+        $this->pageNumber = $pageNumber;
+        $this->limit = $limit;
     }
 
     /**

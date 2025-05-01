@@ -64,7 +64,10 @@ final readonly class RekapagerExtension implements QueryResultCollectionExtensio
         ?Operation $operation = null,
         array $context = [],
     ): bool {
-        /** @psalm-suppress InternalMethod */
+        /**
+         * @psalm-suppress InternalMethod
+         * @phpstan-ignore method.internalClass
+         */
         $extraProperties = $operation?->getExtraProperties() ?? [];
         /** @var bool */
         $isEnabled = $extraProperties['rekapager_orm_enabled'] ?? false;

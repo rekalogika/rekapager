@@ -78,7 +78,10 @@ class PagerFactory implements PagerFactoryInterface
         $page = $this->getPage($pageable, $operation, $context);
         $operation ??= $this->getOperation($context);
 
-        /** @psalm-suppress InternalMethod */
+        /**
+         * @psalm-suppress InternalMethod
+         * @phpstan-ignore method.internalClass
+         */
         $urlGenerationStrategy = $operation?->getUrlGenerationStrategy()
             ?? $this->urlGenerationStrategy;
 

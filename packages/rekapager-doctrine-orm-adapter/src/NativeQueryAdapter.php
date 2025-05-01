@@ -308,7 +308,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
         $sql = str_replace(
             ['{{SELECT}}', '{{WHERE}}', '{{ORDER}}', '{{LIMIT}}', '{{OFFSET}}'],
-            [$this->select, $where, $orderBy, $limit, $offset],
+            [$this->select, $where, $orderBy, (string) $limit, (string) $offset],
             $count ? $this->countSql : $this->sql,
         );
 
