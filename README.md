@@ -5,6 +5,16 @@ keyset-based pagination (also called cursor-based pagination).
 
 Full documentation is available at [rekalogika.dev/rekapager](https://rekalogika.dev/rekapager)
 
+## Demo
+
+You can try the demo by running the following command:
+
+```bash
+docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:latest
+```
+
+Then access the demo at [http://localhost:8187](http://localhost:8187).
+
 ## Keyset Pagination (or Cursor-Based Pagination)
 
 Keyset pagination is a method of pagination that uses the last row of the
@@ -293,16 +303,6 @@ There is also a console command framework, so you can easily create console
 commands to run your batch jobs. Your console commands will come with all these
 features: informative output, batch process resuming, progress file, running the
 command up to the specified duration, signal handling, and more.
-
-## Demo
-
-You can try the demo by running the following command:
-
-```bash
-docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:latest
-```
-
-Then access the demo at [http://localhost:8187](http://localhost:8187).
 
 ## Acknowledgements
 
