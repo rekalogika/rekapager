@@ -52,7 +52,16 @@ jobs:
       - name: Populate database
         run: |
           tests/bin/console doctrine:schema:create
-          tests/bin/console doctrine:fixtures:load --no-interaction          
+          tests/bin/console doctrine:fixtures:load --no-interaction
+      
+      - name: Record git commit hash
+        run: |
+          echo GIT_HASH=$(git log -1 --format="%H") >> tests/templates/git.env
+          echo GIT_BRANCH=$(git branch --show-current) >> tests/templates/git.env
+          echo GIT_TAG=$(git describe --tags --exact-match) >> tests/templates/git.env
+          echo BUILD_TIME=$(date --iso-8601=seconds) >> tests/templates/git.env
+          echo BUILD_USER=$(id -un) >> tests/templates/git.env
+          echo BUILD_HOST=$(hostname) >> tests/templates/git.env
 
         # Uses the `docker/login-action` action to log in to the Container registry registry using the account and password that will publish the packages. Once published, the packages are scoped to the account defined here.
       - name: Log in to the Container registry

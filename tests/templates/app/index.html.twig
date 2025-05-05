@@ -1,6 +1,9 @@
 {% extends "app/base.html.twig" %}
 
 {% block content %}
+    <p>Use the menu above to navigate to a page.</p>
 
-    Use the menu above to navigate to a page.
+    <p>Commit information:</p>
+
+    <pre>{{ source('git.env') }}</pre>
 {% endblock content %}
