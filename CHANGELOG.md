@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.0.1
+
+* build: record git information when building an image
+
 # 0.22.4
 
 * build: fix static analysis errors
