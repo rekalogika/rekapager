@@ -23,7 +23,7 @@ compared to the traditional offset-based pagination:
 
 * It is more efficient because it leverages the index. It does not require the
   database to scan all rows from the beginning to reach the desired page.
-* It is more resilient to data changes. The data will not drift when rows are
+* It is more resilient to data changes, as the data will not drift when rows are
   inserted or deleted.
 
 ### Identifying Pages
@@ -39,8 +39,8 @@ page numbers in the URL, we'll be getting an 'ugly' identifier, which is opaque
 to the user, but meaningful to the application.
 
 It also easily allows us to keep the pagination job separate from the filtering
-and sorting logic. The library does not require a specific way to filter or sort
-your data.
+and sorting logic. The library does not require you to use a specific way to
+filter or sort your data.
 
 ### Queries
 
@@ -106,8 +106,8 @@ can query the count from the underlying data.
 ### Page Number Limit
 
 It also limits the maximum page number that can be navigated to. By default, the
-limit is 100. The UI will indicate that the disabled page exists, but the user
-is not allowed to navigate to it:
+limit is 100. The UI indicates the existence of the disabled page but prevents
+navigation to it:
 
 ![page limit](https://rekalogika.dev/rekapager/limit.png)
 
@@ -137,7 +137,7 @@ of service to the web server, application, and the database.
 
 After the AI craze, there is a surge of web crawlers that are looking for
 contents for AI training. Unlike traditional search engine crawlers, these new
-crawlers tend to be much dumber and much less respectful. Some would foolishly
+crawlers are often less sophisticated and less respectful. Some would foolishly
 traverse thousands of paginated contents with a sub-second delay, causing a
 denial of service to the server. If your application is public and uses
 pagination, this library can help to prevent this problem.
@@ -300,9 +300,9 @@ foreach ($pageable->withItemsPerPage(1000)->getPages() as $page) {
 ```
 
 There is also a console command framework, so you can easily create console
-commands to run your batch jobs. Your console commands will come with all these
-features: informative output, batch process resuming, progress file, running the
-command up to the specified duration, signal handling, and more.
+commands to run your batch jobs. Your console commands will include features
+such as informative output, batch process resuming, progress files,
+duration-limited execution, signal handling, and more.
 
 ## Acknowledgements
 
