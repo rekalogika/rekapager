@@ -10,7 +10,7 @@ Full documentation is available at [rekalogika.dev/rekapager](https://rekalogika
 You can try the demo by running the following command:
 
 ```bash
-docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:latest
+docker run --rm -p 8187:80 ghcr.io/rekalogika/rekapager:main
 ```
 
 Then access the demo at [http://localhost:8187](http://localhost:8187).
