@@ -41,7 +41,7 @@
         "ekino/phpstan-banned-code": "^3.0",
         "fakerphp/faker": "^1.23",
         "graviton/link-header-rel-parser": "^1.0",
-        "phpat/phpat": "^0.11",
+        "phpat/phpat": "^0.11 || ^0.12",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
