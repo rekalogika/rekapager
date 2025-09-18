@@ -49,6 +49,8 @@ jobs:
     
     - name: phive
       run: phive install --trust-gpg-keys E82B2FB314E9906E
+      env:
+        GITHUB_AUTH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
     - name: Install dependencies
       uses: ramsey/composer-install@v3
