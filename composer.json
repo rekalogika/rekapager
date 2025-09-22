@@ -75,7 +75,7 @@
         "symfony/yaml": "^6.4 || ^7.0",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "vimeo/psalm": "^6.0",
-        "zenstruck/foundry": "1.37.*"
+        "zenstruck/foundry": "1.37.* || 2.7.*"
     },
     "autoload": {
         "psr-4": {
