@@ -50,7 +50,12 @@ final readonly class SelectableAdapter implements
         $criteria ??= Criteria::create();
         $orderings = $criteria->orderings();
 
-        if ($criteria->getFirstResult() !== null || $criteria->getMaxResults() !== null) {
+        $firstResult = $criteria->getFirstResult();
+
+        if (
+            ($firstResult !== null && $firstResult !== 0)
+            || $criteria->getMaxResults() !== null
+        ) {
             throw new UnsupportedCriteriaException();
         }
 
