@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.0.4
+
+* fix: compatibility with Doctrine Collections 2.4
+
 # 1.0.1
 
 * build: record git information when building an image
