@@ -193,7 +193,7 @@ final class KeysetPageableTest extends TestCase
         $collection = new ArrayCollection($entities);
         $adapter = new SelectableAdapter(
             $collection,
-            Criteria::create()->orderBy(['id' => Order::Descending]),
+            Criteria::create(true)->orderBy(['id' => Order::Descending]),
         );
         $pageable = new KeysetPageable($adapter, 5);
 

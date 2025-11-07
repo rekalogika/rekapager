@@ -57,7 +57,7 @@ final readonly class OffsetPageableCollectionAdapterCollection implements Pageab
         // LazyMatchingCollection is part of rekalogika/doctrine-collections-decorator package
         $lazyPosts = new LazyMatchingCollection($user->getPosts());
         $filteredPosts = $lazyPosts->matching(
-            Criteria::create()
+            Criteria::create(true)
                 ->where(Criteria::expr()->eq('setName', $setName)),
         );
 

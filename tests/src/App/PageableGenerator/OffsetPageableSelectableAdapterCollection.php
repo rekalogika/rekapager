@@ -56,7 +56,7 @@ final readonly class OffsetPageableSelectableAdapterCollection implements Pageab
         // @highlight-start
         $selectable = $user->getPosts();
 
-        $criteria = Criteria::create()
+        $criteria = Criteria::create(true)
             ->where(Criteria::expr()->eq('setName', $setName))
             ->orderBy([
                 'date' => Order::Descending,

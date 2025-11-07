@@ -23,7 +23,7 @@ final class UnsupportedCriteriaTest extends TestCase
 {
     public function testMaxResults(): void
     {
-        $criteria = Criteria::create()->setFirstResult(1337);
+        $criteria = Criteria::create(true)->setFirstResult(1337);
         $collection = new ArrayCollection();
 
         $this->expectException(UnsupportedCriteriaException::class);
@@ -32,7 +32,7 @@ final class UnsupportedCriteriaTest extends TestCase
 
     public function testFirstResult(): void
     {
-        $criteria = Criteria::create()->setMaxResults(42);
+        $criteria = Criteria::create(true)->setMaxResults(42);
         $collection = new ArrayCollection();
 
         $this->expectException(UnsupportedCriteriaException::class);
