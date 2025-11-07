@@ -51,7 +51,7 @@ final readonly class KeysetPageableSelectableAdapterEntityRepository implements 
         // @highlight-start
         $selectable = $this->postRepository;
 
-        $criteria = Criteria::create()
+        $criteria = Criteria::create(true)
             ->where(Criteria::expr()->eq('setName', $setName))
             ->orderBy([
                 'date' => Order::Descending,

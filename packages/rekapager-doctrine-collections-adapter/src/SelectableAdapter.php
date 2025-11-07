@@ -47,7 +47,7 @@ final readonly class SelectableAdapter implements
         ?Criteria $criteria = null,
         private string|null $indexBy = null,
     ) {
-        $criteria ??= Criteria::create();
+        $criteria ??= Criteria::create(true);
         $orderings = $criteria->orderings();
 
         $firstResult = $criteria->getFirstResult();

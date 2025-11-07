@@ -32,7 +32,7 @@ final class PagerfantaAdapterIndexByTest extends KernelTestCase
 
     public function testIndexBy(): void
     {
-        $criteria = Criteria::create()
+        $criteria = Criteria::create(true)
             ->where(Criteria::expr()->eq('setName', 'large'))
             ->orderBy([
                 'date' => Order::Descending,
@@ -58,7 +58,7 @@ final class PagerfantaAdapterIndexByTest extends KernelTestCase
 
     public function testInvalidIndexBy(): void
     {
-        $criteria = Criteria::create()
+        $criteria = Criteria::create(true)
             ->where(Criteria::expr()->eq('setName', 'large'))
             ->orderBy([
                 'date' => Order::Descending,
