@@ -64,7 +64,7 @@
         "symfony/framework-bundle": "^6.4 || ^7.0",
         "symfony/http-client": "^6.4 || ^7.0",
         "symfony/maker-bundle": "^1.55",
-        "symfony/monolog-bundle": "^3.0",
+        "symfony/monolog-bundle": "^3.0 || ^4.0",
         "symfony/runtime": "^6.4 || ^7.0",
         "symfony/translation": "^6.4 || ^7.0",
         "symfony/twig-bundle": "^6.4 || ^7.0",
