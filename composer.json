@@ -69,7 +69,7 @@
         "symfony/uid": "^6.4 || ^7.0 || ^8.0",
         "symfony/validator": "^6.3 || ^7.0 || ^8.0",
         "symfony/var-dumper": "^6.3 || ^7.0 || ^8.0",
-        "symfony/web-profiler-bundle": "^7.3 || ^8.0",
+        "symfony/web-profiler-bundle": "^6.4 || ^7.0 || ^8.0",
         "symfony/yaml": "^6.4 || ^7.0 || ^8.0",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "zenstruck/foundry": "^2.8"
