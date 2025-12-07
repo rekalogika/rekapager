@@ -3,7 +3,7 @@ COMPOSER=composer
 SYMFONY=symfony
 
 .PHONY: test
-test: composer-dump monorepo-validate phpstan psalm phpunit
+test: composer-dump monorepo-validate phpstan phpunit
 
 .PHONY: composer-dump
 composer-dump:
@@ -12,10 +12,6 @@ composer-dump:
 .PHONY: phpstan
 phpstan:
 	$(PHP) vendor/bin/phpstan analyse
-
-.PHONY: psalm
-psalm:
-	$(PHP) vendor/bin/psalm
 
 .PHONY: phpunit
 phpunit:
@@ -80,7 +76,6 @@ monorepo-release-%:
 .PHONY: clean
 clean:
 	rm -rf tests/var/cache/*
-	$(PHP) vendor/bin/psalm --clear-cache
 
 .PHONY: sqlite
 sqlite:

@@ -16,8 +16,8 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php: [ '8.2', '8.3', '8.4', '8.5' ]
-        symfony: [ '6.*', '7.*' ]
-        orm: ['2.19.*', '^2.20', '3.2.*', '^3.3']
+        symfony: [ '6.*', '7.*', '8.*' ]
+        orm: ['2.19.*', '^2.20', '^3.3', '^3.4', '^3.5']
         dep: [highest,lowest]
 
     name: SF ${{ matrix.symfony }}, ${{ matrix.dep }} deps, ORM ${{ matrix.orm }}, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
@@ -32,6 +32,11 @@ jobs:
         extensions: intl
         tools: flex, phive
 
+    - name: Install Symfony Flex globally
+      run: |
+        composer global config --no-plugins allow-plugins.symfony/flex true
+        composer global require --no-progress --no-scripts --no-plugins symfony/flex
+                
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
