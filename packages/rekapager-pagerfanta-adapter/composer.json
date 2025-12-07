@@ -25,8 +25,8 @@
     },
     "require": {
         "php": "^8.3",
-        "rekalogika/rekapager-adapter-common": "^1.0.4",
-        "rekalogika/rekapager-contracts": "^1.0.4",
-        "rekalogika/rekapager-offset-pagination": "^1.0.4"
+        "rekalogika/rekapager-adapter-common": "^1.1",
+        "rekalogika/rekapager-contracts": "^1.1",
+        "rekalogika/rekapager-offset-pagination": "^1.1"
     }
 }
