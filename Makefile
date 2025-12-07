@@ -30,7 +30,7 @@ rector:
 
 .PHONY: php-cs-fixer
 php-cs-fixer: tools/php-cs-fixer
-	PHP_CS_FIXER_IGNORE_ENV=1 $(PHP) $< fix --config=.php-cs-fixer.dist.php --verbose --allow-risky=yes
+	$(PHP) $< fix --config=.php-cs-fixer.dist.php --verbose --allow-risky=yes
 
 .PHONY: tools/php-cs-fixer
 tools/php-cs-fixer:

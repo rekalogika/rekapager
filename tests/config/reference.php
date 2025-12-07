@@ -966,32 +966,46 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     excluded_ajax_paths?: scalar|null, // Default: "^/((index|app(_[\\w]+)?)\\.php/)?_wdt"
  * }
  * @psalm-type ZenstruckFoundryConfig = array{
- *     auto_refresh_proxies?: bool|null, // Whether to auto-refresh proxies by default (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#auto-refresh) // Default: null
- *     faker?: array{ // Configure faker to be used by your factories.
- *         locale?: scalar|null, // Change the default faker locale. // Default: null
- *         seed?: int, // Random number generator seed to produce the same fake values every run // Default: null
- *         service?: scalar|null, // Customize the faker service. // Default: null
+ *     auto_refresh_proxies?: bool|null, // Deprecated: Since 2.0 auto_refresh_proxies defaults to true and this configuration has no effect. // Whether to auto-refresh proxies by default (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#auto-refresh) // Default: null
+ *     enable_auto_refresh_with_lazy_objects?: bool|null, // Enable auto-refresh using PHP 8.4 lazy objects (cannot be enabled if PHP < 8.4). // Default: null
+ *     faker?: array{ // Configure the faker used by your factories.
+ *         locale?: scalar|null, // The default locale to use for faker. // Default: null
+ *         seed?: scalar|null, // Deprecated: The "faker.seed" configuration is deprecated and will be removed in 3.0. Use environment variable "FOUNDRY_FAKER_SEED" instead. // Random number generator seed to produce the same fake values every run. // Default: null
+ *         service?: scalar|null, // Service id for custom faker instance. // Default: null
  *     },
- *     instantiator?: array{ // Configure the default instantiator used by your factories.
- *         without_constructor?: bool, // Whether or not to call an object's constructor during instantiation. // Default: false
- *         allow_extra_attributes?: bool, // Whether or not to allow extra attributes. // Default: false
+ *     instantiator?: array{ // Configure the default instantiator used by your object factories.
+ *         use_constructor?: bool, // Use the constructor to instantiate objects. // Default: true
+ *         allow_extra_attributes?: bool, // Whether or not to skip attributes that do not correspond to properties. // Default: false
  *         always_force_properties?: bool, // Whether or not to skip setters and force set object properties (public/private/protected) directly. // Default: false
- *         service?: scalar|null, // Customize the instantiator service. // Default: null
- *     },
- *     database_resetter?: bool|array{ // Configure database reset mechanism.
- *         enabled?: bool, // Default: true
- *         orm?: array{
- *             connections?: list<scalar|null>,
- *             object_managers?: list<scalar|null>,
- *             reset_mode?: "schema"|"migrate", // Whether to use doctrine:schema:update or migrations when resetting schema. // Default: "schema"
- *         },
- *         odm?: array{
- *             object_managers?: list<scalar|null>,
- *         },
+ *         service?: scalar|null, // Service id of your custom instantiator. // Default: null
  *     },
  *     global_state?: list<scalar|null>,
+ *     persistence?: array{
+ *         flush_once?: bool, // Flush only once per call of `PersistentObjectFactory::create()` in userland. // Default: false
+ *     },
+ *     orm?: array{
+ *         auto_persist?: bool, // Deprecated: Since 2.4 auto_persist defaults to true and this configuration has no effect. // Automatically persist entities when created. // Default: true
+ *         reset?: array{
+ *             connections?: list<scalar|null>,
+ *             entity_managers?: list<scalar|null>,
+ *             mode?: \Zenstruck\Foundry\ORM\ResetDatabase\ResetDatabaseMode::SCHEMA|\Zenstruck\Foundry\ORM\ResetDatabase\ResetDatabaseMode::MIGRATE, // Reset mode to use with ResetDatabase trait // Default: "schema"
+ *             migrations?: array{
+ *                 configurations?: list<scalar|null>,
+ *             },
+ *         },
+ *     },
+ *     mongo?: array{
+ *         auto_persist?: bool, // Deprecated: Since 2.4 auto_persist defaults to true and this configuration has no effect. // Automatically persist documents when created. // Default: true
+ *         reset?: array{
+ *             document_managers?: list<scalar|null>,
+ *         },
+ *     },
  *     make_factory?: array{
  *         default_namespace?: scalar|null, // Default namespace where factories will be created by maker. // Default: "Factory"
+ *         add_hints?: bool, // Add "beginner" hints in the created factory. // Default: true
+ *     },
+ *     make_story?: array{
+ *         default_namespace?: scalar|null, // Default namespace where stories will be created by maker. // Default: "Story"
  *     },
  * }
  * @psalm-type MakerConfig = array{

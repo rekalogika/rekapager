@@ -72,7 +72,7 @@
         "symfony/web-profiler-bundle": "^6.4 || ^7.0",
         "symfony/yaml": "^6.4 || ^7.0",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
-        "zenstruck/foundry": "1.37.*"
+        "zenstruck/foundry": "^2.8"
     },
     "autoload": {
         "psr-4": {
