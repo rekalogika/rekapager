@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php: [ '8.2', '8.3', '8.4', '8.5' ]
+        php: [ '8.3', '8.4', '8.5' ]
         symfony: [ '6.*', '7.*', '8.*' ]
         orm: ['^2.19', '^2.20', '^3.3', '^3.4', '^3.5']
         dep: [highest,lowest]
@@ -26,8 +26,6 @@ jobs:
             symfony: '8.*'
           - orm: '^3.3'
             symfony: '8.*'
-          - symfony: '8.*'
-            php: '8.2'
           - symfony: '8.*'
             php: '8.3'
 
