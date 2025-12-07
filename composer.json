@@ -38,7 +38,7 @@
         "composer/semver": "^3.4",
         "doctrine/doctrine-bundle": "^2.11.3 || ^3.0",
         "doctrine/doctrine-fixtures-bundle": "^3.5 || ^4.0",
-        "doctrine/persistence": "^3.1",
+        "doctrine/persistence": "^3.1 || ^4.0",
         "ekino/phpstan-banned-code": "^3.0",
         "fakerphp/faker": "^1.23",
         "graviton/link-header-rel-parser": "^1.0",
