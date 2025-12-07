@@ -70,7 +70,7 @@ jobs:
       uses: ramsey/composer-install@v3
       with:
         dependency-versions: ${{ matrix.dep }}
-        composer-options: --prefer-dist --no-progress --no-scripts --ignore-platform-reqs
+        composer-options: --prefer-dist --no-progress --no-scripts
       env:
         SYMFONY_REQUIRE: ${{ matrix.symfony }}
 
