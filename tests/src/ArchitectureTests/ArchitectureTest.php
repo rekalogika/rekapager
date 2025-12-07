@@ -37,6 +37,9 @@ final class ArchitectureTest
                 Selector::classname(\Throwable::class),
                 Selector::classname(\UnitEnum::class),
                 Selector::classname(\Override::class),
+                Selector::classname(\DateTimeInterface::class),
+                Selector::classname(\Stringable::class),
+                Selector::classname(\BackedEnum::class),
             );
     }
 
@@ -64,6 +67,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Symfony\Component\HttpKernel'),
                 Selector::inNamespace('Symfony\Component\Serializer'),
                 Selector::inNamespace('Symfony\Component\WebLink'),
+                Selector::inNamespace('Psr\Link'),
                 Selector::classname(\ArrayObject::class),
                 Selector::classname(\Override::class),
             );
@@ -192,10 +196,14 @@ final class ArchitectureTest
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
                 Selector::inNamespace('Symfony\Bridge\Doctrine'), // optional
+                Selector::inNamespace('Symfony\Component\Uid'), // optional
                 Selector::classname(\Throwable::class),
                 Selector::classname(\Traversable::class),
                 Selector::classname(\Countable::class),
                 Selector::classname(\Override::class),
+                Selector::classname(\BackedEnum::class),
+                Selector::classname(\DateTime::class),
+                Selector::classname(\DateTimeImmutable::class),
                 Selector::classname(InstalledVersions::class),
             );
     }

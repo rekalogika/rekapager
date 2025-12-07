@@ -36,7 +36,7 @@ final readonly class PagerNormalizer implements NormalizerInterface, NormalizerA
     }
 
     /**
-     * @param array<array-key,mixed> $context
+     * @param array<string,mixed> $context
      * @return array<array-key,mixed>|string|integer|float|boolean|\ArrayObject<array-key,mixed>|null
      */
     #[\Override]
@@ -87,7 +87,7 @@ final readonly class PagerNormalizer implements NormalizerInterface, NormalizerA
     }
 
     /**
-     * @param array<array-key,mixed> $context
+     * @param array<string,mixed> $context
      */
     #[\Override]
     public function supportsNormalization(
