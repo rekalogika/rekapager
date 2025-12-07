@@ -33,7 +33,7 @@ jobs:
                     - rekapager-symfony-bridge
     
         steps:
-            -   uses: actions/checkout@v5
+            -   uses: actions/checkout@v6
 
             # no tag
             -
