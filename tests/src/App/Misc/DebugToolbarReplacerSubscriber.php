@@ -24,7 +24,7 @@ final readonly class DebugToolbarReplacerSubscriber implements EventSubscriberIn
     ) {}
 
     #[\Override]
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ResponseEvent::class => 'onKernelResponse',

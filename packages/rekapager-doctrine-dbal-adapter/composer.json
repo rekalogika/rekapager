@@ -27,7 +27,7 @@
         }
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "doctrine/dbal": "^3.8 || ^4.0",
         "doctrine/collections": "^2.2",
         "rekalogika/rekapager-adapter-common": "^1.0.4",
