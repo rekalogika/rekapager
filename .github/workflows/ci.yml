@@ -26,6 +26,10 @@ jobs:
             symfony: '8.*'
           - orm: '^3.3'
             symfony: '8.*'
+          - symfony: '8.*'
+            php: '8.2'
+          - symfony: '8.*'
+            php: '8.3'
 
     name: SF ${{ matrix.symfony }}, ${{ matrix.dep }} deps, ORM ${{ matrix.orm }}, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 
