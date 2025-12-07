@@ -19,6 +19,13 @@ jobs:
         symfony: [ '6.*', '7.*', '8.*' ]
         orm: ['^2.19', '^2.20', '^3.3', '^3.4', '^3.5']
         dep: [highest,lowest]
+        exclude:
+          - orm: '^2.19'
+            symfony: '8.*'
+          - orm: '^2.20'
+            symfony: '8.*'
+          - orm: '^3.3'
+            symfony: '8.*'
 
     name: SF ${{ matrix.symfony }}, ${{ matrix.dep }} deps, ORM ${{ matrix.orm }}, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 
