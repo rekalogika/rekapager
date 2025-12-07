@@ -25,7 +25,7 @@
         }
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "rekalogika/rekapager-contracts": "^1.0.4",
         "rekalogika/rekapager-core": "^1.0.4",
         "symfony/config": "^6.4 || ^7.0 || ^8.0",
