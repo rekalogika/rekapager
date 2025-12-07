@@ -1,15 +1,15 @@
 {
     "name": "rekalogika/rekapager",
     "description": "Pagination library for PHP, supporting both offset-based and keyset-based pagination.",
-    "homepage": "https://rekalogika.dev/rekapager",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Priyadi Iman Nurcahyo",
             "email": "priyadi@rekalogika.com"
         }
     ],
-    "type": "library",
+    "homepage": "https://rekalogika.dev/rekapager",
     "require": {
         "php": "^8.2",
         "composer-runtime-api": "^2.0",
@@ -21,21 +21,23 @@
         "pagerfanta/doctrine-collections-adapter": "^4.0",
         "psr/container": "^2.0",
         "spomky-labs/base64url": "^2.0",
-        "symfony/config": "^6.4 || ^7.0",
-        "symfony/dependency-injection": "^6.4 || ^7.0",
-        "symfony/http-foundation": "^6.4 || ^7.0",
-        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/config": "^6.4 || ^7.0 || ^8.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0 || ^8.0",
+        "symfony/flex": "^2.4",
+        "symfony/http-foundation": "^6.4 || ^7.0 || ^8.0",
+        "symfony/http-kernel": "^6.4 || ^7.0 || ^8.0",
         "symfony/polyfill-intl-messageformatter": "^1.27",
-        "symfony/routing": "^6.4 || ^7.0",
-        "symfony/serializer": "^6.4 || ^7.0",
+        "symfony/routing": "^6.4 || ^7.0 || ^8.0",
+        "symfony/serializer": "^6.4 || ^7.0 || ^8.0",
         "symfony/stimulus-bundle": "^2.16",
-        "symfony/web-link": "^6.4 || ^7.0",
+        "symfony/translation": "^6.4 || ^7.0 || ^8.0",
+        "symfony/web-link": "^6.4 || ^7.0 || ^8.0",
         "twig/twig": "^3.8"
     },
     "require-dev": {
         "bnf/phpstan-psr-container": "^1.0",
         "composer/semver": "^3.4",
-        "doctrine/doctrine-bundle": "^2.11.3",
+        "doctrine/doctrine-bundle": "^2.11.3 || ^3.0",
         "doctrine/doctrine-fixtures-bundle": "^3.5 || ^4.0",
         "doctrine/persistence": "^3.1",
         "ekino/phpstan-banned-code": "^3.0",
@@ -51,28 +53,41 @@
         "rector/rector": "^2.0",
         "rector/swiss-knife": "^2.2",
         "rekalogika/doctrine-collections-decorator": "^2.3",
-        "symfony/asset": "^6.4 || ^7.0",
-        "symfony/asset-mapper": "^6.4 || ^7.0",
-        "symfony/browser-kit": "^6.4 || ^7.0",
-        "symfony/debug-bundle": "^6.4 || ^7.0",
-        "symfony/doctrine-bridge": "^6.4 || ^7.1",
-        "symfony/dotenv": "^6.4 || ^7.0",
-        "symfony/error-handler": "^6.4 || ^7.0",
-        "symfony/form": "^6.4 || ^7.0",
-        "symfony/framework-bundle": "^6.4 || ^7.0",
-        "symfony/http-client": "^6.4 || ^7.0",
+        "symfony/asset": "^6.4 || ^7.0 || ^8.0",
+        "symfony/asset-mapper": "^6.4 || ^7.0 || ^8.0",
+        "symfony/browser-kit": "^6.4 || ^7.0 || ^8.0",
+        "symfony/debug-bundle": "^6.4 || ^7.0 || ^8.0",
+        "symfony/doctrine-bridge": "^6.4 || ^7.0 || ^8.0",
+        "symfony/dotenv": "^6.4 || ^7.0 || ^8.0",
+        "symfony/error-handler": "^6.4 || ^7.0 || ^8.0",
+        "symfony/form": "^6.4 || ^7.0 || ^8.0",
+        "symfony/framework-bundle": "^6.4 || ^7.0 || ^8.0",
+        "symfony/http-client": "^6.4 || ^7.0 || ^8.0",
         "symfony/maker-bundle": "^1.55",
         "symfony/monolog-bundle": "^3.0",
-        "symfony/runtime": "^6.4 || ^7.0",
-        "symfony/translation": "^6.4 || ^7.0",
-        "symfony/twig-bundle": "^6.4 || ^7.0",
-        "symfony/uid": "^6.4 || ^7.0",
-        "symfony/validator": "^6.3 || ^7.0",
-        "symfony/var-dumper": "^6.3 || ^7.0",
-        "symfony/web-profiler-bundle": "^6.4 || ^7.0",
-        "symfony/yaml": "^6.4 || ^7.0",
+        "symfony/runtime": "^6.4 || ^7.0 || ^8.0",
+        "symfony/twig-bundle": "^6.4 || ^7.0 || ^8.0",
+        "symfony/uid": "^6.4 || ^7.0 || ^8.0",
+        "symfony/validator": "^6.3 || ^7.0 || ^8.0",
+        "symfony/var-dumper": "^6.3 || ^7.0 || ^8.0",
+        "symfony/web-profiler-bundle": "^6.4 || ^7.0 || ^8.0",
+        "symfony/yaml": "^6.4 || ^7.0 || ^8.0",
         "symplify/monorepo-builder": "^11.2.20 || ^11.3",
         "zenstruck/foundry": "^2.8"
+    },
+    "replace": {
+        "rekalogika/rekapager-adapter-common": "1.0.4",
+        "rekalogika/rekapager-api-platform": "1.0.4",
+        "rekalogika/rekapager-bundle": "1.0.4",
+        "rekalogika/rekapager-contracts": "1.0.4",
+        "rekalogika/rekapager-core": "1.0.4",
+        "rekalogika/rekapager-doctrine-collections-adapter": "1.0.4",
+        "rekalogika/rekapager-doctrine-dbal-adapter": "1.0.4",
+        "rekalogika/rekapager-doctrine-orm-adapter": "1.0.4",
+        "rekalogika/rekapager-keyset-pagination": "1.0.4",
+        "rekalogika/rekapager-offset-pagination": "1.0.4",
+        "rekalogika/rekapager-pagerfanta-adapter": "1.0.4",
+        "rekalogika/rekapager-symfony-bridge": "1.0.4"
     },
     "autoload": {
         "psr-4": {
@@ -98,25 +113,7 @@
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "symfony/runtime": true,
-            "symfony/flex": false
+            "symfony/runtime": true
         }
-    },
-    "replace": {
-        "rekalogika/rekapager-adapter-common": "1.0.4",
-        "rekalogika/rekapager-api-platform": "1.0.4",
-        "rekalogika/rekapager-bundle": "1.0.4",
-        "rekalogika/rekapager-contracts": "1.0.4",
-        "rekalogika/rekapager-core": "1.0.4",
-        "rekalogika/rekapager-doctrine-collections-adapter": "1.0.4",
-        "rekalogika/rekapager-doctrine-dbal-adapter": "1.0.4",
-        "rekalogika/rekapager-doctrine-orm-adapter": "1.0.4",
-        "rekalogika/rekapager-keyset-pagination": "1.0.4",
-        "rekalogika/rekapager-offset-pagination": "1.0.4",
-        "rekalogika/rekapager-pagerfanta-adapter": "1.0.4",
-        "rekalogika/rekapager-symfony-bridge": "1.0.4"
-    },
-    "provide": {
-        "symfony/flex": "*"
     }
 }
