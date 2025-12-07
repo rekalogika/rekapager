@@ -87,7 +87,7 @@ final readonly class PagerNormalizer implements NormalizerInterface, NormalizerA
     }
 
     /**
-     * @param array<array-key,mixed> $context
+     * @param array<string,mixed> $context
      */
     #[\Override]
     public function supportsNormalization(
