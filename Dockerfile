@@ -1,5 +1,5 @@
 # Use an official PHP runtime as a parent image
-FROM php:8.4-apache
+FROM php:8.5-apache
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/tests/public
 ENV TERM=xterm-256color
 ENV TTYD_VERSION=1.7.7
