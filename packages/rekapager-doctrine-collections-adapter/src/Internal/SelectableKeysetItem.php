@@ -69,7 +69,7 @@ final readonly class SelectableKeysetItem implements KeysetItemInterface
 
         foreach ($this->boundaryProperties as $property) {
             /** @var mixed $value */
-            $value = ClosureExpressionVisitor::getObjectFieldValue($this->objectOrArrayValue, $property);
+            $value = ClosureExpressionVisitor::getObjectFieldValue($this->objectOrArrayValue, $property, true);
 
             if ($value === null) {
                 throw new NullBoundaryValueException(\sprintf('The property "%s" is a boundary property of this pagination, but it is either null or does not exist. All properties involved in the order-by clause must exist and the value must not be null.', $property));
