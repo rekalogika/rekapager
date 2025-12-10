@@ -35,7 +35,7 @@ final class IndexResolver
 
         try {
             /** @var mixed */
-            $key = ClosureExpressionVisitor::getObjectFieldValue($row, $indexBy);
+            $key = ClosureExpressionVisitor::getObjectFieldValue($row, $indexBy, true);
         } catch (\Throwable $e) {
             throw new CannotResolveIndexException($row, $indexBy, $e);
         }
