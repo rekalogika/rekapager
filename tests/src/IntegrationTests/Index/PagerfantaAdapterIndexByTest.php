@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
 use Pagerfanta\Doctrine\Collections\SelectableAdapter;
 use Pagerfanta\Pagerfanta;
+use Rekalogika\Rekapager\Adapter\Common\Exception\CannotResolveIndexException;
 use Rekalogika\Rekapager\Adapter\Common\Exception\IncompatibleIndexTypeException;
 use Rekalogika\Rekapager\Pagerfanta\PagerfantaPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
@@ -75,7 +76,7 @@ final class PagerfantaAdapterIndexByTest extends KernelTestCase
             indexBy: 'foo',
         );
 
-        $this->expectException(IncompatibleIndexTypeException::class);
+        $this->expectException(CannotResolveIndexException::class);
 
         iterator_to_array($pageable->getFirstPage());
     }
