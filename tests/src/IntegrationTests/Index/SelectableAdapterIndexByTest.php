@@ -15,6 +15,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Index;
 
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Order;
+use Rekalogika\Rekapager\Adapter\Common\Exception\CannotResolveIndexException;
 use Rekalogika\Rekapager\Adapter\Common\Exception\IncompatibleIndexTypeException;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
@@ -78,7 +79,7 @@ final class SelectableAdapterIndexByTest extends KernelTestCase
             itemsPerPage: 1000,
         );
 
-        $this->expectException(IncompatibleIndexTypeException::class);
+        $this->expectException(CannotResolveIndexException::class);
 
         iterator_to_array($pageable->getFirstPage());
     }

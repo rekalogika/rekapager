@@ -16,6 +16,7 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Index;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Rekalogika\Rekapager\Adapter\Common\Exception\CannotResolveIndexException;
 use Rekalogika\Rekapager\Adapter\Common\Exception\IncompatibleIndexTypeException;
 use Rekalogika\Rekapager\Adapter\Common\Exception\RowNotCompatibleWithIndexByException;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
@@ -80,7 +81,7 @@ final class QueryBuilderAdapterIndexByTest extends KernelTestCase
             itemsPerPage: 1000,
         );
 
-        $this->expectException(IncompatibleIndexTypeException::class);
+        $this->expectException(CannotResolveIndexException::class);
 
         iterator_to_array($pageable->getFirstPage());
     }
