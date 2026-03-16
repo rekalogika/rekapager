@@ -67,7 +67,7 @@ jobs:
         GITHUB_AUTH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
     - name: Install dependencies
-      uses: ramsey/composer-install@v3
+      uses: ramsey/composer-install@v4
       with:
         dependency-versions: ${{ matrix.dep }}
         composer-options: --prefer-dist --no-progress --no-scripts
