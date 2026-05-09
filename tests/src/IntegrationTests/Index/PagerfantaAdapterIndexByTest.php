@@ -22,10 +22,13 @@ use Rekalogika\Rekapager\Adapter\Common\Exception\IncompatibleIndexTypeException
 use Rekalogika\Rekapager\Pagerfanta\PagerfantaPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class PagerfantaAdapterIndexByTest extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     private function getSelectable(): PostRepository
     {
         return self::getContainer()->get(PostRepository::class);

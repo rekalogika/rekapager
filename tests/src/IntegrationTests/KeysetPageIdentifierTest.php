@@ -22,6 +22,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class KeysetPageIdentifierTest extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     public function testSerialize(): void
     {
         $identifier = new KeysetPageIdentifier(
