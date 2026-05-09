@@ -39,7 +39,13 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         extensions: intl
-        tools: flex, phive
+        tools: flex
+
+    - name: Install phive
+      run: |
+        wget -O phive.phar https://phar.io/releases/phive.phar
+        chmod +x phive.phar
+        sudo mv phive.phar /usr/local/bin/phive
 
     - name: Install Symfony Flex globally
       run: |
