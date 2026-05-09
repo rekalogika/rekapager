@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\IntegrationTests\ApiPlatform;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use Graviton\LinkHeaderParser\LinkHeader;
+use function Kelunik\LinkHeaderRfc5988\parseLinks;
 
 final class ApiTest extends ApiTestCase
 {
@@ -79,12 +79,12 @@ final class ApiTest extends ApiTestCase
         $headers = $response->getHeaders();
         $link = $headers['link'][0] ?? null;
         self::assertNotNull($link);
-        $linkHeader = LinkHeader::fromString($link);
+        $linkHeader = parseLinks($link);
 
-        self::assertEquals($firstPage, $linkHeader->getRel('first')?->getUri());
-        self::assertEquals($previousPage, $linkHeader->getRel('prev')?->getUri());
-        self::assertEquals($nextPage, $linkHeader->getRel('next')?->getUri());
-        self::assertEquals($lastPage, $linkHeader->getRel('last')?->getUri());
+        self::assertEquals($firstPage, $linkHeader->getByRel('first')?->getUri());
+        self::assertEquals($previousPage, $linkHeader->getByRel('prev')?->getUri());
+        self::assertEquals($nextPage, $linkHeader->getByRel('next')?->getUri());
+        self::assertEquals($lastPage, $linkHeader->getByRel('last')?->getUri());
 
         // test last page
 
@@ -119,11 +119,11 @@ final class ApiTest extends ApiTestCase
         $headers = $response->getHeaders();
         $link = $headers['link'][0] ?? null;
         self::assertNotNull($link);
-        $linkHeader = LinkHeader::fromString($link);
+        $linkHeader = parseLinks($link);
 
-        self::assertEquals($firstPage, $linkHeader->getRel('first')?->getUri());
-        self::assertEquals($previousPage, $linkHeader->getRel('prev')?->getUri());
-        self::assertEquals($nextPage, $linkHeader->getRel('next')?->getUri());
-        self::assertEquals($lastPage, $linkHeader->getRel('last')?->getUri());
+        self::assertEquals($firstPage, $linkHeader->getByRel('first')?->getUri());
+        self::assertEquals($previousPage, $linkHeader->getByRel('prev')?->getUri());
+        self::assertEquals($nextPage, $linkHeader->getByRel('next')?->getUri());
+        self::assertEquals($lastPage, $linkHeader->getByRel('last')?->getUri());
     }
 }
