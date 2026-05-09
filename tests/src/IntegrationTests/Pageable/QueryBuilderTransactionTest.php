@@ -21,10 +21,13 @@ use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class QueryBuilderTransactionTest extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     /**
      * @return PageableInterface<int,Post>
      */

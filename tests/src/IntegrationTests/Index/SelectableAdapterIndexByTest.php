@@ -21,10 +21,13 @@ use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class SelectableAdapterIndexByTest extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     private function getSelectable(): PostRepository
     {
         return self::getContainer()->get(PostRepository::class);

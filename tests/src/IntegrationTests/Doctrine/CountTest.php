@@ -15,10 +15,13 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Doctrine;
 
 use Rekalogika\Rekapager\Tests\App\Doctrine\SqlLogger;
 use Rekalogika\Rekapager\Tests\App\PageableGenerator\KeysetPageableQueryBuilderAdapterQueryBuilder;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class CountTest extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     public function testCountSql(): void
     {
         $sqlLogger = static::getContainer()->get(SqlLogger::class);

@@ -23,7 +23,7 @@ final class UnsupportedQueryBuilderTest extends TestCase
 {
     public function testMaxResults(): void
     {
-        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager = $this->createStub(EntityManagerInterface::class);
         $queryBuilder = new QueryBuilder($entityManager);
         $queryBuilder->setMaxResults(42);
 
@@ -33,7 +33,7 @@ final class UnsupportedQueryBuilderTest extends TestCase
 
     public function testFirstResult(): void
     {
-        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager = $this->createStub(EntityManagerInterface::class);
         $queryBuilder = new QueryBuilder($entityManager);
         $queryBuilder->setFirstResult(1337);
 

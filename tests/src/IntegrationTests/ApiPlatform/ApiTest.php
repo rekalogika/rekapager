@@ -14,10 +14,14 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\IntegrationTests\ApiPlatform;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
+
 use function Kelunik\LinkHeaderRfc5988\parseLinks;
 
 final class ApiTest extends ApiTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     public function testApiWithCustomProvider(): void
     {
         $client = static::createClient();

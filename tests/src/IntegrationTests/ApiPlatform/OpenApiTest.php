@@ -16,10 +16,13 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\ApiPlatform;
 use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\PathItem;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class OpenApiTest extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     public function testOpenApi(): void
     {
         self::bootKernel();

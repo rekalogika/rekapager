@@ -23,10 +23,13 @@ use Rekalogika\Rekapager\Doctrine\ORM\QueryBuilderAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
 use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class QueryBuilderAdapterIndexByTest extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     private function getQueryBuilder(): QueryBuilder
     {
         $postRepository = self::getContainer()->get(PostRepository::class);

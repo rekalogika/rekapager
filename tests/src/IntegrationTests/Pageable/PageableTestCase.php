@@ -15,10 +15,13 @@ namespace Rekalogika\Rekapager\Tests\IntegrationTests\Pageable;
 
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Tests\App\Contracts\PageableGeneratorInterface;
+use Rekalogika\Rekapager\Tests\IntegrationTests\RestoresErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 abstract class PageableTestCase extends KernelTestCase
 {
+    use RestoresErrorHandlersTrait;
+
     /**
      * @return int<1,max>
      */

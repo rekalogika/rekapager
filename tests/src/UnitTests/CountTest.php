@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\Selectable;
 use Pagerfanta\Doctrine\Collections\SelectableAdapter as PagerfantaSelectableAdapter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
@@ -152,8 +153,8 @@ final class CountTest extends TestCase
     /**
      * @param Collection<array-key,Entity> $collection
      * @param PageableInterface<array-key,Entity> $pageable
-     * @dataProvider provider
      */
+    #[DataProvider('provider')]
     public function testNoCount(
         Collection $collection,
         PageableInterface $pageable,
