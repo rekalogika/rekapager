@@ -32,7 +32,7 @@ jobs:
     name: SF ${{ matrix.symfony }}, ${{ matrix.dep }} deps, ORM ${{ matrix.orm }}, PHP ${{ matrix.php }}, ${{ matrix.operating-system }}
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install PHP
       uses: shivammathur/setup-php@v2
