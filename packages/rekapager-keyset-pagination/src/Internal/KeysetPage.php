@@ -156,8 +156,6 @@ final class KeysetPage implements PageInterface, \IteratorAggregate
             } else {
                 $this->hasPreviousPage = false;
             }
-
-            $this->hasNextPage = false;
         }
 
         return $result;

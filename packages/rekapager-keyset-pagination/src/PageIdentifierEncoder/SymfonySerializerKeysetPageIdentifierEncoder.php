@@ -81,9 +81,17 @@ final class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifi
         }
 
         $boundaryValues = $identifier->getBoundaryValues();
-        $encodedBoundaryValues = [];
+
+        // Null means unbounded — the first and last pages are the only
+        // ones that have it, and it must survive the round trip as null.
+        // Initialising to `[]` and writing it unconditionally would
+        // encode "unbounded" as "bounded by nothing", which decodes to a
+        // page that believes it has a neighbour.
+        $encodedBoundaryValues = null;
 
         if (\is_array($boundaryValues)) {
+            $encodedBoundaryValues = [];
+
             foreach ($boundaryValues as $key => $value) {
                 if (\is_scalar($value)) {
                     $encodedBoundaryValues[$key] = $value;
@@ -187,9 +195,11 @@ final class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifi
             throw new PageIdentifierDecodingFailureException('Invalid boundary values');
         }
 
-        $decodedBoundaryValues = [];
+        $decodedBoundaryValues = null;
 
-        if (\is_array($boundaryValues)) {
+        if (\is_array($boundaryValues) && $boundaryValues !== []) {
+            $decodedBoundaryValues = [];
+
             foreach ($boundaryValues as $key => $value) {
                 if (\is_scalar($value)) {
                     $decodedBoundaryValues[$key] = $value;
@@ -217,18 +227,18 @@ final class SymfonySerializerKeysetPageIdentifierEncoder implements PageIdentifi
                 $normalizedObject = $value['v'] ?? null;
 
                 /** @psalm-suppress MixedAssignment */
-                $boundaryValues[$key] = $this->denormalizer->denormalize($normalizedObject, $type);
+                $decodedBoundaryValues[$key] = $this->denormalizer->denormalize($normalizedObject, $type);
             }
         }
 
-        /** @var array<string,mixed> $boundaryValues */
+        /** @var null|array<string,mixed> $decodedBoundaryValues */
 
         return new KeysetPageIdentifier(
             pageNumber: $pageNumber,
             limit: $limit,
             pageOffsetFromBoundary: $pageOffsetFromBoundary,
             boundaryType: $boundaryType,
-            boundaryValues: $boundaryValues,
+            boundaryValues: $decodedBoundaryValues,
         );
     }
 }
