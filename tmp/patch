@@ -1,0 +1,127 @@
+--- a/src/Contracts/KeysetPageIdentifier.php
++++ b/src/Contracts/KeysetPageIdentifier.php
+@@ -18,6 +18,11 @@
+ final class KeysetPageIdentifier
+ {
+     /**
++     * @var null|array<string,mixed>
++     */
++    private ?array $boundaryValues;
++
++    /**
+      * @param int<0,max> $pageOffsetFromBoundary
+      * @param null|int<1,max> $limit
+      * @param null|array<string,mixed> $boundaryValues
+@@ -25,10 +30,19 @@
+     public function __construct(
+         private int $pageOffsetFromBoundary,
+         private BoundaryType $boundaryType,
+-        private ?array $boundaryValues,
++        ?array $boundaryValues,
+         private ?int $pageNumber,
+         private ?int $limit,
+-    ) {}
++    ) {
++        // An empty array is not a boundary: with no values there is no
++        // comparison to make, which is exactly what null means here. The
++        // two must not be distinguishable, because `hasNextPage()` and
++        // `hasPreviousPage()` decide on `!== null` alone — see
++        // KeysetPage. Canonicalising here keeps every construction path,
++        // including the decoding side of any identifier encoder, from
++        // producing a page that claims a neighbour it does not have.
++        $this->boundaryValues = $boundaryValues === [] ? null : $boundaryValues;
++    }
+ 
+     public function __serialize(): array
+     {
+@@ -56,11 +70,11 @@
+             throw new UnexpectedValueException('Invalid page offset from boundary');
+         }
+ 
+-        if (!\is_int($pageNumber)) {
++        if ($pageNumber !== null && !\is_int($pageNumber)) {
+             throw new UnexpectedValueException('Invalid page number');
+         }
+ 
+-        if (!(\is_int($limit) && $limit >= 1)) {
++        if ($limit !== null && !(\is_int($limit) && $limit >= 1)) {
+             throw new UnexpectedValueException('Invalid limit');
+         }
+ 
+@@ -76,7 +90,7 @@
+ 
+         $this->pageOffsetFromBoundary = $pageOffsetFromBoundary;
+         $this->boundaryType = $boundaryType;
+-        $this->boundaryValues = $boundaryValues;
++        $this->boundaryValues = $boundaryValues === [] ? null : $boundaryValues;
+         $this->pageNumber = $pageNumber;
+         $this->limit = $limit;
+     }
+--- a/src/Internal/KeysetPage.php
++++ b/src/Internal/KeysetPage.php
+@@ -156,8 +156,6 @@
+             } else {
+                 $this->hasPreviousPage = false;
+             }
+-
+-            $this->hasNextPage = false;
+         }
+ 
+         return $result;
+--- a/src/PageIdentifierEncoder/SymfonySerializerKeysetPageIdentifierEncoder.php
++++ b/src/PageIdentifierEncoder/SymfonySerializerKeysetPageIdentifierEncoder.php
+@@ -81,9 +81,17 @@
+         }
+ 
+         $boundaryValues = $identifier->getBoundaryValues();
+-        $encodedBoundaryValues = [];
++
++        // Null means unbounded — the first and last pages are the only
++        // ones that have it, and it must survive the round trip as null.
++        // Initialising to `[]` and writing it unconditionally would
++        // encode "unbounded" as "bounded by nothing", which decodes to a
++        // page that believes it has a neighbour.
++        $encodedBoundaryValues = null;
+ 
+         if (\is_array($boundaryValues)) {
++            $encodedBoundaryValues = [];
++
+             foreach ($boundaryValues as $key => $value) {
+                 if (\is_scalar($value)) {
+                     $encodedBoundaryValues[$key] = $value;
+@@ -187,9 +195,11 @@
+             throw new PageIdentifierDecodingFailureException('Invalid boundary values');
+         }
+ 
+-        $decodedBoundaryValues = [];
++        $decodedBoundaryValues = null;
++
++        if (\is_array($boundaryValues) && $boundaryValues !== []) {
++            $decodedBoundaryValues = [];
+ 
+-        if (\is_array($boundaryValues)) {
+             foreach ($boundaryValues as $key => $value) {
+                 if (\is_scalar($value)) {
+                     $decodedBoundaryValues[$key] = $value;
+@@ -217,18 +227,18 @@
+                 $normalizedObject = $value['v'] ?? null;
+ 
+                 /** @psalm-suppress MixedAssignment */
+-                $boundaryValues[$key] = $this->denormalizer->denormalize($normalizedObject, $type);
++                $decodedBoundaryValues[$key] = $this->denormalizer->denormalize($normalizedObject, $type);
+             }
+         }
+ 
+-        /** @var array<string,mixed> $boundaryValues */
++        /** @var null|array<string,mixed> $decodedBoundaryValues */
+ 
+         return new KeysetPageIdentifier(
+             pageNumber: $pageNumber,
+             limit: $limit,
+             pageOffsetFromBoundary: $pageOffsetFromBoundary,
+             boundaryType: $boundaryType,
+-            boundaryValues: $boundaryValues,
++            boundaryValues: $decodedBoundaryValues,
+         );
+     }
+ }
