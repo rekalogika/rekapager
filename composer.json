@@ -93,7 +93,10 @@
     "autoload-dev": {
         "psr-4": {
             "Rekalogika\\Rekapager\\Tests\\": "tests/src/"
-        }
+        },
+        "exclude-from-classmap": [
+            "/vendor/rector/swiss-knife/stubs/"
+        ]
     },
     "config": {
         "sort-packages": true,
