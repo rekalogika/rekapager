@@ -182,6 +182,57 @@ final class KeysetPageableTest extends TestCase
         );
     }
 
+    /**
+     * `getNextPages()` optimises on the `hasNextPage` field, which is only
+     * meaningful on a lower bounded page. On an upper bounded page it must
+     * agree with `getNextPage()`, and it must not change its answer once the
+     * result of the page has been loaded.
+     */
+    public function testNextPagesOnUpperBoundedPage(): void
+    {
+        /** @var array<array-key,Entity> */
+        $entities = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $entities[] = new Entity($i);
+        }
+
+        $collection = new ArrayCollection($entities);
+        $adapter = new SelectableAdapter($collection);
+        $pageable = new KeysetPageable($adapter, 5);
+
+        $page2 = $pageable->getFirstPage()->getNextPage();
+        self::assertNotNull($page2);
+
+        // page 1 reached by paging backwards, hence upper bounded, before its
+        // result is loaded
+
+        $page1 = $page2->getPreviousPage();
+        self::assertNotNull($page1);
+        self::assertCount(1, $page1->getNextPages(1));
+        self::assertCount(2, $page1->getNextPages(5));
+
+        // the same page, after its result is loaded
+
+        $page1 = $page2->getPreviousPage();
+        self::assertNotNull($page1);
+        iterator_to_array($page1);
+
+        self::assertNotNull($page1->getNextPage());
+        self::assertCount(1, $page1->getNextPages(1));
+        self::assertCount(2, $page1->getNextPages(5));
+
+        // the last page is upper bounded with no boundary values, so it has no
+        // next pages either way
+
+        $lastPage = $pageable->getLastPage();
+        self::assertSame([], $lastPage->getNextPages(5));
+
+        $lastPage = $pageable->getLastPage();
+        iterator_to_array($lastPage);
+        self::assertNull($lastPage->getNextPage());
+        self::assertSame([], $lastPage->getNextPages(5));
+    }
+
     public function testKeysetPageableCollectionDescending(): void
     {
         /** @var array<array-key,Entity> */

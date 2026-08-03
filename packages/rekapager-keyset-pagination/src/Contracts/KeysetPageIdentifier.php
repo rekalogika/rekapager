@@ -18,6 +18,11 @@ use Rekalogika\Contracts\Rekapager\Exception\UnexpectedValueException;
 final class KeysetPageIdentifier
 {
     /**
+     * @var null|array<string,mixed>
+     */
+    private ?array $boundaryValues;
+
+    /**
      * @param int<0,max> $pageOffsetFromBoundary
      * @param null|int<1,max> $limit
      * @param null|array<string,mixed> $boundaryValues
@@ -25,10 +30,13 @@ final class KeysetPageIdentifier
     public function __construct(
         private int $pageOffsetFromBoundary,
         private BoundaryType $boundaryType,
-        private ?array $boundaryValues,
+        ?array $boundaryValues,
         private ?int $pageNumber,
         private ?int $limit,
-    ) {}
+    ) {
+        // Make sure the boundary values are null if the array is empty
+        $this->boundaryValues = $boundaryValues === [] ? null : $boundaryValues;
+    }
 
     public function __serialize(): array
     {
@@ -56,11 +64,11 @@ final class KeysetPageIdentifier
             throw new UnexpectedValueException('Invalid page offset from boundary');
         }
 
-        if (!\is_int($pageNumber)) {
+        if ($pageNumber !== null && !\is_int($pageNumber)) {
             throw new UnexpectedValueException('Invalid page number');
         }
 
-        if (!(\is_int($limit) && $limit >= 1)) {
+        if ($limit !== null && !(\is_int($limit) && $limit >= 1)) {
             throw new UnexpectedValueException('Invalid limit');
         }
 
@@ -76,7 +84,7 @@ final class KeysetPageIdentifier
 
         $this->pageOffsetFromBoundary = $pageOffsetFromBoundary;
         $this->boundaryType = $boundaryType;
-        $this->boundaryValues = $boundaryValues;
+        $this->boundaryValues = $boundaryValues === [] ? null : $boundaryValues;
         $this->pageNumber = $pageNumber;
         $this->limit = $limit;
     }
