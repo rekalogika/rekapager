@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 
-use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\Connection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Doctrine\DBAL\QueryBuilderAdapter;
@@ -60,9 +59,9 @@ final readonly class OffsetPageableDBALQueryBuilderAdapterDBALQueryBuilder imple
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,
             orderBy: [
-                'p.date' => Order::Descending,
-                'p.category' => Order::Ascending,
-                'p.id' => Order::Ascending,
+                'p.date' => \SortDirection::Descending,
+                'p.category' => \SortDirection::Ascending,
+                'p.id' => \SortDirection::Ascending,
             ],
             indexBy: 'id',
         );

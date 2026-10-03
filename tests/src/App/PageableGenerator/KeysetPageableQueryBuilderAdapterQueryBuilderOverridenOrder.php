@@ -53,8 +53,8 @@ final readonly class KeysetPageableQueryBuilderAdapterQueryBuilderOverridenOrder
             ->andWhere('p.category = :category')
             ->setParameter('setName', $setName)
             ->setParameter('category', 'animalia')
-            ->addOrderBy('p.category', 'ASC')
-            ->addOrderBy('p.id', 'ASC');
+            ->addOrderBy('p.category', \SortDirection::Ascending)
+            ->addOrderBy('p.id', \SortDirection::Ascending);
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,

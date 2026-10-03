@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 
-use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
@@ -76,9 +75,9 @@ final readonly class KeySetPageableNativeQueryAdapterNativeQueryRowValues implem
             sql: $sql,
             countAllSql: $countAllSql, // optional, if null, total will not be available
             orderBy: [
-                'p.date' => Order::Ascending,
-                'p.category' => Order::Ascending,
-                'p.id' => Order::Ascending,
+                'p.date' => \SortDirection::Ascending,
+                'p.category' => \SortDirection::Ascending,
+                'p.id' => \SortDirection::Ascending,
             ],
             parameters: [
                 new Parameter('setName', $setName),

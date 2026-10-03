@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\UnitTests;
 
-use Doctrine\Common\Collections\Order;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
@@ -24,7 +23,7 @@ final class KeysetExpressionTest extends TestCase
     public function testOneField(): void
     {
         $expression = KeysetExpressionCalculator::calculate([
-            new Field('id', 42, Order::Ascending),
+            new Field('id', 42, \SortDirection::Ascending),
         ]);
 
         $visitor = new KeysetExpressionSQLVisitor();
@@ -37,8 +36,8 @@ final class KeysetExpressionTest extends TestCase
     public function testTwoFields(): void
     {
         $expression = KeysetExpressionCalculator::calculate([
-            new Field('date', new \DateTimeImmutable(), Order::Descending),
-            new Field('id', 42, Order::Ascending),
+            new Field('date', new \DateTimeImmutable(), \SortDirection::Descending),
+            new Field('id', 42, \SortDirection::Ascending),
         ]);
 
         $visitor = new KeysetExpressionSQLVisitor();
@@ -51,9 +50,9 @@ final class KeysetExpressionTest extends TestCase
     public function testThreeFields(): void
     {
         $expression = KeysetExpressionCalculator::calculate([
-            new Field('date', new \DateTimeImmutable(), Order::Descending),
-            new Field('name', "John", Order::Ascending),
-            new Field('id', 42, Order::Ascending),
+            new Field('date', new \DateTimeImmutable(), \SortDirection::Descending),
+            new Field('name', "John", \SortDirection::Ascending),
+            new Field('id', 42, \SortDirection::Ascending),
         ]);
 
         $visitor = new KeysetExpressionSQLVisitor();

@@ -62,9 +62,9 @@ final readonly class OffsetPageableQueryBuilderAdapterQueryBuilder implements Pa
             ->andWhere('p.user = :user')
             ->setParameter('setName', $setName)
             ->setParameter('user', $user)
-            ->addOrderBy('p.date', 'DESC')
-            ->addOrderBy('p.category', 'ASC')
-            ->addOrderBy('p.id', 'ASC');
+            ->addOrderBy('p.date', \SortDirection::Descending)
+            ->addOrderBy('p.category', \SortDirection::Ascending)
+            ->addOrderBy('p.id', \SortDirection::Ascending);
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,

@@ -35,7 +35,7 @@ final class IndexResolver
 
         try {
             /** @var mixed */
-            $key = ClosureExpressionVisitor::getObjectFieldValue($row, $indexBy, true);
+            $key = ClosureExpressionVisitor::getObjectFieldValue($row, $indexBy);
 
             if ($key === null) {
                 throw new \RuntimeException('The resolved key is null.');

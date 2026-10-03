@@ -120,7 +120,7 @@ final class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new PagerfantaAdapterAdapter(
-                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create(true)),
+                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create()),
                 ),
             ),
             null,
@@ -130,7 +130,7 @@ final class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new PagerfantaAdapterAdapter(
-                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create(true)),
+                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create()),
                 ),
                 count: true,
             ),
@@ -142,7 +142,7 @@ final class CountTest extends TestCase
             $collection,
             new OffsetPageable(
                 adapter: new PagerfantaAdapterAdapter(
-                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create(true)),
+                    adapter: new PagerfantaSelectableAdapter($collection, Criteria::create()),
                 ),
                 count: fn() => $collection->count(),
             ),

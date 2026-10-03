@@ -52,9 +52,9 @@ final readonly class KeysetPageableQueryBuilderAdapterQueryBuilder implements Pa
             ->createQueryBuilder('p')
             ->where('p.setName = :setName')
             ->setParameter('setName', $setName)
-            ->addOrderBy('p.date', 'DESC')
-            ->addOrderBy('p.category', 'ASC')
-            ->addOrderBy('p.id', 'ASC');
+            ->addOrderBy('p.date', \SortDirection::Descending)
+            ->addOrderBy('p.category', \SortDirection::Ascending)
+            ->addOrderBy('p.id', \SortDirection::Ascending);
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,

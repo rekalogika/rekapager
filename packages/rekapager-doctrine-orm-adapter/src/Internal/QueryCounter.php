@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\ORM\Internal;
 
-use Composer\InstalledVersions;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Internal\SQLResultCasing;
 use Doctrine\ORM\NoResultException;
@@ -22,7 +21,6 @@ use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Tools\Pagination\CountWalker;
-use Rekalogika\Contracts\Rekapager\Exception\RuntimeException;
 
 /**
  * @see Paginator
@@ -81,21 +79,7 @@ final class QueryCounter implements \Countable
             $rsm = new ResultSetMapping();
             $rsm->addScalarResult($this->getSQLResultCasing($platform, 'dctrn_count'), 'count');
 
-            $version = InstalledVersions::getVersion('doctrine/orm');
-
-            if ($version === null) {
-                throw new RuntimeException('Could not determine the installed version of doctrine/orm');
-            }
-
-            if (version_compare($version, '3.3.0', '>=')) {
-                $outputWalker = CountOutputWalker33::class;
-            } elseif (version_compare($version, '3.0.0', '>=')) {
-                $outputWalker = CountOutputWalker30::class;
-            } else {
-                $outputWalker = CountOutputWalker2::class;
-            }
-
-            $countQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, $outputWalker);
+            $countQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, CountOutputWalker33::class);
             $countQuery->setHint('maxResults', $this->query->getMaxResults());
             $countQuery->setHint('firstResult', $this->query->getFirstResult());
             $countQuery->setResultSetMapping($rsm);

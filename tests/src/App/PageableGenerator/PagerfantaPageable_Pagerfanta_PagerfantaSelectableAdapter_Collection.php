@@ -54,7 +54,7 @@ final readonly class PagerfantaPageable_Pagerfanta_PagerfantaSelectableAdapter_C
         }
 
         // @highlight-start
-        $criteria = Criteria::create(true)
+        $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('setName', $setName));
 
         $pagerfantaAdapter = new SelectableAdapter($user->getPosts(), $criteria);

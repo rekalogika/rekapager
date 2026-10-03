@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 
-use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\Connection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
@@ -59,9 +58,9 @@ final readonly class KeysetPageableDBALQueryBuilderAdapterDBALQueryBuilderRowVal
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,
             orderBy: [
-                'p.date' => Order::Ascending,
-                'p.category' => Order::Ascending,
-                'p.id' => Order::Ascending,
+                'p.date' => \SortDirection::Ascending,
+                'p.category' => \SortDirection::Ascending,
+                'p.id' => \SortDirection::Ascending,
             ],
             indexBy: 'id',
             seekMethod: SeekMethod::RowValues,

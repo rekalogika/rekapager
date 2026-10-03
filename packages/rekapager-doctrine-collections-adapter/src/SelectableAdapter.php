@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Doctrine\Collections;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Doctrine\Common\Collections\Selectable;
 use Rekalogika\Contracts\Rekapager\Exception\LogicException;
 use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
+use Rekalogika\Rekapager\Adapter\Common\SortDirectionUtil;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCollectionItemException;
 use Rekalogika\Rekapager\Doctrine\Collections\Exception\UnsupportedCriteriaException;
 use Rekalogika\Rekapager\Doctrine\Collections\Internal\SelectableKeysetItem;
@@ -47,8 +47,8 @@ final readonly class SelectableAdapter implements
         ?Criteria $criteria = null,
         private string|null $indexBy = null,
     ) {
-        $criteria ??= Criteria::create(true);
-        $orderings = $criteria->orderings();
+        $criteria ??= Criteria::create();
+        $orderings = $criteria->getOrderings();
 
         $firstResult = $criteria->getFirstResult();
 
@@ -61,7 +61,7 @@ final readonly class SelectableAdapter implements
 
         // if no criteria is set, assume that 'id' is the primary key
         if (\count($orderings) === 0) {
-            $criteria->orderBy(['id' => Order::Ascending]);
+            $criteria->orderBy(['id' => \SortDirection::Ascending]);
         }
 
         $this->criteria = $criteria;
@@ -157,7 +157,7 @@ final readonly class SelectableAdapter implements
             $criteria->orderBy($this->getReversedSortOrder());
         }
 
-        $orderings = $criteria->orderings();
+        $orderings = $criteria->getOrderings();
 
         if ($orderings === []) {
             throw new LogicException('No ordering is set.');
@@ -177,7 +177,7 @@ final readonly class SelectableAdapter implements
 
     /**
      * @param array<string,mixed> $boundaryValues
-     * @param non-empty-array<string,Order> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      * @return list<Field>
      */
     private function createCalculatorFields(
@@ -244,7 +244,7 @@ final readonly class SelectableAdapter implements
             $items = array_reverse($items, true);
         }
 
-        $properties = array_keys($this->criteria->orderings());
+        $properties = array_keys($this->criteria->getOrderings());
 
         $results = [];
 
@@ -274,17 +274,13 @@ final readonly class SelectableAdapter implements
     }
 
     /**
-     * @return array<string,Order>
+     * @return array<string,\SortDirection>
      */
     private function getReversedSortOrder(): array
     {
-        $orderBy = $this->criteria->orderings();
-        $reversed = [];
-
-        foreach ($orderBy as $property => $order) {
-            $reversed[$property] = $order === Order::Ascending ? Order::Descending : Order::Ascending;
-        }
-
-        return $reversed;
+        return array_map(
+            SortDirectionUtil::reverse(...),
+            $this->criteria->getOrderings(),
+        );
     }
 }

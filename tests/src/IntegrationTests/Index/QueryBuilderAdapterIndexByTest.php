@@ -38,9 +38,9 @@ final class QueryBuilderAdapterIndexByTest extends KernelTestCase
             ->createQueryBuilder('p')
             ->where('p.setName = :setName')
             ->setParameter('setName', 'large')
-            ->addOrderBy('p.date', 'DESC')
-            ->addOrderBy('p.title', 'ASC')
-            ->addOrderBy('p.id', 'ASC');
+            ->addOrderBy('p.date', \SortDirection::Descending)
+            ->addOrderBy('p.title', \SortDirection::Ascending)
+            ->addOrderBy('p.id', \SortDirection::Ascending);
     }
 
     public function testIndexBy(): void
@@ -99,9 +99,9 @@ final class QueryBuilderAdapterIndexByTest extends KernelTestCase
             ->select('p.id')
             ->where('p.setName = :setName')
             ->setParameter('setName', 'large')
-            ->addOrderBy('p.date', 'DESC')
-            ->addOrderBy('p.title', 'ASC')
-            ->addOrderBy('p.id', 'ASC');
+            ->addOrderBy('p.date', \SortDirection::Descending)
+            ->addOrderBy('p.title', \SortDirection::Ascending)
+            ->addOrderBy('p.id', \SortDirection::Ascending);
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,

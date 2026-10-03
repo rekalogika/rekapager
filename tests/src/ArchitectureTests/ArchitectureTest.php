@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\ArchitectureTests;
 
 use Base64Url\Base64Url;
-use Composer\InstalledVersions;
 use PHPat\Selector\Selector;
 use PHPat\Test\Builder\Rule;
 use PHPat\Test\PHPat;
@@ -34,6 +33,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
                 Selector::inNamespace('Doctrine\Common\Collections'),
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager\Exception'),
+                Selector::classname(\SortDirection::class),
                 Selector::classname(\Throwable::class),
                 Selector::classname(\UnitEnum::class),
                 Selector::classname(\Override::class),
@@ -154,6 +154,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Doctrine\Common\Collections'),
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
+                Selector::classname(\SortDirection::class),
                 Selector::classname(\TypeError::class),
                 Selector::classname(\Throwable::class),
                 Selector::classname(\Override::class),
@@ -175,6 +176,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Doctrine\DBAL'),
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
+                Selector::classname(\SortDirection::class),
                 Selector::classname(\Override::class),
             );
     }
@@ -195,6 +197,7 @@ final class ArchitectureTest
                 Selector::inNamespace('Doctrine\DBAL'),
                 Selector::inNamespace('Rekalogika\Contracts\Rekapager'),
                 Selector::inNamespace('Rekalogika\Rekapager\Adapter\Common'),
+                Selector::classname(\SortDirection::class),
                 Selector::inNamespace('Symfony\Bridge\Doctrine'), // optional
                 Selector::inNamespace('Symfony\Component\Uid'), // optional
                 Selector::classname(\Throwable::class),
@@ -204,7 +207,6 @@ final class ArchitectureTest
                 Selector::classname(\BackedEnum::class),
                 Selector::classname(\DateTime::class),
                 Selector::classname(\DateTimeImmutable::class),
-                Selector::classname(InstalledVersions::class),
             );
     }
 

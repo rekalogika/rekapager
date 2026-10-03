@@ -22,6 +22,7 @@ use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
+use Rekalogika\Rekapager\Adapter\Common\SortDirectionUtil;
 use Rekalogika\Rekapager\Doctrine\DBAL\Exception\CountUnsupportedException;
 use Rekalogika\Rekapager\Doctrine\DBAL\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\DBAL\Internal\QueryBuilderKeysetItem;
@@ -39,17 +40,25 @@ use Rekalogika\Rekapager\Offset\OffsetPaginationAdapterInterface;
 final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, OffsetPaginationAdapterInterface
 {
     /**
-     * @param non-empty-array<string,Order> $orderBy
+     * @var non-empty-array<string,\SortDirection>
+     */
+    private array $orderBy;
+
+    /**
+     * @param non-empty-array<string,\SortDirection|Order> $orderBy Passing `Order` is deprecated, use `\SortDirection` instead.
      */
     public function __construct(
         private QueryBuilder $queryBuilder,
-        private array $orderBy,
+        // @phpstan-ignore parameter.deprecatedEnum (for BC)
+        array $orderBy,
         private string|null $indexBy = null,
         private SeekMethod $seekMethod = SeekMethod::Approximated,
     ) {
         if ($queryBuilder->getFirstResult() !== 0 || $queryBuilder->getMaxResults() !== null) {
             throw new UnsupportedQueryBuilderException();
         }
+
+        $this->orderBy = SortDirectionUtil::normalize($orderBy);
     }
 
     /**
@@ -101,7 +110,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         foreach ($orderings as $field => $direction) {
             $queryBuilder->addOrderBy(
                 $field,
-                $direction === Order::Ascending ? 'ASC' : 'DESC',
+                $direction === \SortDirection::Ascending ? 'ASC' : 'DESC',
             );
         }
 
@@ -143,7 +152,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
     /**
      * @param array<string,QueryParameter> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
-     * @param non-empty-array<string,Order> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      * @return array{null|string,array<string,QueryParameter>}
      */
     private function generateWhereExpression(
@@ -235,7 +244,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
         $where = \sprintf(
             '(%s) %s (%s)',
             implode(', ', $whereFields),
-            $order === Order::Ascending ? '>' : '<',
+            $order === \SortDirection::Ascending ? '>' : '<',
             implode(', ', $whereValues),
         );
 
@@ -244,7 +253,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
 
     /**
      * @param array<string,QueryParameter> $boundaryValues
-     * @param non-empty-array<string,Order> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      * @return list<Field>
      */
     private function createCalculatorFields(
@@ -344,7 +353,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
     }
 
     /**
-     * @return non-empty-array<string,Order>
+     * @return non-empty-array<string,\SortDirection>
      */
     private function getSortOrder(bool $reverse): array
     {
@@ -352,13 +361,7 @@ final readonly class QueryBuilderAdapter implements KeysetPaginationAdapterInter
             return $this->orderBy;
         }
 
-        $result = [];
-
-        foreach ($this->orderBy as $field => $direction) {
-            $result[$field] = $direction === Order::Ascending ? Order::Descending : Order::Ascending;
-        }
-
-        return $result;
+        return array_map(SortDirectionUtil::reverse(...), $this->orderBy);
     }
 
     /**
