@@ -15,7 +15,6 @@ namespace Rekalogika\Rekapager\Tests\UnitTests;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use PHPUnit\Framework\TestCase;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Contracts\Rekapager\PageInterface;
@@ -244,7 +243,7 @@ final class KeysetPageableTest extends TestCase
         $collection = new ArrayCollection($entities);
         $adapter = new SelectableAdapter(
             $collection,
-            Criteria::create(true)->orderBy(['id' => Order::Descending]),
+            Criteria::create()->orderBy(['id' => \SortDirection::Descending]),
         );
         $pageable = new KeysetPageable($adapter, 5);
 

@@ -42,9 +42,9 @@ final class QueryBuilderTransactionTest extends KernelTestCase
             ->createQueryBuilder('p')
             ->where('p.setName = :setName')
             ->setParameter('setName', 'medium')
-            ->addOrderBy('p.date', 'DESC')
-            ->addOrderBy('p.category', 'ASC')
-            ->addOrderBy('p.id', 'ASC');
+            ->addOrderBy('p.date', \SortDirection::Descending)
+            ->addOrderBy('p.category', \SortDirection::Ascending)
+            ->addOrderBy('p.id', \SortDirection::Ascending);
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,

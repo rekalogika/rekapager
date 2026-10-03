@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Adapter\Common;
 
-use Doctrine\Common\Collections\Order;
-
 /**
  * @internal
  */
@@ -23,7 +21,7 @@ final readonly class Field
     public function __construct(
         private string $name,
         private mixed $value,
-        private Order $order,
+        private \SortDirection $order,
     ) {}
 
     public function getName(): string
@@ -36,18 +34,18 @@ final readonly class Field
         return $this->value;
     }
 
-    public function getOrder(): Order
+    public function getOrder(): \SortDirection
     {
         return $this->order;
     }
 
     public function isAscending(): bool
     {
-        return $this->order === Order::Ascending;
+        return $this->order === \SortDirection::Ascending;
     }
 
     public function isDescending(): bool
     {
-        return $this->order === Order::Descending;
+        return $this->order === \SortDirection::Descending;
     }
 }

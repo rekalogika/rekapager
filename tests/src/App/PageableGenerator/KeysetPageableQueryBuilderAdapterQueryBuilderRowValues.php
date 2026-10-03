@@ -53,9 +53,9 @@ final readonly class KeysetPageableQueryBuilderAdapterQueryBuilderRowValues impl
             ->createQueryBuilder('p')
             ->where('p.setName = :setName')
             ->setParameter('setName', $setName)
-            ->addOrderBy('p.date', 'ASC')
-            ->addOrderBy('p.category', 'ASC')
-            ->addOrderBy('p.id', 'ASC');
+            ->addOrderBy('p.date', \SortDirection::Ascending)
+            ->addOrderBy('p.category', \SortDirection::Ascending)
+            ->addOrderBy('p.id', \SortDirection::Ascending);
 
         $adapter = new QueryBuilderAdapter(
             queryBuilder: $queryBuilder,

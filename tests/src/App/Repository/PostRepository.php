@@ -36,7 +36,7 @@ final class PostRepository extends ServiceEntityRepository
     public function queryPost(): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'ASC');
+            ->orderBy('p.id', \SortDirection::Ascending);
     }
 
     //    /**

@@ -23,6 +23,7 @@ use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionSQLVisitor;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
+use Rekalogika\Rekapager\Adapter\Common\SortDirectionUtil;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingPlaceholderInSQLException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\NoCountResultFoundException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\QueryBuilderKeysetItem;
@@ -45,14 +46,20 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
     private string $countSql;
 
     /**
-     * @param non-empty-array<string,Order> $orderBy
+     * @var non-empty-array<string,\SortDirection>
+     */
+    private array $orderBy;
+
+    /**
+     * @param non-empty-array<string,\SortDirection|Order> $orderBy Passing `Order` is deprecated, use `\SortDirection` instead.
      * @param list<Parameter> $parameters
      */
     public function __construct(
         private EntityManagerInterface $entityManager,
         ResultSetMapping $resultSetMapping,
         private string $sql,
-        private array $orderBy,
+        // @phpstan-ignore parameter.deprecatedEnum (for BC)
+        array $orderBy,
         ?string $countSql = null,
         private ?string $countAllSql = null,
         private array $parameters = [],
@@ -62,6 +69,8 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         // clone the ResultSetMapping to avoid modifying the original
         $resultSetMapping = clone $resultSetMapping;
         $this->resultSetMapping = $resultSetMapping;
+
+        $this->orderBy = SortDirectionUtil::normalize($orderBy);
 
         // generate the SELECT fields
         $boundaryFieldNames = array_keys($orderBy);
@@ -108,7 +117,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
     /**
      * @param array<string,QueryParameter> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
-     * @param non-empty-array<string,Order> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      * @return array{string,array<string,QueryParameter>}
      */
     private function generateWhereExpression(
@@ -202,7 +211,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
         $where = \sprintf(
             'AND (%s) %s (%s)',
             implode(', ', $whereFields),
-            $order === Order::Ascending ? '>' : '<',
+            $order === \SortDirection::Ascending ? '>' : '<',
             implode(', ', $whereValues),
         );
 
@@ -211,7 +220,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
 
     /**
      * @param array<string,mixed> $boundaryValues
-     * @param non-empty-array<string,Order> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      * @return list<Field>
      */
     private function createCalculatorFields(
@@ -240,7 +249,7 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
     }
 
     /**
-     * @return array<string,Order>
+     * @return array<string,\SortDirection>
      */
     private function getSortOrder(bool $reverse): array
     {
@@ -248,21 +257,18 @@ final readonly class NativeQueryAdapter implements KeysetPaginationAdapterInterf
             return $this->orderBy;
         }
 
-        return array_map(
-            static fn(Order $order): Order => $order === Order::Ascending ? Order::Descending : Order::Ascending,
-            $this->orderBy,
-        );
+        return array_map(SortDirectionUtil::reverse(...), $this->orderBy);
     }
 
     /**
-     * @param non-empty-array<string,Order> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      */
     private function generateOrderBy(array $orderings): string
     {
         $orderBy = [];
 
         foreach ($orderings as $field => $order) {
-            $orderBy[] = \sprintf('%s %s', $field, $order === Order::Ascending ? 'ASC' : 'DESC');
+            $orderBy[] = \sprintf('%s %s', $field, $order === \SortDirection::Ascending ? 'ASC' : 'DESC');
         }
 
         return implode(', ', $orderBy);

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
 use Rekalogika\Rekapager\Keyset\KeysetPageable;
@@ -56,12 +55,12 @@ final readonly class KeysetPageableSelectableAdapterCollection implements Pageab
         // @highlight-start
         $selectable = $user->getPosts();
 
-        $criteria = Criteria::create(true)
+        $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('setName', $setName))
             ->orderBy([
-                'date' => Order::Descending,
-                'category' => Order::Ascending,
-                'id' => Order::Ascending,
+                'date' => \SortDirection::Descending,
+                'category' => \SortDirection::Ascending,
+                'id' => \SortDirection::Ascending,
             ]);
 
         $adapter = new SelectableAdapter(

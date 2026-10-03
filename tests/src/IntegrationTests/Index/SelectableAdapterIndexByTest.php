@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\IntegrationTests\Index;
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\Common\Collections\Order;
 use Rekalogika\Rekapager\Adapter\Common\Exception\CannotResolveIndexException;
 use Rekalogika\Rekapager\Adapter\Common\Exception\IncompatibleIndexTypeException;
 use Rekalogika\Rekapager\Doctrine\Collections\SelectableAdapter;
@@ -35,12 +34,12 @@ final class SelectableAdapterIndexByTest extends KernelTestCase
 
     public function testIndexBy(): void
     {
-        $criteria = Criteria::create(true)
+        $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('setName', 'large'))
             ->orderBy([
-                'date' => Order::Descending,
-                'title' => Order::Ascending,
-                'id' => Order::Ascending,
+                'date' => \SortDirection::Descending,
+                'title' => \SortDirection::Ascending,
+                'id' => \SortDirection::Ascending,
             ]);
 
         $adapter = new SelectableAdapter(
@@ -63,12 +62,12 @@ final class SelectableAdapterIndexByTest extends KernelTestCase
 
     public function testInvalidIndexBy(): void
     {
-        $criteria = Criteria::create(true)
+        $criteria = Criteria::create()
             ->where(Criteria::expr()->eq('setName', 'large'))
             ->orderBy([
-                'date' => Order::Descending,
-                'title' => Order::Ascending,
-                'id' => Order::Ascending,
+                'date' => \SortDirection::Descending,
+                'title' => \SortDirection::Ascending,
+                'id' => \SortDirection::Ascending,
             ]);
 
         $adapter = new SelectableAdapter(

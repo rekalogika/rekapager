@@ -31,8 +31,6 @@ return RectorConfig::configure()
     ])
     // brittle version specific classes
     ->withSkip([
-        __DIR__ . '/packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker2.php',
-        __DIR__ . '/packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker30.php',
         __DIR__ . '/packages/rekapager-doctrine-orm-adapter/src/Internal/CountOutputWalker33.php',
     ])
     ->withPhpVersion(PhpVersion::PHP_83)

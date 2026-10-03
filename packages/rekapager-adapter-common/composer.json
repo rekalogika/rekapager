@@ -16,8 +16,9 @@
         }
     },
     "require": {
-        "php": "^8.3",
-        "doctrine/collections": "^2.2 || ^3.0",
+        "php": "^8.4",
+        "doctrine/collections": "^3.1",
+        "symfony/polyfill-php86": "^1.37",
         "rekalogika/rekapager-contracts": "^1.3"
     }
 }

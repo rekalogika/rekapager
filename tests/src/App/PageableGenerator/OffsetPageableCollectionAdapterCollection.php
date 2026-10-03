@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Rekalogika\Rekapager\Tests\App\PageableGenerator;
 
 use Doctrine\Common\Collections\Criteria;
-use Rekalogika\Collections\Decorator\LazyMatching\LazyMatchingCollection;
 use Rekalogika\Contracts\Rekapager\PageableInterface;
 use Rekalogika\Rekapager\Doctrine\Collections\CollectionAdapter;
 use Rekalogika\Rekapager\Offset\OffsetPageable;
@@ -54,10 +53,8 @@ final readonly class OffsetPageableCollectionAdapterCollection implements Pageab
         }
 
         // @highlight-start
-        // LazyMatchingCollection is part of rekalogika/doctrine-collections-decorator package
-        $lazyPosts = new LazyMatchingCollection($user->getPosts());
-        $filteredPosts = $lazyPosts->matching(
-            Criteria::create(true)
+        $filteredPosts = $user->getPosts()->matching(
+            Criteria::create()
                 ->where(Criteria::expr()->eq('setName', $setName)),
         );
 

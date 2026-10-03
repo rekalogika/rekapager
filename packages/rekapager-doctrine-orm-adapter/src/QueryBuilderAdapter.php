@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Rekalogika\Rekapager\Doctrine\ORM;
 
-use Doctrine\Common\Collections\Order;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\LockMode;
 use Doctrine\DBAL\ParameterType;
@@ -31,6 +30,7 @@ use Rekalogika\Rekapager\Adapter\Common\Field;
 use Rekalogika\Rekapager\Adapter\Common\IndexResolver;
 use Rekalogika\Rekapager\Adapter\Common\KeysetExpressionCalculator;
 use Rekalogika\Rekapager\Adapter\Common\SeekMethod;
+use Rekalogika\Rekapager\Adapter\Common\SortDirectionUtil;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\MissingRowValuesDQLFunctionException;
 use Rekalogika\Rekapager\Doctrine\ORM\Exception\UnsupportedQueryBuilderException;
 use Rekalogika\Rekapager\Doctrine\ORM\Internal\KeysetQueryBuilderVisitor;
@@ -186,7 +186,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
     /**
      * @param array<string,QueryParameter> $boundaryValues Key is the property name, value is the bound value. Null if unbounded.
-     * @param non-empty-array<string,'ASC'|'DESC'> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      * @return array{null|Andx|string,array<string,QueryParameter>}
      */
     private function generateWhereExpression(
@@ -277,7 +277,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
         $where = \sprintf(
             'REKAPAGER_ROW_VALUES(%s) %s REKAPAGER_ROW_VALUES(%s)',
             implode(', ', $whereFields),
-            $order === Order::Ascending ? '>' : '<',
+            $order === \SortDirection::Ascending ? '>' : '<',
             implode(', ', $whereValues),
         );
 
@@ -286,7 +286,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
 
     /**
      * @param array<string,QueryParameter> $boundaryValues
-     * @param non-empty-array<string, 'ASC'|'DESC'> $orderings
+     * @param non-empty-array<string,\SortDirection> $orderings
      * @return list<Field>
      */
     private function createCalculatorFields(
@@ -307,7 +307,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
                 continue;
             }
 
-            $fields[] = new Field($field, $value, $direction === 'ASC' ? Order::Ascending : Order::Descending);
+            $fields[] = new Field($field, $value, $direction);
         }
 
         return $fields;
@@ -404,12 +404,12 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     }
 
     /**
-     * @var non-empty-array<string,'ASC'|'DESC'>
+     * @var non-empty-array<string,\SortDirection>
      */
     private null|array $sortOrderCache = null;
 
     /**
-     * @return non-empty-array<string,'ASC'|'DESC'>
+     * @return non-empty-array<string,\SortDirection>
      */
     private function getSortOrder(): array
     {
@@ -417,7 +417,7 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             return $this->sortOrderCache;
         }
 
-        /** @var array<string,'ASC'|'DESC'> */
+        /** @var array<string,\SortDirection> */
         $result = [];
 
         /** @var array<int,OrderBy> */
@@ -431,12 +431,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
             foreach ($orderBy->getParts() as $part) {
                 $exploded = explode(' ', $part);
                 $field = $exploded[0];
-                $direction = $exploded[1] ?? 'ASC';
-                $direction = strtoupper($direction);
-
-                if (!\in_array($direction, ['ASC', 'DESC'], true)) {
-                    throw new LogicException('Invalid direction');
-                }
+                $direction = match (strtoupper($exploded[1] ?? 'ASC')) {
+                    'ASC' => \SortDirection::Ascending,
+                    'DESC' => \SortDirection::Descending,
+                    default => throw new LogicException('Invalid direction'),
+                };
 
                 if (isset($result[$field])) {
                     throw new LogicException(\sprintf('The field "%s" appears multiple times in the ORDER BY clause.', $field));
@@ -466,17 +465,11 @@ final class QueryBuilderAdapter implements KeysetPaginationAdapterInterface, Off
     }
 
     /**
-     * @return non-empty-array<string,'ASC'|'DESC'>
+     * @return non-empty-array<string,\SortDirection>
      */
     private function getReversedSortOrder(): array
     {
-        $result = [];
-
-        foreach ($this->getSortOrder() as $field => $direction) {
-            $result[$field] = $direction === 'ASC' ? 'DESC' : 'ASC';
-        }
-
-        return $result;
+        return array_map(SortDirectionUtil::reverse(...), $this->getSortOrder());
     }
 
     private function getType(
