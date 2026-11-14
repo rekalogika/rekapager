@@ -24,6 +24,6 @@
     },
     "require": {
         "php": "^8.4",
-        "rekalogika/rekapager-contracts": "^2.0"
+        "rekalogika/rekapager-contracts": "^2.0.2"
     }
 }
