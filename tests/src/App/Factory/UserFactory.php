@@ -2,17 +2,13 @@
 
 namespace Rekalogika\Rekapager\Tests\App\Factory;
 
-use Doctrine\ORM\EntityRepository;
 use Rekalogika\Rekapager\Tests\App\Entity\User;
-use Rekalogika\Rekapager\Tests\App\Repository\UserRepository;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
-use Zenstruck\Foundry\Persistence\Proxy;
-use Zenstruck\Foundry\Persistence\ProxyRepositoryDecorator;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<User>
+ * @extends PersistentObjectFactory<User>
  */
-final class UserFactory extends PersistentProxyObjectFactory
+final class UserFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
