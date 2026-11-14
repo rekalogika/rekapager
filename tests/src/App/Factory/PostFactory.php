@@ -2,18 +2,14 @@
 
 namespace Rekalogika\Rekapager\Tests\App\Factory;
 
-use Doctrine\ORM\EntityRepository;
 use Rekalogika\Rekapager\Tests\App\Entity\Category;
 use Rekalogika\Rekapager\Tests\App\Entity\Post;
-use Rekalogika\Rekapager\Tests\App\Repository\PostRepository;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
-use Zenstruck\Foundry\Persistence\Proxy;
-use Zenstruck\Foundry\Persistence\ProxyRepositoryDecorator;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Post>
+ * @extends PersistentObjectFactory<Post>
  */
-final class PostFactory extends PersistentProxyObjectFactory
+final class PostFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

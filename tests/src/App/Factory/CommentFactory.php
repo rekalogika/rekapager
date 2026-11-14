@@ -2,17 +2,13 @@
 
 namespace Rekalogika\Rekapager\Tests\App\Factory;
 
-use Doctrine\ORM\EntityRepository;
 use Rekalogika\Rekapager\Tests\App\Entity\Comment;
-use Rekalogika\Rekapager\Tests\App\Repository\CommentRepository;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
-use Zenstruck\Foundry\Persistence\Proxy;
-use Zenstruck\Foundry\Persistence\ProxyRepositoryDecorator;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Comment>
+ * @extends PersistentObjectFactory<Comment>
  */
-final class CommentFactory extends PersistentProxyObjectFactory
+final class CommentFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
