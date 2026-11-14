@@ -32,9 +32,9 @@
         "doctrine/orm": "^3.7",
         "doctrine/collections": "^3.1",
         "symfony/polyfill-php86": "^1.37",
-        "rekalogika/rekapager-adapter-common": "^2.0",
-        "rekalogika/rekapager-contracts": "^2.0",
-        "rekalogika/rekapager-keyset-pagination": "^2.0",
-        "rekalogika/rekapager-offset-pagination": "^2.0"
+        "rekalogika/rekapager-adapter-common": "^2.0.2",
+        "rekalogika/rekapager-contracts": "^2.0.2",
+        "rekalogika/rekapager-keyset-pagination": "^2.0.2",
+        "rekalogika/rekapager-offset-pagination": "^2.0.2"
     }
 }
